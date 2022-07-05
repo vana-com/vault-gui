@@ -1,0 +1,6 @@
+.next
+.github
+next.config.js
+.eslintrc.json
+yarn.lock
+package.json

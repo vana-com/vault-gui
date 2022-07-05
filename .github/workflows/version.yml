@@ -1,0 +1,38 @@
+# .github/workflows/version.yml
+name: Git Version
+
+on:
+  push:
+    branches:
+      - development
+      - staging
+      - production
+
+jobs:
+  generate-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}   # checkout the correct branch name
+          fetch-depth: 0                # fetch the whole repo history
+
+      - name: Git Version
+        id: gitversion
+        uses: codacy/git-version@2.2.0
+        with:
+          release-branch: production
+          dev-branch: development
+          prefix: v
+
+      - name: Create tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.gitversion.outputs.VERSION }}',
+              sha: context.sha
+            })

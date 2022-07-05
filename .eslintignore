@@ -1,0 +1,6 @@
+.next
+.github
+.prettierrc.json
+.prettierignore
+yarn.lock
+package.json
