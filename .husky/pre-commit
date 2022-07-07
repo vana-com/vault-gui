@@ -1,4 +1,14 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Install any packages if needed
+yarn install
+
+# Run linters
 npx lint-staged
+
+# Run unit tests
+yarn test
+
+# Run cypress tests
+npx -y start-server-and-test start:ci http://localhost:3000 cypress:headless
