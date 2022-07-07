@@ -23,7 +23,6 @@ jobs:
         uses: codacy/git-version@2.2.0
         with:
           release-branch: production
-          dev-branch: development
           prefix: v
 
       - name: Create tag
