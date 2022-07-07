@@ -4,3 +4,4 @@
 .prettierignore
 yarn.lock
 package.json
+README.md
