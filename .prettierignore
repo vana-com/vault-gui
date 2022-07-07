@@ -4,3 +4,4 @@ next.config.js
 .eslintrc.json
 yarn.lock
 package.json
+README.md
