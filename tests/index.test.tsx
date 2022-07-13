@@ -3,6 +3,7 @@ import Home from '../pages/index'
 
 describe('Home', () => {
   it('Renders', () => {
-    render(<Home />)
+    const home = render(<Home />)
+    expect(home)
   })
 })
