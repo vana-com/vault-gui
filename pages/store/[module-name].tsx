@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { Nav } from '../components/Nav'
+import styles from '../../styles/Home.module.css'
+import { Nav } from '../../components/Nav'
 
 const Home: NextPage = () => {
   return (
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Nav description="Home page: login / module options / modules index" />
+      <Nav description="Module storage page: eg. upload your Instagram data" />
     </div>
   )
 }
