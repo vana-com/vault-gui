@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Nav description="Home page: login / module options / modules index" />
+      <Nav description="Vault module page: your stored data module, eg. Instagram" />
     </div>
   )
 }
