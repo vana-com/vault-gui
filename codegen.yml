@@ -1,0 +1,39 @@
+overwrite: true
+schema:
+  ${NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL}:
+    headers:
+      "x-hasura-admin-secret": ${HASURA_ADMIN_SECRET}
+documents: 'src/graphql/**/*.graphql'
+generates:
+  src/graphql/generated/sdk.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
+  src/graphql/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      reactApolloVersion: 3
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      exportFragmentSpreadSubTypes: true
+      documentMode: graphQLTag
+  src/graphql/generated/page.tsx:
+    config:
+      documentMode: external
+      importDocumentNodeExternallyFrom: ./graphql
+      reactApolloVersion: 3
+      withHooks: true
+      apolloClientInstanceImport: '../../utils/apolloClient'
+    preset: import-types
+    presetConfig:
+      typesPath: ./graphql
+    plugins:
+      - "graphql-codegen-apollo-next-ssr"
+  src/graphql/generated/graphql.schema.json:
+    plugins:
+      - "introspection"

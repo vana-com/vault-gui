@@ -6,3 +6,5 @@ yarn.lock
 package.json
 package-lock.json
 README.md
+cypress.config.ts
+src/graphql/generated/*
