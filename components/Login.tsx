@@ -1,33 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Web3Auth } from '@web3auth/web3auth'
-import {
-  ADAPTER_EVENTS,
-  CHAIN_NAMESPACES,
-  SafeEventEmitterProvider,
-} from '@web3auth/base'
+import { ADAPTER_EVENTS, SafeEventEmitterProvider } from '@web3auth/base'
 
-// TODO: [CU-36mezx1] Move Web3Auth variables and secrets to Doppler
-const CLIENT_ID =
-  'BNCnjvWWetrw0ygWhVsVYc1lNaf_9ZKk3sWSuXK1J2422dNWv9Dvc5vZBO6Jdi_VPSpq9Sa0q381SZzutMpFm3g'
-const RPC_TARGET =
-  'https://mainnet.infura.io/v3/4e179115341d400baa2bec18fd69d210'
-const ETHEREUM_CHAIN_ID = '0x1'
-const NETWORK = 'mainnet'
+import config from '../config/web3auth'
+const web3AuthInstance = config.web3AuthInstance
 
 const Login = () => {
   // TODO: Move web3auth and provider to global context
-  const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null)
   const [walletProvider, setWalletProvider] =
     useState<SafeEventEmitterProvider | null>(null)
-  const [user, setUser] = useState<unknown | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
     const subscribeAuthEvents = (web3Auth: Web3Auth) => {
       // Subscribe to ADAPTER_EVENTS. Additional ADAPTER_EVENTS and LOGIN_MODAL_EVENTS exist.
       web3Auth.on(ADAPTER_EVENTS.CONNECTED, (data: unknown) => {
         console.log('adapter successfully logged in', data)
-        setUser(data)
+        web3Auth.getUserInfo().then(userInfo => setUser(userInfo))
         setWalletProvider(web3Auth.provider!)
       })
 
@@ -37,7 +26,6 @@ const Login = () => {
 
       web3Auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
         console.log('adapter disconnected')
-        setUser(null)
       })
 
       web3Auth.on(ADAPTER_EVENTS.ERRORED, error => {
@@ -48,55 +36,34 @@ const Login = () => {
       })
     }
 
-    const init = async () => {
-      const { Web3Auth } = await import('@web3auth/web3auth')
-      const { OpenloginAdapter } = await import('@web3auth/openlogin-adapter')
-
-      setIsLoading(true)
-
-      try {
-        const web3AuthInstance = new Web3Auth({
-          clientId: CLIENT_ID,
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: ETHEREUM_CHAIN_ID,
-            rpcTarget: RPC_TARGET,
-          },
-        })
-
-        const adapter = new OpenloginAdapter({
-          adapterSettings: { network: NETWORK, clientId: CLIENT_ID },
-        })
-        web3AuthInstance.configureAdapter(adapter)
-        subscribeAuthEvents(web3AuthInstance)
-        setWeb3Auth(web3AuthInstance)
-        await web3AuthInstance.initModal()
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setIsLoading(false)
+    if (web3AuthInstance) {
+      // TODO: Make sure event listeners are not added multiple times
+      subscribeAuthEvents(web3AuthInstance)
+      if (web3AuthInstance.status !== 'connected') {
+        web3AuthInstance.initModal()
       }
+    } else {
+      console.log('unable to login with Web3Auth')
     }
-
-    init()
   }, [])
 
   const logIn = async () => {
-    if (!web3Auth) {
+    if (!web3AuthInstance) {
       console.log('web3auth not initialized yet')
       return
     }
-    const web3AuthProvider = await web3Auth.connect()
+    const web3AuthProvider = await web3AuthInstance.connect()
     setWalletProvider(web3AuthProvider)
   }
 
   const logOut = async () => {
-    if (!web3Auth) {
+    if (!web3AuthInstance) {
       console.log('web3auth not initialized yet')
       return
     }
-    await web3Auth.logout()
+    await web3AuthInstance.logout()
     setWalletProvider(null)
+    setUser(null)
   }
 
   return (
