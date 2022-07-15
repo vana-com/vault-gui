@@ -1,0 +1,7 @@
+query getModules {
+  modules(where: { isActive: { _eq: true } }) {
+    iconURL
+    id
+    name
+  }
+}

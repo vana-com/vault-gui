@@ -1,0 +1,23 @@
+fragment UserWithCustomer on Users {
+  id
+  emailAddress
+  phoneNumber
+  name
+  createdAt
+  updatedAt
+  customer {
+    id
+    createdAt
+    updatedAt
+    organization {
+      id
+      name
+      stripeCustomerId
+    }
+  }
+  worker {
+    id
+    createdAt
+    updatedAt
+  }
+}

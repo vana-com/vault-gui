@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react'
-import Home from '../pages/index'
+import { render } from "@testing-library/react";
 
-describe('Home', () => {
-  it('Renders', () => {
-    render(<Home />)
-  })
-})
+import Home from "../pages/index";
+
+describe("Home", () => {
+  it("Renders", () => {
+    render(<Home />);
+  });
+});

@@ -1,0 +1,12 @@
+subscription getUserModules($userId: uuid!) {
+  usersModules(
+    where: { userId: { _eq: $userId }, progress: { _eq: "COMPLETE" } }
+  ) {
+    id
+    module {
+      name
+    }
+    moduleId
+    urlToData
+  }
+}
