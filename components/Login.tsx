@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Web3Auth } from '@web3auth/web3auth'
-import { ADAPTER_EVENTS, SafeEventEmitterProvider } from '@web3auth/base'
+import {
+  ADAPTER_EVENTS,
+  SafeEventEmitterProvider,
+  UserInfo,
+} from '@web3auth/base'
 
 import config from '../config/web3auth'
 const web3AuthInstance = config.web3AuthInstance
@@ -9,7 +13,7 @@ const Login = () => {
   // TODO: Move web3auth and provider to global context
   const [walletProvider, setWalletProvider] =
     useState<SafeEventEmitterProvider | null>(null)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<Partial<UserInfo> | null>(null)
 
   useEffect(() => {
     const subscribeAuthEvents = (web3Auth: Web3Auth) => {
