@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import {
   Box,
   Button,
+  ModuleButton,
   Container,
   Flex,
   PageVault,
@@ -55,7 +56,12 @@ const Home: NextPage = () => {
             {hasStoredModules && (
               <>
                 {testDataModule.map(module => (
-                  <Button key={module.id} name={module.name} isLarge isStored />
+                  <ModuleButton
+                    key={module.id}
+                    name={module.name}
+                    isLarge
+                    isStored
+                  />
                 ))}
               </>
             )}

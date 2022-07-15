@@ -68,42 +68,42 @@ setup({
   preflight: {
     '@font-face': [
       {
-        fontFamily: 'Sans',
+        fontFamily: 'Ginto',
         src: 'url(/fonts/Ginto-Regular.woff) format("woff")',
         fontStyle: 'normal',
         fontWeight: 400,
         fontDisplay: 'swap',
       },
       {
-        fontFamily: 'Sans',
+        fontFamily: 'Ginto',
         src: 'url("/fonts/Ginto-Medium.woff") format("woff")',
         fontStyle: 'normal',
         fontWeight: 500,
         fontDisplay: 'swap',
       },
       {
-        fontFamily: 'Sans',
+        fontFamily: 'Ginto',
         src: 'url("/fonts/Ginto-Bold.woff") format("woff")',
         fontStyle: 'normal',
         fontWeight: 700,
         fontDisplay: 'swap',
       },
       {
-        fontFamily: 'Sans',
+        fontFamily: 'Ginto',
         src: 'url("/fonts/Ginto-Black.woff") format("woff")',
         fontStyle: 'normal',
         fontWeight: 900,
         fontDisplay: 'swap',
       },
       {
-        fontFamily: 'Display',
+        fontFamily: 'GintoNord',
         src: 'url("/fonts/Ginto-Nord-Bold.woff") format("woff")',
         fontStyle: 'normal',
         fontWeight: 700,
         fontDisplay: 'swap',
       },
       {
-        fontFamily: 'Display',
+        fontFamily: 'GintoNord',
         src: 'url(/fonts/Ginto-Nord-Black.woff) format("woff")',
         fontStyle: 'normal',
         fontWeight: 900,
