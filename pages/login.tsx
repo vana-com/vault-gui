@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { Nav } from "../components/Nav";
+import Login from "../components/Login";
 import styles from "../styles/Home.module.css";
 
-const HomePage: NextPage = () => (
+const LoginPage: NextPage = () => (
   <div className={styles.container}>
     <Head>
       <title>Vana</title>
@@ -12,8 +12,8 @@ const HomePage: NextPage = () => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <Nav description="Home page: login / module options / modules index" />
+    <Login />
   </div>
 );
 
-export default HomePage;
+export default LoginPage;

@@ -1,9 +1,10 @@
 import { render } from "@testing-library/react";
 
-import Home from "../pages/index";
+import Home from "../pages/login";
 
 describe("Home", () => {
   it("Renders", () => {
-    render(<Home />);
+    const home = render(<Home />);
+    expect(home);
   });
 });
