@@ -8,3 +8,7 @@ package-lock.json
 README.md
 cypress.config.ts
 src/graphql/generated/*
+
+# TODO: Remove later
+components/Login.tsx
+config/web3auth.ts

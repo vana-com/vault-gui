@@ -1,10 +1,10 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Login from '../components/Login'
+import type { NextPage } from "next";
+import Head from "next/head";
 
-const LoginPage: NextPage = () => {
-  return (
+import Login from "../components/Login";
+import styles from "../styles/Home.module.css";
+
+const LoginPage: NextPage = () => (
     <div className={styles.container}>
       <Head>
         <title>Vana</title>
@@ -14,7 +14,6 @@ const LoginPage: NextPage = () => {
 
       <Login />
     </div>
-  )
-}
+  );
 
-export default LoginPage
+export default LoginPage;

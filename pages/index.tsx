@@ -1,8 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
-const HomePage: NextPage = () => {
-  return (
+const HomePage: NextPage = () => (
     <div>
       <Head>
         <title>Vana</title>
@@ -11,5 +10,4 @@ const HomePage: NextPage = () => {
       </Head>
     </div>
   );
-}
-export default HomePage
+export default HomePage;
