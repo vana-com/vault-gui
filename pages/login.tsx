@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Nav } from '../components/Nav'
+import Login from '../components/Login'
 
-const HomePage: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,9 +12,9 @@ const HomePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Nav description="Home page: login / module options / modules index" />
+      <Login />
     </div>
   )
 }
 
-export default HomePage
+export default LoginPage
