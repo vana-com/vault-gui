@@ -1,6 +1,34 @@
-// https://github.com/tw-in-js/use-twind-with/tree/main/packages/next
-// import withTwindDocument from '@twind/next/document'
-import withTwindDocument from "@twind/next/shim/document";
-import twindConfig from "../twind.config";
+import React from 'react'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { extractCritical } from '@emotion/server'
 
-export default withTwindDocument(twindConfig);
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx: any) {
+    const initialProps = await Document.getInitialProps(ctx)
+    const critical = extractCritical(initialProps.html)
+    initialProps.html = critical.html
+    initialProps.styles = (
+      <React.Fragment>
+        {initialProps.styles}
+        <style
+          data-emotion-css={critical.ids.join(' ')}
+          dangerouslySetInnerHTML={{ __html: critical.css }}
+        />
+      </React.Fragment>
+    )
+
+    return initialProps
+  }
+
+  render() {
+    return (
+      <Html lang="en">
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+}

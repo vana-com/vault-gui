@@ -1,16 +1,14 @@
-import * as React from 'react'
-import { tw, apply } from 'twind'
-import { Box, BoxProps } from './Box'
-// import { ComponentChildren } from '../../types'
+import { Box } from 'components'
+import tw, { styled, css } from 'twin.macro'
 
 /* 
   Flex is a shortcut component for using Tailwind flex props. 
   See: https://tailwindcss.com/docs/flex-basis 
  */
 
-const direction = ['row', 'row-reverse', 'col', 'col-reverse'] as const
+// const direction = ['row', 'row-reverse', 'col', 'col-reverse'] as const
 // https://steveholgado.com/typescript-types-from-arrays/
-export type Direction = typeof direction[number]
+// export type Direction = typeof direction[number]
 
 // const flex = [1, 'auto', 'initial', 'none'] as const
 // const flexAlignment = ['flex-start', 'center', 'flex-end', 'stretch'] as const
@@ -22,15 +20,22 @@ export type Direction = typeof direction[number]
 // ] as const
 // const justifySelf = flexAlignment
 
-export type FlexProps = BoxProps & {
+const directionMap = {
+  row: tw`flex-row`,
+  rowReverse: tw`flex-row-reverse`,
+  col: tw`flex-col`,
+  colReverse: tw`flex-col-reverse`,
+} as const
+
+export type Direction = keyof typeof directionMap
+
+export type FlexProps = {
   direction?: Direction
 }
 
-export const Flex = ({ direction = 'row', className, children }: FlexProps) => {
-  const instanceStyles = apply`
-    flex
-    flex-${direction}
-  `
-
-  return <Box className={tw(instanceStyles, className)}>{children}</Box>
-}
+export const Flex = styled.div(({ direction = 'row' }: FlexProps) => [
+  tw`flex`,
+  css`
+    ${directionMap[direction]}
+  `,
+])

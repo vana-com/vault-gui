@@ -1,13 +1,21 @@
-// import '../css/globals.css'
+import { cache } from '@emotion/css'
+import { CacheProvider } from '@emotion/react'
 import type { AppProps } from 'next/app'
-// import withTwindApp from '@twind/next/app'
-import withTwindApp from '@twind/next/shim/app'
-import twindConfig from '../twind.config'
-import { tw } from 'twind'
-import { globalStyles } from 'css/global'
+import { ThemeProvider } from 'next-themes'
+import { ColorModeToggle } from '../components'
+import GlobalStyles from '../styles/GlobalStyles'
+import '../styles/fonts.css'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component className={tw(globalStyles)} {...pageProps} />
-}
+const App = ({ Component, pageProps }: AppProps) => (
+  <CacheProvider value={cache}>
+    <ThemeProvider attribute="class" defaultTheme="dark">
+      <GlobalStyles />
+      <div tw="relative">
+        <ColorModeToggle />
+      </div>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  </CacheProvider>
+)
 
-export default withTwindApp(twindConfig, MyApp)
+export default App

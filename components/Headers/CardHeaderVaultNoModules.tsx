@@ -1,31 +1,27 @@
-import { CardHeaderStack, Box, Text } from "components";
+import { CardHeaderStack, Box, Text } from 'components'
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const CardHeaderVaultNoModules = ({ children }: Props) => (
   <>
-    <CardHeaderStack gap="1" justifyContent="center">
-      <Text variant="title2" align="center" weight="medium" color="label">
+    <CardHeaderStack tw="gap-1 justify-center">
+      {/* title2  color="label" */}
+      <Text variant="title" tw="text-center" weight="medium">
         Store your Data
       </Text>
-      <Text variant="body" color="labelTertiary" align="center">
+      {/* color="labelTertiary" */}
+      <Text variant="body" tw="text-center">
         To get started, choose an app
       </Text>
     </CardHeaderStack>
 
     {/* CTA */}
-    <Box
-      display="flex"
-      flexDirection={{ xs: "column", lg: "row" }}
-      gap="3"
-      justifyContent="center"
-      paddingTop="7"
-    >
+    <div tw="flex flex-col lg:flex-row justify-center gap-4 pt-7">
       {children}
-    </Box>
+    </div>
   </>
-);
+)
 
-export { CardHeaderVaultNoModules };
+export { CardHeaderVaultNoModules }

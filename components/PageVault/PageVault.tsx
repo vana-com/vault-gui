@@ -9,7 +9,7 @@ import {
   // SimpleColorModeToggle,
 } from 'components'
 import { CarbonArrowLeft } from 'components/Icons'
-import { tw, apply } from 'twind'
+import tw, { styled, css, theme } from 'twin.macro'
 
 /* PageVault is the default page layout + header for a Vault page */
 
@@ -20,35 +20,32 @@ type PageVaultProps = {
 
 const PageVault = ({ children, showBackLink }: PageVaultProps) => {
   return (
-    <Box className={tw('relative')}>
+    <div tw="relative">
       {showBackLink && (
-        <Box className={tw('fixed top-8 left-8 z-10')}>
+        <div tw="fixed top-8 left-8 z-10">
           <NextLink passHref href="/">
             <Button
               as="a"
               size="md"
-              variant="outline"
+              // variant="outline"
               prefix={<CarbonArrowLeft />}
             >
               Vault
             </Button>
           </NextLink>
-        </Box>
+        </div>
       )}
-      {/* <Box className={tw('fixed top-8 right-8 z-10')}>
-        <SimpleColorModeToggle />
-      </Box> */}
-      <Container className={tw('relative pt-[6vh]')} size="lg">
-        <Box className={tw('flex flex-col gap-8 relative')}>
+      <Container tw="relative pt-[6vh]" size="lg">
+        <div tw="flex flex-col gap-8 relative">
           <HeaderBasic
             heading="Vault"
             subheading="Unlock the power of your data"
           />
 
           <Card>{children}</Card>
-        </Box>
+        </div>
       </Container>
-    </Box>
+    </div>
   )
 }
 

@@ -1,18 +1,15 @@
 import * as React from 'react'
-import { tw, apply } from 'twind'
 import { Box, BoxProps, SpinnerIcon } from 'components'
+import tw, { styled, css } from 'twin.macro'
 import * as styles from './Button.css'
 
 type BaseProps = {
   prefix?: React.ReactElement
   suffix?: React.ReactElement
-  style?: React.CSSProperties
   id?: string
-  round?: boolean
-  isDisabled?: boolean
   isLoading?: boolean
-} & styles.ButtonVariant &
-  styles.ButtonSize &
+} & styles.ButtonStyleProps &
+  BoxProps &
   Pick<
     JSX.IntrinsicElements['button'],
     | 'onClick'
@@ -22,8 +19,7 @@ type BaseProps = {
     | 'disabled'
     | 'type'
     | 'tabIndex'
-  > &
-  BoxProps
+  >
 
 type WithAnchor = {
   as?: 'a'
@@ -43,67 +39,38 @@ type WithoutAnchor = {
 
 export type ButtonProps = BaseProps & (WithAnchor | WithoutAnchor)
 
-// export const Button = ({
-//   size = 'md',
-//   variant = 'primary',
-//   round = false,
-//   disabled = false,
-//   className,
-//   children,
-// }: ButtonProps) => {
-//   // Collect all styles into one class
-
-//   // Allow passed classNames to override instance styles
-//   return <button className={tw(instanceStyles, className)}>{children}</button>
-// }
-
-// shape = 'base',
-// variant = 'contrast',
-
 export const Button = React.forwardRef(
   (
     {
       children,
-      className,
       id,
       isDisabled,
       isLoading,
       prefix,
-      shadow,
+      // shadow,
       round,
       size = 'md',
-      style,
       suffix,
       variant = 'primary',
       ...boxProps
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
-    const instanceStyles = apply`
-      ${styles.baseStyles}
-      bg-${styles.variantMap[variant]}(600 700(hover:& focus:&)))
-      ${styles.sizeMap[size]}
-      rounded-${round ? 'full' : 'lg'}
-      ${isDisabled && 'bg-gray-400 text-gray-100 cursor-not-allowed'}
-    `
-
     return (
       <Box
-        className={tw(instanceStyles, className)}
         ref={ref}
         {...boxProps}
         as={boxProps.as ?? 'button'}
+        css={styles.buttonStyle({ size, variant, round, isDisabled })}
         id={id}
-        disabled={isDisabled}
-        style={style}
       >
         {isLoading ? (
           <SpinnerIcon />
         ) : (
           <>
-            {prefix && <Box className={tw('inline-flex -mt-px')}>{prefix}</Box>}
+            {prefix && <div tw="inline-flex -mt-px">{prefix}</div>}
             {children}
-            {suffix && <Box className={tw('inline-flex')}>{suffix}</Box>}
+            {suffix && <div tw="inline-flex">{suffix}</div>}
           </>
         )}
       </Box>

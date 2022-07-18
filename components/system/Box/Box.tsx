@@ -1,5 +1,5 @@
 import * as React from 'react'
-// import { TW } from 'twind'
+// import { TW } from 'twin.macro'
 
 /* 
   Box
@@ -29,12 +29,12 @@ export type ClassName = ClassValue | string
 type Props = HTMLProperties & {
   as?: React.ElementType
   // children?: React.ReactNode
-  className?: ClassName
+  // className?: ClassName
 }
 
 export const Box = React.forwardRef<HTMLElement, Props>(
-  ({ as = 'div', className, ...props }: Props, ref) => {
-    return React.createElement(as, { className, ...props, ref })
+  ({ as = 'div', ...props }: Props, ref) => {
+    return React.createElement(as, { ...props, ref })
   }
 )
 

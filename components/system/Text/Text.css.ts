@@ -1,24 +1,55 @@
-import { tw, apply, CSSProperties } from 'twind'
+import tw, { TwStyle } from 'twin.macro'
 
-export const variantMap = {
-  footnote: apply`text-xs tracking-[0]`,
-  note: apply`text-sm tracking-[0]`,
-  body: apply`text-md tracking-[-0.025em]`,
-  headingMeta: apply`text-sm tracking-[0.025em] leading-none uppercase`,
-  heading: apply`text-lg tracking-[-0.025em] font-semibold`,
-  subheading: apply`text-sm tracking-[-0.025em] font-semibold`,
-  title: apply`text-3xl tracking-[-0.025em] font-black font-title`,
-}
+const variants = [
+  'footnote',
+  'note',
+  'body',
+  'headingMeta',
+  'heading',
+  'subheading',
+  'title',
+] as const
 
-export type TextVariant = keyof typeof variantMap
+// type TextVariant = typeof variants[number] // union type
 
-export const weightMap = {
-  normal: apply`font-normal`,
-  medium: apply`font-medium`,
-  semibold: apply`font-semibold`,
-  bold: apply`font-bold`,
-  heavy: apply`font-extrabold`,
-  black: apply`font-black`,
-}
+// enum TextVariant {
+//   Footnote = 'footnote',
+//   Note = 'note',
+//   Body = 'body',
+//   HeadingMeta = 'headingMeta',
+//   Heading = 'heading',
+//   Subheading = 'subheading',
+//   Title = 'title',
+// }
 
-export type TextWeight = keyof typeof weightMap
+// Record<TextVariant, string>
+export const textVariants = {
+  footnote: tw`text-xs tracking-[0]`,
+  note: tw`text-sm tracking-[0]`,
+  body: tw`text-md tracking-[-0.025em]`,
+  headingMeta: tw`text-sm tracking-[0.025em] leading-none uppercase`,
+  heading: tw`text-lg tracking-[-0.025em] font-semibold`,
+  subheading: tw`text-sm tracking-[-0.025em] font-semibold`,
+  title: tw`text-3xl tracking-[-0.025em] font-black font-title`,
+} as const
+
+export type TextVariant = keyof typeof textVariants
+
+export const textWeights = {
+  normal: tw`font-normal`,
+  medium: tw`font-medium`,
+  semibold: tw`font-semibold`,
+  bold: tw`font-bold`,
+  heavy: tw`font-extrabold`,
+  black: tw`font-black`,
+} as const
+
+export type TextWeight = keyof typeof textWeights
+
+export type TextStyleProps = TextVariant & TextWeight
+
+export const textStyles = ({ variant, weight }: TextStyleProps) => [
+  tw`flex`,
+  textVariants[variant],
+  textWeights[weight],
+]

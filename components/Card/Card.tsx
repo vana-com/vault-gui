@@ -1,16 +1,25 @@
 import { Box, BoxProps } from '../index'
-import * as styles from './Card.css'
-import { tw } from 'twind'
+import tw, { styled } from 'twin.macro'
 
 interface Props extends BoxProps {
   children: React.ReactNode
   withShadow?: boolean
 }
 
-const Card = ({ children, withShadow, ...props }: Props) => (
-  <Box className={tw(styles.root)} {...props}>
-    <Box className={tw(styles.inner)}>{children}</Box>
-  </Box>
+const Root = styled.div([
+  tw`
+    flex flex-col rounded-md shadow-xl
+    min-h-[195px] h-full overflow-hidden
+  `,
+])
+
+const Inner = styled.div([tw`flex flex-1 p-3 rounded-md lg:p-6`])
+
+// {...props}
+const Card = ({ children, ...props }: Props) => (
+  <Root>
+    <Inner>{children}</Inner>
+  </Root>
 )
 
 export { Card }

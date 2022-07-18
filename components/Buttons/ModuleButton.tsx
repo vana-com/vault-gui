@@ -1,8 +1,8 @@
-import { Box, Button, ButtonProps, VaultDataLogo } from 'components'
+import { Button, ButtonProps, VaultDataLogo } from 'components'
 import { CarbonSecurity } from 'components/Icons'
 import NextLink from 'next/link'
 import { useState } from 'react'
-import { tw } from 'twind'
+import tw from 'twin.macro'
 
 type Props = ButtonProps & {
   name: string
@@ -26,15 +26,15 @@ const ModuleButton = ({ name, isLarge, isStored }: Props) => {
   return (
     <NextLink passHref href={link}>
       <Button
-        // size="xl"
+        size="lg"
         // variant="orange"
-        // style={
-        //   isLarge
-        //     ? largeStyle
-        //     : {
-        //         flex: '1',
-        //       }
-        // }
+        style={
+          isLarge
+            ? largeStyle
+            : {
+                flex: '1',
+              }
+        }
         prefix={<VaultDataLogo name={name} />}
         isLoading={isLoading}
         onClick={() => {
@@ -42,9 +42,9 @@ const ModuleButton = ({ name, isLarge, isStored }: Props) => {
         }}
       >
         {isLarge && (
-          <Box className={tw('absolute top-3 right-3 text-white-100')}>
+          <div tw="absolute top-3 right-3 text-white">
             <CarbonSecurity />
-          </Box>
+          </div>
         )}
         {name}
       </Button>

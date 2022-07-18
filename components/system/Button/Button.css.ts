@@ -1,31 +1,49 @@
-import { apply } from 'twind'
+import tw, { TwStyle } from 'twin.macro'
 
-export const variantMap = {
-  success: 'green',
-  primary: 'blue',
-  warning: 'yellow',
-  info: 'gray',
-  danger: 'red',
-} as const
+type ButtonVariant = 'success' | 'primary' | 'info'
+// export type ButtonVariant = keyof typeof buttonVariants
 
-export type ButtonVariant = keyof typeof variantMap
+export const buttonVariants: Record<ButtonVariant, TwStyle> = {
+  success: tw`bg-green-500`,
+  primary: tw`bg-blue-500`,
+  info: tw`bg-gray-500`,
+}
 
-export const sizeMap = {
-  sm: apply`text-xs py(2 md:1) px-2`,
-  md: apply`text-sm py(3 md:2) px-2`,
-  lg: apply`text-lg py-2 px-4`,
-  xl: apply`text-xl py-3 px-6`,
-} as const
+type ButtonSize = 'sm' | 'md' | 'lg' | 'xl'
+// export type ButtonSize = keyof typeof buttonSizes
 
-export type ButtonSize = keyof typeof sizeMap
+export const buttonSizes: Record<ButtonSize, TwStyle> = {
+  sm: tw`px-2 py-2 text-xs md:py-1`,
+  md: tw`px-2 py-3 text-sm md:py-2`,
+  lg: tw`px-4 py-2 text-lg`,
+  xl: tw`px-6 py-3 text-xl`,
+}
 
-export const baseStyles = apply`
-  w(full md:auto)
-  text(sm white uppercase)
-  px-4
-  border-none
-  transition-colors
-  duration-300
-  relative
-  cursor-pointer
-`
+// export type ButtonStyleProps = ButtonVariant &
+//   ButtonSize & {
+//     round?: boolean
+//     isDisabled?: boolean
+//   }
+
+export interface ButtonStyleProps {
+  round?: boolean
+  isDisabled?: boolean
+  variant?: ButtonVariant
+  size?: ButtonSize
+}
+
+export const buttonStyle = ({
+  size,
+  variant,
+  round,
+  isDisabled,
+}: ButtonStyleProps) => [
+  // base
+  tw`relative w-full px-4 text-sm text-white uppercase transition-colors duration-300 border-none cursor-pointer md:w-auto`,
+
+  // bg-${styles.variantMap[variant]}(600 700(hover:& focus:&)))
+  buttonSizes[size],
+  buttonVariants[variant],
+  round ? tw`rounded-full` : tw`rounded-lg`,
+  isDisabled && tw`text-gray-100 bg-gray-400 cursor-not-allowed`,
+]

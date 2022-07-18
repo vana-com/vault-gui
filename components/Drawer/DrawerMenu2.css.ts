@@ -1,26 +1,26 @@
-import { keyframes, style, createVar } from "@vanilla-extract/css";
-import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
-import { atoms } from "../../css/atoms";
-import { vars } from "../../css/vars.css";
+import { keyframes, style, createVar } from '@vanilla-extract/css'
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes'
+import { atoms } from '../../styles/atoms'
+import { vars } from '../../styles/vars.css'
 
 const fadeIn = keyframes({
-  from: { opacity: "0" },
-  to: { opacity: "1" },
-});
+  from: { opacity: '0' },
+  to: { opacity: '1' },
+})
 
 const fadeOut = keyframes({
-  from: { opacity: "1" },
-  to: { opacity: "0" },
-});
+  from: { opacity: '1' },
+  to: { opacity: '0' },
+})
 
 export const styledOverlay = style([
   atoms({
-    position: "fixed",
-    backgroundColor: "backgroundScrim",
+    position: 'fixed',
+    backgroundColor: 'backgroundScrim',
   }),
   style({
     // backgroundColor: vars.colors.backgroundScrim,
-    backdropFilter: "blur(4px)",
+    backdropFilter: 'blur(4px)',
     inset: 0,
     selectors: {
       '&[data-state="open"]': {
@@ -31,37 +31,37 @@ export const styledOverlay = style([
       },
     },
   }),
-]);
+])
 
-const translateDirection = createVar();
+const translateDirection = createVar()
 
 const slideIn = keyframes({
   from: { transform: translateDirection },
-  to: { transform: "translate3d(0,0,0)" },
-});
+  to: { transform: 'translate3d(0,0,0)' },
+})
 
 const slideOut = keyframes({
-  from: { transform: "translate3d(0,0,0)" },
+  from: { transform: 'translate3d(0,0,0)' },
   to: { transform: translateDirection },
-});
+})
 
 export const styledContent = recipe({
   base: style([
     atoms({
-      position: "fixed",
+      position: 'fixed',
     }),
     style({
       bottom: 0,
       left: 0,
-      outline: "none",
-      position: "fixed",
+      outline: 'none',
+      position: 'fixed',
       top: 0,
       width: 250,
       // Among other things, prevents text alignment inconsistencies when dialog can't be centered in the viewport evenly.
       // Affects animated and non-animated dialogs alike.
-      willChange: "transform",
+      willChange: 'transform',
       vars: {
-        [translateDirection]: "translate3d(100%,0,0)",
+        [translateDirection]: 'translate3d(100%,0,0)',
       },
       selectors: {
         '&[data-state="open"]': {
@@ -77,56 +77,56 @@ export const styledContent = recipe({
     side,
   },
   defaultVariants: {
-    side: "right",
+    side: 'right',
   },
-});
+})
 
 const side = {
   top: {
     // transform: "translate3d(0,-100%,0)",
-    width: "100%",
+    width: '100%',
     height: 300,
-    bottom: "auto",
+    bottom: 'auto',
     // vars: {
     //   [translateDirection]: "translate3d(0,-100%,0)",
     // },
   },
   right: {
-    transform: "translate3d(100%,0,0)",
-    right: "0",
+    transform: 'translate3d(100%,0,0)',
+    right: '0',
   },
   bottom: {
-    transform: "translate3d(0,100%,0)",
-    width: "100%",
+    transform: 'translate3d(0,100%,0)',
+    width: '100%',
     height: 300,
     bottom: 0,
-    top: "auto",
+    top: 'auto',
   },
   left: {
-    transform: "translate3d(-100%,0,0)",
+    transform: 'translate3d(-100%,0,0)',
     left: 0,
   },
-};
+}
 
-export type Side = keyof typeof side;
+export type Side = keyof typeof side
 
 export const styledContent = recipe({
   base: style([
     atoms({
-      position: "fixed",
+      position: 'fixed',
     }),
     style({
       bottom: 0,
       left: 0,
-      outline: "none",
-      position: "fixed",
+      outline: 'none',
+      position: 'fixed',
       top: 0,
       width: 250,
       // Among other things, prevents text alignment inconsistencies when dialog can't be centered in the viewport evenly.
       // Affects animated and non-animated dialogs alike.
-      willChange: "transform",
+      willChange: 'transform',
       vars: {
-        [translateDirection]: "translate3d(100%,0,0)",
+        [translateDirection]: 'translate3d(100%,0,0)',
       },
       selectors: {
         '&[data-state="open"]': {
@@ -142,8 +142,8 @@ export const styledContent = recipe({
     side,
   },
   defaultVariants: {
-    side: "right",
+    side: 'right',
   },
-});
+})
 
-export type Variants = RecipeVariants<typeof styledContent>;
+export type Variants = RecipeVariants<typeof styledContent>

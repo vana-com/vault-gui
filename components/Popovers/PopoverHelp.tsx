@@ -1,6 +1,6 @@
 import { Button, Popover, PopoverContent, PopoverTrigger } from 'components'
 import { MarkdownComponent } from 'components/MarkdownComponents'
-import { tw, apply } from 'twind'
+import tw from 'twin.macro'
 import { HELP_INFORMATION } from 'data'
 
 // marginLeft="2"
@@ -18,7 +18,7 @@ const PopoverHelp = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="sm" className={tw('ml-1')}>
+        <Button size="sm" tw="ml-1">
           Need help?
         </Button>
       </PopoverTrigger>

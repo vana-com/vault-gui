@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* BASE */
+@layer base {
+  @font-face {
+    font-family: 'Ginto';
+    src: 'url(/fonts/Ginto-Regular.woff) format("woff")';
+    font-style: 'normal';
+    font-weight: 400;
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: 'Ginto';
+    src: 'url("/fonts/Ginto-Medium.woff") format("woff")';
+    font-style: 'normal';
+    font-weight: 500;
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: 'Ginto';
+    src: 'url("/fonts/Ginto-Bold.woff") format("woff")';
+    font-style: 'normal';
+    font-weight: 700;
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: 'Ginto';
+    src: 'url("/fonts/Ginto-Black.woff") format("woff")';
+    font-style: 'normal';
+    font-weight: 900;
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: 'GintoNord';
+    src: 'url("/fonts/Ginto-Nord-Bold.woff") format("woff")';
+    font-style: 'normal';
+    font-weight: 700;
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: 'GintoNord';
+    src: 'url(/fonts/Ginto-Nord-Black.woff) format("woff")';
+    font-style: 'normal';
+    font-weight: 900;
+    font-display: 'swap';
+  }
+  html {
+    @apply bg-white;
+  }
+  body {
+    @apply relative;
+    @apply antialiased;
+    @apply font-sans text-text-800;
+    @apply font-normal tracking-normal;
+    /* text-base */
+    font-size: 16px;
+    /* 1. Apple kerning, from http://design.byform.co/ */
+    /* font-feature-settings: "kern" 1,'ss01' 1,'ss02' 1,'ss03' 1,'ss04' 1; */
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    /* transition everywhere */
+    transition: color 50ms ease 0s;
+  }
+  /* https://sebhastian.com/hide-scrollbar-css/ */
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  ::selection {
+    background-color: var(--active-text-color);
+  }
+  code, pre: {
+    font-family: 'SFMono, ui-monospace, monospace',
+    font-weight: 400,
+    MozOsxFontSmoothing: 'subpixel-antialiased',
+    WebkitFontSmoothing: 'subpixel-antialiased',
+  }
+  svg: {
+    vertical-align: 'middle',
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
-import { keyframes, css, tw } from 'twind/css'
+import tw, { styled, css } from 'twin.macro'
+import { keyframes } from '@emotion/react'
 
 const useRandomId = (prefix: string) =>
   useMemo(
@@ -7,10 +8,10 @@ const useRandomId = (prefix: string) =>
     [prefix]
   )
 
-const spin = keyframes({
-  '0%': { transform: 'rotate(0deg)' },
-  '100%': { transform: 'rotate(360deg)' },
-})
+const spin = keyframes`
+  0%: { transform: rotate(0deg) },
+  100%: { transform: rotate(360deg) },
+`
 
 export const icon = css({
   animation: `${spin} 1s infinite linear`,
@@ -33,7 +34,7 @@ export const SpinnerIcon = ({
 
   return (
     <svg
-      className={tw(icon)}
+      css={icon}
       fill="none"
       height={height}
       viewBox="0 0 21 21"
@@ -50,7 +51,7 @@ export const SpinnerIcon = ({
         x="0"
         y="0"
       >
-        <div className={tw(iconPath)} />
+        <div css={iconPath} />
       </foreignObject>
     </svg>
   )

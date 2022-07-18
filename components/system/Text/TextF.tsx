@@ -1,6 +1,6 @@
 import { Box, ClassValue } from 'components'
 import React from 'react'
-import { tw, apply } from 'twind'
+import { tw, apply } from 'twin.macro'
 import * as vars from './Text.css'
 
 // & styles.Variants

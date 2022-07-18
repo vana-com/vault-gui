@@ -1,14 +1,6 @@
-import { Flex, FlexProps } from './Flex'
-import { tw, apply, CSSProperties } from 'twind'
+import { Flex } from './Flex'
+import { GroupProps } from './Group'
 
-interface StackProps extends FlexProps {
-  reverse?: boolean
-}
-
-export const Stack = ({ children, className, reverse = false }: StackProps) => {
-  // Flex direction defaults to "row"
-  const instanceStyles = apply`
-    ${reverse ? 'flex-col-reverse' : 'flex-col'}
-  `
-  return <Flex className={tw(instanceStyles, className)}>{children}</Flex>
+export const Stack = ({ children, reverse = false }: GroupProps) => {
+  return <Flex direction={reverse ? 'colReverse' : 'col'}>{children}</Flex>
 }
