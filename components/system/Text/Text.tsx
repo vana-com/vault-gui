@@ -1,6 +1,5 @@
 import { Box } from 'components'
 import React from 'react'
-// import tw, { TwStyle } from 'twin.macro'
 import * as styles from './Text.css'
 
 export type TextProps = {
@@ -21,18 +20,24 @@ export type TextProps = {
     | 'span'
   variant?: styles.TextVariant
   weight?: styles.TextWeight
+  color?: styles.TextColor
   children?: React.ReactNode
-  // tw?: TwStyle | string
 }
 
 export const Text = ({
   as = 'div',
   children,
   variant = 'body',
-  weight = 'normal',
+  weight, // allow variant weight to take precedence
+  color = 'label',
+  ...boxProps
 }: TextProps) => {
   return (
-    <Box as={as} css={styles.textStyles({ variant, weight })}>
+    <Box
+      as={as}
+      css={styles.textStyles({ variant, weight, color })}
+      {...boxProps}
+    >
       {children}
     </Box>
   )

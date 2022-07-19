@@ -1,17 +1,18 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Box, BoxProps } from "components";
-import { vars } from "css/vars.css";
-import { useState } from "react";
-import * as styles from "./Dialog.css";
-import { AnimatePresence, motion } from "framer-motion";
-import { styledMotionDiv } from "./Motion.css";
+import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { Box, BoxProps } from 'components'
+// import { vars } from "css/vars.css";
+import { useState } from 'react'
+import * as styles from './Dialog.css'
+import { AnimatePresence, motion } from 'framer-motion'
+import { styledMotionDiv } from './Motion.css'
+import tw from 'twin.macro'
 
 interface Props extends BoxProps {
-  buttonSlot: React.ReactNode;
+  buttonSlot: React.ReactNode
 }
 
 const Dialog = ({ buttonSlot, children }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <DialogPrimitive.Root onOpenChange={setIsOpen} open={isOpen}>
@@ -25,16 +26,11 @@ const Dialog = ({ buttonSlot, children }: Props) => {
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.125 }}
-                className={styledMotionDiv}
+                css={styledMotionDiv}
               >
                 <DialogPrimitive.Overlay
                   forceMount
-                  style={{
-                    // backdropFilter: "blur(4px)",
-                    backgroundColor: vars.colors.backgroundScrim,
-                    inset: 0,
-                    position: "fixed",
-                  }}
+                  tw="fixed inset-0 bg-backgroundScrim backdrop-blur-sm"
                 />
               </motion.div>
               <motion.div
@@ -42,17 +38,14 @@ const Dialog = ({ buttonSlot, children }: Props) => {
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.25 }}
-                className={styledMotionDiv}
+                css={styledMotionDiv}
               >
                 <DialogPrimitive.Content
                   forceMount
                   asChild
-                  className={styles.styledContent}
-                  style={{
-                    overflow: "auto",
-                  }}
+                  css={styles.styledDialogContent}
                 >
-                  <Box padding="9">{children}</Box>
+                  {children}
                 </DialogPrimitive.Content>
               </motion.div>
             </>
@@ -60,7 +53,7 @@ const Dialog = ({ buttonSlot, children }: Props) => {
         </AnimatePresence>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
-  );
-};
+  )
+}
 
-export { Dialog };
+export { Dialog }

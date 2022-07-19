@@ -1,4 +1,5 @@
-import { CardHeaderStack, Box, Text } from 'components'
+import { CardHeaderStack, Text } from 'components'
+import tw from 'twin.macro'
 
 type Props = {
   children: React.ReactNode
@@ -8,11 +9,10 @@ const CardHeaderVaultNoModules = ({ children }: Props) => (
   <>
     <CardHeaderStack tw="gap-1 justify-center">
       {/* title2  color="label" */}
-      <Text variant="title" tw="text-center" weight="medium">
+      <Text variant="title1" tw="text-center" weight="medium">
         Store your Data
       </Text>
-      {/* color="labelTertiary" */}
-      <Text variant="body" tw="text-center">
+      <Text variant="body" color="labelTertiary" tw="text-center">
         To get started, choose an app
       </Text>
     </CardHeaderStack>

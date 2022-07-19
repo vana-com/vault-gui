@@ -13,11 +13,11 @@ export const ColorModeToggle = () => {
   }
 
   return (
-    <div tw="fixed top-4 right-4 z-10 flex flex-col items-center bg-secondary p-3 rounded-lg">
+    <div tw="fixed top-4 right-4 z-10 flex flex-col items-center bg-backgroundElevated p-3 rounded-lg">
       <button
         aria-label="Toggle Dark Mode"
         type="button"
-        tw="w-6 h-6 focus:outline-none fill-current text-primary hover:text-secondary"
+        tw="w-4 h-4 focus:outline-none fill-current text-label hover:text-labelSecondary"
         onClick={() => setTheme(isDark() ? 'light' : 'dark')}
       >
         {isDark() ? <Moon /> : <Sun />}

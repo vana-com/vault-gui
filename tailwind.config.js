@@ -1,7 +1,7 @@
 // default config
 // https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 
-// const { fontFamily } = require('tailwindcss/defaultTheme')
+// const theme = require('tailwindcss/defaultTheme')
 
 // const separatorColor = colors.white[100]
 
@@ -16,23 +16,23 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      backgroundColor: {
-        primary: 'var(--bg-primary)',
-        secondary: 'var(--bg-secondary)',
-        tertiary: 'var(--color-primary)',
-      },
-      textColor: {
-        primary: 'var(--text-primary)',
-        secondary: 'var(--text-secondary)',
-        tertiary: 'var(--color-primary)',
-      },
       colors: {
-        gray: {
-          custom: '#242331',
-        },
-        yellow: {
-          custom: '#edf060',
-        },
+        primary: 'var(--primary)',
+        accent: 'var(--accent)',
+        label: 'var(--label)',
+        labelSecondary: 'var(--labelSecondary)',
+        labelTertiary: 'var(--labelTertiary)',
+        labelQuaternary: 'var(--labelQuaternary)',
+        labelInverse: 'var(--labelInverse)',
+        labelWhite: 'var(--labelWhite)',
+        fill: 'var(--fill)',
+        fillSecondary: 'var(--fillSecondary)',
+        fillElevated: 'var(--fillElevated)',
+        background: 'var(--background)',
+        backgroundElevated: 'var(--backgroundElevated)',
+        backgroundScrim: 'var(--backgroundScrim)',
+        neutral: 'var(--neutral)',
+        separator: 'var(--separator)',
         // blueGray: twColors.blueGray,
         // white: colors.white,
         // orange: colors.orange,
@@ -40,7 +40,7 @@ module.exports = {
         // separator: separatorColor,
       },
       // borderColor: {
-      //   DEFAULT: theme('colors.gray.200', 'currentColor'),
+      //   DEFAULT: theme('colors.separator', 'currentColor'),
       // },
       screens: {
         standalone: { raw: '(display-mode:standalone)' },
@@ -48,6 +48,7 @@ module.exports = {
       fontFamily: {
         // title: ['GintoNord', ...fontFamily.sans],
         title: ['GintoNord'],
+        heading: ['Ginto'],
         sans: ['Inter'],
         mono: 'SFMono, ui-monospace, monospace',
       },
@@ -64,6 +65,10 @@ module.exports = {
         '5xl': ['52px', { lineHeight: '1.0' }],
       },
     },
+    borderColor: ({ theme }) => ({
+      ...theme('colors'),
+      DEFAULT: theme('colors.separator', 'currentColor'),
+    }),
   },
   plugins: [],
 }

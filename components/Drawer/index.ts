@@ -1,2 +1,2 @@
 export * from './DrawerMenu'
-// export * from "./Dialog";
+export * from './Dialog'

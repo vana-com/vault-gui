@@ -1,45 +1,35 @@
 import {
-  Flex,
   Text,
+  Flex,
   CardHeaderStack,
   PopoverHelp,
   VaultDataLogo,
-} from "components";
+} from 'components'
+import tw from 'twin.macro'
 
 interface Props {
-  moduleName: string;
+  moduleName: string
+  isStoring?: boolean
+  children: React.ReactNode
 }
 
-const CardHeaderVaultModule = ({ moduleName }: Props) => (
-  <CardHeaderStack gap="3">
-    <Flex display="flex" gap="3" alignItems="center">
-      <Flex
-        borderColor="labelTertiary"
-        borderWidth="1"
-        borderRadius="1"
-        alignItems="center"
-        justifyContent="center"
-        marginX="1"
-        padding="1"
-        style={{
-          transform: "translateY(-0.06em)",
-          height: "1.4em",
-          width: "1.4em",
-        }}
-      >
+const CardHeaderVaultModule = ({ moduleName, isStoring, children }: Props) => (
+  <CardHeaderStack tw="gap-2">
+    <Flex tw="flex items-center justify-center gap-2">
+      <Flex tw="flex items-center justify-center gap-1 p-1 rounded-md border border-labelTertiary transform translate-y-[-0.07em] text-md">
         <VaultDataLogo name={moduleName} />
       </Flex>
-      <Text color="label" variant="title1" weight="bold" align="center">
-        Store your {moduleName} data
+      <Text variant="title2" tw="text-center">
+        {isStoring ? 'Store your' : 'Your'} {moduleName} data
       </Text>
     </Flex>
-    <Flex justifyContent="center" gap="1">
-      <Text variant="note" color="labelTertiary">
-        Vana encrypts your data before storing.
+    <Flex tw="flex gap-1 justify-center">
+      <Text variant="note" color="labelSecondary">
+        {children}
       </Text>
       <PopoverHelp />
     </Flex>
   </CardHeaderStack>
-);
+)
 
-export { CardHeaderVaultModule };
+export { CardHeaderVaultModule }

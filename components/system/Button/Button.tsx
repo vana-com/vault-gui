@@ -4,12 +4,11 @@ import tw, { styled, css } from 'twin.macro'
 import * as styles from './Button.css'
 
 type BaseProps = {
-  prefix?: React.ReactElement
-  suffix?: React.ReactElement
+  prefix?: React.ReactNode
+  suffix?: React.ReactNode
   id?: string
   isLoading?: boolean
 } & styles.ButtonStyleProps &
-  BoxProps &
   Pick<
     JSX.IntrinsicElements['button'],
     | 'onClick'
@@ -47,11 +46,11 @@ export const Button = React.forwardRef(
       isDisabled,
       isLoading,
       prefix,
-      // shadow,
       round,
-      size = 'md',
+      // shadow,
+      size,
       suffix,
-      variant = 'primary',
+      variant,
       ...boxProps
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>
@@ -68,7 +67,7 @@ export const Button = React.forwardRef(
           <SpinnerIcon />
         ) : (
           <>
-            {prefix && <div tw="inline-flex -mt-px">{prefix}</div>}
+            {prefix && <div tw="inline-flex">{prefix}</div>}
             {children}
             {suffix && <div tw="inline-flex">{suffix}</div>}
           </>

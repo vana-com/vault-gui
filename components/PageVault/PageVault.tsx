@@ -1,7 +1,6 @@
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import {
-  Box,
   Button,
   Card,
   Container,
@@ -27,7 +26,7 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
             <Button
               as="a"
               size="md"
-              // variant="outline"
+              variant="outline"
               prefix={<CarbonArrowLeft />}
             >
               Vault

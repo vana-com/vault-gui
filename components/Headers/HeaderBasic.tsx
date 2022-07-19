@@ -1,8 +1,8 @@
 import NextLink from 'next/link'
-import { VanaLogo, Box, Flex, Text, TextVariant } from 'components'
+import { VanaLogo, Text, TextVariant } from 'components'
 import tw, { styled } from 'twin.macro'
 
-// Pick<TextVariant,
+// How can we use Pick<TextVariant on a type?
 type SubheadingVariant = 'headingMeta' | 'heading' | 'subheading'
 interface HeaderBasicProps {
   heading: string
@@ -17,20 +17,25 @@ const HeaderBasic = ({
   subheading,
   subheadingVariant = 'headingMeta',
 }: HeaderBasicProps) => (
-  <Flex tw="flex-col items-center justify-center gap-1.5">
+  <div tw="flex flex-col items-center justify-center gap-1.5">
     <NextLink passHref href={logoLink}>
       <a tw="grow-0 p-1 rounded-md text-slate-900">
-        <VanaLogo tw="rounded-md bg-orange-500 h-[42px] w-[42px]" />
+        <VanaLogo boxSize="42px" tw="rounded-md bg-orange-500" />
       </a>
     </NextLink>
     {/* titleLarge */}
-    <Text as="h1" variant="title" weight="black" tw="text-white">
+    <Text as="h1" variant="display" weight="black" color="label">
       {heading}
     </Text>
-    <Text as="h2" variant={subheadingVariant} weight="bold" tw="text-slate-600">
+    <Text
+      as="h2"
+      variant={subheadingVariant}
+      weight="bold"
+      color="labelTertiary"
+    >
       {subheading}
     </Text>
-  </Flex>
+  </div>
 )
 
 export { HeaderBasic }

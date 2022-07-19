@@ -8,12 +8,14 @@ export * from './Logo'
 export * from './PageVault'
 export * from './Popovers'
 export * from './TitleAndMetaTags'
+export * from './Vault'
 
 /* DESIGN SYSTEM PRIMITIVES */
 export * from './system/Box'
 export * from './system/Button'
 export * from './system/Collapsible'
 export * from './Drawer'
+// export * from './Toast'
 // export * from "./system/Link";
 export * from './system/Popover'
 export * from './system/Text'

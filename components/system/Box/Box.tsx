@@ -14,17 +14,17 @@ type HTMLProperties<T = HTMLElement> = Omit<
 
 // Probably better to use Twind here but can't find as yet…
 // https://github.com/lukeed/clsx/blob/master/clsx.d.ts
-export type ClassValue =
-  | ClassArray
-  | ClassDictionary
-  | string
-  | number
-  | null
-  | boolean
-  | undefined
-export type ClassDictionary = Record<string, any>
-export type ClassArray = ClassValue[]
-export type ClassName = ClassValue | string
+// export type ClassValue =
+//   | ClassArray
+//   | ClassDictionary
+//   | string
+//   | number
+//   | null
+//   | boolean
+//   | undefined
+// export type ClassDictionary = Record<string, any>
+// export type ClassArray = ClassValue[]
+// export type ClassName = ClassValue | string
 
 type Props = HTMLProperties & {
   as?: React.ElementType

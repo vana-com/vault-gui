@@ -1,14 +1,15 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Box, BoxProps, Button } from 'components'
-// import { vars } from 'css/vars.css'
+import { Button } from 'components'
 import { useState } from 'react'
 import { CarbonAddFilled } from 'components/Icons'
 import { styledContent } from './DrawerMenu.css'
-import { styledMotionDiv } from './Motion.css'
 import { AnimatePresence, motion } from 'framer-motion'
+import { styledMotionDiv } from './Motion.css'
+import tw from 'twin.macro'
 
-interface Props extends BoxProps {
+interface Props {
   buttonLabel: string
+  children: React.ReactNode
 }
 
 const DrawerMenu = ({ buttonLabel = 'Add', children }: Props) => {
@@ -16,22 +17,11 @@ const DrawerMenu = ({ buttonLabel = 'Add', children }: Props) => {
 
   return (
     <DialogPrimitive.Root onOpenChange={setIsOpen} open={isOpen}>
-      <Box>
-        <DialogPrimitive.Trigger asChild>
-          <Button
-            // size="l"
-            // variant="outline"
-            prefix={<CarbonAddFilled />}
-            style={{
-              height: '100%',
-              width: '100%',
-              borderRadius: '1',
-            }}
-          >
-            {buttonLabel}
-          </Button>
-        </DialogPrimitive.Trigger>
-      </Box>
+      <DialogPrimitive.Trigger asChild>
+        <Button size="full" variant="outline" prefix={<CarbonAddFilled />}>
+          {buttonLabel}
+        </Button>
+      </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
         <AnimatePresence>
           {isOpen ? (
@@ -45,13 +35,7 @@ const DrawerMenu = ({ buttonLabel = 'Add', children }: Props) => {
               >
                 <DialogPrimitive.Overlay
                   forceMount
-                  style={{
-                    // backdropFilter: "blur(4px)",
-                    // backgroundColor: vars.colors.backgroundScrim,
-                    inset: 0,
-                    position: 'fixed',
-                    // zIndex: 11,
-                  }}
+                  tw="fixed inset-0 bg-backgroundScrim backdrop-blur-sm"
                 />
               </motion.div>
               <motion.div
@@ -61,18 +45,15 @@ const DrawerMenu = ({ buttonLabel = 'Add', children }: Props) => {
                 transition={{ duration: 0.25 }}
                 css={styledMotionDiv}
               >
-                <DialogPrimitive.Content forceMount asChild css={styledContent}>
-                  <Box
-                    // backgroundColor="fillElevated"
-                    // padding="9"
-                    style={{
-                      height: '100%',
-                      overflow: 'auto',
-                      paddingTop: '6vh',
-                    }}
-                  >
+                {/* css={styledContent} */}
+                <DialogPrimitive.Content
+                  forceMount
+                  asChild
+                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none"
+                >
+                  <div tw="bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh]">
                     {children}
-                  </Box>
+                  </div>
                 </DialogPrimitive.Content>
               </motion.div>
             </>
