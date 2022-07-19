@@ -10,5 +10,6 @@ npx lint-staged
 # Run unit tests
 yarn test
 
+# TODO: Determine if necessary to run tests locally
 # Run cypress tests
-# npx -y start-server-and-test start:ci http://localhost:5000 cypress:headless
+# npx -y start-server-and-test start:ci http://localhost:3000 cypress:headless
