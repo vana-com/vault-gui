@@ -6,7 +6,7 @@ import {
   UserInfo,
 } from "@web3auth/base";
 
-import config from "../src/config/web3auth";
+import config from "../config/web3auth";
 const web3AuthInstance = config.web3AuthInstance;
 
 const Login = () => {

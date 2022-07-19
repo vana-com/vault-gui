@@ -4,7 +4,7 @@ import Home from "../pages/login";
 
 describe("Home", () => {
   it("Renders", () => {
-    const home = render(<Home />);
-    expect(home);
+    // Just a dummy test
+    render(<Home />);
   });
 });
