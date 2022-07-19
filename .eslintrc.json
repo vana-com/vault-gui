@@ -1,6 +1,6 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "prettier"
+    "@corsali",
+    "plugin:@next/next/core-web-vitals"
   ]
 }

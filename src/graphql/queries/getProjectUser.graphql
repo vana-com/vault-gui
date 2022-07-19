@@ -1,0 +1,11 @@
+query getProjectUser($fireboaProjectId: uuid!, $userId: uuid!) {
+  fireboaProjectUser(fireboaProjectId: $fireboaProjectId, userId: $userId) {
+    user {
+      id
+    }
+    fireboaProject {
+      id
+    }
+    currentState
+  }
+}

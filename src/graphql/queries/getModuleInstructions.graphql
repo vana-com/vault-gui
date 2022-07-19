@@ -1,0 +1,8 @@
+query getModuleInstructions($projectModuleId: uuid!) {
+  fireboaProjectModule(id: $projectModuleId) {
+    instructions
+    module {
+      resourceLocation
+    }
+  }
+}

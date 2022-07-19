@@ -1,8 +1,27 @@
+# Next Build
 .next
-.github
-.prettierrc.json
-.prettierignore
+
+# NPM Files
 yarn.lock
 package.json
-package-lock.json
-README.md
+
+# Github
+.github
+
+# Text files
+*.md
+
+# Pretty
+.prettierrc.json
+.prettierignore
+
+# Generated files
+src/graphql/generated/*
+
+# Configs
+cypress.config.ts
+jest.config.js
+
+# TODO: Remove later
+components/Login.tsx
+config/web3auth.ts

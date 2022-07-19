@@ -1,0 +1,35 @@
+query getVanaAdminData {
+  totalInstagramUploads: usersModulesAggregate(
+    where: { module: { name: { _eq: "Instagram" } } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+  totalFacebookUploads: usersModulesAggregate(
+    where: { module: { name: { _eq: "Facebook" } } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+  totalGoogleUploads: usersModulesAggregate(
+    where: { module: { name: { _eq: "Google" } } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+  vanaEmployeeUsersModules: usersModules(
+    where: { user: { emailAddress: { _ilike: "%@vana.org%" } } }
+  ) {
+    module {
+      name
+    }
+    progress
+    createdAt
+    user {
+      emailAddress
+    }
+  }
+}

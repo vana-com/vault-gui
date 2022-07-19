@@ -1,7 +1,7 @@
-describe('Can load page', () => {
-  it('passes', () => {
-    cy.visit('/')
-  })
-})
+describe("Can load page", () => {
+  it("passes", () => {
+    cy.visit("/");
+  });
+});
 
-export {}
+export {};

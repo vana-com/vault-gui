@@ -1,20 +1,19 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Login from '../components/Login'
+import type { NextPage } from "next";
+import Head from "next/head";
 
-const LoginPage: NextPage = () => {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Vana</title>
-        <meta name="description" content="" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+import Login from "../components/Login";
+import styles from "../styles/Home.module.css";
 
-      <Login />
-    </div>
-  )
-}
+const LoginPage: NextPage = () => (
+  <div className={styles.container}>
+    <Head>
+      <title>Vana</title>
+      <meta name="description" content="" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
 
-export default LoginPage
+    <Login />
+  </div>
+);
+
+export default LoginPage;

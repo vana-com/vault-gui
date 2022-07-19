@@ -1,0 +1,7 @@
+mutation createUserProject($userId: uuid, $projectId: uuid) {
+  createOneUserProject(
+    object: { projectId: $projectId, status: "COMPLETED", userId: $userId }
+  ) {
+    status
+  }
+}

@@ -1,0 +1,10 @@
+query getModule($name: String!) {
+  modules(where: { name: { _eq: $name } }) {
+    iconURL
+    id
+    name
+    moduleInstructions {
+      instructionsMarkdown
+    }
+  }
+}

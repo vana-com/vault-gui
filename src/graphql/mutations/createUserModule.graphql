@@ -1,0 +1,18 @@
+mutation createUserModule(
+  $urlToData: String!
+  $moduleId: uuid!
+  $userId: uuid!
+  $urlNumber: Int!
+) {
+  createOneUserModule(
+    object: {
+      urlToData: $urlToData
+      moduleId: $moduleId
+      userId: $userId
+      progress: "COMPLETE"
+      urlNumber: $urlNumber
+    }
+  ) {
+    id
+  }
+}

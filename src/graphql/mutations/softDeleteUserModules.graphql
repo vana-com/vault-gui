@@ -1,0 +1,8 @@
+mutation softDeleteUserModules($userId: uuid!, $usersModulesIds: [uuid!]) {
+  updateManyUsersModules(
+    where: { id: { _in: $usersModulesIds }, userId: { _eq: $userId } }
+    _set: { progress: "DELETED" }
+  ) {
+    affected_rows
+  }
+}
