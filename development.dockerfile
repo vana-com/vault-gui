@@ -1,5 +1,7 @@
 FROM node:17.3.0-alpine3.14
 
+RUN apk add --no-cache --virtual .gyp python3 make g++
+
 WORKDIR /app
 
 ENV NODE_ENV development

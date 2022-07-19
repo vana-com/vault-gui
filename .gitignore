@@ -42,3 +42,6 @@ yarn-error.log*
 .npmrc
 
 .eslintcache
+
+# Idea
+/.idea/
