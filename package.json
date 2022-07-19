@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev -p 5000",
     "build": "next build",
-    "start": "next start",
-    "start:ci": "next build && next start",
+    "start": "next start -p 5000",
+    "start:ci": "next build && next start -p 5000",
     "lint": "next lint",
     "prettier": "prettier -c **/*.ts **/*.tsx",
     "prettier:write": "prettier --write **/*.ts **/*.tsx",
