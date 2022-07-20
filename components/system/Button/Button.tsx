@@ -2,7 +2,7 @@
 import { Box, SpinnerIcon } from "components";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { TwStyle } from "twin.macro";
 
 import * as styles from "./Button.css";
 
@@ -13,7 +13,7 @@ type BaseProps = {
   isLoading?: boolean;
   // css escape hatch
   // [key: string]: any
-  // css?: CSSInterpolation
+  css?: TwStyle;
 } & styles.ButtonStyleProps &
   Pick<
     JSX.IntrinsicElements["button"],
@@ -57,7 +57,7 @@ export const Button = React.forwardRef(
       size,
       suffix,
       variant,
-      // css,
+      css,
       ...boxProps
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>,
@@ -67,8 +67,8 @@ export const Button = React.forwardRef(
       {...boxProps}
       as={boxProps.as ?? "button"}
       // TODO: fix this introduced CSS casecade error…
-      // css={[styles.buttonStyle({ size, variant, round, isDisabled }), css]}
-      css={styles.buttonStyle({ size, variant, round, isDisabled })}
+      // css={styles.buttonStyle({ size, variant, round, isDisabled })}
+      css={[styles.buttonStyle({ size, variant, round, isDisabled }), css]}
       id={id}
     >
       {isLoading ? (

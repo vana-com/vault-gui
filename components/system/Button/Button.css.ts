@@ -1,4 +1,4 @@
-import tw from "twin.macro";
+import tw, { css } from "twin.macro";
 
 // all: "unset",
 // fontFamily: "inherit",
@@ -46,10 +46,14 @@ export const buttonStyle = ({
   round,
   isDisabled,
 }: ButtonStyleProps) => [
+  // reset Tailwind button preflight styles
+  css`
+    all: unset;
+  `,
   // layout
   tw`relative inline-flex items-center justify-center`,
   // typography
-  tw`font-medium leading-none`,
+  tw`font-sans font-medium leading-none`,
   // transition
   tw`transition-transform duration-100 ease-in-out`,
   // states
