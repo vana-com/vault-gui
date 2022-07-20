@@ -1,8 +1,8 @@
 import {
   ADAPTER_EVENTS,
-  WALLET_ADAPTERS,
   SafeEventEmitterProvider,
   UserInfo,
+  WALLET_ADAPTERS,
 } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { useEffect, useState } from "react";
