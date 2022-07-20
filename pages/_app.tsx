@@ -1,34 +1,34 @@
-import "../styles/globals.css";
+import "../styles/fonts.css";
 
 import { ApolloProvider } from "@apollo/client";
+import { cache } from "@emotion/css";
+import { CacheProvider } from "@emotion/react";
+import * as Toast from "@radix-ui/react-toast";
 import type { AppProps } from "next/app";
-import { Fragment } from "react";
+import { ThemeProvider } from "next-themes";
+import tw from "twin.macro";
 
-import type { Page } from "../src/types/page.d";
+import { ColorModeToggle } from "../components";
 import { useApollo } from "../src/utils/apolloClient";
+import GlobalStyles from "../styles/GlobalStyles";
 
-type AppPropsWithLayout = AppProps & {
-  Component: Page;
-};
-
-const NextApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+const NextApp = ({ Component, pageProps }: AppProps) => {
   const client = useApollo(pageProps);
-  // Use the layout defined at the page level, if available
-  // See: https://nextjs.org/docs/basic-features/layouts#per-page-layouts
-  // TS fix: https://dev.to/ofilipowicz/next-js-per-page-layouts-and-typescript-lh5
-  const getLayout = Component.getLayout ?? ((page: Page) => page);
-  const Layout = Component.layout ?? Fragment;
-
-  if (typeof client === "undefined") {
-    return <Layout>{getLayout(<Component>Loading…</Component>)}</Layout>;
-  }
 
   return (
-    <Layout>
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
-      </ApolloProvider>
-    </Layout>
+    <ApolloProvider client={client}>
+      <CacheProvider value={cache}>
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          <GlobalStyles />
+          <div tw="relative">
+            <ColorModeToggle />
+          </div>
+          <Toast.Provider swipeDirection="right">
+            <Component {...pageProps} />
+          </Toast.Provider>
+        </ThemeProvider>
+      </CacheProvider>
+    </ApolloProvider>
   );
 };
 
