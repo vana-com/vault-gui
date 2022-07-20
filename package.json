@@ -10,6 +10,7 @@
     "lint": "next lint",
     "prettier": "prettier -c **/*.ts **/*.tsx",
     "prettier:write": "prettier --write **/*.ts **/*.tsx",
+    "ts": "tsc --noEmit --incremental",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
     "gen:gql": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config codegen.yml -r dotenv/config",
