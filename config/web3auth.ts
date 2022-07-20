@@ -44,8 +44,33 @@ function initWeb3Auth() {
 
 const [web3AuthInstance, web3AuthAdapter] = initWeb3Auth();
 
+const SSO_OPTIONS_TO_HIDE = [
+  "facebook",
+  "reddit",
+  "discord",
+  "wechat",
+  "github",
+  "linkedin",
+  "line",
+  "twitch",
+  "weibo",
+  "kakao",
+  "email_passwordless",
+];
+
+const openLoginModalConfig = {
+  name: "Vana Login",
+  loginMethods: Object.assign(
+    {},
+    ...SSO_OPTIONS_TO_HIDE.map((ssoOptionToHide) => ({
+      [ssoOptionToHide]: { showOnModal: false },
+    })),
+  ),
+};
+
 export default {
-  // Web3Auth
   web3AuthInstance,
   web3AuthAdapter,
+  SSO_OPTIONS_TO_HIDE,
+  openLoginModalConfig,
 };
