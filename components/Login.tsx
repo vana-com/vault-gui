@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/web3auth";
 import {
   ADAPTER_EVENTS,
+  WALLET_ADAPTERS,
   SafeEventEmitterProvider,
   UserInfo,
 } from "@web3auth/base";
@@ -44,7 +45,11 @@ const Login = () => {
       // TODO: Make sure event listeners are not added multiple times
       subscribeAuthEvents(web3AuthInstance);
       if (web3AuthInstance.status !== "connected") {
-        web3AuthInstance.initModal();
+        web3AuthInstance.initModal({
+          modalConfig: {
+            [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
+          },
+        });
       }
     } else {
       console.log("unable to login with Web3Auth");
@@ -56,12 +61,16 @@ const Login = () => {
       console.log("web3auth not initialized yet");
       return;
     }
-    const web3AuthProvider = await web3AuthInstance.connect();
-    setWalletProvider(web3AuthProvider);
+    try {
+      const web3AuthProvider = await web3AuthInstance.connect();
+      setWalletProvider(web3AuthProvider);
+    } catch (error: any) {
+      console.log(error.toString());
+    }
   };
 
   const logOut = async () => {
-    if (!web3AuthInstance) {
+    if (!web3AuthInstance || web3AuthInstance.status === "not_ready") {
       console.log("web3auth not initialized yet");
       return;
     }
