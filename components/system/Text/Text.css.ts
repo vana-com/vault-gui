@@ -33,7 +33,6 @@ export const textColors = {
   current: tw`text-current`,
   black: tw`text-black`,
   white: tw`text-white`,
-  // responsive to colorMode
   label: tw`text-label`,
   labelSecondary: tw`text-labelSecondary`,
   labelTertiary: tw`text-labelTertiary`,

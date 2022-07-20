@@ -36,31 +36,31 @@ const MarkdownComponent = ({
           <Text
             as="h1"
             variant="title3"
-            color="current"
             tw="mt-3 first:mt-0"
             {...props}
+            color="current"
           />
         ),
         h2: (props) => (
           <Text
             as="h2"
             variant="title2"
-            color="current"
             tw="mt-3 first:mt-0"
             {...props}
+            color="current"
           />
         ),
         h3: (props) => (
           <Text
             as="h3"
             variant="title1"
-            color="current"
             tw="mt-3 first:mt-0"
             {...props}
+            color="current"
           />
         ),
         p: (props) => (
-          <Text variant={isNote ? "note" : "body"} color="current" {...props} />
+          <Text variant={isNote ? "note" : "body"} {...props} color="current" />
         ),
         // a: (props: LinkProps) => <Link underline {...props} />,
         ol: (props) => <ol tw="pl-3" {...props} />,
