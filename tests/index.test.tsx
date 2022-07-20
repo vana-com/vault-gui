@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 
-import Home from "../pages/login";
+import Home from "../src/pages/login";
 
 describe("Home", () => {
   it("Renders", () => {
