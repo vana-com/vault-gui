@@ -2,13 +2,13 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Install any packages if needed
-# yarn install
+yarn install
 
-# # Run linters
-# npx lint-staged
+# Run linters
+npx lint-staged
 
-# # Run unit tests
-# yarn test
+# Run unit tests
+yarn test
 
 # TODO: Determine if necessary to run tests locally
 # Run cypress tests
