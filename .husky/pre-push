@@ -1,4 +1,14 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn run build
+# Install any packages if needed
+yarn install
+
+# Run linters
+npx lint-staged
+
+# Run unit tests
+yarn test
+
+# Run (test) production build
+yarn build
