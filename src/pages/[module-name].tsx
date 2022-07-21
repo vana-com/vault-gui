@@ -13,6 +13,7 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
+import { idTokenAtom, userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultModulePage: NextPage = () => {
