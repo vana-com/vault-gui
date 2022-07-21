@@ -3,9 +3,8 @@ import axios, { AxiosRequestConfig } from "axios";
 type ProgressEvent = { loaded: number; total: number };
 type ProgressHandler = (progressEvent: ProgressEvent) => void;
 
-// Uploads a file to GCS or S3 for a particular module (ex. A user's Google data stored in a zip file)
 /**
- *
+ * Uploads a file to GCS or S3 for a particular module (ex. A user's Google data stored in a zip file)
  * @param file file(s)
  * @param moduleName module that the data will be attached to
  * @param userId uuid of the user uploading data

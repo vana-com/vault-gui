@@ -12,8 +12,10 @@ const WEB_3_AUTH_NETWORK = "mainnet";
 // if document object is undefined
 function initWeb3Auth() {
   if (typeof window !== "undefined") {
+    /* eslint-disable */
     const { Web3Auth } = require("@web3auth/web3auth");
     const { OpenloginAdapter } = require("@web3auth/openlogin-adapter");
+    /* eslint-enable */
     try {
       const web3AuthInstance = new Web3Auth({
         clientId: WEB_3_AUTH_CLIENT_ID,
@@ -44,8 +46,33 @@ function initWeb3Auth() {
 
 const [web3AuthInstance, web3AuthAdapter] = initWeb3Auth();
 
+const SSO_OPTIONS_TO_HIDE = [
+  "facebook",
+  "reddit",
+  "discord",
+  "wechat",
+  "github",
+  "linkedin",
+  "line",
+  "twitch",
+  "weibo",
+  "kakao",
+  "email_passwordless",
+];
+
+const openLoginModalConfig = {
+  name: "Vana Login",
+  loginMethods: Object.assign(
+    {},
+    ...SSO_OPTIONS_TO_HIDE.map((ssoOptionToHide) => ({
+      [ssoOptionToHide]: { showOnModal: false },
+    })),
+  ),
+};
+
 export default {
-  // Web3Auth
   web3AuthInstance,
   web3AuthAdapter,
+  SSO_OPTIONS_TO_HIDE,
+  openLoginModalConfig,
 };

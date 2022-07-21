@@ -9,7 +9,7 @@ const stripZipFiles = async (files: Array<File>): Promise<Array<File>> => {
   for (let i = 0; i < files.length; i++) {
     const zipFile = new ZipFile(files[i]);
     // eslint-disable-next-line no-await-in-loop
-    await zipFile.importFileSystem({ filenameEncoding: "utf-8" });
+    await zipFile.importFileSystem({});
     zipFile.sanitizeFiles();
     // eslint-disable-next-line no-await-in-loop
     const strippedFile = await zipFile.exportAsFile({ bufferedWrite: true });

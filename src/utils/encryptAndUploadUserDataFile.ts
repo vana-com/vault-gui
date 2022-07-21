@@ -51,7 +51,8 @@ const encryptAndUploadUserDataFiles = async (
 
   // Associate object URL with the user in the DB.
   const mutationPromises = objectURLs.map((url, i) =>
-    createUserModule(url, i + 1),
+    // url is always a string due to successfulUpload === true
+    createUserModule(url as string, i + 1),
   );
   await Promise.all(mutationPromises);
 };

@@ -1,6 +1,6 @@
 import * as zip from "@zip.js/zip.js";
 
-import config from "src/config";
+import config from "../config";
 
 /**
  * Class used for managing Zip files.
@@ -39,7 +39,9 @@ export class ZipFile {
    * @param options zip.fs options object
    * @returns a zip file
    */
-  async exportAsFile(options): Promise<File> {
+  async exportAsFile(
+    options: zip.ZipDirectoryEntryExportOptions,
+  ): Promise<File> {
     const blob = await this.getRoot().exportBlob(options);
     return new File([blob], this.file.name);
   }
@@ -48,7 +50,9 @@ export class ZipFile {
    * Create a file system from a zip file
    * @param options zip.fs options object
    */
-  async importFileSystem(options): Promise<void> {
+  async importFileSystem(
+    options: zip.ZipDirectoryEntryExportOptions,
+  ): Promise<void> {
     await this.getRoot().importBlob(this.file, options);
   }
 
@@ -56,7 +60,7 @@ export class ZipFile {
    * Remove any unwanted files from file system
    */
   sanitizeFiles(): void {
-    const entriesToRemove = [];
+    const entriesToRemove: zip.ZipEntry[] = [];
     this.collectFilesToRemove(this.getRoot(), entriesToRemove);
     entriesToRemove.map((entry) => this.remove(entry));
   }

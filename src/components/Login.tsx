@@ -7,9 +7,9 @@ import {
 import { Web3Auth } from "@web3auth/web3auth";
 import { useEffect, useState } from "react";
 
-import config from "../../config/web3auth";
+import config from "../config";
 
-const { web3AuthInstance } = config;
+const { openLoginModalConfig, web3AuthInstance } = config;
 
 const Login = () => {
   // TODO: Move web3auth and provider to global context
@@ -49,7 +49,7 @@ const Login = () => {
       if (web3AuthInstance.status !== "connected") {
         web3AuthInstance.initModal({
           modalConfig: {
-            [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
+            [WALLET_ADAPTERS.OPENLOGIN]: openLoginModalConfig,
           },
         });
       }
