@@ -46,7 +46,7 @@ export const buttonStyle = ({
   round,
   isDisabled,
 }: ButtonStyleProps) => [
-  // reset Tailwind button preflight styles
+  // reset Tailwind button preflight styles? Causes a bug, leave for now…
   // css`
   //   all: unset;
   // `,
@@ -58,7 +58,9 @@ export const buttonStyle = ({
   tw`transition-transform duration-100 ease-in-out`,
   // states
   tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-primary)`,
-
+  // set a min-width so it looks good when the loading spinner is active
+  variant !== "icon" && tw`min-w-[130px]`,
+  // variants
   buttonVariants[variant],
   size && buttonSizes[size],
   round ? tw`rounded-full` : tw`rounded-lg`,
