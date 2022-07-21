@@ -2,21 +2,20 @@ import Markdown from "react-markdown";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import {
-  Text,
-  // Link,
-  // LinkProps,
-} from "src/components";
+import { Link, LinkProps, Text } from "src/components";
 
 /*
-  A Markdown component using react-markdown
-  See https://github.com/remarkjs/react-markdown
+A Markdown component using react-markdown
+See https://github.com/remarkjs/react-markdown
 
-  Contains failing example use of :not() in Tailwind CSS
-  `focus:not(:focus-visible):outline-none`
-  `[&>:not(:first)]:mt-3`
+Contains failing example use of :not() in Tailwind CSS
+`focus:not(:focus-visible):outline-none`
+`[&>:not(:first)]:mt-3`
 */
 
+// TODO: integrate react-markdown Types with TextProps, etc
+// import Markdown, { Components } from "react-markdown";
+// interface Props extends Components {
 interface Props {
   children: string;
   isNote?: boolean;
@@ -63,7 +62,7 @@ const MarkdownComponent = ({
         p: (props) => (
           <Text variant={isNote ? "note" : "body"} {...props} color="current" />
         ),
-        // a: (props: LinkProps) => <Link underline {...props} />,
+        a: (props: LinkProps) => <Link underline {...props} />,
         ol: (props) => <ol tw="pl-3" {...props} />,
         ul: (props) => <ul tw="pl-3" {...props} />,
         // eslint-disable-next-line @typescript-eslint/no-shadow

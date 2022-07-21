@@ -17,7 +17,7 @@ export * from "./system/Box";
 export * from "./system/Button";
 export * from "./system/Collapsible";
 export * from "./system/Dialog";
-// export * from "./system/Link"; // TODO
+export * from "./system/Link";
 export * from "./system/Motion.css";
 export * from "./system/Popover";
 export * from "./system/Spinner";
