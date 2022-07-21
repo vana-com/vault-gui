@@ -13,7 +13,6 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import { appPubKeyAtom, idTokenAtom, userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultModulePage: NextPage = () => {
@@ -27,7 +26,6 @@ const VaultModulePage: NextPage = () => {
 
   const [user] = useAtom(userAtom);
   const [idToken] = useAtom(idTokenAtom);
-  const [appPubKey] = useAtom(appPubKeyAtom);
 
   const { data: userModulesData, loading: isDataLoading } =
     useGetUserModulesSubscription({
@@ -58,7 +56,6 @@ const VaultModulePage: NextPage = () => {
         body: JSON.stringify({
           usersModulesIds: usersModulesIdsToDelete,
           idToken,
-          appPubKey,
         }),
       })
     ).json();
