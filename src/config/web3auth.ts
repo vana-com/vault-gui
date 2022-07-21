@@ -6,8 +6,6 @@ const WEB_3_AUTH_ETHEREUM_CHAIN_ID =
   process.env.NEXT_PUBLIC_WEB_3_AUTH_ETHEREUM_CHAIN_ID;
 const WEB_3_AUTH_NETWORK = process.env.NEXT_PUBLIC_WEB_3_AUTH_NETWORK;
 
-console.log("WEB_3_AUTH_CLIENT_ID", WEB_3_AUTH_CLIENT_ID);
-
 // function is needed to dynamically import Web3Auth libraries that will error out
 // if document object is undefined
 function initWeb3Auth() {
