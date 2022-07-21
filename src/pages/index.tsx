@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 import {
   CardHeaderVaultNoModules,
-  DrawerMenu,
+  DialogDrawerMenu,
   Flex,
   ModuleButton,
   PageVault,
@@ -39,13 +39,13 @@ const HomePage: NextPage = () => {
           </Flex>
           <hr />
           <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
-            <DrawerMenu buttonLabel="Add">
+            <DialogDrawerMenu buttonLabel="Add">
               <CardHeaderVaultNoModules>
                 {testModules.map((module) => (
                   <ModuleButton key={module.id} name={module.name} />
                 ))}
               </CardHeaderVaultNoModules>
-            </DrawerMenu>
+            </DialogDrawerMenu>
             {/* FAKE DATA MODULE */}
             {hasStoredModules && (
               <ModuleButton

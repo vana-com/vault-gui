@@ -1,30 +1,35 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button } from "src/components";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogTrigger,
+  styledMotionDiv,
+} from "src/components";
 import { CarbonAddFilled } from "src/components/Icons";
-
-import { styledMotionDiv } from "./Motion.css";
 
 interface Props {
   buttonLabel: string;
   children: React.ReactNode;
 }
 
-const DrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
+const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DialogPrimitive.Root onOpenChange={setIsOpen} open={isOpen}>
-      <DialogPrimitive.Trigger asChild>
+    <Dialog onOpenChange={setIsOpen} open={isOpen}>
+      <DialogTrigger asChild>
         <Button size="full" variant="outline" prefix={<CarbonAddFilled />}>
           {buttonLabel}
         </Button>
-      </DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
+      </DialogTrigger>
+      <DialogPortal>
         <AnimatePresence>
           {isOpen ? (
             <>
@@ -35,7 +40,7 @@ const DrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
                 transition={{ duration: 0.125 }}
                 css={styledMotionDiv}
               >
-                <DialogPrimitive.Overlay
+                <DialogOverlay
                   forceMount
                   tw="fixed inset-0 bg-backgroundScrim backdrop-blur-sm"
                 />
@@ -48,22 +53,19 @@ const DrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
                 css={styledMotionDiv}
               >
                 {/* css={styledContent} */}
-                <DialogPrimitive.Content
+                <DialogContent
                   forceMount
-                  asChild
-                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none"
+                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh]"
                 >
-                  <div tw="bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh]">
-                    {children}
-                  </div>
-                </DialogPrimitive.Content>
+                  {children}
+                </DialogContent>
               </motion.div>
             </>
           ) : null}
         </AnimatePresence>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+      </DialogPortal>
+    </Dialog>
   );
 };
 
-export { DrawerMenu };
+export { DialogDrawerMenu };
