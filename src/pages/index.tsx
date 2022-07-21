@@ -19,11 +19,6 @@ import {
 } from "src/graphql/generated";
 import { userAtom } from "src/state";
 
-// interface Module {
-//   id: string;
-//   name: string;
-// }
-
 const HomePage: NextPage = () => {
   const [user, _] = useAtom(userAtom);
 
@@ -50,7 +45,7 @@ const HomePage: NextPage = () => {
 
   // TODO: handle loading state
   if (isModulesLoading || isUserModulesDataLoading) {
-    return null;
+    return <div>loading</div>;
   }
 
   return (

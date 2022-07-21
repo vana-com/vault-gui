@@ -25,7 +25,6 @@ const VaultModulePage: NextPage = () => {
   const { "module-name": moduleNameFromQuery } = router.query;
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
-  // TODO: get from Jotai
   const [user] = useAtom(userAtom);
   const [idToken] = useAtom(idTokenAtom);
   const [appPubKey] = useAtom(appPubKeyAtom);
