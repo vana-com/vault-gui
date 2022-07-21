@@ -1,4 +1,5 @@
 export * from "./apolloClient";
+export * from "./createHasuraJWT";
 export * from "./encryptAndUploadUserDataFile";
 export * from "./encryptFileChaCha20Poly1305";
 export * from "./formatModuleNameFromQueryString";

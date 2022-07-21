@@ -2,9 +2,9 @@ import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import serverConfig from "../../config/server";
-import { getSdk } from "../../graphql/generated";
-import { verifyWeb3AuthAuthentication } from "../../utils";
+import serverConfig from "src/config/server";
+import { getSdk } from "src/graphql/generated";
+import { verifyWeb3AuthAuthentication } from "src/utils";
 
 /**
  * Delete the file in objects store for a specific users_modules rows and set the

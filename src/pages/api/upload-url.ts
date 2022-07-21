@@ -2,9 +2,9 @@ import { GenerateSignedPostPolicyV4Options } from "@google-cloud/storage";
 import log from "loglevel";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import config from "../../config";
-import serverConfig from "../../config/server";
-import { generateUserDataObjectName } from "../../utils/generateUserDataObjectName";
+import config from "src/config";
+import serverConfig from "src/config/server";
+import { generateUserDataObjectName } from "src/utils/generateUserDataObjectName";
 
 /**
  * Return a short-lived URL to allow uploading to a Google Cloud Storage bucket
