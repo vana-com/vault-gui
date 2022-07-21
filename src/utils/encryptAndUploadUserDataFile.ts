@@ -1,5 +1,4 @@
-import { encryptFileChaCha20Poly1305 } from "./encryptFileChaCha20Poly1305";
-import { uploadFile } from "./uploadFile";
+import { encryptFileChaCha20Poly1305, uploadFile } from "src/utils";
 
 /**
  * This the only method that encrypts and uploads user data zip files from email integrations

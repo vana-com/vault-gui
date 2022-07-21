@@ -12,23 +12,46 @@ import {
   TitleAndMetaTags,
   VaultStoreUpload,
 } from "src/components";
+import {
+  useCreateUserModuleMutation,
+  useGetModuleQuery,
+} from "src/graphql/generated";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
 
-  // Extract consts from router.query
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { "module-name": moduleNameFromQuery, origin: originEncoded } =
-    router.query;
+  // use Jotai
+  const user = { id: "123" };
 
-  // Decode the origin
-  // const origin = originEncoded
-  //   ? decodeURIComponent(originEncoded as string)
-  //   : undefined;
+  // Extract consts from router.query
+  const { "module-name": moduleNameFromQuery } = router.query;
 
   // Module name
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
+
+  const { data: { modules: [module] = [] } = {}, loading: isDataLoading } =
+    useGetModuleQuery({
+      variables: {
+        name: moduleName,
+      },
+    });
+
+  const [createUserModule] = useCreateUserModuleMutation();
+
+  const createUserModuleCallback = async (
+    urlToData: string,
+    urlNumber: number,
+  ) => {
+    await createUserModule({
+      variables: {
+        urlToData,
+        userId: user.id,
+        moduleId: module.id,
+        urlNumber,
+      },
+    });
+  };
 
   // If the module doesn't exist, redirect
   useEffect(() => {
@@ -36,6 +59,11 @@ const VaultStoragePage: NextPage = () => {
       router.push("/");
     }
   }, [router]);
+
+  // TODO: handle loading state
+  if (isDataLoading) {
+    return null;
+  }
 
   return (
     <>
@@ -57,7 +85,11 @@ const VaultStoragePage: NextPage = () => {
             <hr />
           </Stack>
           <div tw="pt-5">
-            <VaultStoreUpload moduleName={moduleName} />
+            <VaultStoreUpload
+              moduleName={moduleName}
+              createUserModule={createUserModuleCallback}
+              userId={user?.id}
+            />
           </div>
         </div>
       </PageVault>

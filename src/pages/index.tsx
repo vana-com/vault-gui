@@ -12,7 +12,10 @@ import {
   Text,
   TitleAndMetaTags,
 } from "src/components";
-import { testModules } from "src/data";
+import {
+  useGetModulesQuery,
+  useGetUserModulesSubscription,
+} from "src/graphql/generated";
 
 // interface Module {
 //   id: string;
@@ -20,10 +23,34 @@ import { testModules } from "src/data";
 // }
 
 const HomePage: NextPage = () => {
-  // const testDataModule = [testModules.at(-1)];
-  const testDataModule = testModules.slice(-1).pop();
-  // const hasStoredModules = !!userModulesData?.usersModules?.length;
-  const hasStoredModules = testDataModule;
+  // TODO: get from Jotai
+  const user = { id: "test" };
+
+  const { data: { modules } = {}, loading: isModulesLoading } =
+    useGetModulesQuery();
+
+  const { data: userModulesData, loading: isUserModulesDataLoading } =
+    useGetUserModulesSubscription({
+      variables: { userId: user?.id },
+    });
+
+  const storedModuleIds = userModulesData?.usersModules
+    ? userModulesData.usersModules.map((userModule) => userModule.moduleId)
+    : [];
+
+  const notStoredModules = modules?.filter(
+    (module) => !storedModuleIds.includes(module.id),
+  );
+
+  // TODO: use storedModuleIds and notStoredModules
+  console.log("notStoredModules", notStoredModules);
+
+  const hasStoredModules = !!userModulesData?.usersModules?.length;
+
+  // TODO: handle loading state
+  if (isModulesLoading || isUserModulesDataLoading) {
+    return null;
+  }
 
   return (
     <>
@@ -41,7 +68,7 @@ const HomePage: NextPage = () => {
           <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
             <DrawerMenu buttonLabel="Add">
               <CardHeaderVaultNoModules>
-                {testModules.map((module) => (
+                {modules?.map((module) => (
                   <ModuleButton key={module.id} name={module.name} />
                 ))}
               </CardHeaderVaultNoModules>
@@ -49,8 +76,8 @@ const HomePage: NextPage = () => {
             {/* FAKE DATA MODULE */}
             {hasStoredModules && (
               <ModuleButton
-                key={testDataModule.id}
-                name={testDataModule.name}
+                key="TODO: add key"
+                name="TODO: add module name"
                 isLarge
                 isStored
               />

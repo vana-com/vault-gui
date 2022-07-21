@@ -1,8 +1,7 @@
 import crypto from "crypto";
-
-import developmentCredentials from "../../secrets/development";
-import productionCredentials from "../../secrets/production";
-import stagingCredentials from "../../secrets/staging";
+import developmentCredentials from "secrets/development";
+import productionCredentials from "secrets/production";
+import stagingCredentials from "secrets/staging";
 
 const localSecrets = {
   development: developmentCredentials,

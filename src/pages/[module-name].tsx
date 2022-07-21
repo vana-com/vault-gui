@@ -11,7 +11,7 @@ import {
   SpinnerIcon,
   TitleAndMetaTags,
 } from "src/components";
-import { testModules } from "src/data";
+import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultModulePage: NextPage = () => {
@@ -23,17 +23,52 @@ const VaultModulePage: NextPage = () => {
   const { "module-name": moduleNameFromQuery } = router.query;
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
-  // tests
-  const testDataModule = [testModules.at(-1)];
-  const isDataLoading = false;
-  const usersModulesForName = testDataModule;
+  // TODO: get from Jotai
+  const user = { id: "12" };
+  const idToken = {};
+  const appPubKey = "123";
+
+  const { data: userModulesData, loading: isDataLoading } =
+    useGetUserModulesSubscription({
+      variables: { userId: user.id },
+    });
+
+  const usersModulesForName = userModulesData
+    ? userModulesData.usersModules.filter(
+        (userModule) => userModule.module.name === moduleName,
+      )
+    : [];
 
   /**
    * Deletes all files a user has stored for a module (ie. Email integration).
    * See deleteSingleFile comment for how deletion is done.
    */
-  const deleteAllModuleFiles = () => {
-    console.log("deleteAllModuleFiles");
+  const deleteAllModuleFiles = async () => {
+    setIsDeleting(true);
+    const usersModulesIdsToDelete = usersModulesForName.map(
+      (userModule) => userModule.id,
+    );
+    const { deleteSuccessful } = await (
+      await fetch(`/api/vault/delete-files`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usersModulesIds: usersModulesIdsToDelete,
+          idToken,
+          appPubKey,
+        }),
+      })
+    ).json();
+
+    if (deleteSuccessful) {
+      // TODO: show success toast
+      setTimeout(() => router.push("/"), 250);
+    } else {
+      setIsDeleting(false);
+      // TODO: show failure toast
+    }
   };
 
   return (
@@ -51,19 +86,6 @@ const VaultModulePage: NextPage = () => {
             <SpinnerIcon />
           ) : (
             <div tw="flex flex-col gap-2 items-center">
-              {/* <>
-                {usersModulesForName.length > 1 &&
-                    usersModulesForName?.map(userModule => (
-                      <DeleteVaultData
-                        key={userModule.id}
-                        onDelete={() => deleteSingleFile(userModule.id)}
-                        isDeleting={isDeleting}
-                        buttonLabel={`Delete ${getFileName(
-                          userModule.urlToData
-                        )}`}
-                      />
-                    ))}
-              </> */}
               <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
                 <DeleteData
                   onDelete={() => deleteAllModuleFiles()}

@@ -1,6 +1,6 @@
 import * as zip from "@zip.js/zip.js";
 
-import config from "../config";
+import config from "src/config";
 
 /**
  * Class used for managing Zip files.
