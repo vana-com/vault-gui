@@ -22,7 +22,7 @@ const uploadFile = async (
   try {
     // get the pre-signed URL for S3 or GCS
     const res = await fetch(
-      `/api/vault/upload-url?fileName=${filename}&moduleName=${moduleName}&userId=${userId}`,
+      `/api/upload-url?fileName=${filename}&moduleName=${moduleName}&userId=${userId}`,
     );
     const { fullFileName, url, fields } = await res.json();
     const formData = new FormData();

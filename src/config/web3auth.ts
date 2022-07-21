@@ -1,12 +1,12 @@
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 
-// TODO: [CU-36mezx1] Move Web3Auth variables and secrets to Doppler
-const WEB_3_AUTH_CLIENT_ID =
-  "BNCnjvWWetrw0ygWhVsVYc1lNaf_9ZKk3sWSuXK1J2422dNWv9Dvc5vZBO6Jdi_VPSpq9Sa0q381SZzutMpFm3g";
-const WEB_3_AUTH_RPC_TARGET =
-  "https://mainnet.infura.io/v3/4e179115341d400baa2bec18fd69d210";
-const WEB_3_AUTH_ETHEREUM_CHAIN_ID = "0x1";
-const WEB_3_AUTH_NETWORK = "mainnet";
+const WEB_3_AUTH_CLIENT_ID = process.env.NEXT_PUBLIC_WEB_3_AUTH_CLIENT_ID;
+const WEB_3_AUTH_RPC_TARGET = process.env.NEXT_PUBLIC_WEB_3_AUTH_RPC_TARGET;
+const WEB_3_AUTH_ETHEREUM_CHAIN_ID =
+  process.env.NEXT_PUBLIC_WEB_3_AUTH_ETHEREUM_CHAIN_ID;
+const WEB_3_AUTH_NETWORK = process.env.NEXT_PUBLIC_WEB_3_AUTH_NETWORK;
+
+console.log("WEB_3_AUTH_CLIENT_ID", WEB_3_AUTH_CLIENT_ID);
 
 // function is needed to dynamically import Web3Auth libraries that will error out
 // if document object is undefined

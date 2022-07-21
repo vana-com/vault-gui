@@ -1,4 +1,4 @@
-import { UserInfo } from "@web3auth/base";
+import { SafeEventEmitterProvider, UserInfo } from "@web3auth/base";
 import { atom } from "jotai";
 
 interface User {
@@ -7,14 +7,16 @@ interface User {
 
 const userAtom = atom<User | undefined>(undefined);
 const idTokenAtom = atom<string | undefined>(undefined);
-const appPubKeyAtom = atom<string | undefined>(undefined);
 const hasuraTokenAtom = atom<string | undefined>(undefined);
 const web3AuthUserInfoAtom = atom<Partial<UserInfo> | undefined>(undefined);
+const web3AuthWalletProviderAtom = atom<SafeEventEmitterProvider | undefined>(
+  undefined,
+);
 
 export {
-  appPubKeyAtom,
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
   web3AuthUserInfoAtom,
+  web3AuthWalletProviderAtom,
 };
