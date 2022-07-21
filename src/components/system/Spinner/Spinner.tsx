@@ -25,7 +25,7 @@ export const iconPath = css({
   width: 21,
 });
 
-export const SpinnerIcon = ({
+export const Spinner = ({
   height = 21,
   width = 21,
 }: {

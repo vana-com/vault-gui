@@ -3,7 +3,7 @@ import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw, { TwStyle } from "twin.macro";
 
-import { Box, SpinnerIcon } from "src/components";
+import { Box, Spinner } from "src/components";
 
 import * as styles from "./Button.css";
 
@@ -73,7 +73,7 @@ export const Button = React.forwardRef(
       id={id}
     >
       {isLoading ? (
-        <SpinnerIcon />
+        <Spinner />
       ) : (
         <>
           {prefix && <div tw="inline-flex">{prefix}</div>}

@@ -8,7 +8,7 @@ import {
   CardHeaderVaultModule,
   DeleteData,
   PageVault,
-  SpinnerIcon,
+  Spinner,
   TitleAndMetaTags,
 } from "src/components";
 import { testModules } from "src/data";
@@ -48,7 +48,7 @@ const VaultModulePage: NextPage = () => {
           <hr />
 
           {isDataLoading ? (
-            <SpinnerIcon />
+            <Spinner />
           ) : (
             <div tw="flex flex-col gap-2 items-center">
               {/* <>
