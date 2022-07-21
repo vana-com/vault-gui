@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import type { NextPage } from "next";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -16,6 +17,7 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
+import { userAtom } from "src/state";
 
 // interface Module {
 //   id: string;
@@ -23,8 +25,7 @@ import {
 // }
 
 const HomePage: NextPage = () => {
-  // TODO: get from Jotai
-  const user = { id: "test" };
+  const [user, _] = useAtom(userAtom);
 
   const { data: { modules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();

@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -16,13 +17,14 @@ import {
   useCreateUserModuleMutation,
   useGetModuleQuery,
 } from "src/graphql/generated";
+import { userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
 
   // use Jotai
-  const user = { id: "123" };
+  const [user] = useAtom(userAtom);
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -46,7 +48,7 @@ const VaultStoragePage: NextPage = () => {
     await createUserModule({
       variables: {
         urlToData,
-        userId: user.id,
+        userId: user?.id,
         moduleId: module.id,
         urlNumber,
       },
@@ -88,7 +90,7 @@ const VaultStoragePage: NextPage = () => {
             <VaultStoreUpload
               moduleName={moduleName}
               createUserModule={createUserModuleCallback}
-              userId={user?.id}
+              userId={user?.id ?? ""}
             />
           </div>
         </div>

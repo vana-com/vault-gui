@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -12,6 +13,7 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
+import { appPubKeyAtom, idTokenAtom, userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultModulePage: NextPage = () => {
@@ -24,13 +26,13 @@ const VaultModulePage: NextPage = () => {
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
   // TODO: get from Jotai
-  const user = { id: "12" };
-  const idToken = {};
-  const appPubKey = "123";
+  const [user] = useAtom(userAtom);
+  const [idToken] = useAtom(idTokenAtom);
+  const [appPubKey] = useAtom(appPubKeyAtom);
 
   const { data: userModulesData, loading: isDataLoading } =
     useGetUserModulesSubscription({
-      variables: { userId: user.id },
+      variables: { userId: user?.id },
     });
 
   const usersModulesForName = userModulesData
