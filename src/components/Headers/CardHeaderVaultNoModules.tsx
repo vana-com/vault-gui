@@ -9,9 +9,9 @@ type Props = {
 
 const CardHeaderVaultNoModules = ({ children }: Props) => (
   <>
-    <CardHeaderStack tw="gap-1 justify-center">
+    <CardHeaderStack tw="gap-0 justify-center">
       {/* title2  color="label" */}
-      <Text variant="title1" tw="text-center" weight="medium">
+      <Text variant="heading" tw="text-center">
         Store your Data
       </Text>
       <Text variant="body" color="labelTertiary" tw="text-center">

@@ -8911,7 +8911,7 @@ jose@^4.8.3:
 
 jotai@^1.7.6:
   version "1.7.6"
-  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.7.6.tgz#234165b0b139e11ef40e660e8fa1b420b23bb24b"
+  resolved "https://registry.npmjs.org/jotai/-/jotai-1.7.6.tgz#234165b0b139e11ef40e660e8fa1b420b23bb24b"
   integrity sha512-D3R5f6OvwUPUyTPQY3wGP800nb6bDEOl/mqftjxg3gcHVITeFcldr9W9IBK+gXsow357vhNXuci/LfD+rl92PA==
 
 js-sha3@0.8.0, js-sha3@^0.8.0:

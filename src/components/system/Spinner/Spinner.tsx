@@ -9,14 +9,15 @@ const useRandomId = (prefix: string) =>
     [prefix],
   );
 
+// you must close the rule with `;` or Emotion won't understand it
 const spin = keyframes`
-  0%: { transform: rotate(0deg) },
-  100%: { transform: rotate(360deg) },
+  0% { transform: rotate(0deg); },
+  100% { transform: rotate(360deg); },
 `;
 
-export const icon = css({
-  animation: `${spin} 1s infinite linear`,
-});
+export const icon = css`
+  animation: ${spin} 1s infinite linear;
+`;
 
 export const iconPath = css({
   background: `conic-gradient(from 180deg at 50% 50%, rgba(72, 146, 254, 0) 0deg, currentColor 282.04deg, rgba(72, 146, 254, 0) 319.86deg, rgba(72, 146, 254, 0) 360deg)`,
@@ -24,7 +25,7 @@ export const iconPath = css({
   width: 21,
 });
 
-export const SpinnerIcon = ({
+export const Spinner = ({
   height = 21,
   width = 21,
 }: {

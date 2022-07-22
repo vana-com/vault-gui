@@ -95,7 +95,7 @@ const stylesBase = css`
   }
   body {
     "WebkitTapHighlightColor": ${theme`colors.purple.500`};
-    ${tw`antialiased transition-all duration-150 bg-background text-label`};
+    ${tw`min-h-screen antialiased transition-all duration-150 bg-background text-label`};
   }
 `;
 

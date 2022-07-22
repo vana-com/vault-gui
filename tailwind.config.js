@@ -71,7 +71,7 @@ module.exports = {
       },
       fontSize: {
         xs: ['11px', { lineHeight: '1.5' }],
-        sm: ['12px', { lineHeight: '1.5' }],
+        sm: ['13px', { lineHeight: '1.5' }],
         base: ['15px', { lineHeight: '1.5' }],
         md: ['17px', { lineHeight: '1.5' }],
         lg: ['20px', { lineHeight: '1.3' }],

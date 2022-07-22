@@ -91,11 +91,9 @@ export default async (
     return res.status(200).json({ filesDeleted, deleteSuccessful: true });
   } catch (error: any) {
     log.error(error);
-    return res
-      .status(500)
-      .json({
-        deleteSuccessful: false,
-        message: "Error while deleting user data",
-      });
+    return res.status(500).json({
+      deleteSuccessful: false,
+      message: "Error while deleting user data",
+    });
   }
 };

@@ -3,12 +3,13 @@ import tw from "twin.macro";
 
 import {
   Button,
+  Markdown,
+  MarkdownWrapper,
   Popover,
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
 } from "src/components";
-import { MarkdownComponent } from "src/components/MarkdownComponents";
 import { HELP_INFORMATION } from "src/data";
 
 const PopoverHelp = () => (
@@ -20,7 +21,9 @@ const PopoverHelp = () => (
     </PopoverTrigger>
     <PopoverContent tw="text-black bg-white">
       <PopoverArrow tw="fill-white" />
-      <MarkdownComponent isNote>{HELP_INFORMATION}</MarkdownComponent>
+      <MarkdownWrapper isNote tw="text-black">
+        <Markdown>{HELP_INFORMATION}</Markdown>
+      </MarkdownWrapper>
     </PopoverContent>
   </Popover>
 );

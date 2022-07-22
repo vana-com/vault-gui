@@ -23,6 +23,7 @@ const ModuleButton = ({ name, isLarge, isStored }: Props) => {
       <Button
         size={isLarge ? "full" : "xl"}
         variant={isStored ? "solid" : "outline"}
+        tw="min-w-[155px]"
         prefix={<VaultDataLogo name={name} />}
         isLoading={isLoading}
         onClick={() => setIsLoading(true)}

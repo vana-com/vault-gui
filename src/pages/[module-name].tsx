@@ -9,7 +9,7 @@ import {
   CardHeaderVaultModule,
   DeleteData,
   PageVault,
-  SpinnerIcon,
+  Spinner,
   TitleAndMetaTags,
 } from "src/components";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
@@ -87,7 +87,7 @@ const VaultModulePage: NextPage = () => {
           <hr />
 
           {isDataLoading ? (
-            <SpinnerIcon />
+            <Spinner />
           ) : (
             <div tw="flex flex-col gap-2 items-center">
               <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
