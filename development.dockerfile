@@ -25,4 +25,4 @@ RUN yarn install
 EXPOSE 5000
 
 # Run with Doppler
-CMD ["doppler","run", "--", "yarn", "dev"]
+CMD ["doppler", "run", "--", "yarn", "dev"]
