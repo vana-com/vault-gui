@@ -18,7 +18,7 @@ interface Props {
 const CardHeaderVaultModule = ({ moduleName, isStoring, children }: Props) => (
   <CardHeaderStack tw="gap-2">
     <Flex tw="flex items-center justify-center gap-2">
-      <Flex tw="flex items-center justify-center gap-1 p-1 rounded-md border border-labelTertiary transform translate-y-[-0.07em] text-md">
+      <Flex tw="flex items-center justify-center gap-1 p-0.5 rounded-md border border-labelSecondary transform translate-y-[-0.07em] text-md">
         <VaultDataLogo name={moduleName} />
       </Flex>
       <Text variant="title2" tw="text-center">
