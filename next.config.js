@@ -8,6 +8,18 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-}
+  images: {
+    domains: ["storage.googleapis.com"],
+  },
+  webpack: (config, { isServer: _isServer }) => {
+    if (!_isServer) {
+      // Required to run sql.js in the browser (used by @corsali/userdata-extractor)
+      // eslint-disable-next-line
+      config.resolve.fallback.fs = false;
+    }
 
-module.exports = nextConfig
+    return config;
+  },
+};
+
+module.exports = nextConfig;

@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -12,30 +13,61 @@ import {
   TitleAndMetaTags,
   VaultStoreUpload,
 } from "src/components";
+import {
+  useCreateUserModuleMutation,
+  useGetModuleQuery,
+} from "src/graphql/generated";
+import { userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
 
-  // Extract consts from router.query
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { "module-name": moduleNameFromQuery, origin: originEncoded } =
-    router.query;
+  // use Jotai
+  const [user] = useAtom(userAtom);
 
-  // Decode the origin
-  // const origin = originEncoded
-  //   ? decodeURIComponent(originEncoded as string)
-  //   : undefined;
+  console.log("user", user);
+
+  // Extract consts from router.query
+  const { "module-name": moduleNameFromQuery } = router.query;
 
   // Module name
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
+  const { data: { modules: [module] = [] } = {}, loading: isDataLoading } =
+    useGetModuleQuery({
+      variables: {
+        name: moduleName,
+      },
+    });
+
+  const [createUserModule] = useCreateUserModuleMutation();
+
+  const createUserModuleCallback = async (
+    urlToData: string,
+    urlNumber: number,
+  ) => {
+    await createUserModule({
+      variables: {
+        urlToData,
+        userId: user?.id,
+        moduleId: module.id,
+        urlNumber,
+      },
+    });
+  };
+
   // If the module doesn't exist, redirect
   useEffect(() => {
-    if (router.isReady && !module) {
+    if (router.isReady && !module && !isDataLoading) {
       router.push("/");
     }
   }, [router]);
+
+  // TODO: handle loading state
+  if (isDataLoading) {
+    return null;
+  }
 
   return (
     <>
@@ -57,7 +89,11 @@ const VaultStoragePage: NextPage = () => {
             <hr />
           </Stack>
           <div tw="pt-5">
-            <VaultStoreUpload moduleName={moduleName} />
+            <VaultStoreUpload
+              moduleName={moduleName}
+              createUserModule={createUserModuleCallback}
+              appPubKey={user?.externalId ?? ""}
+            />
           </div>
         </div>
       </PageVault>

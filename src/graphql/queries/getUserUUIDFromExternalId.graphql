@@ -1,5 +1,8 @@
 query getUserUUIDFromExternalId($externalId: String!) {
   users(limit: 1, where: { externalId: { _eq: $externalId } }) {
+    name
+    emailAddress
     id
+    externalId
   }
 }

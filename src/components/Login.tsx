@@ -1,30 +1,61 @@
-import {
-  ADAPTER_EVENTS,
-  SafeEventEmitterProvider,
-  UserInfo,
-  WALLET_ADAPTERS,
-} from "@web3auth/base";
+import { ADAPTER_EVENTS, WALLET_ADAPTERS } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
-import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
-import config from "../../config/web3auth";
+import {
+  hasuraTokenAtom,
+  idTokenAtom,
+  userAtom,
+  web3AuthUserInfoAtom,
+  web3AuthWalletProviderAtom,
+} from "src/state";
 
-const { web3AuthInstance } = config;
+import config from "../config";
+
+const { openLoginModalConfig, web3AuthInstance } = config;
 
 const Login = () => {
-  // TODO: Move web3auth and provider to global context
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [walletProvider, setWalletProvider] =
-    useState<SafeEventEmitterProvider | null>(null);
-  const [user, setUser] = useState<Partial<UserInfo> | null>(null);
+  const [web3AuthUserInfo, setWeb3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
+  const [user, setUser] = useAtom(userAtom);
+  const setHasuraToken = useAtom(hasuraTokenAtom)[1];
+  const setWalletProvider = useAtom(web3AuthWalletProviderAtom)[1];
+  const [idToken, setIdToken] = useAtom(idTokenAtom);
+
+  // get Hasura user object
+  useEffect(() => {
+    const loginUser = async () => {
+      const loginResponse = await fetch(`/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idToken }),
+      });
+
+      const { user: userFromResponse, hasuraToken } =
+        await loginResponse.json();
+
+      console.log("userFromResponse", userFromResponse);
+
+      setUser(userFromResponse);
+      setHasuraToken(hasuraToken);
+    };
+
+    if (!user && web3AuthUserInfo) {
+      loginUser();
+    }
+  }, [user, web3AuthUserInfo]);
 
   useEffect(() => {
     const subscribeAuthEvents = (web3Auth: Web3Auth) => {
       // Subscribe to ADAPTER_EVENTS. Additional ADAPTER_EVENTS and LOGIN_MODAL_EVENTS exist.
-      web3Auth.on(ADAPTER_EVENTS.CONNECTED, (data: unknown) => {
-        console.log("adapter successfully logged in", data);
-        web3Auth.getUserInfo().then((userInfo) => setUser(userInfo));
-        setWalletProvider(web3Auth.provider!);
+      web3Auth.on(ADAPTER_EVENTS.CONNECTED, () => {
+        web3Auth.getUserInfo().then((userInfo) => {
+          setWeb3AuthUserInfo(userInfo);
+          setIdToken(userInfo.idToken);
+        });
+        setWalletProvider(web3Auth.provider ? web3Auth.provider : undefined);
       });
 
       web3Auth.on(ADAPTER_EVENTS.CONNECTING, () => {
@@ -49,7 +80,7 @@ const Login = () => {
       if (web3AuthInstance.status !== "connected") {
         web3AuthInstance.initModal({
           modalConfig: {
-            [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
+            [WALLET_ADAPTERS.OPENLOGIN]: openLoginModalConfig,
           },
         });
       }
@@ -77,13 +108,15 @@ const Login = () => {
       return;
     }
     await web3AuthInstance.logout();
-    setWalletProvider(null);
-    setUser(null);
+    setWalletProvider(undefined);
+    setWeb3AuthUserInfo(undefined);
+    setUser(undefined);
+    setHasuraToken(undefined);
   };
 
   return (
     <>
-      {user ? (
+      {web3AuthUserInfo ? (
         <button type="button" onClick={logOut}>
           Log Out
         </button>
