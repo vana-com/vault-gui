@@ -8,7 +8,6 @@ export * from "./getAbbreviatedFileName";
 export * from "./getSecret";
 export * from "./heap";
 export * from "./sortByCreatedAt";
-export * from "./stripZipFiles";
 export * from "./uploadFile";
 export * from "./verifyWeb3AuthAuthentication";
 export * from "./zipFile";

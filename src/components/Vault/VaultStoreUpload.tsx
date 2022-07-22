@@ -1,3 +1,4 @@
+import { stripZipFiles } from "@corsali/userdata-extractor";
 import { Form, Formik, FormikProps } from "formik";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -8,11 +9,7 @@ import { Button, Stack } from "src/components";
 import { CarbonArrowRight } from "src/components/Icons";
 import { ToastApi, ToastImp } from "src/components/Toast";
 import config from "src/config";
-import {
-  encryptAndUploadUserDataFiles,
-  heapTrack,
-  stripZipFiles,
-} from "src/utils";
+import { encryptAndUploadUserDataFiles, heapTrack } from "src/utils";
 
 import { useFileDropzone } from "./FileDropzone";
 import { StoragePassword, VaultStoreUploadPresenter } from "./index";
