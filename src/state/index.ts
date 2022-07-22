@@ -12,15 +12,16 @@ interface User {
 const userAtom = atom<User | undefined>(undefined);
 const idTokenAtom = atom<string | undefined>(undefined);
 const hasuraTokenAtom = atom<string | undefined>(undefined);
+const web3AuthAdapterAtom = atom<string | undefined>(undefined);
 const web3AuthUserInfoAtom = atom<Partial<UserInfo> | undefined>(undefined);
 const web3AuthWalletProviderAtom = atom<SafeEventEmitterProvider | undefined>(
   undefined,
 );
-
 export {
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
+  web3AuthAdapterAtom,
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 };

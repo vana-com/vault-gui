@@ -3,7 +3,7 @@ import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { getSdk } from "src/graphql/generated";
-import { verifyWeb3AuthAuthentication } from "src/utils";
+import { createHasuraJWT, getIdTokenPayload } from "src/utils";
 
 /**
  * Gets the user associated with appPubKey in Hasura after authenticating the user.
@@ -13,15 +13,15 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { idToken } = req.body;
+  const { idToken, issuer } = req.body;
   try {
-    if (!idToken) {
+    if (!idToken || !issuer) {
       return res.status(400).json({
-        message: "Missing required query param",
+        message: "Missing required params: idToken or issuer",
       });
     }
 
-    const idTokenPayload = (await verifyWeb3AuthAuthentication(idToken)) as any;
+    const idTokenPayload = (await getIdTokenPayload(idToken, issuer)) as any;
 
     if (!idTokenPayload) {
       return res.status(401).json({
@@ -30,12 +30,13 @@ export default async (
     }
 
     const appPubKey = idTokenPayload?.wallets[0]?.public_key;
+    const hasuraJwt = await createHasuraJWT(idTokenPayload);
 
     const graphQLClient = new GraphQLClient(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
       {
         headers: {
-          "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
+          Authorization: `Bearer ${hasuraJwt}`,
         },
       },
     );
@@ -60,9 +61,7 @@ export default async (
       [user] = users;
     }
 
-    // const hasuraToken = await createHasuraJWT(idToken, "appPubKey");
-
-    return res.status(200).json({ user, hasuraToken: "test" });
+    return res.status(200).json({ user, hasuraToken: hasuraJwt });
   } catch (error) {
     log.error(error);
     return res.status(500).json({ message: "Error while retrieving user" });

@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
-import { verifyWeb3AuthAuthentication } from "src/utils";
+import { getHasuraTokenPayload } from "src/utils";
 
 /**
  * Delete the file in objects store for a specific users_modules rows and set the
@@ -14,31 +14,35 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { idToken, usersModulesIds } = req.body;
+  const { hasuraToken, usersModulesIds } = req.body;
   try {
-    if (!idToken) {
+    if (!hasuraToken || !usersModulesIds) {
       return res.status(400).json({
         deleteSuccessful: false,
-        message: "Missing required query param",
+        message: "Missing required parameters: hasuraToken or usersModulesIds",
       });
     }
 
-    const idTokenPayload = (await verifyWeb3AuthAuthentication(idToken)) as any;
+    const hasuraTokenPayload = (await getHasuraTokenPayload(
+      hasuraToken,
+    )) as any;
 
-    if (!idTokenPayload) {
+    if (!hasuraTokenPayload) {
       return res.status(401).json({
         deleteSuccessful: false,
-        message: "User not authenticated via Web3Auth",
+        message:
+          "User does not have a valid Hasura token. Please log in again.",
       });
     }
 
-    const appPubKey = idTokenPayload?.wallets[0]?.public_key;
+    const appPubKey =
+      hasuraTokenPayload["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
 
     const graphQLClient = new GraphQLClient(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
       {
         headers: {
-          "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
+          Authorization: `Bearer ${hasuraToken}`,
         },
       },
     );
@@ -91,11 +95,9 @@ export default async (
     return res.status(200).json({ filesDeleted, deleteSuccessful: true });
   } catch (error: any) {
     log.error(error);
-    return res
-      .status(500)
-      .json({
-        deleteSuccessful: false,
-        message: "Error while deleting user data",
-      });
+    return res.status(500).json({
+      deleteSuccessful: false,
+      message: "Error while deleting user data",
+    });
   }
 };
