@@ -11,6 +11,7 @@ type BaseProps = {
   suffix?: React.ReactNode;
   id?: string;
   isLoading?: boolean;
+  css?: any;
 } & styles.ButtonStyleProps &
   Pick<
     JSX.IntrinsicElements["button"],
