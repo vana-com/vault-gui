@@ -20,7 +20,7 @@ function createAtom<T>(name: string, defaultValue: T) {
 const userAtom = createAtom<User | undefined>("user", undefined);
 const idTokenAtom = createAtom<string | undefined>("id-token", undefined);
 const hasuraTokenAtom = createAtom<string>("hasura-token", "");
-const web3AuthAdapterAtom = createAtom("web3auth-adapter", undefined);
+const web3AuthAdapterAtom = createAtom<any>("web3auth-adapter", undefined);
 const web3AuthUserInfoAtom = createAtom<Partial<UserInfo> | undefined>(
   "web3auth-user-info",
   undefined,
