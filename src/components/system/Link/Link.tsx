@@ -1,30 +1,10 @@
-import React from "react";
+import tw, { styled } from "twin.macro";
 
-import { Box } from "src/components";
-
-import * as styles from "./Link.css";
-
-// TODO: inherit styles prop…
 export type LinkProps = {
-  // variant?: styles.TextVariant;
-  // this Pick doesn't work, why not?
-  // underline?: Pick<styles.LinkStyleProps, "underline">;
   underline?: boolean;
-  children?: React.ReactNode;
-  // css escape hatch
-  [key: string]: any;
 };
 
-export const Link = ({
-  children,
-  underline = true,
-  ...boxProps
-}: LinkProps) => (
-  <Box
-    as="a"
-    css={[styles.textStyles({ underline }), boxProps.css]}
-    {...boxProps}
-  >
-    {children}
-  </Box>
-);
+export const Link = styled.a(({ underline = true }: LinkProps) => [
+  tw`outline-none decoration-current decoration-[0.075em] underline-offset-[0.09375em]`,
+  underline && tw`underline`,
+]);
