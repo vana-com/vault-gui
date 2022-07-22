@@ -3,7 +3,7 @@ import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Stack, Text } from "src/components";
+import { Button, Input, Stack, Text } from "src/components";
 import { CarbonCheckmarkOutline } from "src/components/Icons";
 
 import { StoragePasswordLabel } from "./index";
@@ -22,8 +22,7 @@ const StoragePassword = () => {
         {/* TODO: fix this */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label tw="flex bg-whites-20 items-center relative select-none">
-          <Text
-            as="input"
+          <Input
             variant="subbody"
             color="black"
             type={showPassword ? "text" : "password"}
