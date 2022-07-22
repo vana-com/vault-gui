@@ -21,7 +21,7 @@ export default async (
       });
     }
 
-    const idTokenPayload = await verifyWeb3AuthAuthentication(idToken);
+    const idTokenPayload = (await verifyWeb3AuthAuthentication(idToken)) as any;
 
     if (!idTokenPayload) {
       return res.status(401).json({
