@@ -36,6 +36,7 @@ jobs:
           name: .next
           if-no-files-found: error
           path: .next
+          retention-days: 2 # Since the build/test happens right away we don't need to cache this for long
 
   e2e-chrome-tests:
     timeout-minutes: 15
