@@ -46,6 +46,8 @@ export default async (
     });
   } catch (error) {
     log.error(error);
-    return res.status(500).json({});
+    return res
+      .status(500)
+      .json({ message: "Error while generating upload URL" });
   }
 };
