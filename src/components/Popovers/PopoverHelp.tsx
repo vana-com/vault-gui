@@ -21,7 +21,7 @@ const PopoverHelp = () => (
     </PopoverTrigger>
     <PopoverContent tw="text-black bg-white">
       <PopoverArrow tw="fill-white" />
-      <MarkdownWrapper isNote tw="text-labelSecondary">
+      <MarkdownWrapper isNote tw="text-black">
         <Markdown>{HELP_INFORMATION}</Markdown>
       </MarkdownWrapper>
     </PopoverContent>
