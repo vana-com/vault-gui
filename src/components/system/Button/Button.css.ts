@@ -1,15 +1,6 @@
 import tw from "twin.macro";
 
-// all: "unset",
-// fontFamily: "inherit",
-// boxShadow: `0 2px 10px ${vars.colors.blueGray60}`,
-// selectors: {
-//   '&[data-state="closed"]': { backgroundColor: "white" },
-//   '&[data-state="open"]': { backgroundColor: vars.colors.purple30 },
-//   "&:hover": { backgroundColor: vars.colors.purple30 },
-//   "&:focus": { boxShadow: `0 0 0 2px black` },
-// },
-
+// TODO: add hover & focus states when we know the design…
 export const buttonVariants = {
   info: tw`bg-gray-500`,
   contrast: tw`bg-fillElevated text-label`,
@@ -17,17 +8,20 @@ export const buttonVariants = {
   outline: tw`bg-transparent text-primary ring-1 ring-inset ring-primary`,
   ghost: tw`bg-fillSecondary text-label`,
   ghostSecondary: tw`bg-fillSecondary text-labelSecondary`,
-  // 'link'? icon?
+  // 'link'?
   icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;
 
 export const buttonSizes = {
+  initial: tw``,
   sm: tw`gap-1 px-2 py-1.5 text-xs md:py-0.5`,
   md: tw`h-[27px] gap-1 px-2 py-3 text-sm md:py-2`,
-  lg: tw`h-[38px] gap-2 px-4 py-2 text-md w-full md:w-auto`,
-  xl: tw`h-[44px] gap-2 px-6 py-3 text-md w-full md:w-auto`,
+  // set a min-width so it looks good when the loading spinner is active
+  // renderMinWidth(variant, size) && tw`min-w-[130px]`,
+  lg: tw`h-[38px] gap-2 px-4 py-2 text-md w-full md:w-auto min-w-[130px]`,
+  xl: tw`h-[44px] gap-2 px-6 py-3 text-md w-full md:w-auto min-w-[130px]`,
   full: tw`flex-1 h-full gap-2 px-6 py-3 text-lg`,
 } as const;
 
@@ -36,7 +30,7 @@ export type ButtonSize = keyof typeof buttonSizes;
 export interface ButtonStyleProps {
   round?: boolean;
   isDisabled?: boolean;
-  variant: ButtonVariant;
+  variant?: ButtonVariant;
   size?: ButtonSize;
 }
 
@@ -58,12 +52,9 @@ export const buttonStyle = ({
   tw`transition-transform duration-100 ease-in-out`,
   // states
   tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-primary)`,
-  // set a min-width so it looks good when the loading spinner is active
-  variant !== "icon" && tw`min-w-[130px]`,
   // variants
-  buttonVariants[variant],
+  variant && buttonVariants[variant],
   size && buttonSizes[size],
   round ? tw`rounded-full` : tw`rounded-lg`,
-  // text-gray-100 bg-gray-400
   isDisabled && tw`cursor-not-allowed opacity-80`,
 ];

@@ -1,7 +1,6 @@
-// import { CSSInterpolation } from "@emotion/serialize";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw, { TwStyle } from "twin.macro";
+import tw from "twin.macro";
 
 import { Box, Spinner } from "src/components";
 
@@ -12,9 +11,6 @@ type BaseProps = {
   suffix?: React.ReactNode;
   id?: string;
   isLoading?: boolean;
-  // css escape hatch
-  // [key: string]: any
-  css?: TwStyle;
 } & styles.ButtonStyleProps &
   Pick<
     JSX.IntrinsicElements["button"],
@@ -35,14 +31,6 @@ type WithoutAnchor = {
   as?: "button";
 };
 
-// export const iconSizeMapping: Record<styles.Size, keyof Theme['space']> = {
-//   xs: '5',
-//   s: '1',
-//   m: '1',
-//   l: '1',
-//   xl: '1',
-// }
-
 export type ButtonProps = BaseProps & (WithAnchor | WithoutAnchor);
 
 export const Button = React.forwardRef(
@@ -54,22 +42,17 @@ export const Button = React.forwardRef(
       isLoading,
       prefix,
       round,
-      // shadow,
       size,
       suffix,
       variant,
-      css,
-      ...boxProps
+      ...buttonProps
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>,
   ) => (
     <Box
       ref={ref}
-      {...boxProps}
-      as={boxProps.as ?? "button"}
-      // TODO: fix this introduced CSS casecade error…
-      // css={styles.buttonStyle({ size, variant, round, isDisabled })}
-      css={[styles.buttonStyle({ size, variant, round, isDisabled }), css]}
+      {...buttonProps}
+      css={styles.buttonStyle({ size, variant, round, isDisabled })}
       id={id}
     >
       {isLoading ? (
