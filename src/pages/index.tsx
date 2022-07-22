@@ -13,11 +13,7 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { testModules } from "src/data";
-
-// interface Module {
-//   id: string;
-//   name: string;
-// }
+import { Module } from "src/types";
 
 const HomePage: NextPage = () => {
   // const testDataModule = [testModules.at(-1)];
@@ -41,7 +37,7 @@ const HomePage: NextPage = () => {
           <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
             <DialogDrawerMenu buttonLabel="Add">
               <CardHeaderVaultNoModules>
-                {testModules.map((module) => (
+                {testModules.map((module: Module) => (
                   <ModuleButton key={module.id} name={module.name} />
                 ))}
               </CardHeaderVaultNoModules>

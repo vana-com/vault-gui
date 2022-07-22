@@ -1,4 +1,6 @@
-export const testModules = [
+import { Module } from "src/types";
+
+export const testModules: Module[] = [
   { id: "1", name: "Google" },
   { id: "2", name: "Facebook" },
   { id: "3", name: "Instagram" },
