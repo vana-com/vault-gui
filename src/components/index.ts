@@ -7,6 +7,7 @@ export * from "./Dialogs";
 export * from "./Headers";
 export * from "./Icons";
 export * from "./Logo";
+export * from "./Markdown";
 export * from "./PageVault";
 export * from "./Popovers";
 export * from "./TitleAndMetaTags";
