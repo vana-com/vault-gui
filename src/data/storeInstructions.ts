@@ -1,35 +1,47 @@
 export const googleStoreInstructions = `
-1. Go to [Google Takeout](https://takeout.google.com/?pli=1).
+1. Go to [Google Takeout](https://takeout.google.com/?pli=1)
 
-2. Uncheck Drive.
+2. Keep Access Log Activity unchecked
 
-3. Uncheck Mail.
+    ![Google instructions {priority}{1292x458}](/images/google-instructions-1.png)
 
-4. Submit your request.
+3. Uncheck Drive
 
-5. Wait for an email from Google which will contain a download link.
+    ![Google instructions {priority}{1236x248}](/images/google-instructions-4.png)
+
+4. Uncheck Mail
+
+    ![Google instructions {priority}{1242x248}](/images/google-instructions-5.png)
+
+5. Submit your request
+
+6. Wait for an email from Google with a download link. Says 48 hours but usually arrives in a few minutes.
 `;
 
 export const facebookStoreInstructions = `
-1. Go to [Google Takeout](https://takeout.google.com/?pli=1).
+1. Go to the [Facebook Download Page](https://www.facebook.com/dyi/?referrer=ayi)
 
-2. Uncheck Drive.
+2. Select the following options
 
-3. Uncheck Mail.
+    ![Facebook instructions {priority}{1704x698}](/images/facebook-instructions-3.png)
 
-4. Submit your request.
+3. Uncheck Messages
 
-5. Wait for an email from Google which will contain a download link.
+    ![Facebook instructions {priority}{1688x158}](/images/facebook-instructions-4.png)
+
+4. Submit your request
+
+5. Wait for an email from Facebook with a download link. Says 48 hours but usually arrives in a few minutes.
 `;
 
 export const instagramStoreInstructions = `
-1. Go to [Google Takeout](https://takeout.google.com/?pli=1).
+1. Go to the [Instagram Download Page](https://www.instagram.com/download/request/)
 
-2. Uncheck Drive.
+2. Pick JSON
 
-3. Uncheck Mail.
+    ![Instagram instructions {priority}{672x178}](/images/instagram-instructions-1.png)
 
-4. Submit your request.
+3. Submit your request
 
-5. Wait for an email from Google which will contain a download link.
+4. Wait for an email from Instagram with a download link. Says 48 hours but usually arrives in a few minnutes.
 `;

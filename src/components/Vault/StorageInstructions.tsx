@@ -1,6 +1,6 @@
 import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 import {
   Button,
@@ -10,19 +10,16 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
   Flex,
+  Markdown,
+  MarkdownWrapper,
   Text,
-  TextProps,
 } from "src/components";
-import { MarkdownComponent } from "src/components/MarkdownComponents";
-import { googleStoreInstructions } from "src/data";
+import { ModuleName } from "src/types";
+import { renderModuleStoreInstructions } from "src/utils";
 
 interface Props {
-  moduleName: string;
+  moduleName: ModuleName;
 }
-
-const StyledText = (props: TextProps) => (
-  <Text variant="note" color="labelSecondary" {...props} />
-);
 
 const StorageInstructions = ({ moduleName }: Props) => {
   const [open, setOpen] = useState(false);
@@ -31,12 +28,12 @@ const StorageInstructions = ({ moduleName }: Props) => {
     <Collapsible open={open} onOpenChange={setOpen} tw="py-3 cursor-pointer">
       <CollapsibleTrigger asChild>
         <Flex tw="items-center justify-between">
-          <StyledText weight="semibold">
+          <Text variant="note" weight="semibold" color="labelSecondary">
             Obtain your {moduleName} data first.{" "}
-            <StyledText as="span" weight="normal">
+            <Text as="span" weight="normal">
               How do I do that?
-            </StyledText>
-          </StyledText>
+            </Text>
+          </Text>
           <Button variant="icon" round tw="text-labelSecondary">
             {open ? <CarbonChevronUp /> : <CarbonChevronDown />}
           </Button>
@@ -44,9 +41,9 @@ const StorageInstructions = ({ moduleName }: Props) => {
       </CollapsibleTrigger>
 
       <CollapsibleContent tw="pt-3 pb-6">
-        <MarkdownComponent isNote stackProps={{ tw: "text-labelTertiary" }}>
-          {googleStoreInstructions}
-        </MarkdownComponent>
+        <MarkdownWrapper isNote tw="text-labelSecondary">
+          <Markdown>{renderModuleStoreInstructions(moduleName)}</Markdown>
+        </MarkdownWrapper>
       </CollapsibleContent>
     </Collapsible>
   );

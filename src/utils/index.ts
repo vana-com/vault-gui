@@ -8,3 +8,4 @@ export * from "./sortByCreatedAt";
 // export * from "./zipFile";
 // export * from "./uploadFile";
 export * from "./formatModuleNameFromQueryString";
+export * from "./renderModuleStoreInstructions";
