@@ -14,21 +14,25 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { idToken, appPubKey, usersModulesIds } = req.body;
+  const { idToken, usersModulesIds } = req.body;
   try {
-    if (!idToken || !appPubKey) {
+    if (!idToken) {
       return res.status(400).json({
         deleteSuccessful: false,
         message: "Missing required query param",
       });
     }
 
-    if (!verifyWeb3AuthAuthentication(idToken, appPubKey)) {
+    const idTokenPayload = await verifyWeb3AuthAuthentication(idToken);
+
+    if (!idTokenPayload) {
       return res.status(401).json({
         deleteSuccessful: false,
         message: "User not authenticated via Web3Auth",
       });
     }
+
+    const appPubKey = idTokenPayload?.wallets[0]?.public_key;
 
     const graphQLClient = new GraphQLClient(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
@@ -87,6 +91,8 @@ export default async (
     return res.status(200).json({ filesDeleted, deleteSuccessful: true });
   } catch (error) {
     log.error(error);
-    return res.status(500).json({ deleteSuccessful: false });
+    return res
+      .status(500)
+      .json({ deleteSuccessful: false, message: error.toString() });
   }
 };

@@ -6,19 +6,21 @@ import * as jose from "jose";
  *
  * @param idToken idToken JWT returned to the user's browser after they login with web
  * @param appPubKey The Web3Auth user's app public key
- * @returns true if idToken JWT is valid and is for appPubKey, false otherwise
+ * @returns JWT payload if authenticated idToken, otherwise null
  */
-const verifyWeb3AuthAuthentication = async (
-  idToken: any,
-  appPubKey: string,
-) => {
-  const jwks = jose.createRemoteJWKSet(
-    new URL("https://api.openlogin.com/jwks"),
-  );
-  const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
-    algorithms: ["ES256"],
-  });
-  return (jwtDecoded.payload as any).wallets[0].public_key === appPubKey;
+const verifyWeb3AuthAuthentication = async (idToken: any) => {
+  try {
+    const jwks = jose.createRemoteJWKSet(
+      new URL("https://api.openlogin.com/jwks"),
+    );
+    const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
+      algorithms: ["ES256"],
+    });
+
+    return jwtDecoded.payload;
+  } catch (error) {
+    return null;
+  }
 };
 
 export { verifyWeb3AuthAuthentication };

@@ -26,6 +26,8 @@ const VaultStoragePage: NextPage = () => {
   // use Jotai
   const [user] = useAtom(userAtom);
 
+  console.log("user", user);
+
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
 
@@ -57,7 +59,7 @@ const VaultStoragePage: NextPage = () => {
 
   // If the module doesn't exist, redirect
   useEffect(() => {
-    if (router.isReady && !module) {
+    if (router.isReady && !module && !isDataLoading) {
       router.push("/");
     }
   }, [router]);
@@ -90,7 +92,7 @@ const VaultStoragePage: NextPage = () => {
             <VaultStoreUpload
               moduleName={moduleName}
               createUserModule={createUserModuleCallback}
-              userId={user?.id ?? ""}
+              appPubKey={user?.externalId ?? ""}
             />
           </div>
         </div>

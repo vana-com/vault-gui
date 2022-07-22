@@ -17,7 +17,7 @@ const localSecrets = {
 const getSecret = (key: string): string => {
   if (
     localSecrets &&
-    localSecrets[key as keyof typeof localSecrets] !== undefined
+    localSecrets[key as keyof typeof localSecrets] === undefined
   ) {
     throw new Error(`Secret not found for key ${key}`);
   }

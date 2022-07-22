@@ -6,7 +6,7 @@ import { encryptFileChaCha20Poly1305, uploadFile } from "src/utils";
  * @param files - The user data files to encrypt and upload
  * @param password - The password used to symmetrically encrypt
  * @param moduleName - Name of the email integration the file is for
- * @param userId - userID
+ * @param appPubKey - Public key of the user
  * @param handleUploadProgress - callback to show user progress of upload
  * @param createUserModule - callback to create a row in users_modules table in hasura
  *
@@ -15,7 +15,7 @@ const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
   password: string,
   moduleName: string,
-  userId: string,
+  appPubKey: string,
   handleUploadProgress: (event: any) => void,
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>,
 ) => {
@@ -32,7 +32,7 @@ const encryptAndUploadUserDataFiles = async (
 
   // Upload files to object store (S3 or GCS)
   const uploadPromises = encryptedFilesToUpload.map((file) =>
-    uploadFile(file, moduleName, userId, handleUploadProgress),
+    uploadFile(file, moduleName, appPubKey, handleUploadProgress),
   );
 
   const uploadResults = await Promise.all(uploadPromises);

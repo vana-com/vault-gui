@@ -1,0 +1,19 @@
+mutation createUser(
+  $name: String!
+  $emailAddress: String!
+  $externalId: String!
+) {
+  createOneUser(
+    object: {
+      name: $name
+      emailAddress: $emailAddress
+      externalId: $externalId
+    }
+    on_conflict: { constraint: users_externalId_key, update_columns: updatedAt }
+  ) {
+    id
+    emailAddress
+    name
+    externalId
+  }
+}

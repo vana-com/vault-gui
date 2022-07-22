@@ -24,6 +24,9 @@ const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
 
+  console.log("user", user);
+  console.log("webAuthUserInfo", web3AuthUserInfo);
+
   const { data: { modules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
 
@@ -56,7 +59,7 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" />
 
       <PageVault>
-        {web3AuthUserInfo && (
+        {user && (
           <Flex tw="w-full flex-col gap-4">
             <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
               <Text as="h3" variant="heading">
@@ -76,8 +79,8 @@ const HomePage: NextPage = () => {
               {/* FAKE DATA MODULE */}
               {hasStoredModules && (
                 <ModuleButton
-                  key="TODO: add key"
-                  name="TODO: add module name"
+                  key="instagram"
+                  name="instagram"
                   isLarge
                   isStored
                 />

@@ -24,13 +24,13 @@ interface FormikValues {
 interface VaultStoreUploadProps {
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
-  userId: string;
+  appPubKey: string;
 }
 
 const VaultStoreUpload = ({
   moduleName,
   createUserModule,
-  userId,
+  appPubKey,
 }: VaultStoreUploadProps) => {
   const router = useRouter();
   const { FileInput, openFileDialog } = useFileDropzone();
@@ -123,7 +123,7 @@ const VaultStoreUpload = ({
         sanitizedFiles,
         password,
         moduleName,
-        userId,
+        appPubKey,
         handleUploadProgress,
         createUserModule,
       );

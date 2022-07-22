@@ -31,13 +31,18 @@ const VaultModulePage: NextPage = () => {
   const { data: userModulesData, loading: isDataLoading } =
     useGetUserModulesSubscription({
       variables: { userId: user?.id },
+      skip: !user?.id,
     });
+
+  console.log("user", user);
 
   const usersModulesForName = userModulesData
     ? userModulesData.usersModules.filter(
         (userModule) => userModule.module.name === moduleName,
       )
     : [];
+
+  console.log("usersModulesForName", usersModulesForName);
 
   /**
    * Deletes all files a user has stored for a module (ie. Email integration).
@@ -49,7 +54,7 @@ const VaultModulePage: NextPage = () => {
       (userModule) => userModule.id,
     );
     const { deleteSuccessful } = await (
-      await fetch(`/api/vault/delete-files`, {
+      await fetch(`/api/delete-user-data-files`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

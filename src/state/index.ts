@@ -1,8 +1,12 @@
 import { SafeEventEmitterProvider, UserInfo } from "@web3auth/base";
 import { atom } from "jotai";
 
+// TODO: update interface with generated graphQL type
 interface User {
   id: string;
+  externalId: string;
+  emailAddress: string;
+  name: string;
 }
 
 const userAtom = atom<User | undefined>(undefined);
