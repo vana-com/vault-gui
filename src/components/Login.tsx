@@ -118,7 +118,7 @@ const Login = () => {
     setWalletProvider(undefined);
     setWeb3AuthUserInfo(undefined);
     setUser(undefined);
-    setHasuraToken(undefined);
+    setHasuraToken("");
   };
 
   return (
