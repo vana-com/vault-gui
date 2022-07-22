@@ -1,4 +1,8 @@
-import { ADAPTER_EVENTS, WALLET_ADAPTERS } from "@web3auth/base";
+import {
+  ADAPTER_EVENTS,
+  CONNECTED_EVENT_DATA,
+  WALLET_ADAPTERS,
+} from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
@@ -7,6 +11,7 @@ import {
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
+  web3AuthAdapterAtom,
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
@@ -20,6 +25,7 @@ const Login = () => {
   const [user, setUser] = useAtom(userAtom);
   const setHasuraToken = useAtom(hasuraTokenAtom)[1];
   const setWalletProvider = useAtom(web3AuthWalletProviderAtom)[1];
+  const [walletAdapter, setWalletAdapter] = useAtom(web3AuthAdapterAtom);
   const [idToken, setIdToken] = useAtom(idTokenAtom);
 
   // get Hasura user object
@@ -30,7 +36,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ idToken, issuer: walletAdapter }),
       });
 
       const { user: userFromResponse, hasuraToken } =
@@ -50,11 +56,12 @@ const Login = () => {
   useEffect(() => {
     const subscribeAuthEvents = (web3Auth: Web3Auth) => {
       // Subscribe to ADAPTER_EVENTS. Additional ADAPTER_EVENTS and LOGIN_MODAL_EVENTS exist.
-      web3Auth.on(ADAPTER_EVENTS.CONNECTED, () => {
+      web3Auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
         web3Auth.getUserInfo().then((userInfo) => {
           setWeb3AuthUserInfo(userInfo);
           setIdToken(userInfo.idToken);
         });
+        setWalletAdapter(data.adapter);
         setWalletProvider(web3Auth.provider ? web3Auth.provider : undefined);
       });
 
@@ -111,7 +118,7 @@ const Login = () => {
     setWalletProvider(undefined);
     setWeb3AuthUserInfo(undefined);
     setUser(undefined);
-    setHasuraToken(undefined);
+    setHasuraToken("");
   };
 
   return (

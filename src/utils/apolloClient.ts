@@ -20,13 +20,16 @@ import {
   // persistCacheSync
 } from "apollo3-cache-persist";
 import merge from "deepmerge";
+import { atom } from "jotai";
 import isEqual from "lodash/isEqual";
 import type { AppProps } from "next/app";
 import { useMemo } from "react";
 
+import { hasuraTokenAtom } from "src/state";
+
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
-const accessToken = process.env.NEXT_PUBLIC_HASURA_JWT as string;
+let accessToken = "public";
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 // Apollo `link` for when client (user) is offline.
@@ -40,12 +43,21 @@ const createApolloClient = () => {
     console.error(networkError);
   });
 
-  const authLink = setContext(async (_, { headers }) => ({
-    headers: {
-      ...headers,
-      authorization: accessToken ? `Bearer ${accessToken}` : "",
-    },
-  }));
+  const authLink = setContext(async (_, { headers }) => {
+    const cachedToken = sessionStorage.getItem("hasura-token");
+    if (cachedToken) {
+      accessToken = JSON.parse(cachedToken);
+    } else {
+      return headers;
+    }
+
+    return {
+      headers: {
+        ...headers,
+        authorization: accessToken ? `Bearer ${accessToken}` : "",
+      },
+    };
+  });
 
   const ssrMode = typeof window === "undefined";
 

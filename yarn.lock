@@ -4345,11 +4345,6 @@
   resolved "https://registry.npmjs.org/@zip.js/zip.js/-/zip.js-2.4.21.tgz#263bbdbfc5c867bc95e9af8711d567233d49c734"
   integrity sha512-KF6NSbHdbmPAP6wzuB5xCfC8JTqNwiOaiviMCJTscbY6PWJRKtFVOHU8JYcBj2k0/ynGrRpGzQdIoAxdvc5B1Q==
 
-"@zip.js/zip.js@^2.5.26":
-  version "2.5.26"
-  resolved "https://registry.npmjs.org/@zip.js/zip.js/-/zip.js-2.5.26.tgz#9cda9a4613574be4c131d67b26ec856fb3637fc2"
-  integrity sha512-7c28kbgjvvoROu7XdAw5mIGMaUCZvgxcLhrZ+243nqJwFsl87aD8IgMiuKIkJkSOe2X6MA+qXwqqL+6/PtPbig==
-
 JSONStream@^1.3.5:
   version "1.3.5"
   resolved "https://registry.npmjs.org/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
