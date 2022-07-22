@@ -3,7 +3,7 @@ import * as jose from "jose";
 const createHasuraJWT = async (
   idTokenPayload: jose.JWTPayload,
 ): Promise<string> => {
-  const userEmail = idTokenPayload.email as string;
+  const userEmail = idTokenPayload.email as string || "";
   let defaultRole = "worker";
   const allowedRoles = ["worker"];
 
