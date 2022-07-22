@@ -1,5 +1,6 @@
-import config from "config";
 import _sodium from "libsodium-wrappers";
+
+import config from "src/config";
 
 const textEncoder = new TextEncoder();
 
