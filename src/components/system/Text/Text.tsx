@@ -51,13 +51,13 @@ export type TextColor = keyof typeof textColors;
 
 // All text style props are optional to allow parent styles inheritance.
 // This is useful for markdown.
-export interface TextStyleProps {
+export interface TextProps {
   variant?: TextVariant;
   weight?: TextWeight;
   color?: TextColor;
 }
 
-export const Text = styled.div(({ variant, weight, color }: TextStyleProps) => [
+export const Text = styled.div(({ variant, weight, color }: TextProps) => [
   variant && textVariants[variant],
   weight && textWeights[weight],
   color && textColors[color],

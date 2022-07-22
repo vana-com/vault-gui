@@ -4,7 +4,11 @@ import tw from "twin.macro";
 import { BoxProps, Group, Text, TextProps } from "src/components";
 import { CarbonLocked } from "src/components/Icons";
 
-const DefaultText = (props: TextProps) => (
+interface DefaultTextProps extends TextProps {
+  children: React.ReactNode;
+}
+
+const DefaultText = (props: DefaultTextProps) => (
   <Text weight="medium" variant="footnote" color="black" {...props} />
 );
 
