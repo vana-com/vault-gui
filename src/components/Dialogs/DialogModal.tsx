@@ -1,25 +1,31 @@
-import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-// import { vars } from "css/vars.css";
 import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogTrigger,
+  styledMotionDiv,
+} from "src/components";
+
 import * as styles from "./Dialog.css";
-import { styledMotionDiv } from "./Motion.css";
 
 interface Props {
   buttonSlot: React.ReactNode;
   children: React.ReactNode;
 }
 
-const Dialog = ({ buttonSlot, children }: Props) => {
+const DialogModal = ({ buttonSlot, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DialogPrimitive.Root onOpenChange={setIsOpen} open={isOpen}>
-      <DialogPrimitive.Trigger asChild>{buttonSlot}</DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
+    <Dialog onOpenChange={setIsOpen} open={isOpen}>
+      <DialogTrigger asChild>{buttonSlot}</DialogTrigger>
+      <DialogPortal>
         <AnimatePresence>
           {isOpen ? (
             <>
@@ -30,7 +36,7 @@ const Dialog = ({ buttonSlot, children }: Props) => {
                 transition={{ duration: 0.125 }}
                 css={styledMotionDiv}
               >
-                <DialogPrimitive.Overlay
+                <DialogOverlay
                   forceMount
                   tw="fixed inset-0 bg-backgroundScrim backdrop-blur-sm"
                 />
@@ -42,20 +48,20 @@ const Dialog = ({ buttonSlot, children }: Props) => {
                 transition={{ duration: 0.25 }}
                 css={styledMotionDiv}
               >
-                <DialogPrimitive.Content
+                <DialogContent
                   forceMount
                   asChild
                   css={styles.styledDialogContent}
                 >
                   {children}
-                </DialogPrimitive.Content>
+                </DialogContent>
               </motion.div>
             </>
           ) : null}
         </AnimatePresence>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+      </DialogPortal>
+    </Dialog>
   );
 };
 
-export { Dialog };
+export { DialogModal };

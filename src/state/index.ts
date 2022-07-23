@@ -1,5 +1,5 @@
 import { SafeEventEmitterProvider, UserInfo } from "@web3auth/base";
-import { atom } from "jotai";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
 // TODO: update interface with generated graphQL type
 interface User {
@@ -9,18 +9,31 @@ interface User {
   name: string;
 }
 
-const userAtom = atom<User | undefined>(undefined);
-const idTokenAtom = atom<string | undefined>(undefined);
-const hasuraTokenAtom = atom<string | undefined>(undefined);
-const web3AuthUserInfoAtom = atom<Partial<UserInfo> | undefined>(undefined);
-const web3AuthWalletProviderAtom = atom<SafeEventEmitterProvider | undefined>(
+function createAtom<T>(name: string, defaultValue: T) {
+  return atomWithStorage<T>(
+    name,
+    defaultValue,
+    createJSONStorage<T>(() => localStorage),
+  );
+}
+
+const userAtom = createAtom<User | undefined>("user", undefined);
+const idTokenAtom = createAtom<string | undefined>("id-token", undefined);
+const hasuraTokenAtom = createAtom<string>("hasura-token", "");
+const web3AuthAdapterAtom = createAtom<any>("web3auth-adapter", undefined);
+const web3AuthUserInfoAtom = createAtom<Partial<UserInfo> | undefined>(
+  "web3auth-user-info",
   undefined,
 );
+const web3AuthWalletProviderAtom = createAtom<
+  SafeEventEmitterProvider | undefined
+>("web3auth-wallet-provider", undefined);
 
 export {
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
+  web3AuthAdapterAtom,
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 };

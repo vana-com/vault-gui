@@ -21,9 +21,10 @@ const swipeOut = keyframes({
 export const viewport = [
   tw`fixed top-0 right-0`,
   tw`flex flex-col items-center justify-center gap-3`,
-  // VIEWPORT_PADDING
-  tw`p-[25px]`,
   tw`w-[390px] max-w-full m-0 outline-none z-[999]`,
+  css`
+    padding: ${VIEWPORT_PADDING}px;
+  `,
 ];
 
 export const root = [

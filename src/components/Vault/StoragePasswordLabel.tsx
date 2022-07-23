@@ -1,21 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { BoxProps, Group, Text, TextProps } from "src/components";
+import { BoxProps, Group, Text } from "src/components";
 import { CarbonLocked } from "src/components/Icons";
-
-const DefaultText = (props: TextProps) => (
-  <Text weight="medium" variant="footnote" color="black" {...props} />
-);
 
 const DefaultLabel = () => (
   <>
-    <DefaultText as="span" weight="semibold" color="inherit">
-      Create a password.
-    </DefaultText>{" "}
-    <DefaultText as="span" color="inherit">
-      Only you will know this.
-    </DefaultText>
+    <Text weight="semibold" variant="footnote" color="black">
+      Create a password.{" "}
+      <Text as="span" weight="medium">
+        Only you will know this.
+      </Text>
+    </Text>
   </>
 );
 

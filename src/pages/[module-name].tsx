@@ -9,11 +9,11 @@ import {
   CardHeaderVaultModule,
   DeleteData,
   PageVault,
-  SpinnerIcon,
+  Spinner,
   TitleAndMetaTags,
 } from "src/components";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import { idTokenAtom, userAtom } from "src/state";
+import { hasuraTokenAtom, userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultModulePage: NextPage = () => {
@@ -26,7 +26,7 @@ const VaultModulePage: NextPage = () => {
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
   const [user] = useAtom(userAtom);
-  const [idToken] = useAtom(idTokenAtom);
+  const [hasuraToken] = useAtom(hasuraTokenAtom);
 
   const { data: userModulesData, loading: isDataLoading } =
     useGetUserModulesSubscription({
@@ -61,7 +61,7 @@ const VaultModulePage: NextPage = () => {
         },
         body: JSON.stringify({
           usersModulesIds: usersModulesIdsToDelete,
-          idToken,
+          hasuraToken,
         }),
       })
     ).json();
@@ -87,7 +87,7 @@ const VaultModulePage: NextPage = () => {
           <hr />
 
           {isDataLoading ? (
-            <SpinnerIcon />
+            <Spinner />
           ) : (
             <div tw="flex flex-col gap-2 items-center">
               <div css={usersModulesForName?.length < 2 && tw`pt-1`}>

@@ -1,5 +1,6 @@
 # Next Build
 .next
+public
 
 # NPM Files
 yarn.lock

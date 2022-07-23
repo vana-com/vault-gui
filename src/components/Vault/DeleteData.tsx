@@ -1,9 +1,14 @@
-import { DialogClose } from "@radix-ui/react-dialog";
-// import { useRef } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Dialog, Group, Stack, Text } from "src/components";
+import {
+  Button,
+  DialogClose,
+  DialogModal,
+  Group,
+  Stack,
+  Text,
+} from "src/components";
 import { CarbonCloseFilled } from "src/components/Icons";
 
 interface Props {
@@ -17,7 +22,7 @@ const DeleteData = ({
   isDeleting,
   onDelete,
 }: Props) => (
-  <Dialog
+  <DialogModal
     buttonSlot={
       <Button
         variant="outline"
@@ -49,7 +54,7 @@ const DeleteData = ({
         </DialogClose>
       </Group>
     </Stack>
-  </Dialog>
+  </DialogModal>
 );
 
 export { DeleteData };

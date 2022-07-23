@@ -85,7 +85,7 @@ const VaultStoragePage: NextPage = () => {
             <hr />
           </Stack>
           <Stack tw="gap-0">
-            <StorageInstructions moduleName={moduleName} />
+            <StorageInstructions moduleName={moduleName as any} />
             <hr />
           </Stack>
           <div tw="pt-5">
