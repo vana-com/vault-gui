@@ -51,7 +51,7 @@ const HomePage: NextPage = () => {
 
   const hasStoredModules = !!userModulesData?.usersModules?.length;
 
-  // Loading state
+  // Loading state for Apollo
   if (isModulesLoading || isUserModulesDataLoading) {
     return (
       <PageVault>
@@ -62,44 +62,47 @@ const HomePage: NextPage = () => {
     );
   }
 
+  // Loading state for !user
+  if (!user) {
+    return (
+      <>
+        <TitleAndMetaTags color="black" />
+        <PageVault>
+          <Flex tw="w-full items-center justify-center">
+            <Login />
+          </Flex>
+        </PageVault>
+      </>
+    );
+  }
+
   return (
     <>
       <TitleAndMetaTags color="black" />
 
       <PageVault>
-        {user ? (
-          <Flex tw="w-full flex-col gap-4">
-            <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
-              <Text as="h3" variant="heading" color="label">
-                Your Data
-              </Text>
-              <PopoverHelp />
-            </Flex>
-            <hr />
-            <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
-              <DialogDrawerMenu buttonLabel="Add">
-                <CardHeaderVaultNoModules>
-                  {modules?.map((module) => (
-                    <ModuleButton key={module.id} name={module.name} />
-                  ))}
-                </CardHeaderVaultNoModules>
-              </DialogDrawerMenu>
-              {/* TODO: use real data with map() */}
-              {hasStoredModules && (
-                <ModuleButton
-                  key="instagram"
-                  name="instagram"
-                  isLarge
-                  isStored
-                />
-              )}
-            </div>
+        <Flex tw="w-full flex-col gap-4">
+          <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
+            <Text as="h3" variant="heading" color="label">
+              Your Data
+            </Text>
+            <PopoverHelp />
           </Flex>
-        ) : (
-          <Flex tw="w-full items-center justify-center">
-            <Login />
-          </Flex>
-        )}
+          <hr />
+          <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
+            <DialogDrawerMenu buttonLabel="Add">
+              <CardHeaderVaultNoModules>
+                {modules?.map((module) => (
+                  <ModuleButton key={module.id} name={module.name} />
+                ))}
+              </CardHeaderVaultNoModules>
+            </DialogDrawerMenu>
+            {/* TODO: use real data with map() */}
+            {hasStoredModules && (
+              <ModuleButton key="instagram" name="instagram" isLarge isStored />
+            )}
+          </div>
+        </Flex>
       </PageVault>
     </>
   );
