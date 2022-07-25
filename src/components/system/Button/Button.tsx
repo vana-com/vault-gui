@@ -1,6 +1,6 @@
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { TwStyle } from "twin.macro";
 
 import { Box, Spinner } from "src/components";
 
@@ -11,7 +11,7 @@ type BaseProps = {
   suffix?: React.ReactNode;
   id?: string;
   isLoading?: boolean;
-  css?: any;
+  css?: TwStyle;
 } & styles.ButtonStyleProps &
   Pick<
     JSX.IntrinsicElements["button"],
