@@ -1,5 +1,7 @@
 import * as jose from "jose";
 
+import { getSecret } from "./getSecret";
+
 /**
  * Retrieve the Hasura Token payload, issued by Vault.
  *
@@ -11,7 +13,7 @@ const getHasuraTokenPayload = async (
 ): Promise<jose.JWTPayload | null> => {
   try {
     const hasuraJwtSecret = await jose.importPKCS8(
-      process.env.HASURA_JWT_SECRET as string,
+      getSecret("hasura_jwt_secret", true),
       "RS512",
     );
     const jwtDecoded = await jose.jwtVerify(hasuraToken, hasuraJwtSecret);
