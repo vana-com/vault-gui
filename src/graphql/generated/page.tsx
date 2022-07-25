@@ -11,6 +11,7 @@ import { getApolloClient } from '../../utils/apolloClient';
 
 
 
+
 export async function getServerPageGetModule
     (options: Omit<Apollo.QueryOptions<Types.GetModuleQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
@@ -185,6 +186,41 @@ export const ssrGetUser = {
       getServerPage: getServerPageGetUser,
       withPage: withPageGetUser,
       usePage: useGetUser,
+    }
+export async function getServerPageGetUserFromExternalIdOrEmail
+    (options: Omit<Apollo.QueryOptions<Types.GetUserFromExternalIdOrEmailQueryVariables>, 'query'>, ctx?: any ){
+        const apolloClient = getApolloClient(ctx);
+        
+        const data = await apolloClient.query<Types.GetUserFromExternalIdOrEmailQuery>({ ...options, query: Operations.GetUserFromExternalIdOrEmailDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState: apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }
+export const useGetUserFromExternalIdOrEmail = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserFromExternalIdOrEmailQuery, Types.GetUserFromExternalIdOrEmailQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.GetUserFromExternalIdOrEmailDocument, options);
+};
+export type PageGetUserFromExternalIdOrEmailComp = React.FC<{data?: Types.GetUserFromExternalIdOrEmailQuery, error?: Apollo.ApolloError}>;
+export const withPageGetUserFromExternalIdOrEmail = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserFromExternalIdOrEmailQuery, Types.GetUserFromExternalIdOrEmailQueryVariables>) => (WrappedComponent:PageGetUserFromExternalIdOrEmailComp) : NextPage  => (props) => {
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.GetUserFromExternalIdOrEmailDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; 
+export const ssrGetUserFromExternalIdOrEmail = {
+      getServerPage: getServerPageGetUserFromExternalIdOrEmail,
+      withPage: withPageGetUserFromExternalIdOrEmail,
+      usePage: useGetUserFromExternalIdOrEmail,
     }
 export async function getServerPageGetUserUuidFromExternalId
     (options: Omit<Apollo.QueryOptions<Types.GetUserUuidFromExternalIdQueryVariables>, 'query'>, ctx?: any ){

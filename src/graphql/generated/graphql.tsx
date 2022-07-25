@@ -165,9 +165,9 @@ export type CashOutRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "cash_out_requests" */
 export enum CashOutRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "transaction_hash" */
   CashOutRequestsConfirmationIdKey = 'cash_out_requests_confirmation_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   CashOutRequestsPkey = 'cash_out_requests_pkey'
 }
 
@@ -464,7 +464,7 @@ export type CollectionTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "collection_type" */
 export enum CollectionTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   CollectionTypePkey = 'collection_type_pkey'
 }
 
@@ -630,9 +630,9 @@ export type Customers_Bool_Exp = {
 
 /** unique or primary key constraints on table "customers" */
 export enum Customers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   CustomersPkey = 'customers_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id" */
   CustomersUserIdKey = 'customers_user_id_key'
 }
 
@@ -862,9 +862,9 @@ export type EtxTaskSessions_Bool_Exp = {
 
 /** unique or primary key constraints on table "etx_task_sessions" */
 export enum EtxTaskSessions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id", "user_id" */
   EtxTaskSessionsIdUserIdKey = 'etx_task_sessions_id_user_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   EtxTaskSessionsPkey = 'etx_task_sessions_pkey'
 }
 
@@ -1051,11 +1051,11 @@ export type FireboaCashOutCryptoRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_crypto_requests" */
 export enum FireboaCashOutCryptoRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fireboa_cash_out_request_id" */
   FireboaCashOutCryptoRequesFireboaCashOutRequestsIdKey = 'fireboa_cash_out_crypto_reques_fireboa_cash_out_requests_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutCryptoRequestsPkey = 'fireboa_cash_out_crypto_requests_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "transaction_hash" */
   FireboaCashOutCryptoRequestsTransactionHashKey = 'fireboa_cash_out_crypto_requests_transaction_hash_key'
 }
 
@@ -1224,9 +1224,9 @@ export type FireboaCashOutGiftCardRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_gift_card_requests" */
 export enum FireboaCashOutGiftCardRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fireboa_cash_out_request_id" */
   FireboaCashOutGiftCardReqFireboaCashOutRequestsIdKey = 'fireboa_cash_out_gift_card_req_fireboa_cash_out_requests_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutGiftCardRequestsPkey = 'fireboa_cash_out_gift_card_requests_pkey'
 }
 
@@ -1401,7 +1401,7 @@ export type FireboaCashOutPreferredMethods_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_preferred_methods" */
 export enum FireboaCashOutPreferredMethods_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutPreferredMethodsPkey = 'fireboa_cash_out_preferred_methods_pkey'
 }
 
@@ -1628,7 +1628,7 @@ export type FireboaCashOutRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_requests" */
 export enum FireboaCashOutRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutRequestsPkey = 'fireboa_cash_out_requests_pkey'
 }
 
@@ -1939,7 +1939,7 @@ export type FireboaModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_modules" */
 export enum FireboaModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ModulesPkey = 'modules_pkey'
 }
 
@@ -2259,7 +2259,7 @@ export type FireboaProjectsModulesUsers_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_modules_users" */
 export enum FireboaProjectsModulesUsers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id", "fireboa_project_module_id" */
   FireboaProjectModuleUserPkey = 'fireboa_project_module_user_pkey'
 }
 
@@ -2479,7 +2479,7 @@ export type FireboaProjectsModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_modules" */
 export enum FireboaProjectsModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaProjectModulePkey = 'fireboa_project_module_pkey'
 }
 
@@ -2737,7 +2737,7 @@ export type FireboaProjectsModules_Variance_Order_By = {
 /** columns and relationships of "fireboa_projects_users" */
 export type FireboaProjectsUsers = {
   __typename?: 'FireboaProjectsUsers';
-  currentState: Project_Statuses_Enum;
+  currentState: ProjectStatuses_Enum;
   /** An object relationship */
   fireboaProject: FireboaProjects;
   fireboaProjectId: Scalars['uuid'];
@@ -2787,7 +2787,7 @@ export type FireboaProjectsUsers_Bool_Exp = {
   _and?: InputMaybe<Array<FireboaProjectsUsers_Bool_Exp>>;
   _not?: InputMaybe<FireboaProjectsUsers_Bool_Exp>;
   _or?: InputMaybe<Array<FireboaProjectsUsers_Bool_Exp>>;
-  currentState?: InputMaybe<Project_Statuses_Enum_Comparison_Exp>;
+  currentState?: InputMaybe<ProjectStatuses_Enum_Comparison_Exp>;
   fireboaProject?: InputMaybe<FireboaProjects_Bool_Exp>;
   fireboaProjectId?: InputMaybe<Uuid_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -2796,13 +2796,13 @@ export type FireboaProjectsUsers_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_users" */
 export enum FireboaProjectsUsers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fireboa_project_id", "user_id" */
   FireboaProjectUserPkey = 'fireboa_project_user_pkey'
 }
 
 /** input type for inserting data into table "fireboa_projects_users" */
 export type FireboaProjectsUsers_Insert_Input = {
-  currentState?: InputMaybe<Project_Statuses_Enum>;
+  currentState?: InputMaybe<ProjectStatuses_Enum>;
   fireboaProject?: InputMaybe<FireboaProjects_Obj_Rel_Insert_Input>;
   fireboaProjectId?: InputMaybe<Scalars['uuid']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -2878,7 +2878,7 @@ export enum FireboaProjectsUsers_Select_Column {
 
 /** input type for updating data in table "fireboa_projects_users" */
 export type FireboaProjectsUsers_Set_Input = {
-  currentState?: InputMaybe<Project_Statuses_Enum>;
+  currentState?: InputMaybe<ProjectStatuses_Enum>;
   fireboaProjectId?: InputMaybe<Scalars['uuid']>;
   userId?: InputMaybe<Scalars['uuid']>;
 };
@@ -2933,7 +2933,7 @@ export type FireboaProjects_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects" */
 export enum FireboaProjects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaProjectsPkey = 'fireboa_projects_pkey'
 }
 
@@ -3119,7 +3119,7 @@ export type FraudStatusEnum_Bool_Exp = {
 
 /** unique or primary key constraints on table "fraud_status_enum" */
 export enum FraudStatusEnum_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fraud_status" */
   FraudStatusEnumPkey = 'fraud_status_enum_pkey'
 }
 
@@ -3293,9 +3293,27 @@ export type IdentitiesLegalIdTypeEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "identities_legal_id_type_enum" */
 export enum IdentitiesLegalIdTypeEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   IdentitiesLegalIdTypeEnumPkey = 'identities_legal_id_type_enum_pkey'
 }
+
+export enum IdentitiesLegalIdTypeEnums_Enum {
+  /** Drivers license document type. */
+  DrivingLicense = 'driving_license',
+  /** ID card document type. */
+  IdCard = 'id_card',
+  /** Passport document type. */
+  Passport = 'passport'
+}
+
+/** Boolean expression to compare columns of type "IdentitiesLegalIdTypeEnums_enum". All fields are combined with logical 'AND'. */
+export type IdentitiesLegalIdTypeEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
+  _in?: InputMaybe<Array<IdentitiesLegalIdTypeEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
+  _nin?: InputMaybe<Array<IdentitiesLegalIdTypeEnums_Enum>>;
+};
 
 /** input type for inserting data into table "identities_legal_id_type_enum" */
 export type IdentitiesLegalIdTypeEnums_Insert_Input = {
@@ -3443,9 +3461,9 @@ export type Images_Bool_Exp = {
 
 /** unique or primary key constraints on table "images" */
 export enum Images_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "resource_name" */
   ImagesResourceNameKey = 'images_resource_name_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModulesImagesPkey = 'visualJudgementModulesImages_pkey'
 }
 
@@ -3665,7 +3683,7 @@ export type ModuleInstructions_Bool_Exp = {
 
 /** unique or primary key constraints on table "module_instructions" */
 export enum ModuleInstructions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   DataServiceInstructionsPkey = 'data_service_instructions_pkey'
 }
 
@@ -3896,9 +3914,9 @@ export type Modules_Bool_Exp = {
 
 /** unique or primary key constraints on table "modules" */
 export enum Modules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   DataServicesPkey = 'data_services_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   ModulesNameKey = 'modules_name_key'
 }
 
@@ -4073,9 +4091,24 @@ export type ProjectStatuses_Bool_Exp = {
 
 /** unique or primary key constraints on table "project_statuses" */
 export enum ProjectStatuses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   ProjectStatusesPkey = 'project_statuses_pkey'
 }
+
+export enum ProjectStatuses_Enum {
+  Compensated = 'COMPENSATED',
+  Complete = 'COMPLETE',
+  InProgress = 'IN_PROGRESS'
+}
+
+/** Boolean expression to compare columns of type "ProjectStatuses_enum". All fields are combined with logical 'AND'. */
+export type ProjectStatuses_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<ProjectStatuses_Enum>;
+  _in?: InputMaybe<Array<ProjectStatuses_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<ProjectStatuses_Enum>;
+  _nin?: InputMaybe<Array<ProjectStatuses_Enum>>;
+};
 
 /** input type for inserting data into table "project_statuses" */
 export type ProjectStatuses_Insert_Input = {
@@ -4227,7 +4260,7 @@ export type Sessions_Bool_Exp = {
 
 /** unique or primary key constraints on table "sessions" */
 export enum Sessions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   SessionsPkey = 'sessions_pkey'
 }
 
@@ -4659,9 +4692,33 @@ export type StripeIdentitySessionErrorCodeEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_identity_session_error_code_enum" */
 export enum StripeIdentitySessionErrorCodeEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   StripeIdentitySessionErrorCodeEnumPkey = 'stripe_identity_session_error_code_enum_pkey'
 }
+
+export enum StripeIdentitySessionErrorCodeEnums_Enum {
+  /** 	The provided identity document has expired. */
+  DocumentExpired = 'document_expired',
+  /** The provided identity document isn’t one of the session’s allowed document types. */
+  DocumentTypeNotSupported = 'document_type_not_supported',
+  /** Stripe couldn’t verify the provided identity document. */
+  DocumentUnverifiedOther = 'document_unverified_other',
+  /** 	The provided document didn’t contain enough data to match against the ID number. */
+  IdNumberInsufficientDocumentData = 'id_number_insufficient_document_data',
+  /** The information provided couldn’t be matched against global databases. */
+  IdNumberMismatch = 'id_number_mismatch',
+  /** Stripe couldn’t verify the provided ID number. */
+  IdNumberUnverifiedOther = 'id_number_unverified_other'
+}
+
+/** Boolean expression to compare columns of type "StripeIdentitySessionErrorCodeEnums_enum". All fields are combined with logical 'AND'. */
+export type StripeIdentitySessionErrorCodeEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
+  _in?: InputMaybe<Array<StripeIdentitySessionErrorCodeEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
+  _nin?: InputMaybe<Array<StripeIdentitySessionErrorCodeEnums_Enum>>;
+};
 
 /** input type for inserting data into table "stripe_identity_session_error_code_enum" */
 export type StripeIdentitySessionErrorCodeEnums_Insert_Input = {
@@ -4779,9 +4836,35 @@ export type StripeIdentitySessionStatusEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_identity_session_status_enum" */
 export enum StripeIdentitySessionStatusEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   StripeIdentitySessionStatusEnumPkey = 'stripe_identity_session_status_enum_pkey'
 }
+
+export enum StripeIdentitySessionStatusEnums_Enum {
+  /** The session has been canceled and future submission attempts have been disabled.  */
+  Canceled = 'canceled',
+  /** The session was created. */
+  Created = 'created',
+  /** The user has not started a session. */
+  NotStarted = 'not_started',
+  /** The user has successfully submitted their information, and verification checks have started processing. */
+  Processing = 'processing',
+  /** The session was redacted. */
+  Redacted = 'redacted',
+  /** Processing of all the verification checks have completed, and at least one of the checks failed. */
+  RequiresInput = 'requires_input',
+  /** Processing of all the verification checks have completed, and they’re all successfully verified. */
+  Verified = 'verified'
+}
+
+/** Boolean expression to compare columns of type "StripeIdentitySessionStatusEnums_enum". All fields are combined with logical 'AND'. */
+export type StripeIdentitySessionStatusEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
+  _in?: InputMaybe<Array<StripeIdentitySessionStatusEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
+  _nin?: InputMaybe<Array<StripeIdentitySessionStatusEnums_Enum>>;
+};
 
 /** input type for inserting data into table "stripe_identity_session_status_enum" */
 export type StripeIdentitySessionStatusEnums_Insert_Input = {
@@ -4899,9 +4982,25 @@ export type StripeIdentitySessionTypeEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_identity_session_type_enum" */
 export enum StripeIdentitySessionTypeEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   StripeIdentitySessionTypeEnumPkey = 'stripe_identity_session_type_enum_pkey'
 }
+
+export enum StripeIdentitySessionTypeEnums_Enum {
+  /** Document check. */
+  Document = 'document',
+  /** ID number check. */
+  IdNumber = 'id_number'
+}
+
+/** Boolean expression to compare columns of type "StripeIdentitySessionTypeEnums_enum". All fields are combined with logical 'AND'. */
+export type StripeIdentitySessionTypeEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
+  _in?: InputMaybe<Array<StripeIdentitySessionTypeEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
+  _nin?: InputMaybe<Array<StripeIdentitySessionTypeEnums_Enum>>;
+};
 
 /** input type for inserting data into table "stripe_identity_session_type_enum" */
 export type StripeIdentitySessionTypeEnums_Insert_Input = {
@@ -4988,13 +5087,13 @@ export type StripeVerificationSessions = {
   /** unique ID for the initiated Stripe Identity verification session */
   sessionId: Scalars['String'];
   /** machine-readable error code if a check has failed */
-  sessionLastErrorCode?: Maybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
+  sessionLastErrorCode?: Maybe<StripeIdentitySessionErrorCodeEnums_Enum>;
   /** last error in human readable format */
   sessionLastErrorMessage?: Maybe<Scalars['String']>;
   /** status of the initiated Stripe Identity verification session */
-  sessionStatus: Stripe_Identity_Session_Status_Enum_Enum;
+  sessionStatus: StripeIdentitySessionStatusEnums_Enum;
   /** type of verification session initiated */
-  sessionType: Stripe_Identity_Session_Type_Enum_Enum;
+  sessionType: StripeIdentitySessionTypeEnums_Enum;
   /** An object relationship */
   stripeIdentitySessionErrorCodeEnum?: Maybe<StripeIdentitySessionErrorCodeEnums>;
   /** An object relationship */
@@ -5076,10 +5175,10 @@ export type StripeVerificationSessions_Bool_Exp = {
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   sessionId?: InputMaybe<String_Comparison_Exp>;
-  sessionLastErrorCode?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum_Comparison_Exp>;
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum_Comparison_Exp>;
   sessionLastErrorMessage?: InputMaybe<String_Comparison_Exp>;
-  sessionStatus?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum_Comparison_Exp>;
-  sessionType?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum_Comparison_Exp>;
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum_Comparison_Exp>;
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum_Comparison_Exp>;
   stripeIdentitySessionErrorCodeEnum?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Bool_Exp>;
   stripeIdentitySessionStatusEnum?: InputMaybe<StripeIdentitySessionStatusEnums_Bool_Exp>;
   stripeIdentitySessionTypeEnum?: InputMaybe<StripeIdentitySessionTypeEnums_Bool_Exp>;
@@ -5091,9 +5190,9 @@ export type StripeVerificationSessions_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_verification_sessions" */
 export enum StripeVerificationSessions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   StripeVerificationSessionsPkey = 'stripe_verification_sessions_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "session_id" */
   StripeVerificationSessionsSessionIdKey = 'stripe_verification_sessions_session_id_key'
 }
 
@@ -5105,13 +5204,13 @@ export type StripeVerificationSessions_Insert_Input = {
   /** unique ID for the initiated Stripe Identity verification session */
   sessionId?: InputMaybe<Scalars['String']>;
   /** machine-readable error code if a check has failed */
-  sessionLastErrorCode?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
   /** last error in human readable format */
   sessionLastErrorMessage?: InputMaybe<Scalars['String']>;
   /** status of the initiated Stripe Identity verification session */
-  sessionStatus?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
   /** type of verification session initiated */
-  sessionType?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
   stripeIdentitySessionErrorCodeEnum?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Obj_Rel_Insert_Input>;
   stripeIdentitySessionStatusEnum?: InputMaybe<StripeIdentitySessionStatusEnums_Obj_Rel_Insert_Input>;
   stripeIdentitySessionTypeEnum?: InputMaybe<StripeIdentitySessionTypeEnums_Obj_Rel_Insert_Input>;
@@ -5257,13 +5356,13 @@ export type StripeVerificationSessions_Set_Input = {
   /** unique ID for the initiated Stripe Identity verification session */
   sessionId?: InputMaybe<Scalars['String']>;
   /** machine-readable error code if a check has failed */
-  sessionLastErrorCode?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
   /** last error in human readable format */
   sessionLastErrorMessage?: InputMaybe<Scalars['String']>;
   /** status of the initiated Stripe Identity verification session */
-  sessionStatus?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
   /** type of verification session initiated */
-  sessionType?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   /** uuid of the participant of the session */
   userId?: InputMaybe<Scalars['uuid']>;
@@ -5361,11 +5460,11 @@ export type SurveyResponses_Bool_Exp = {
 
 /** unique or primary key constraints on table "survey_responses" */
 export enum SurveyResponses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   SurveyResponsesPkey = 'survey_responses_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "qualtrics_response_id" */
   SurveyResponsesQualtricsResponseIdKey = 'survey_responses_qualtrics_response_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "survey_url", "user_id" */
   SurveyResponsesUserIdSurveyUrlKey = 'survey_responses_user_id_survey_url_key'
 }
 
@@ -5597,9 +5696,9 @@ export type Surveys_Bool_Exp = {
 
 /** unique or primary key constraints on table "surveys" */
 export enum Surveys_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   SurveysPkey = 'surveys_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "survey_url" */
   SurveysSurveyUrlKey = 'surveys_survey_url_key'
 }
 
@@ -5845,7 +5944,7 @@ export type UserIdentities = {
   /** The type of id number supplied (includes country code as a prefix) */
   legalIdNumberType?: Maybe<Scalars['String']>;
   /** The document type that the user supplied, verified by 3rd party */
-  legalIdType: Identities_Legal_Id_Type_Enum_Enum;
+  legalIdType: IdentitiesLegalIdTypeEnums_Enum;
   /** Last name of user-supplied document, verified by 3rd party */
   legalLastName?: Maybe<Scalars['String']>;
   /** Local zip code from the document */
@@ -5909,7 +6008,7 @@ export type UserIdentities_Bool_Exp = {
   legalIdCountry?: InputMaybe<String_Comparison_Exp>;
   legalIdNumber?: InputMaybe<String_Comparison_Exp>;
   legalIdNumberType?: InputMaybe<String_Comparison_Exp>;
-  legalIdType?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum_Comparison_Exp>;
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum_Comparison_Exp>;
   legalLastName?: InputMaybe<String_Comparison_Exp>;
   legalZipCode?: InputMaybe<String_Comparison_Exp>;
   stripeVerificationSession?: InputMaybe<StripeVerificationSessions_Bool_Exp>;
@@ -5921,9 +6020,9 @@ export type UserIdentities_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_identities" */
 export enum UserIdentities_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "legal_id_type", "legal_id_number", "legal_id_country" */
   UserIdentitiesLegalIdNumberLegalIdTypeLegalIdCounKey = 'user_identities_legal_id_number_legal_id_type_legal_id_coun_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserIdentitiesPkey = 'user_identities_pkey'
 }
 
@@ -5942,7 +6041,7 @@ export type UserIdentities_Insert_Input = {
   /** The type of id number supplied (includes country code as a prefix) */
   legalIdNumberType?: InputMaybe<Scalars['String']>;
   /** The document type that the user supplied, verified by 3rd party */
-  legalIdType?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
   /** Last name of user-supplied document, verified by 3rd party */
   legalLastName?: InputMaybe<Scalars['String']>;
   /** Local zip code from the document */
@@ -6137,7 +6236,7 @@ export type UserIdentities_Set_Input = {
   /** The type of id number supplied (includes country code as a prefix) */
   legalIdNumberType?: InputMaybe<Scalars['String']>;
   /** The document type that the user supplied, verified by 3rd party */
-  legalIdType?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
   /** Last name of user-supplied document, verified by 3rd party */
   legalLastName?: InputMaybe<Scalars['String']>;
   /** Local zip code from the document */
@@ -6217,7 +6316,7 @@ export type UserModuleStatus_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_module_progress_enum" */
 export enum UserModuleStatus_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   UserModuleProgressEnumPkey = 'user_module_progress_enum_pkey'
 }
 
@@ -6358,9 +6457,9 @@ export type UserReferrals_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_referrals" */
 export enum UserReferrals_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserReferralsPkey = 'user_referrals_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "referred_user_id" */
   UserReferralsReferredUserIdKey = 'user_referrals_referred_user_id_key'
 }
 
@@ -6833,7 +6932,7 @@ export type UsersImages_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_images" */
 export enum UsersImages_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UsersImagesPkey = 'users_images_pkey'
 }
 
@@ -7046,7 +7145,7 @@ export type UsersModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_modules" */
 export enum UsersModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserServiceDataPkey = 'user_service_data_pkey'
 }
 
@@ -7588,13 +7687,13 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "email_address" */
   UsersEmailAddressKey = 'users_email_address_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "external_id" */
   UsersExternalIdKey = 'users_externalId_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "phone_number" */
   UsersPhoneNumberKey = 'users_phone_number_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UsersPkey = 'users_pkey'
 }
 
@@ -7961,9 +8060,9 @@ export type VisualJudgementModuleResponses_Bool_Exp = {
 
 /** unique or primary key constraints on table "visual_judgement_module_responses" */
 export enum VisualJudgementModuleResponses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModuleResponsesPkey = 'visual_judgement_module_responses_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "visual_judgement_module_image_id", "user_id" */
   VisualJudgementModuleResponsesVisualJudgementModuleImage = 'visual_judgement_module_responses_visual_judgement_module_image'
 }
 
@@ -8193,7 +8292,7 @@ export type Wallets_Bool_Exp = {
 
 /** unique or primary key constraints on table "wallets" */
 export enum Wallets_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   WalletAddressesPkey = 'wallet_addresses_pkey'
 }
 
@@ -8561,9 +8660,9 @@ export type Workers_Bool_Exp = {
 
 /** unique or primary key constraints on table "workers" */
 export enum Workers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   WorkersPkey = 'workers_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id" */
   WorkersUserIdKey = 'workers_user_id_key'
 }
 
@@ -8893,7 +8992,7 @@ export type CashOutMethods_Bool_Exp = {
 
 /** unique or primary key constraints on table "cash_out_methods" */
 export enum CashOutMethods_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   CashOutMethodsPkey = 'cash_out_methods_pkey'
 }
 
@@ -9015,7 +9114,7 @@ export type DatatTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "data_types" */
 export enum DatatTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   DataTypesPkey = 'data_types_pkey'
 }
 
@@ -9128,7 +9227,7 @@ export type FeatureTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "feature_types" */
 export enum FeatureTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   FeatureTypesPkey = 'feature_types_pkey'
 }
 
@@ -9254,7 +9353,7 @@ export type Gender_Bool_Exp = {
 
 /** unique or primary key constraints on table "gender" */
 export enum Gender_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GenderPkey = 'gender_pkey'
 }
 
@@ -9367,7 +9466,7 @@ export type HaveLabeledDataTypesEnum_Bool_Exp = {
 
 /** unique or primary key constraints on table "have_labeled_data_types" */
 export enum HaveLabeledDataTypesEnum_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   HaveLabeledDataTypesPkey = 'have_labeled_data_types_pkey'
 }
 
@@ -9440,24 +9539,6 @@ export enum HaveLabeledDataTypesEnum_Update_Column {
   Value = 'value'
 }
 
-export enum Identities_Legal_Id_Type_Enum_Enum {
-  /** Drivers license document type. */
-  DrivingLicense = 'driving_license',
-  /** ID card document type. */
-  IdCard = 'id_card',
-  /** Passport document type. */
-  Passport = 'passport'
-}
-
-/** Boolean expression to compare columns of type "identities_legal_id_type_enum_enum". All fields are combined with logical 'AND'. */
-export type Identities_Legal_Id_Type_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
-  _in?: InputMaybe<Array<Identities_Legal_Id_Type_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
-  _nin?: InputMaybe<Array<Identities_Legal_Id_Type_Enum_Enum>>;
-};
-
 /** columns and relationships of "industry_types" */
 export type Industry_Types = {
   __typename?: 'industry_types';
@@ -9498,7 +9579,7 @@ export type Industry_Types_Bool_Exp = {
 
 /** unique or primary key constraints on table "industry_types" */
 export enum Industry_Types_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   IndustryTypesPkey = 'industry_types_pkey'
 }
 
@@ -9639,7 +9720,7 @@ export type LabellingPlatforms_Bool_Exp = {
 
 /** unique or primary key constraints on table "labelling_platforms" */
 export enum LabellingPlatforms_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   LabellingPlatformsPkey = 'labelling_platforms_pkey'
 }
 
@@ -9770,7 +9851,7 @@ export type Managers_Bool_Exp = {
 
 /** unique or primary key constraints on table "managers" */
 export enum Managers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ManagersPkey = 'managers_pkey'
 }
 
@@ -9955,11 +10036,11 @@ export type Marketplace_Projects_Bool_Exp = {
 
 /** unique or primary key constraints on table "marketplace_projects" */
 export enum Marketplace_Projects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   MarketplaceProjectsPkey = 'marketplace_projects_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "title" */
   MarketplaceProjectsTitleKey = 'marketplace_projects_title_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "url_slug" */
   MarketplaceProjectsUrlSlugKey = 'marketplace_projects_url_slug_key'
 }
 
@@ -10114,7 +10195,7 @@ export type Modules_Marketplace_Projects_Bool_Exp = {
 
 /** unique or primary key constraints on table "modules_marketplace_projects" */
 export enum Modules_Marketplace_Projects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "project_id", "module_id" */
   ModulesMarketplaceProjectsPkey = 'modules_marketplace_projects_pkey'
 }
 
@@ -13461,7 +13542,7 @@ export type OrganizationsCustomers_Bool_Exp = {
 
 /** unique or primary key constraints on table "organizations_customers" */
 export enum OrganizationsCustomers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "customer_id", "organization_id" */
   OrganizationsCustomersPkey = 'organizations_customers_pkey'
 }
 
@@ -13617,7 +13698,7 @@ export type Organizations_Bool_Exp = {
 
 /** unique or primary key constraints on table "organizations" */
 export enum Organizations_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   OrganizationsPkey = 'organizations_pkey'
 }
 
@@ -13823,7 +13904,7 @@ export type PricingPlans_Bool_Exp = {
 
 /** unique or primary key constraints on table "pricing_plans" */
 export enum PricingPlans_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   PricingPlansPkey = 'pricing_plans_pkey'
 }
 
@@ -14005,21 +14086,6 @@ export type PricingPlans_Variance_Fields = {
   monthlyPriceCents?: Maybe<Scalars['Float']>;
   overageCharge?: Maybe<Scalars['Float']>;
   predictionLimit?: Maybe<Scalars['Float']>;
-};
-
-export enum Project_Statuses_Enum {
-  Compensated = 'COMPENSATED',
-  Complete = 'COMPLETE',
-  InProgress = 'IN_PROGRESS'
-}
-
-/** Boolean expression to compare columns of type "project_statuses_enum". All fields are combined with logical 'AND'. */
-export type Project_Statuses_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Project_Statuses_Enum>;
-  _in?: InputMaybe<Array<Project_Statuses_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Project_Statuses_Enum>;
-  _nin?: InputMaybe<Array<Project_Statuses_Enum>>;
 };
 
 export type Query_Root = {
@@ -15768,9 +15834,26 @@ export type SpotifyStateTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "spotify_state_types" */
 export enum SpotifyStateTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   SpotifyStateTypesPkey = 'spotify_state_types_pkey'
 }
+
+export enum SpotifyStateTypes_Enum {
+  Completed = 'COMPLETED',
+  DuplicateAccount = 'DUPLICATE_ACCOUNT',
+  InternalError = 'INTERNAL_ERROR',
+  NewAccount = 'NEW_ACCOUNT',
+  Started = 'STARTED'
+}
+
+/** Boolean expression to compare columns of type "spotifyStateTypes_enum". All fields are combined with logical 'AND'. */
+export type SpotifyStateTypes_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<SpotifyStateTypes_Enum>;
+  _in?: InputMaybe<Array<SpotifyStateTypes_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<SpotifyStateTypes_Enum>;
+  _nin?: InputMaybe<Array<SpotifyStateTypes_Enum>>;
+};
 
 /** input type for inserting data into table "spotify_state_types" */
 export type SpotifyStateTypes_Insert_Input = {
@@ -15841,23 +15924,6 @@ export enum SpotifyStateTypes_Update_Column {
   Name = 'name'
 }
 
-export enum Spotify_State_Types_Enum {
-  Completed = 'COMPLETED',
-  DuplicateAccount = 'DUPLICATE_ACCOUNT',
-  InternalError = 'INTERNAL_ERROR',
-  NewAccount = 'NEW_ACCOUNT',
-  Started = 'STARTED'
-}
-
-/** Boolean expression to compare columns of type "spotify_state_types_enum". All fields are combined with logical 'AND'. */
-export type Spotify_State_Types_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Spotify_State_Types_Enum>;
-  _in?: InputMaybe<Array<Spotify_State_Types_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Spotify_State_Types_Enum>;
-  _nin?: InputMaybe<Array<Spotify_State_Types_Enum>>;
-};
-
 /** columns and relationships of "strapi" */
 export type Strapi = {
   __typename?: 'strapi';
@@ -15906,7 +15972,7 @@ export type Strapi_Bool_Exp = {
 
 /** unique or primary key constraints on table "strapi" */
 export enum Strapi_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   StrapiPkey = 'strapi_pkey'
 }
 
@@ -15969,72 +16035,6 @@ export enum Strapi_Update_Column {
   /** column name */
   Id = 'id'
 }
-
-export enum Stripe_Identity_Session_Error_Code_Enum_Enum {
-  /** 	The provided identity document has expired. */
-  DocumentExpired = 'document_expired',
-  /** The provided identity document isn’t one of the session’s allowed document types. */
-  DocumentTypeNotSupported = 'document_type_not_supported',
-  /** Stripe couldn’t verify the provided identity document. */
-  DocumentUnverifiedOther = 'document_unverified_other',
-  /** 	The provided document didn’t contain enough data to match against the ID number. */
-  IdNumberInsufficientDocumentData = 'id_number_insufficient_document_data',
-  /** The information provided couldn’t be matched against global databases. */
-  IdNumberMismatch = 'id_number_mismatch',
-  /** Stripe couldn’t verify the provided ID number. */
-  IdNumberUnverifiedOther = 'id_number_unverified_other'
-}
-
-/** Boolean expression to compare columns of type "stripe_identity_session_error_code_enum_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Identity_Session_Error_Code_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
-  _in?: InputMaybe<Array<Stripe_Identity_Session_Error_Code_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Identity_Session_Error_Code_Enum_Enum>>;
-};
-
-export enum Stripe_Identity_Session_Status_Enum_Enum {
-  /** The session has been canceled and future submission attempts have been disabled.  */
-  Canceled = 'canceled',
-  /** The session was created. */
-  Created = 'created',
-  /** The user has not started a session. */
-  NotStarted = 'not_started',
-  /** The user has successfully submitted their information, and verification checks have started processing. */
-  Processing = 'processing',
-  /** The session was redacted. */
-  Redacted = 'redacted',
-  /** Processing of all the verification checks have completed, and at least one of the checks failed. */
-  RequiresInput = 'requires_input',
-  /** Processing of all the verification checks have completed, and they’re all successfully verified. */
-  Verified = 'verified'
-}
-
-/** Boolean expression to compare columns of type "stripe_identity_session_status_enum_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Identity_Session_Status_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
-  _in?: InputMaybe<Array<Stripe_Identity_Session_Status_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Identity_Session_Status_Enum_Enum>>;
-};
-
-export enum Stripe_Identity_Session_Type_Enum_Enum {
-  /** Document check. */
-  Document = 'document',
-  /** ID number check. */
-  IdNumber = 'id_number'
-}
-
-/** Boolean expression to compare columns of type "stripe_identity_session_type_enum_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Identity_Session_Type_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
-  _in?: InputMaybe<Array<Stripe_Identity_Session_Type_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Identity_Session_Type_Enum_Enum>>;
-};
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
@@ -17699,9 +17699,9 @@ export type User_Ip_Addresses_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_ip_addresses" */
 export enum User_Ip_Addresses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserIpAddressesPkey = 'user_ip_addresses_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "ip_address", "user_id" */
   UserIpAddressesUserIdIpAddressKey = 'user_ip_addresses_user_id_ip_address_key'
 }
 
@@ -17863,7 +17863,7 @@ export type Users_Projects_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_projects" */
 export enum Users_Projects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "project_id", "user_id" */
   UsersProjectsPkey = 'users_projects_pkey'
 }
 
@@ -18079,9 +18079,9 @@ export type VisualJudgementModuleImages_Bool_Exp = {
 
 /** unique or primary key constraints on table "visual_judgement_module_images" */
 export enum VisualJudgementModuleImages_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "image_id" */
   VisualJudgementModuleImagesImageIdKey = 'visual_judgement_module_images_image_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModuleImagesPkey = 'visual_judgement_module_images_pkey'
 }
 
@@ -18321,7 +18321,7 @@ export type VisualJudgementModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "visual_judgement_modules" */
 export enum VisualJudgementModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModulesPkey = 'visual_judgement_modules_pkey'
 }
 
@@ -18463,7 +18463,7 @@ export type WorkersSpotify = {
   spotifyId?: Maybe<Scalars['String']>;
   spotifyRefreshToken?: Maybe<Scalars['String']>;
   spotifyVerifierCode?: Maybe<Scalars['String']>;
-  status: Spotify_State_Types_Enum;
+  status: SpotifyStateTypes_Enum;
   /** An object relationship */
   worker: Workers;
   workerId: Scalars['uuid'];
@@ -18501,16 +18501,16 @@ export type WorkersSpotify_Bool_Exp = {
   spotifyId?: InputMaybe<String_Comparison_Exp>;
   spotifyRefreshToken?: InputMaybe<String_Comparison_Exp>;
   spotifyVerifierCode?: InputMaybe<String_Comparison_Exp>;
-  status?: InputMaybe<Spotify_State_Types_Enum_Comparison_Exp>;
+  status?: InputMaybe<SpotifyStateTypes_Enum_Comparison_Exp>;
   worker?: InputMaybe<Workers_Bool_Exp>;
   workerId?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "workers_spotify" */
 export enum WorkersSpotify_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "worker_id" */
   WorkersSpotifyPkey = 'workers_spotify_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "spotify_id" */
   WorkersSpotifySpotifyIdKey = 'workers_spotify_spotify_id_key'
 }
 
@@ -18521,7 +18521,7 @@ export type WorkersSpotify_Insert_Input = {
   spotifyId?: InputMaybe<Scalars['String']>;
   spotifyRefreshToken?: InputMaybe<Scalars['String']>;
   spotifyVerifierCode?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Spotify_State_Types_Enum>;
+  status?: InputMaybe<SpotifyStateTypes_Enum>;
   worker?: InputMaybe<Workers_Obj_Rel_Insert_Input>;
   workerId?: InputMaybe<Scalars['uuid']>;
 };
@@ -18613,7 +18613,7 @@ export type WorkersSpotify_Set_Input = {
   spotifyId?: InputMaybe<Scalars['String']>;
   spotifyRefreshToken?: InputMaybe<Scalars['String']>;
   spotifyVerifierCode?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Spotify_State_Types_Enum>;
+  status?: InputMaybe<SpotifyStateTypes_Enum>;
   workerId?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -18674,6 +18674,14 @@ export type SoftDeleteUserModulesMutationVariables = Exact<{
 
 export type SoftDeleteUserModulesMutation = { __typename?: 'mutation_root', updateManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
 
+export type UpdateUserExternalIdMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  externalId: Scalars['String'];
+}>;
+
+
+export type UpdateUserExternalIdMutation = { __typename?: 'mutation_root', updateOneUser?: { __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string } | null };
+
 export type GetModuleQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -18699,7 +18707,7 @@ export type GetProjectUserQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectUserQuery = { __typename?: 'query_root', fireboaProjectUser?: { __typename?: 'FireboaProjectsUsers', currentState: Project_Statuses_Enum, user: { __typename?: 'Users', id: any }, fireboaProject: { __typename?: 'FireboaProjects', id: any } } | null };
+export type GetProjectUserQuery = { __typename?: 'query_root', fireboaProjectUser?: { __typename?: 'FireboaProjectsUsers', currentState: ProjectStatuses_Enum, user: { __typename?: 'Users', id: any }, fireboaProject: { __typename?: 'FireboaProjects', id: any } } | null };
 
 export type GetUserQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -18707,6 +18715,14 @@ export type GetUserQueryVariables = Exact<{
 
 
 export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> }> };
+
+export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
+  externalId: Scalars['String'];
+  emailAddress: Scalars['String'];
+}>;
+
+
+export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -18934,6 +18950,43 @@ export function useSoftDeleteUserModulesMutation(baseOptions?: Apollo.MutationHo
 export type SoftDeleteUserModulesMutationHookResult = ReturnType<typeof useSoftDeleteUserModulesMutation>;
 export type SoftDeleteUserModulesMutationResult = Apollo.MutationResult<SoftDeleteUserModulesMutation>;
 export type SoftDeleteUserModulesMutationOptions = Apollo.BaseMutationOptions<SoftDeleteUserModulesMutation, SoftDeleteUserModulesMutationVariables>;
+export const UpdateUserExternalIdDocument = gql`
+    mutation updateUserExternalId($userId: uuid!, $externalId: String!) {
+  updateOneUser(pk_columns: {id: $userId}, _set: {externalId: $externalId}) {
+    name
+    emailAddress
+    id
+    externalId
+  }
+}
+    `;
+export type UpdateUserExternalIdMutationFn = Apollo.MutationFunction<UpdateUserExternalIdMutation, UpdateUserExternalIdMutationVariables>;
+
+/**
+ * __useUpdateUserExternalIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserExternalIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserExternalIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserExternalIdMutation, { data, loading, error }] = useUpdateUserExternalIdMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      externalId: // value for 'externalId'
+ *   },
+ * });
+ */
+export function useUpdateUserExternalIdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserExternalIdMutation, UpdateUserExternalIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserExternalIdMutation, UpdateUserExternalIdMutationVariables>(UpdateUserExternalIdDocument, options);
+      }
+export type UpdateUserExternalIdMutationHookResult = ReturnType<typeof useUpdateUserExternalIdMutation>;
+export type UpdateUserExternalIdMutationResult = Apollo.MutationResult<UpdateUserExternalIdMutation>;
+export type UpdateUserExternalIdMutationOptions = Apollo.BaseMutationOptions<UpdateUserExternalIdMutation, UpdateUserExternalIdMutationVariables>;
 export const GetModuleDocument = gql`
     query getModule($name: String!) {
   modules(where: {name: {_eq: $name}}) {
@@ -19125,6 +19178,48 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const GetUserFromExternalIdOrEmailDocument = gql`
+    query getUserFromExternalIdOrEmail($externalId: String!, $emailAddress: String!) {
+  users(
+    limit: 1
+    where: {_or: [{externalId: {_eq: $externalId}}, {emailAddress: {_eq: $emailAddress}}]}
+  ) {
+    name
+    emailAddress
+    id
+    externalId
+  }
+}
+    `;
+
+/**
+ * __useGetUserFromExternalIdOrEmailQuery__
+ *
+ * To run a query within a React component, call `useGetUserFromExternalIdOrEmailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserFromExternalIdOrEmailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserFromExternalIdOrEmailQuery({
+ *   variables: {
+ *      externalId: // value for 'externalId'
+ *      emailAddress: // value for 'emailAddress'
+ *   },
+ * });
+ */
+export function useGetUserFromExternalIdOrEmailQuery(baseOptions: Apollo.QueryHookOptions<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>(GetUserFromExternalIdOrEmailDocument, options);
+      }
+export function useGetUserFromExternalIdOrEmailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>(GetUserFromExternalIdOrEmailDocument, options);
+        }
+export type GetUserFromExternalIdOrEmailQueryHookResult = ReturnType<typeof useGetUserFromExternalIdOrEmailQuery>;
+export type GetUserFromExternalIdOrEmailLazyQueryHookResult = ReturnType<typeof useGetUserFromExternalIdOrEmailLazyQuery>;
+export type GetUserFromExternalIdOrEmailQueryResult = Apollo.QueryResult<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>;
 export const GetUserUuidFromExternalIdDocument = gql`
     query getUserUUIDFromExternalId($externalId: String!) {
   users(limit: 1, where: {externalId: {_eq: $externalId}}) {

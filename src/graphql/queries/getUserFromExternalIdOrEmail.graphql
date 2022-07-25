@@ -1,0 +1,19 @@
+query getUserFromExternalIdOrEmail(
+  $externalId: String!
+  $emailAddress: String!
+) {
+  users(
+    limit: 1
+    where: {
+      _or: [
+        { externalId: { _eq: $externalId } }
+        { emailAddress: { _eq: $emailAddress } }
+      ]
+    }
+  ) {
+    name
+    emailAddress
+    id
+    externalId
+  }
+}

@@ -1313,13 +1313,13 @@
         "enumValues": [
           {
             "name": "cash_out_requests_confirmation_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"transaction_hash\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "cash_out_requests_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -3162,7 +3162,7 @@
         "enumValues": [
           {
             "name": "collection_type_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4258,13 +4258,13 @@
         "enumValues": [
           {
             "name": "customers_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "customers_user_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -5964,13 +5964,13 @@
         "enumValues": [
           {
             "name": "etx_task_sessions_id_user_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\", \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "etx_task_sessions_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -7255,19 +7255,19 @@
         "enumValues": [
           {
             "name": "fireboa_cash_out_crypto_reques_fireboa_cash_out_requests_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"fireboa_cash_out_request_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "fireboa_cash_out_crypto_requests_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "fireboa_cash_out_crypto_requests_transaction_hash_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"transaction_hash\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -8390,13 +8390,13 @@
         "enumValues": [
           {
             "name": "fireboa_cash_out_gift_card_req_fireboa_cash_out_requests_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"fireboa_cash_out_request_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "fireboa_cash_out_gift_card_requests_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -9549,7 +9549,7 @@
         "enumValues": [
           {
             "name": "fireboa_cash_out_preferred_methods_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -11195,7 +11195,7 @@
         "enumValues": [
           {
             "name": "fireboa_cash_out_requests_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -13147,7 +13147,7 @@
         "enumValues": [
           {
             "name": "modules_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -15421,7 +15421,7 @@
         "enumValues": [
           {
             "name": "fireboa_project_module_user_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"user_id\", \"fireboa_project_module_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -16871,7 +16871,7 @@
         "enumValues": [
           {
             "name": "fireboa_project_module_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -18360,7 +18360,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "project_statuses_enum",
+                "name": "ProjectStatuses_enum",
                 "ofType": null
               }
             },
@@ -18725,7 +18725,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "project_statuses_enum_comparison_exp",
+              "name": "ProjectStatuses_enum_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -18795,7 +18795,7 @@
         "enumValues": [
           {
             "name": "fireboa_project_user_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"fireboa_project_id\", \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -18813,7 +18813,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "project_statuses_enum",
+              "name": "ProjectStatuses_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -19281,7 +19281,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "project_statuses_enum",
+              "name": "ProjectStatuses_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -19658,7 +19658,7 @@
         "enumValues": [
           {
             "name": "fireboa_projects_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -20954,7 +20954,7 @@
         "enumValues": [
           {
             "name": "fraud_status_enum_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"fraud_status\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -22209,11 +22209,127 @@
         "enumValues": [
           {
             "name": "identities_legal_id_type_enum_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "IdentitiesLegalIdTypeEnums_enum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "driving_license",
+            "description": "Drivers license document type.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id_card",
+            "description": "ID card document type.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "passport",
+            "description": "Passport document type.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "IdentitiesLegalIdTypeEnums_enum_comparison_exp",
+        "description": "Boolean expression to compare columns of type \"IdentitiesLegalIdTypeEnums_enum\". All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "IdentitiesLegalIdTypeEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "IdentitiesLegalIdTypeEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "IdentitiesLegalIdTypeEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "IdentitiesLegalIdTypeEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -23150,13 +23266,13 @@
         "enumValues": [
           {
             "name": "images_resource_name_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"resource_name\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "visualJudgementModulesImages_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -24826,7 +24942,7 @@
         "enumValues": [
           {
             "name": "data_service_instructions_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -26443,13 +26559,13 @@
         "enumValues": [
           {
             "name": "data_services_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "modules_name_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"name\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -27594,11 +27710,127 @@
         "enumValues": [
           {
             "name": "project_statuses_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ProjectStatuses_enum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "COMPENSATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "COMPLETE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "IN_PROGRESS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "ProjectStatuses_enum_comparison_exp",
+        "description": "Boolean expression to compare columns of type \"ProjectStatuses_enum\". All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "ProjectStatuses_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "ProjectStatuses_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "ProjectStatuses_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "ProjectStatuses_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -28586,7 +28818,7 @@
         "enumValues": [
           {
             "name": "sessions_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -32225,11 +32457,145 @@
         "enumValues": [
           {
             "name": "stripe_identity_session_error_code_enum_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "StripeIdentitySessionErrorCodeEnums_enum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "document_expired",
+            "description": "\tThe provided identity document has expired.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "document_type_not_supported",
+            "description": "The provided identity document isn’t one of the session’s allowed document types.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "document_unverified_other",
+            "description": "Stripe couldn’t verify the provided identity document.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id_number_insufficient_document_data",
+            "description": "\tThe provided document didn’t contain enough data to match against the ID number.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id_number_mismatch",
+            "description": "The information provided couldn’t be matched against global databases.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id_number_unverified_other",
+            "description": "Stripe couldn’t verify the provided ID number.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "StripeIdentitySessionErrorCodeEnums_enum_comparison_exp",
+        "description": "Boolean expression to compare columns of type \"StripeIdentitySessionErrorCodeEnums_enum\". All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "StripeIdentitySessionErrorCodeEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "StripeIdentitySessionErrorCodeEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "StripeIdentitySessionErrorCodeEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "StripeIdentitySessionErrorCodeEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -32904,11 +33270,151 @@
         "enumValues": [
           {
             "name": "stripe_identity_session_status_enum_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "StripeIdentitySessionStatusEnums_enum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "canceled",
+            "description": "The session has been canceled and future submission attempts have been disabled. ",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created",
+            "description": "The session was created.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "not_started",
+            "description": "The user has not started a session.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "processing",
+            "description": "The user has successfully submitted their information, and verification checks have started processing.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "redacted",
+            "description": "The session was redacted.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "requires_input",
+            "description": "Processing of all the verification checks have completed, and at least one of the checks failed.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "verified",
+            "description": "Processing of all the verification checks have completed, and they’re all successfully verified.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "StripeIdentitySessionStatusEnums_enum_comparison_exp",
+        "description": "Boolean expression to compare columns of type \"StripeIdentitySessionStatusEnums_enum\". All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "StripeIdentitySessionStatusEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "StripeIdentitySessionStatusEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "StripeIdentitySessionStatusEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "StripeIdentitySessionStatusEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -33583,11 +34089,121 @@
         "enumValues": [
           {
             "name": "stripe_identity_session_type_enum_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "StripeIdentitySessionTypeEnums_enum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "document",
+            "description": "Document check.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id_number",
+            "description": "ID number check.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "StripeIdentitySessionTypeEnums_enum_comparison_exp",
+        "description": "Boolean expression to compare columns of type \"StripeIdentitySessionTypeEnums_enum\". All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "StripeIdentitySessionTypeEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "StripeIdentitySessionTypeEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "StripeIdentitySessionTypeEnums_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "StripeIdentitySessionTypeEnums_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -34046,7 +34662,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_error_code_enum_enum",
+              "name": "StripeIdentitySessionErrorCodeEnums_enum",
               "ofType": null
             },
             "isDeprecated": false,
@@ -34073,7 +34689,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "stripe_identity_session_status_enum_enum",
+                "name": "StripeIdentitySessionStatusEnums_enum",
                 "ofType": null
               }
             },
@@ -34089,7 +34705,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "stripe_identity_session_type_enum_enum",
+                "name": "StripeIdentitySessionTypeEnums_enum",
                 "ofType": null
               }
             },
@@ -34708,7 +35324,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "stripe_identity_session_error_code_enum_enum_comparison_exp",
+              "name": "StripeIdentitySessionErrorCodeEnums_enum_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -34732,7 +35348,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "stripe_identity_session_status_enum_enum_comparison_exp",
+              "name": "StripeIdentitySessionStatusEnums_enum_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -34744,7 +35360,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "stripe_identity_session_type_enum_enum_comparison_exp",
+              "name": "StripeIdentitySessionTypeEnums_enum_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -34850,13 +35466,13 @@
         "enumValues": [
           {
             "name": "stripe_verification_sessions_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "stripe_verification_sessions_session_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"session_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -34910,7 +35526,7 @@
             "description": "machine-readable error code if a check has failed",
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_error_code_enum_enum",
+              "name": "StripeIdentitySessionErrorCodeEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -34934,7 +35550,7 @@
             "description": "status of the initiated Stripe Identity verification session",
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_status_enum_enum",
+              "name": "StripeIdentitySessionStatusEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -34946,7 +35562,7 @@
             "description": "type of verification session initiated",
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_type_enum_enum",
+              "name": "StripeIdentitySessionTypeEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -35845,7 +36461,7 @@
             "description": "machine-readable error code if a check has failed",
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_error_code_enum_enum",
+              "name": "StripeIdentitySessionErrorCodeEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -35869,7 +36485,7 @@
             "description": "status of the initiated Stripe Identity verification session",
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_status_enum_enum",
+              "name": "StripeIdentitySessionStatusEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -35881,7 +36497,7 @@
             "description": "type of verification session initiated",
             "type": {
               "kind": "ENUM",
-              "name": "stripe_identity_session_type_enum_enum",
+              "name": "StripeIdentitySessionTypeEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -36539,19 +37155,19 @@
         "enumValues": [
           {
             "name": "survey_responses_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "survey_responses_qualtrics_response_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"qualtrics_response_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "survey_responses_user_id_survey_url_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"survey_url\", \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -38197,13 +38813,13 @@
         "enumValues": [
           {
             "name": "surveys_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "surveys_survey_url_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"survey_url\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -40115,7 +40731,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "identities_legal_id_type_enum_enum",
+                "name": "IdentitiesLegalIdTypeEnums_enum",
                 "ofType": null
               }
             },
@@ -40600,7 +41216,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "identities_legal_id_type_enum_enum_comparison_exp",
+              "name": "IdentitiesLegalIdTypeEnums_enum_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -40706,13 +41322,13 @@
         "enumValues": [
           {
             "name": "user_identities_legal_id_number_legal_id_type_legal_id_coun_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"legal_id_type\", \"legal_id_number\", \"legal_id_country\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "user_identities_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -40814,7 +41430,7 @@
             "description": "The document type that the user supplied, verified by 3rd party",
             "type": {
               "kind": "ENUM",
-              "name": "identities_legal_id_type_enum_enum",
+              "name": "IdentitiesLegalIdTypeEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -41980,7 +42596,7 @@
             "description": "The document type that the user supplied, verified by 3rd party",
             "type": {
               "kind": "ENUM",
-              "name": "identities_legal_id_type_enum_enum",
+              "name": "IdentitiesLegalIdTypeEnums_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -42406,7 +43022,7 @@
         "enumValues": [
           {
             "name": "user_module_progress_enum_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -43308,13 +43924,13 @@
         "enumValues": [
           {
             "name": "user_referrals_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "user_referrals_referred_user_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"referred_user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -46920,7 +47536,7 @@
         "enumValues": [
           {
             "name": "users_images_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -48420,7 +49036,7 @@
         "enumValues": [
           {
             "name": "user_service_data_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -52207,25 +52823,25 @@
         "enumValues": [
           {
             "name": "users_email_address_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"email_address\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "users_externalId_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"external_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "users_phone_number_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"phone_number\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "users_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -54787,13 +55403,13 @@
         "enumValues": [
           {
             "name": "visual_judgement_module_responses_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "visual_judgement_module_responses_visual_judgement_module_image",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"visual_judgement_module_image_id\", \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -56423,7 +57039,7 @@
         "enumValues": [
           {
             "name": "wallet_addresses_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -59277,13 +59893,13 @@
         "enumValues": [
           {
             "name": "workers_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "workers_user_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -62407,7 +63023,7 @@
         "enumValues": [
           {
             "name": "cash_out_methods_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"name\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -63106,7 +63722,7 @@
         "enumValues": [
           {
             "name": "data_types_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"name\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -63742,7 +64358,7 @@
         "enumValues": [
           {
             "name": "feature_types_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -64523,7 +65139,7 @@
         "enumValues": [
           {
             "name": "gender_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -65159,7 +65775,7 @@
         "enumValues": [
           {
             "name": "have_labeled_data_types_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -65529,122 +66145,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "ENUM",
-        "name": "identities_legal_id_type_enum_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "driving_license",
-            "description": "Drivers license document type.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id_card",
-            "description": "ID card document type.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "passport",
-            "description": "Passport document type.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "identities_legal_id_type_enum_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"identities_legal_id_type_enum_enum\". All fields are combined with logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "identities_legal_id_type_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "identities_legal_id_type_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "identities_legal_id_type_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "identities_legal_id_type_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "industry_types",
         "description": "columns and relationships of \"industry_types\"",
@@ -65911,7 +66411,7 @@
         "enumValues": [
           {
             "name": "industry_types_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"name\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -66803,7 +67303,7 @@
         "enumValues": [
           {
             "name": "labelling_platforms_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"value\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -67593,7 +68093,7 @@
         "enumValues": [
           {
             "name": "managers_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -68794,19 +69294,19 @@
         "enumValues": [
           {
             "name": "marketplace_projects_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "marketplace_projects_title_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"title\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "marketplace_projects_url_slug_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"url_slug\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -69731,7 +70231,7 @@
         "enumValues": [
           {
             "name": "modules_marketplace_projects_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"project_id\", \"module_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -85570,7 +86070,7 @@
         "enumValues": [
           {
             "name": "organizations_customers_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"customer_id\", \"organization_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -86589,7 +87089,7 @@
         "enumValues": [
           {
             "name": "organizations_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -88013,7 +88513,7 @@
         "enumValues": [
           {
             "name": "pricing_plans_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -89043,122 +89543,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "project_statuses_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "COMPENSATED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "COMPLETE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "IN_PROGRESS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "project_statuses_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"project_statuses_enum\". All fields are combined with logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "project_statuses_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "project_statuses_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "project_statuses_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "project_statuses_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -102379,11 +102763,139 @@
         "enumValues": [
           {
             "name": "spotify_state_types_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"name\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "spotifyStateTypes_enum",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "COMPLETED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DUPLICATE_ACCOUNT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INTERNAL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NEW_ACCOUNT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "STARTED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "spotifyStateTypes_enum_comparison_exp",
+        "description": "Boolean expression to compare columns of type \"spotifyStateTypes_enum\". All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "spotifyStateTypes_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "spotifyStateTypes_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "spotifyStateTypes_enum",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "spotifyStateTypes_enum",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -102749,134 +103261,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "ENUM",
-        "name": "spotify_state_types_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "COMPLETED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DUPLICATE_ACCOUNT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "INTERNAL_ERROR",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NEW_ACCOUNT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "STARTED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "spotify_state_types_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"spotify_state_types_enum\". All fields are combined with logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "spotify_state_types_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "spotify_state_types_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "spotify_state_types_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "spotify_state_types_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "strapi",
         "description": "columns and relationships of \"strapi\"",
@@ -103184,7 +103568,7 @@
         "enumValues": [
           {
             "name": "strapi_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -103479,390 +103863,6 @@
             "deprecationReason": null
           }
         ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_identity_session_error_code_enum_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "document_expired",
-            "description": "\tThe provided identity document has expired.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "document_type_not_supported",
-            "description": "The provided identity document isn’t one of the session’s allowed document types.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "document_unverified_other",
-            "description": "Stripe couldn’t verify the provided identity document.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id_number_insufficient_document_data",
-            "description": "\tThe provided document didn’t contain enough data to match against the ID number.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id_number_mismatch",
-            "description": "The information provided couldn’t be matched against global databases.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id_number_unverified_other",
-            "description": "Stripe couldn’t verify the provided ID number.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_identity_session_error_code_enum_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"stripe_identity_session_error_code_enum_enum\". All fields are combined with logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_identity_session_error_code_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_identity_session_error_code_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_identity_session_error_code_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_identity_session_error_code_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_identity_session_status_enum_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "canceled",
-            "description": "The session has been canceled and future submission attempts have been disabled. ",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created",
-            "description": "The session was created.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "not_started",
-            "description": "The user has not started a session.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "processing",
-            "description": "The user has successfully submitted their information, and verification checks have started processing.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "redacted",
-            "description": "The session was redacted.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "requires_input",
-            "description": "Processing of all the verification checks have completed, and at least one of the checks failed.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "verified",
-            "description": "Processing of all the verification checks have completed, and they’re all successfully verified.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_identity_session_status_enum_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"stripe_identity_session_status_enum_enum\". All fields are combined with logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_identity_session_status_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_identity_session_status_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_identity_session_status_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_identity_session_status_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "stripe_identity_session_type_enum_enum",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "document",
-            "description": "Document check.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id_number",
-            "description": "ID number check.",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "stripe_identity_session_type_enum_enum_comparison_exp",
-        "description": "Boolean expression to compare columns of type \"stripe_identity_session_type_enum_enum\". All fields are combined with logical 'AND'.",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "_eq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_identity_session_type_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_in",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_identity_session_type_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_is_null",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_neq",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "stripe_identity_session_type_enum_enum",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "_nin",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "ENUM",
-                  "name": "stripe_identity_session_type_enum_enum",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -116721,13 +116721,13 @@
         "enumValues": [
           {
             "name": "user_ip_addresses_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "user_ip_addresses_user_id_ip_address_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"ip_address\", \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -117761,7 +117761,7 @@
         "enumValues": [
           {
             "name": "users_projects_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"project_id\", \"user_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -119248,13 +119248,13 @@
         "enumValues": [
           {
             "name": "visual_judgement_module_images_image_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"image_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "visual_judgement_module_images_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -120787,7 +120787,7 @@
         "enumValues": [
           {
             "name": "visual_judgement_modules_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -121631,7 +121631,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "spotify_state_types_enum",
+                "name": "spotifyStateTypes_enum",
                 "ofType": null
               }
             },
@@ -121930,7 +121930,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "spotify_state_types_enum_comparison_exp",
+              "name": "spotifyStateTypes_enum_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -121976,13 +121976,13 @@
         "enumValues": [
           {
             "name": "workers_spotify_pkey",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"worker_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "workers_spotify_spotify_id_key",
-            "description": "unique or primary key constraint",
+            "description": "unique or primary key constraint on columns \"spotify_id\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -122060,7 +122060,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "spotify_state_types_enum",
+              "name": "spotifyStateTypes_enum",
               "ofType": null
             },
             "defaultValue": null,
@@ -122673,7 +122673,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "spotify_state_types_enum",
+              "name": "spotifyStateTypes_enum",
               "ofType": null
             },
             "defaultValue": null,
