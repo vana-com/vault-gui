@@ -8,7 +8,6 @@ export const buttonVariants = {
   outline: tw`bg-transparent text-primary ring-1 ring-inset ring-primary`,
   ghost: tw`bg-fillSecondary text-label`,
   ghostSecondary: tw`bg-fillSecondary text-labelSecondary`,
-  // 'link'?
   icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
 } as const;
 
@@ -17,12 +16,12 @@ export type ButtonVariant = keyof typeof buttonVariants;
 export const buttonSizes = {
   initial: tw``,
   sm: tw`gap-1 px-2 py-1.5 text-xs md:py-0.5`,
-  md: tw`h-[27px] gap-1 px-2 py-3 text-sm md:py-2`,
+  md: tw`h-[27px] gap-1 px-2 text-sm`,
   // set a min-width so it looks good when the loading spinner is active
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
-  lg: tw`h-[38px] gap-2 px-4 py-2 text-md w-full md:w-auto min-w-[130px]`,
-  xl: tw`h-[44px] gap-2 px-6 py-3 text-md w-full md:w-auto min-w-[130px]`,
-  full: tw`flex-1 h-full gap-2 px-6 py-3 text-lg`,
+  lg: tw`h-[38px] gap-2 px-4 text-md w-full md:w-auto min-w-[130px]`,
+  xl: tw`h-[44px] gap-2 px-6 text-md w-full md:w-auto min-w-[130px]`,
+  full: tw`flex-1 h-full gap-2 px-6 text-lg`,
 } as const;
 
 export type ButtonSize = keyof typeof buttonSizes;

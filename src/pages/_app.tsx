@@ -10,7 +10,7 @@ import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { ColorModeToggle } from "../components";
+// import { ColorModeToggle } from "../components";
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
 
@@ -23,9 +23,11 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
         <CacheProvider value={cache}>
           <ThemeProvider attribute="class" defaultTheme="dark">
             <GlobalStyles />
-            <div tw="relative">
-              <ColorModeToggle />
-            </div>
+            {/* <div tw="relative">
+              <div tw="fixed top-8 right-8 z-10">
+                <ColorModeToggle />
+              </div>
+            </div> */}
             <Toast.Provider swipeDirection="right">
               <Component {...pageProps} />
             </Toast.Provider>

@@ -15,7 +15,6 @@ export default async (
 ): Promise<void> => {
   const { fileName, moduleName, appPubKey, encryptedPassword } = req.query;
 
-  console.log("req.query", req.query);
   try {
     if (fileName && moduleName && appPubKey) {
       const fullFileName = generateUserDataObjectName(

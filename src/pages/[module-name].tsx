@@ -8,6 +8,7 @@ import tw from "twin.macro";
 import {
   CardHeaderVaultModule,
   DeleteData,
+  Flex,
   PageVault,
   Spinner,
   TitleAndMetaTags,
@@ -34,15 +35,11 @@ const VaultModulePage: NextPage = () => {
       skip: !user?.id,
     });
 
-  console.log("user", user);
-
   const usersModulesForName = userModulesData
     ? userModulesData.usersModules.filter(
         (userModule) => userModule.module.name === moduleName,
       )
     : [];
-
-  console.log("usersModulesForName", usersModulesForName);
 
   /**
    * Deletes all files a user has stored for a module (ie. Email integration).
@@ -75,6 +72,16 @@ const VaultModulePage: NextPage = () => {
     }
   };
 
+  if (isDataLoading) {
+    return (
+      <PageVault>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
+        </Flex>
+      </PageVault>
+    );
+  }
+
   return (
     <>
       <TitleAndMetaTags color="black" />
@@ -85,20 +92,15 @@ const VaultModulePage: NextPage = () => {
             Vana encrypts your data before storing.
           </CardHeaderVaultModule>
           <hr />
-
-          {isDataLoading ? (
-            <Spinner />
-          ) : (
-            <div tw="flex flex-col gap-2 items-center">
-              <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
-                <DeleteData
-                  onDelete={() => deleteAllModuleFiles()}
-                  isDeleting={isDeleting}
-                  buttonLabel={`Delete all your ${moduleName} data`}
-                />
-              </div>
+          <div tw="flex flex-col gap-2 items-center">
+            <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
+              <DeleteData
+                onDelete={() => deleteAllModuleFiles()}
+                isDeleting={isDeleting}
+                buttonLabel={`Delete all your ${moduleName} data`}
+              />
             </div>
-          )}
+          </div>
         </div>
       </PageVault>
     </>

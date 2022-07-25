@@ -48,11 +48,7 @@ const DialogModal = ({ buttonSlot, children }: Props) => {
                 transition={{ duration: 0.25 }}
                 css={styledMotionDiv}
               >
-                <DialogContent
-                  forceMount
-                  asChild
-                  css={styles.styledDialogContent}
-                >
+                <DialogContent forceMount css={styles.styledDialogContent}>
                   {children}
                 </DialogContent>
               </motion.div>
