@@ -15,7 +15,6 @@ const createHasuraJWT = async (
     allowedRoles.push("vana-org");
   }
 
-  console.log("google_credentials", getSecret("google_credentials"));
   const hasuraJwtSecret = await jose.importPKCS8(
     getSecret("hasura_jwt_secret", true),
     "RS512",
