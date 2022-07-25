@@ -12,5 +12,6 @@ export * from "./heap";
 export * from "./sortByCreatedAt";
 // export * from "./stripZipFiles";
 export * from "./formatModuleNameFromQueryString";
+export * from "./logOut";
 export * from "./renderModuleStoreInstructions";
 export * from "./uploadFile";

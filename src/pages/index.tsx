@@ -20,14 +20,10 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import { userAtom, web3AuthUserInfoAtom } from "src/state";
+import { userAtom } from "src/state";
 
 const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
-  const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
-
-  console.log("user", user);
-  console.log("webAuthUserInfo", web3AuthUserInfo);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
