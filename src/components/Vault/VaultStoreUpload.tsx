@@ -216,9 +216,6 @@ const VaultStoreUpload = ({
                 >
                   Encrypt and store
                 </Button>
-                <Button onClick={() => encryptAndUploadFiles("weflkjwef")}>
-                  Store
-                </Button>
               </Stack>
             </Stack>
           </Form>
