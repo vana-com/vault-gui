@@ -17,8 +17,7 @@ function initWeb3Auth() {
     try {
       const web3AuthInstance = new Web3Auth({
         uiConfig: {
-          // TODO: comment in after initial product release
-          // appLogo: "https://vault.vana.xyz/vana-favicon.svg";
+          appLogo: "https://vault.vana.xyz/vana-favicon.svg",
           theme: "dark",
         },
         clientId: WEB_3_AUTH_CLIENT_ID,
