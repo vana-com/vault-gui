@@ -20,12 +20,9 @@ import {
   // persistCacheSync
 } from "apollo3-cache-persist";
 import merge from "deepmerge";
-import { atom } from "jotai";
 import isEqual from "lodash/isEqual";
 import type { AppProps } from "next/app";
 import { useMemo } from "react";
-
-import { hasuraTokenAtom } from "src/state";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
@@ -44,7 +41,7 @@ const createApolloClient = () => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const cachedToken = sessionStorage.getItem("hasura-token");
+    const cachedToken = localStorage.getItem("hasura-token");
     if (cachedToken) {
       accessToken = JSON.parse(cachedToken);
     } else {
