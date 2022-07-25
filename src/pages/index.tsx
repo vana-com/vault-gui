@@ -29,7 +29,7 @@ const HomePage: NextPage = () => {
   console.log("user", user);
   console.log("webAuthUserInfo", web3AuthUserInfo);
 
-  const { data: { modules } = {}, loading: isModulesLoading } =
+  const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
 
   const { data: userModulesData, loading: isUserModulesDataLoading } =
@@ -38,18 +38,16 @@ const HomePage: NextPage = () => {
       skip: !user?.id,
     });
 
-  const storedModuleIds = userModulesData?.usersModules
-    ? userModulesData.usersModules.map((userModule) => userModule.moduleId)
+  const storedUsersModules = userModulesData?.usersModules
+    ? userModulesData.usersModules
     : [];
 
-  const notStoredModules = modules?.filter(
-    (module) => !storedModuleIds.includes(module.id),
+  const notStoredModules = allModules?.filter(
+    (module) =>
+      !storedUsersModules.some(
+        (storedModule) => module.id === storedModule.moduleId,
+      ),
   );
-
-  // TODO: use storedModuleIds and notStoredModules
-  console.log("notStoredModules", notStoredModules);
-
-  const hasStoredModules = !!userModulesData?.usersModules?.length;
 
   // Loading state for Apollo
   if (isModulesLoading || isUserModulesDataLoading) {
@@ -92,15 +90,19 @@ const HomePage: NextPage = () => {
           <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
             <DialogDrawerMenu buttonLabel="Add">
               <CardHeaderVaultNoModules>
-                {modules?.map((module) => (
+                {notStoredModules?.map((module) => (
                   <ModuleButton key={module.id} name={module.name} />
                 ))}
               </CardHeaderVaultNoModules>
             </DialogDrawerMenu>
-            {/* TODO: use real data with map() */}
-            {hasStoredModules && (
-              <ModuleButton key="instagram" name="instagram" isLarge isStored />
-            )}
+            {storedUsersModules.map((module) => (
+              <ModuleButton
+                key={module.module.name?.toLowerCase()}
+                name={module.module.name}
+                isLarge
+                isStored
+              />
+            ))}
           </div>
         </Flex>
       </PageVault>

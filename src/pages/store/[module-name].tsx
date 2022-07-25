@@ -7,7 +7,9 @@ import tw from "twin.macro";
 
 import {
   CardHeaderVaultModule,
+  Flex,
   PageVault,
+  Spinner,
   Stack,
   StorageInstructions,
   TitleAndMetaTags,
@@ -23,15 +25,11 @@ import { formatModuleNameFromQueryString } from "src/utils";
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
 
-  // use Jotai
   const [user] = useAtom(userAtom);
-
-  console.log("user", user);
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
 
-  // Module name
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
   const { data: { modules: [module] = [] } = {}, loading: isDataLoading } =
@@ -64,9 +62,14 @@ const VaultStoragePage: NextPage = () => {
     }
   }, [router]);
 
-  // TODO: handle loading state
   if (isDataLoading) {
-    return null;
+    return (
+      <PageVault>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
+        </Flex>
+      </PageVault>
+    );
   }
 
   return (
