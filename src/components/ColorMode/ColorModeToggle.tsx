@@ -13,16 +13,14 @@ export const ColorModeToggle = () => {
   }
 
   return (
-    <div tw="fixed top-8 right-8 z-10">
-      <button
-        aria-label="Toggle Dark Mode"
-        type="button"
-        tw="focus:outline-none fill-current text-label hover:text-labelSecondary bg-backgroundElevated p-3 rounded-lg"
-        onClick={() => setTheme(isDark() ? "light" : "dark")}
-      >
-        <div tw="w-4 h-4">{isDark() ? <Moon /> : <Sun />}</div>
-      </button>
-    </div>
+    <button
+      aria-label="Toggle Dark Mode"
+      type="button"
+      tw="focus:outline-none fill-current text-label hover:text-labelSecondary bg-backgroundElevated p-3 rounded-lg"
+      onClick={() => setTheme(isDark() ? "light" : "dark")}
+    >
+      <div tw="w-4 h-4">{isDark() ? <Moon /> : <Sun />}</div>
+    </button>
   );
 };
 
