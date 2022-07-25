@@ -1,9 +1,11 @@
 import * as jose from "jose";
 
+import { getSecret } from "./getSecret";
+
 const createHasuraJWT = async (
   idTokenPayload: jose.JWTPayload,
 ): Promise<string> => {
-  const userEmail = idTokenPayload.email as string || "";
+  const userEmail = (idTokenPayload.email as string) || "";
   let defaultRole = "worker";
   const allowedRoles = ["worker"];
 
@@ -13,8 +15,9 @@ const createHasuraJWT = async (
     allowedRoles.push("vana-org");
   }
 
+  console.log("google_credentials", getSecret("google_credentials"));
   const hasuraJwtSecret = await jose.importPKCS8(
-    process.env.HASURA_JWT_SECRET as string,
+    getSecret("hasura_jwt_secret", true),
     "RS512",
   );
   const hasuraJwt = await new jose.SignJWT({

@@ -12,9 +12,10 @@ const localSecrets = {
 /**
  * Returns an encrypted secret from local secret store
  * @param key Key to retrieve in secret store
+ * @param replaceNewlines If the secret contains \n, should it be replaced with a newline?
  * @returns decrypted secret
  */
-const getSecret = (key: string): string => {
+const getSecret = (key: string, replaceNewlines = false): string => {
   if (
     localSecrets &&
     localSecrets[key as keyof typeof localSecrets] === undefined
@@ -34,6 +35,14 @@ const getSecret = (key: string): string => {
     "utf8",
   );
   decrypted += decipher.final("utf8");
+
+  if (replaceNewlines) {
+    decrypted = decrypted.replace(
+      /\\n/g,
+      `
+    `,
+    );
+  }
 
   return decrypted;
 };
