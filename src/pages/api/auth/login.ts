@@ -30,35 +30,51 @@ export default async (
     }
 
     const appPubKey = idTokenPayload?.wallets[0]?.public_key;
+    const emailAddress = idTokenPayload?.email || "";
     const hasuraJwt = await createHasuraJWT(idTokenPayload);
 
     const graphQLClient = new GraphQLClient(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
       {
         headers: {
-          Authorization: `Bearer ${hasuraJwt}`,
+          "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
         },
       },
     );
 
     const sdk = getSdk(graphQLClient);
 
-    const { users } = await sdk.getUserUUIDFromExternalId({
+    let user;
+    const { users } = await sdk.getUserFromExternalIdOrEmail({
+      emailAddress,
       externalId: appPubKey,
     });
 
-    const userId = users && users.length === 1 ? users[0].id : undefined;
+    if (users?.length >= 1) {
+      // Found a user
+      [user] = users;
 
-    let user;
-    if (!userId) {
+      if (
+        users[0].externalId.startsWith("google-oauth2|") ||
+        users[0].externalId.startsWith("auth0|")
+      ) {
+        // Migrate user external ID from Auth0 to Web3Auth
+        await sdk.updateUserExternalId({
+          userId: users[0].id,
+          externalId: appPubKey,
+        });
+        user.externalId = appPubKey;
+      }
+    } else {
+      // Create a new user. Generate a dummy email for users that sign in with a wallet
       const { createOneUser } = await sdk.createUser({
         name: idTokenPayload?.name as string,
-        emailAddress: idTokenPayload?.email as string,
+        emailAddress:
+          (idTokenPayload?.email as string) ||
+          `${new Date().getTime()}@dummy-email.com`,
         externalId: appPubKey as string,
       });
       user = createOneUser;
-    } else {
-      [user] = users;
     }
 
     return res.status(200).json({ user, hasuraToken: hasuraJwt });

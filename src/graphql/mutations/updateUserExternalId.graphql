@@ -1,0 +1,11 @@
+mutation updateUserExternalId($userId: uuid!, $externalId: String!) {
+  updateOneUser(
+    pk_columns: { id: $userId }
+    _set: { externalId: $externalId }
+  ) {
+    name
+    emailAddress
+    id
+    externalId
+  }
+}
