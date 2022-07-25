@@ -28,7 +28,6 @@ type HTMLProperties<T = HTMLElement> = Omit<
 
 type Props = HTMLProperties & {
   as?: React.ElementType;
-  // children?: React.ReactNode
   // className?: ClassName
 };
 
