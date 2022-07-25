@@ -6,7 +6,11 @@ import {
 import { Web3Auth } from "@web3auth/web3auth";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import tw from "twin.macro";
 
+import { Button } from "src/components";
+import config from "src/config";
 import {
   hasuraTokenAtom,
   idTokenAtom,
@@ -15,8 +19,6 @@ import {
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
-
-import config from "../config";
 
 const { openLoginModalConfig, web3AuthInstance } = config;
 
@@ -109,31 +111,17 @@ const Login = () => {
     }
   };
 
-  const logOut = async () => {
-    if (!web3AuthInstance || web3AuthInstance.status === "not_ready") {
-      console.log("web3auth not initialized yet");
-      return;
-    }
-    await web3AuthInstance.logout();
-    setWalletProvider(undefined);
-    setWeb3AuthUserInfo(undefined);
-    setUser(undefined);
-    setHasuraToken("");
-  };
-
   return (
-    <>
-      {web3AuthUserInfo ? (
-        <button type="button" onClick={logOut}>
-          Log Out
-        </button>
-      ) : (
-        <button type="button" onClick={logIn}>
-          Log In
-        </button>
-      )}
-    </>
+    <Button
+      type="button"
+      variant="solid"
+      size="xl"
+      css={tw`min-w-[155px]`}
+      onClick={logIn}
+    >
+      Log In
+    </Button>
   );
 };
 
-export default Login;
+export { Login };

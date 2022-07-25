@@ -16,6 +16,11 @@ function initWeb3Auth() {
     /* eslint-enable */
     try {
       const web3AuthInstance = new Web3Auth({
+        uiConfig: {
+          // TODO: comment in after initial product release
+          // appLogo: "https://vault.vana.xyz/vana-favicon.svg";
+          theme: "dark",
+        },
         clientId: WEB_3_AUTH_CLIENT_ID,
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,

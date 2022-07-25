@@ -11,6 +11,7 @@ export * from "./Markdown";
 export * from "./PageVault";
 export * from "./Popovers";
 export * from "./TitleAndMetaTags";
+export * from "./UserAccess";
 export * from "./Vault";
 
 /* DESIGN SYSTEM PRIMITIVES */

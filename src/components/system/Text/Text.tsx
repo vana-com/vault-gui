@@ -50,7 +50,7 @@ export const textColors = {
 export type TextColor = keyof typeof textColors;
 
 // All text style props are optional to allow parent styles inheritance.
-// This is useful for markdown.
+// This is useful for markdown. It's also a potential CSS cascade problem!
 export interface TextProps {
   variant?: TextVariant;
   weight?: TextWeight;
