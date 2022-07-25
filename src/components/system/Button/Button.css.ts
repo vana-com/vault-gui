@@ -8,7 +8,6 @@ export const buttonVariants = {
   outline: tw`bg-transparent text-primary ring-1 ring-inset ring-primary`,
   ghost: tw`bg-fillSecondary text-label`,
   ghostSecondary: tw`bg-fillSecondary text-labelSecondary`,
-  // 'link'?
   icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
 } as const;
 
