@@ -12,34 +12,32 @@ import {
   Text,
 } from "src/components";
 import { CarbonSecurity } from "src/components/Icons";
-import config from "src/config";
 import {
   hasuraTokenAtom,
+  idTokenAtom,
   userAtom,
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
-
-const { web3AuthInstance } = config;
+import { logOut as logOutUtil } from "src/utils";
 
 const Logout = () => {
   const [, setWeb3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [, setUser] = useAtom(userAtom);
-  const setHasuraToken = useAtom(hasuraTokenAtom)[1];
-  const setWalletProvider = useAtom(web3AuthWalletProviderAtom)[1];
+  const [, setIdToken] = useAtom(idTokenAtom);
+  const [, setHasuraToken] = useAtom(hasuraTokenAtom);
+  const [, setWalletProvider] = useAtom(web3AuthWalletProviderAtom);
   const [isLoading, setIsLoading] = useState(false);
 
   const logOut = async () => {
     setIsLoading(true);
-    if (!web3AuthInstance || web3AuthInstance.status === "not_ready") {
-      console.log("web3auth not initialized yet");
-      return;
-    }
-    await web3AuthInstance.logout();
-    setWalletProvider(undefined);
-    setWeb3AuthUserInfo(undefined);
-    setUser(undefined);
-    setHasuraToken("");
+    logOutUtil(
+      setWalletProvider,
+      setWeb3AuthUserInfo,
+      setUser,
+      setHasuraToken,
+      setIdToken,
+    );
   };
 
   return (

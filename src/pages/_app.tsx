@@ -10,7 +10,8 @@ import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-// import { ColorModeToggle } from "../components";
+import { AppHook } from "src/components";
+
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
 
@@ -29,6 +30,7 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
               </div>
             </div> */}
             <Toast.Provider swipeDirection="right">
+              <AppHook />
               <Component {...pageProps} />
             </Toast.Provider>
           </ThemeProvider>
