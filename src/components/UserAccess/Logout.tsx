@@ -69,6 +69,7 @@ const Logout = () => {
             size="lg"
             prefix={<CarbonSecurity />}
             isLoading={isLoading}
+            // type="button"
             onClick={logOut}
           >
             Log Out

@@ -5,7 +5,7 @@ import {
 } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
