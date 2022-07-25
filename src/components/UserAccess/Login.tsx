@@ -29,7 +29,6 @@ const Login = () => {
   const setWalletProvider = useAtom(web3AuthWalletProviderAtom)[1];
   const [walletAdapter, setWalletAdapter] = useAtom(web3AuthAdapterAtom);
   const [idToken, setIdToken] = useAtom(idTokenAtom);
-  const [isLoading, setIsLoading] = useState(false);
 
   // get Hasura user object
   useEffect(() => {
@@ -100,7 +99,6 @@ const Login = () => {
   }, []);
 
   const logIn = async () => {
-    setIsLoading(true);
     if (!web3AuthInstance) {
       console.log("web3auth not initialized yet");
       return;
@@ -119,7 +117,6 @@ const Login = () => {
       variant="solid"
       size="xl"
       css={tw`min-w-[155px]`}
-      isLoading={isLoading}
       onClick={logIn}
     >
       Log In
