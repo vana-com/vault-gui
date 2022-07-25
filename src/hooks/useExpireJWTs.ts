@@ -20,9 +20,9 @@ const useExpireJWTs = () => {
   const [, setHasuraToken] = useAtom(hasuraTokenAtom);
   const [, setWalletProvider] = useAtom(web3AuthAdapterAtom);
 
-  useEffect(() => {
+  const expireJWTs = async () => {
     if (idToken) {
-      const idTokenPayload = getIdTokenPayload(idToken);
+      const idTokenPayload = await getIdTokenPayload(idToken);
       if (!idTokenPayload) {
         logOut(
           setWalletProvider,
@@ -34,7 +34,11 @@ const useExpireJWTs = () => {
         router.push("/");
       }
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    expireJWTs();
+  }, [router.asPath]);
   return null;
 };
 

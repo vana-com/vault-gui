@@ -30,8 +30,9 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
               </div>
             </div> */}
             <Toast.Provider swipeDirection="right">
-              <AppHook />
-              <Component {...pageProps} />
+              <AppHook>
+                <Component {...pageProps} />
+              </AppHook>
             </Toast.Provider>
           </ThemeProvider>
         </CacheProvider>

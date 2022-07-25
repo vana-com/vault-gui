@@ -1,9 +1,9 @@
 import { useExpireJWTs } from "src/hooks";
 
 // Run __app.tsx level hooks that need React Providers
-const AppHook = () => {
+const AppHook = ({ children }: any) => {
   useExpireJWTs();
-  return null;
+  return children;
 };
 
 export { AppHook };
