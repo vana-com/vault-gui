@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import type { NextPage } from "next";
+import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -7,13 +8,14 @@ import {
   CardHeaderVaultNoModules,
   DialogDrawerMenu,
   Flex,
+  Login,
   ModuleButton,
   PageVault,
   PopoverHelp,
+  Spinner,
   Text,
   TitleAndMetaTags,
 } from "src/components";
-import Login from "src/components/Login";
 import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
@@ -49,9 +51,15 @@ const HomePage: NextPage = () => {
 
   const hasStoredModules = !!userModulesData?.usersModules?.length;
 
-  // TODO: handle loading state
+  // Loading state
   if (isModulesLoading || isUserModulesDataLoading) {
-    return <div>loading</div>;
+    return (
+      <PageVault>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
+        </Flex>
+      </PageVault>
+    );
   }
 
   return (
@@ -59,10 +67,10 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" />
 
       <PageVault>
-        {user && (
+        {user ? (
           <Flex tw="w-full flex-col gap-4">
             <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
-              <Text as="h3" variant="heading">
+              <Text as="h3" variant="heading" color="label">
                 Your Data
               </Text>
               <PopoverHelp />
@@ -76,7 +84,7 @@ const HomePage: NextPage = () => {
                   ))}
                 </CardHeaderVaultNoModules>
               </DialogDrawerMenu>
-              {/* FAKE DATA MODULE */}
+              {/* TODO: use real data with map() */}
               {hasStoredModules && (
                 <ModuleButton
                   key="instagram"
@@ -87,8 +95,11 @@ const HomePage: NextPage = () => {
               )}
             </div>
           </Flex>
+        ) : (
+          <Flex tw="w-full items-center justify-center">
+            <Login />
+          </Flex>
         )}
-        <Login />
       </PageVault>
     </>
   );
