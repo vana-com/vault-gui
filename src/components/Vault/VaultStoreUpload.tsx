@@ -216,9 +216,6 @@ const VaultStoreUpload = ({
                 >
                   Encrypt and store
                 </Button>
-                <Button onClick={() => encryptAndUploadFiles("weflkjwef")}>
-                  Store
-                </Button>
               </Stack>
             </Stack>
           </Form>
@@ -226,10 +223,10 @@ const VaultStoreUpload = ({
       </Formik>
 
       {/* TOASTS */}
-      <ToastImp ref={savedRef}>Saved successfully!</ToastImp>
+      {/* <ToastImp ref={savedRef}>Saved successfully!</ToastImp> */}
       {/* <ToastDemo /> */}
       {/* TODO: use formik success, not storeSuccess */}
-      <ToastApi
+      {/* <ToastApi
         open={storeSuccess}
         setOpen={setStoreSuccess}
         duration={2000}
@@ -241,7 +238,7 @@ const VaultStoreUpload = ({
         setOpen={setInvalidFile}
         title="Bad!"
         content="invalid file"
-      />
+      /> */}
     </>
   );
 };

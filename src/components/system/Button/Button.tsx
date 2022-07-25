@@ -1,6 +1,6 @@
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw, { TwStyle } from "twin.macro";
+import tw from "twin.macro";
 
 import { Box, Spinner } from "src/components";
 
@@ -11,7 +11,7 @@ type BaseProps = {
   suffix?: React.ReactNode;
   id?: string;
   isLoading?: boolean;
-  css?: TwStyle;
+  css?: any;
 } & styles.ButtonStyleProps &
   Pick<
     JSX.IntrinsicElements["button"],
@@ -47,13 +47,14 @@ export const Button = React.forwardRef(
       suffix,
       variant,
       css,
-      ...buttonProps
+      ...boxProps
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>,
   ) => (
     <Box
       ref={ref}
-      {...buttonProps}
+      as={boxProps.as ?? "button"}
+      {...boxProps}
       css={[styles.buttonStyle({ size, variant, round, isDisabled }), css]}
       id={id}
     >
