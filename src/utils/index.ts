@@ -13,5 +13,6 @@ export * from "./sortByCreatedAt";
 // export * from "./stripZipFiles";
 export * from "./formatModuleNameFromQueryString";
 export * from "./logOut";
+export * from "./parseJwt";
 export * from "./renderModuleStoreInstructions";
 export * from "./uploadFile";
