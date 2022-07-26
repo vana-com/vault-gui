@@ -3,5 +3,5 @@ export * from "./StorageInstructions";
 export * from "./StoragePassword";
 export * from "./StoragePasswordLabel";
 export * from "./StorageProgress";
-export * from "./VaultStoreUpload";
-export * from "./VaultStoreUploadPresenter";
+export * from "./StorageUpload";
+export * from "./StorageUploadPresenter";

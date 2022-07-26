@@ -1,6 +1,7 @@
 import * as ToastPrimitive from "@radix-ui/react-toast";
 import React from "react";
 
+import { Text } from "src/components";
 import { CarbonCloseFilled } from "src/components/Icons";
 
 import * as styles from "./Toast.css";
@@ -28,7 +29,12 @@ const ToastDefault = ({
 }: Props) => (
   <>
     <Toast css={styles.root({ variant })} {...props}>
-      {title && <ToastTitle css={styles.title}>{title}</ToastTitle>}
+      {title && (
+        <ToastTitle asChild css={styles.title}>
+          {/* use `asChild` so we can target h3 with root styles */}
+          <Text as="h3">{title}</Text>
+        </ToastTitle>
+      )}
       <ToastDescription css={styles.description}>{content}</ToastDescription>
       {/* use ToastPrimitive.Action here if you need */}
       {children}

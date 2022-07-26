@@ -12,8 +12,8 @@ import {
   Spinner,
   Stack,
   StorageInstructions,
+  StorageUpload,
   TitleAndMetaTags,
-  VaultStoreUpload,
 } from "src/components";
 import {
   useCreateUserModuleMutation,
@@ -92,7 +92,7 @@ const VaultStoragePage: NextPage = () => {
             <hr />
           </Stack>
           <div tw="pt-5">
-            <VaultStoreUpload
+            <StorageUpload
               moduleName={moduleName}
               createUserModule={createUserModuleCallback}
               appPubKey={user?.externalId ?? ""}
