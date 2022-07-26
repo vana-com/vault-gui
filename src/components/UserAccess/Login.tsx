@@ -5,11 +5,12 @@ import {
 } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button } from "src/components";
+import { Button, Link } from "src/components";
+import { ToastDefault } from "src/components/Toast";
 import config from "src/config";
 import {
   hasuraTokenAtom,
@@ -29,29 +30,35 @@ const Login = () => {
   const setWalletProvider = useAtom(web3AuthWalletProviderAtom)[1];
   const [walletAdapter, setWalletAdapter] = useAtom(web3AuthAdapterAtom);
   const [idToken, setIdToken] = useAtom(idTokenAtom);
+  const [loginError, setLoginError] = useState(false);
 
-  // get Hasura user object
+  // after a user has logged in with Web3Auth, this useEffect hook gets their auth information from the database
   useEffect(() => {
-    const loginUser = async () => {
-      const loginResponse = await fetch(`/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idToken, issuer: walletAdapter }),
-      });
+    const loginVanaUser = async () => {
+      try {
+        const loginResponse = await fetch(`/api/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ idToken, issuer: walletAdapter }),
+        });
+        const { user: userFromResponse, hasuraToken } =
+          await loginResponse.json();
 
-      const { user: userFromResponse, hasuraToken } =
-        await loginResponse.json();
-
-      console.log("userFromResponse", userFromResponse);
-
-      setUser(userFromResponse);
-      setHasuraToken(hasuraToken);
+        if (!userFromResponse || !hasuraToken) {
+          setLoginError(true);
+        }
+        setUser(userFromResponse);
+        setHasuraToken(hasuraToken);
+      } catch (error: any) {
+        console.log(error.toString());
+        setLoginError(true);
+      }
     };
 
     if (!user && web3AuthUserInfo) {
-      loginUser();
+      loginVanaUser();
     }
   }, [user, web3AuthUserInfo]);
 
@@ -108,19 +115,38 @@ const Login = () => {
       setWalletProvider(web3AuthProvider);
     } catch (error: any) {
       console.log(error.toString());
+      setLoginError(true);
     }
   };
 
   return (
-    <Button
-      type="button"
-      variant="solid"
-      size="xl"
-      css={tw`min-w-[155px]`}
-      onClick={logIn}
-    >
-      Log In
-    </Button>
+    <>
+      <Button
+        type="button"
+        variant="solid"
+        size="xl"
+        css={tw`min-w-[220px] max-w-[220px]`}
+        onClick={logIn}
+      >
+        Log In
+      </Button>
+
+      {/* TOAST for any errors */}
+      <ToastDefault
+        open={loginError}
+        onOpenChange={setLoginError}
+        duration={12000}
+        variant="error"
+        title="Something went wrong"
+        content={
+          <>
+            Please{" "}
+            <Link href="mailto:support@vanahelp.zendesk.com">email us</Link>{" "}
+            with details of your login attempt.
+          </>
+        }
+      />
+    </>
   );
 };
 
