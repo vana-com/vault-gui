@@ -3,12 +3,6 @@ import React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw, { css } from "twin.macro";
 
-// const useRandomId = (prefix: string) =>
-//   useMemo(
-//     () => `${prefix}_${Math.round(Math.random() * 1_000_000_000)}`,
-//     [prefix],
-//   );
-
 // you must close the rule with `;` or Emotion won't understand it
 const spin = keyframes`
   0% { transform: rotate(0deg); },
@@ -34,8 +28,6 @@ export const Spinner = ({
   width?: string | number;
   height?: string | number;
 }) => (
-  // const id = useRandomId("spinner");
-
   <svg
     css={icon}
     fill="none"
