@@ -45,18 +45,7 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // Loading state for Apollo
-  if (isModulesLoading || isUserModulesDataLoading) {
-    return (
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-        </Flex>
-      </PageVault>
-    );
-  }
-
-  // Loading state for !user
+  // State for !user
   if (!user) {
     return (
       <>
@@ -67,6 +56,17 @@ const HomePage: NextPage = () => {
           </Flex>
         </PageVault>
       </>
+    );
+  }
+
+  // State for loading Apollo
+  if (isModulesLoading || isUserModulesDataLoading) {
+    return (
+      <PageVault>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
+        </Flex>
+      </PageVault>
     );
   }
 
@@ -84,6 +84,7 @@ const HomePage: NextPage = () => {
           </Flex>
           <hr />
           <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
+            {/* ADD A MODULE */}
             <DialogDrawerMenu buttonLabel="Add">
               <CardHeaderVaultNoModules>
                 {notStoredModules?.map((module) => (
@@ -91,6 +92,8 @@ const HomePage: NextPage = () => {
                 ))}
               </CardHeaderVaultNoModules>
             </DialogDrawerMenu>
+
+            {/* STORED MODULES */}
             {storedUsersModules.map((module) => (
               <ModuleButton
                 key={module.module.name?.toLowerCase()}
