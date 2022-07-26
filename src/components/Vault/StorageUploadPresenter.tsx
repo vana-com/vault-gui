@@ -22,7 +22,7 @@ interface Props {
 
 const boxStyle = tw`w-full p-6 text-black bg-white border rounded-lg lg:p-8`;
 
-const VaultStoreUploadPresenter = ({
+const StorageUploadPresenter = ({
   onDropFile,
   isDataUploading,
   FileInput,
@@ -109,4 +109,4 @@ const VaultStoreUploadPresenter = ({
   </>
 );
 
-export { VaultStoreUploadPresenter };
+export { StorageUploadPresenter };

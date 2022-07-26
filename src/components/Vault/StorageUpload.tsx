@@ -1,34 +1,29 @@
 import { stripZipFiles } from "@corsali/userdata-extractor";
 import { Form, Formik, FormikProps } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Stack } from "src/components";
+import { Button, Stack, ToastDefault } from "src/components";
 import { CarbonArrowRight } from "src/components/Icons";
-import { ToastApi, ToastImp } from "src/components/Toast";
 import config from "src/config";
 import { encryptAndUploadUserDataFiles, heapTrack } from "src/utils";
 
 import { useFileDropzone } from "./FileDropzone";
-import { StoragePassword, VaultStoreUploadPresenter } from "./index";
+import { StoragePassword, StorageUploadPresenter } from "./index";
 
 interface FormikValues {
   password: string;
 }
 
-interface VaultStoreUploadProps {
+interface Props {
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
   appPubKey: string;
 }
 
-const VaultStoreUpload = ({
-  moduleName,
-  createUserModule,
-  appPubKey,
-}: VaultStoreUploadProps) => {
+const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
   const router = useRouter();
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
@@ -37,16 +32,15 @@ const VaultStoreUpload = ({
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
   const [invalidFile, setInvalidFile] = useState(false);
   const [storeSuccess, setStoreSuccess] = useState(false);
-  // const router = useRouter();
-  const savedRef = useRef();
+  const [storeError, setStoreError] = useState(false);
 
   /* FILE CALLBACKS */
 
   // Callback when a file is selected in the file picker
   const handleSelectFile = (file: File) => {
     if (!config.zipFileMimeTypes.includes(file.type)) {
+      // Trigger invalid file toast
       setInvalidFile(true);
-      // TODO: invalid file type toast
       return;
     }
     const newFiles = [...filesToUpload, file];
@@ -86,7 +80,8 @@ const VaultStoreUpload = ({
     });
 
     if (!validFileCheck) {
-      // TODO: invalid file error toast
+      // Trigger invalid file toast
+      setInvalidFile(true);
     } else {
       setFilesToUpload([...filesToUpload, ...newFiles]);
     }
@@ -126,18 +121,17 @@ const VaultStoreUpload = ({
       );
 
       setIsDataUploading(true);
-      // TODO: success modal
+      setStoreSuccess(true);
       heapTrack("Uploaded Data", {
         module: moduleName,
         numFilesUploaded: filesToUpload.length,
       });
-      setStoreSuccess(true);
       setTimeout(() => router.push("/?completed-store=true"), 500);
     } catch (error: any) {
       console.log(error.toString());
-      // TODO: Error toast
-      setStoreSuccess(false);
       setIsDataUploading(false);
+      setStoreSuccess(false);
+      setStoreError(true);
     }
   };
 
@@ -186,7 +180,7 @@ const VaultStoreUpload = ({
             <Stack tw="rounded-sm">
               <Stack tw="w-full gap-1 lg:gap-4">
                 {/* UPLOADER */}
-                <VaultStoreUploadPresenter
+                <StorageUploadPresenter
                   onDropFile={onDropFile}
                   isDataUploading={isDataUploading}
                   FileInput={FileInput}
@@ -222,25 +216,32 @@ const VaultStoreUpload = ({
         )}
       </Formik>
 
-      {/* TOASTS */}
-      {/* <ToastImp ref={savedRef}>Saved successfully!</ToastImp> */}
-      {/* <ToastDemo /> */}
-      {/* TODO: use formik success, not storeSuccess */}
-      {/* <ToastApi
+      {/* INTERACTION STATUS TOASTS */}
+      <ToastDefault
         open={storeSuccess}
-        setOpen={setStoreSuccess}
-        duration={2000}
-        title="Good!"
-        content="Well done, you won"
+        onOpenChange={setStoreSuccess}
+        variant="success"
+        title="Success!"
+        content={`Your ${moduleName} data is securely stored`}
       />
-      <ToastApi
+      <ToastDefault
+        open={storeError}
+        onOpenChange={setStoreError}
+        duration={12000}
+        variant="error"
+        title="Error!"
+        content="Please reload the page and try again"
+      />
+      <ToastDefault
         open={invalidFile}
-        setOpen={setInvalidFile}
-        title="Bad!"
-        content="invalid file"
-      /> */}
+        onOpenChange={setInvalidFile}
+        duration={12000}
+        variant="error"
+        title="Invalid file!"
+        content="Please select a zip file"
+      />
     </>
   );
 };
 
-export { VaultStoreUpload };
+export { StorageUpload };

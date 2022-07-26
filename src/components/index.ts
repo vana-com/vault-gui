@@ -12,6 +12,7 @@ export * from "./Markdown";
 export * from "./PageVault";
 export * from "./Popovers";
 export * from "./TitleAndMetaTags";
+export * from "./Toast";
 export * from "./UserAccess";
 export * from "./Vault";
 
@@ -26,4 +27,3 @@ export * from "./system/Motion.css";
 export * from "./system/Popover";
 export * from "./system/Spinner";
 export * from "./system/Text";
-// export * from './Toast' // TODO
