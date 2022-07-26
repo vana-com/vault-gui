@@ -84,7 +84,7 @@ const VaultModulePage: NextPage = () => {
 
   return (
     <>
-      <TitleAndMetaTags color="black" />
+      <TitleAndMetaTags color="black" title="Your Vault | Vana" />
 
       <PageVault showBackLink>
         <div tw="flex flex-col gap-8 w-full">
