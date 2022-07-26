@@ -27,9 +27,22 @@ export const viewport = [
   `,
 ];
 
-export const root = [
-  tw`w-full p-4 rounded-md bg-backgroundElevated`,
-  tw`grid items-center gap-1`,
+export const rootVariants = {
+  error: tw`bg-red-500 text-label`,
+  success: tw`bg-backgroundElevated text-label`,
+  alert: tw`bg-backgroundElevated text-primary`,
+} as const;
+
+export type ToastVariant = keyof typeof rootVariants;
+
+export interface ToastProps {
+  variant?: ToastVariant;
+}
+
+export const root = ({ variant }: ToastProps) => [
+  tw`w-full px-4 py-3 rounded-md`,
+  tw`grid items-center gap-0.5`,
+  variant && rootVariants[variant],
   css`
     grid-template-areas: "title action" "description action";
     grid-template-columns: auto max-content;
@@ -55,7 +68,7 @@ export const root = [
 ];
 
 export const title = [
-  tw`font-semibold text-md`,
+  tw`text-base font-semibold`,
   css`
     grid-area: title;
   `,

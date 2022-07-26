@@ -1,2 +1,1 @@
-export * from "./ToastApi";
-export * from "./ToastImp";
+export * from "./ToastDefault";
