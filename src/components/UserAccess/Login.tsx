@@ -32,28 +32,33 @@ const Login = () => {
   const [idToken, setIdToken] = useAtom(idTokenAtom);
   const [loginError, setLoginError] = useState(false);
 
-  // get Hasura user object
+  // after a user has logged in with Web3Auth, this useEffect hook gets their auth information from the database
   useEffect(() => {
-    const loginUser = async () => {
-      const loginResponse = await fetch(`/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idToken, issuer: walletAdapter }),
-      });
+    const loginVanaUser = async () => {
+      try {
+        const loginResponse = await fetch(`/api/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ idToken, issuer: walletAdapter }),
+        });
+        const { user: userFromResponse, hasuraToken } =
+          await loginResponse.json();
 
-      const { user: userFromResponse, hasuraToken } =
-        await loginResponse.json();
-
-      console.log("userFromResponse", userFromResponse);
-
-      setUser(userFromResponse);
-      setHasuraToken(hasuraToken);
+        if (!userFromResponse || !hasuraToken) {
+          setLoginError(true);
+        }
+        setUser(userFromResponse);
+        setHasuraToken(hasuraToken);
+      } catch (error: any) {
+        console.log(error.toString());
+        setLoginError(true);
+      }
     };
 
     if (!user && web3AuthUserInfo) {
-      loginUser();
+      loginVanaUser();
     }
   }, [user, web3AuthUserInfo]);
 
