@@ -30,9 +30,9 @@ const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploadProgress, setUploadProgress] = useState(5); // Start at 5%
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
-  const [invalidFile, setInvalidFile] = useState(false);
-  const [storeSuccess, setStoreSuccess] = useState(false);
-  const [storeError, setStoreError] = useState(false);
+  const [showInvalidFileToast, setShowInvalidFileToast] = useState(false);
+  const [showStoreSuccessToast, setShowStoreSuccessToast] = useState(false);
+  const [showStoreErrorToast, setShowStoreErrorToast] = useState(false);
 
   /* FILE CALLBACKS */
 
@@ -40,7 +40,7 @@ const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
   const handleSelectFile = (file: File) => {
     if (!config.zipFileMimeTypes.includes(file.type)) {
       // Trigger invalid file toast
-      setInvalidFile(true);
+      setShowInvalidFileToast(true);
       return;
     }
     const newFiles = [...filesToUpload, file];
@@ -81,7 +81,7 @@ const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
 
     if (!validFileCheck) {
       // Trigger invalid file toast
-      setInvalidFile(true);
+      setShowInvalidFileToast(true);
     } else {
       setFilesToUpload([...filesToUpload, ...newFiles]);
     }
@@ -121,7 +121,7 @@ const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
       );
 
       setIsDataUploading(true);
-      setStoreSuccess(true);
+      setShowStoreSuccessToast(true);
       heapTrack("Uploaded Data", {
         module: moduleName,
         numFilesUploaded: filesToUpload.length,
@@ -130,8 +130,8 @@ const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
     } catch (error: any) {
       console.log(error.toString());
       setIsDataUploading(false);
-      setStoreSuccess(false);
-      setStoreError(true);
+      setShowStoreSuccessToast(false);
+      setShowStoreErrorToast(true);
     }
   };
 
@@ -218,23 +218,23 @@ const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
 
       {/* INTERACTION STATUS TOASTS */}
       <ToastDefault
-        open={storeSuccess}
-        onOpenChange={setStoreSuccess}
+        open={showStoreSuccessToast}
+        onOpenChange={setShowStoreSuccessToast}
         variant="success"
         title="Success!"
         content={`Your ${moduleName} data is securely stored`}
       />
       <ToastDefault
-        open={storeError}
-        onOpenChange={setStoreError}
+        open={showStoreErrorToast}
+        onOpenChange={setShowStoreErrorToast}
         duration={12000}
         variant="error"
         title="Error!"
         content="Please reload the page and try again"
       />
       <ToastDefault
-        open={invalidFile}
-        onOpenChange={setInvalidFile}
+        open={showInvalidFileToast}
+        onOpenChange={setShowInvalidFileToast}
         duration={12000}
         variant="error"
         title="Invalid file!"
