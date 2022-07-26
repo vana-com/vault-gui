@@ -9,7 +9,7 @@ import {
   web3AuthAdapterAtom,
   web3AuthUserInfoAtom,
 } from "src/state";
-import { getIdTokenPayload, logOut } from "src/utils";
+import { logOut } from "src/utils";
 
 const useExpireJWTs = () => {
   const router = useRouter();
@@ -22,8 +22,8 @@ const useExpireJWTs = () => {
 
   const expireJWTs = async () => {
     if (idToken) {
-      const idTokenPayload = await getIdTokenPayload(idToken);
-      if (!idTokenPayload) {
+      // const idTokenPayload = await getIdTokenPayload(idToken);
+      if (!idToken) {
         logOut(
           setWalletProvider,
           setWeb3AuthUserInfo,

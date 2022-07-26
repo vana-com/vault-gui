@@ -42,7 +42,7 @@ export default async (
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
       {
         headers: {
-          Authorization: `Bearer ${hasuraToken}`,
+          "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
         },
       },
     );
