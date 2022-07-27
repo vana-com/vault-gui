@@ -80,7 +80,7 @@ const HomePage: NextPage = () => {
 
   return (
     <>
-      <TitleAndMetaTags color="black" />
+      <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <PageVault>
         <Flex tw="w-full flex-col gap-4">
