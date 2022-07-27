@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 import { NextPage } from "next";
-import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
+import { useEffect, useRef, useState } from "react";
 
 import { Flex, Login, TitleAndMetaTags } from "src/components";
 import {
@@ -13,7 +13,7 @@ import {
   VaultSharePage,
 } from "src/components/VaultShare";
 import { web3AuthUserInfoAtom } from "src/state";
-import { runDataQueryPipeline } from "src/utils";
+// import { runDataQueryPipeline } from "src/utils";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -21,15 +21,18 @@ const SendPage: NextPage = () => {
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
     useState(false);
 
+  const workerRef = useRef<Worker>();
+
   const dummySQLQuery = "select * from instagram_interests";
   const testAccessor = "Dall•e";
   const testAccessDomain = "openai.com";
 
   const onDataRequestApproval = async () => {
     setHasUserAcceptedSharingRequest(true);
-    const dataToSend = runDataQueryPipeline(dummySQLQuery);
-    // TODO: send data to the underlying website
-    console.log("dataToSend", dataToSend);
+
+    console.log('sharing...')
+
+    workerRef.current?.postMessage({ query: dummySQLQuery, dataUrl: "../../joe2.zip.enc" });
   };
 
   // STATE TESTS
@@ -83,7 +86,24 @@ const SendPage: NextPage = () => {
     <div>Sending your data... Cool animation</div>;
   }
 
-  // Permissions contract state: requesting permissions
+  useEffect(() => {
+    // Preload the worker script
+    workerRef.current = new Worker(new URL('../../workers/sender.ts', import.meta.url));
+
+    // Listen for messages from the worker
+    workerRef.current.onmessage = (event: MessageEvent) => {
+      const { data } = event;
+      console.log("worker message", data);
+
+      // If it's a data message, send the data to the underlying website
+      // and terminate the worker
+      if (data?.done) {
+        console.log("worker done");
+        workerRef?.current?.terminate();
+      }
+    };
+  }, []);
+
   return (
     <>
       <TitleAndMetaTags color="black" title="Share your Vault data | Vana" />
