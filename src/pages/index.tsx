@@ -20,10 +20,11 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import { userAtom } from "src/state";
+import { userAtom, web3AuthUserInfoAtom } from "src/state";
 
 const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
+  const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -45,7 +46,10 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // State for !user
+  // web3Auth complete but user state object not available yet
+  const userAuthorizedWithoutUserData = web3AuthUserInfo && !user;
+
+  // State prior to authenticated user state object
   if (!user) {
     return (
       <>
@@ -59,8 +63,12 @@ const HomePage: NextPage = () => {
     );
   }
 
-  // State for loading Apollo
-  if (isModulesLoading || isUserModulesDataLoading) {
+  // State for loading Apollo and/or user data
+  if (
+    userAuthorizedWithoutUserData ||
+    isModulesLoading ||
+    isUserModulesDataLoading
+  ) {
     return (
       <PageVault>
         <Flex tw="w-full items-center justify-center">
