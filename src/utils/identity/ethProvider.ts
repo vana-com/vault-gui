@@ -3,6 +3,11 @@ import Web3 from "web3";
 
 import { IWalletProvider } from "./walletProvider";
 
+/**
+ * Implements wallet functionality specific to EVM compatible wallets, such as getting the wallet address and private key
+ * @param provider - Web3Auth provider
+ * @returns
+ */
 const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
   const getAccounts = async (): Promise<string[]> => {
     try {
