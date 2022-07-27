@@ -15,4 +15,5 @@ export * from "./formatModuleNameFromQueryString";
 export * from "./logOut";
 export * from "./parseJwt";
 export * from "./renderModuleStoreInstructions";
+export * from "./runDataQueryPipeline";
 export * from "./uploadFile";
