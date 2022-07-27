@@ -1,6 +1,6 @@
 import * as jose from "jose";
 
-import { getSecret } from "./getSecret";
+import { getSecret } from "../getSecret";
 
 const createHasuraJWT = async (
   idTokenPayload: jose.JWTPayload = {},

@@ -61,6 +61,8 @@ const Login = () => {
       }
     };
 
+    // Get the user from the database if we've logged in with web3Auth
+    // (either web3AuthUserInfo via openLogin or userWalletAddress via wallet login)
     if (!user && (web3AuthUserInfo || userWalletAddress)) {
       loginVanaUser();
     }
@@ -85,7 +87,6 @@ const Login = () => {
           } else {
             // Signed in with a social network
             web3Auth.getUserInfo().then(async (userInfo) => {
-              console.log("userInfo", userInfo);
               setWeb3AuthUserInfo(userInfo);
               setIdToken(userInfo.idToken);
             });
@@ -143,7 +144,7 @@ const Login = () => {
   };
 
   // don't render any markup when the user is logged in
-  if (user) {
+  if (web3AuthUserInfo || userWalletAddress) {
     return null;
   }
 
