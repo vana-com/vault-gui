@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { web3AuthUserInfoAtom } from "src/state";
-import { runDataQueryPipeline } from "src/utils";
+// import { runDataQueryPipeline } from "src/utils";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -11,13 +11,16 @@ const SendPage: NextPage = () => {
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
     useState(false);
 
+  const workerRef = useRef<Worker>();
+
   const dummySQLQuery = "select * from instagram_interests";
 
   const onDataRequestApproval = async () => {
     setHasUserAcceptedSharingRequest(true);
-    const dataToSend = runDataQueryPipeline(dummySQLQuery);
-    // TODO: send data to the underlying website
-    console.log("dataToSend", dataToSend);
+
+    console.log('sharing...')
+
+    workerRef.current?.postMessage({ query: dummySQLQuery, dataUrl: "../../joe2.zip.enc" });
   };
 
   if (!web3AuthUserInfo) {
@@ -27,6 +30,24 @@ const SendPage: NextPage = () => {
   if (hasUserAcceptedSharingRequest) {
     <div>Sending your data... Cool animation</div>;
   }
+
+  useEffect(() => {
+    // Preload the worker script
+    workerRef.current = new Worker(new URL('../../workers/sender.ts', import.meta.url));
+
+    // Listen for messages from the worker
+    workerRef.current.onmessage = (event: MessageEvent) => {
+      const { data } = event;
+      console.log("worker message", data);
+
+      // If it's a data message, send the data to the underlying website
+      // and terminate the worker
+      if (data?.done) {
+        console.log("worker done");
+        workerRef?.current?.terminate();
+      }
+    };
+  }, []);
 
   return (
     <div>
