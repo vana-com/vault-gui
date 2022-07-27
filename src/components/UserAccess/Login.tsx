@@ -61,7 +61,6 @@ const Login = () => {
       }
     };
 
-    console.log(user, web3AuthUserInfo, userWalletAddress);
     if (!user && (web3AuthUserInfo || userWalletAddress)) {
       loginVanaUser();
     }
