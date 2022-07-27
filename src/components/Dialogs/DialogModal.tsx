@@ -25,7 +25,7 @@ const DialogModal = ({ buttonSlot, children }: Props) => {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>{buttonSlot}</DialogTrigger>
-      <DialogPortal>
+      <DialogPortal forceMount>
         <AnimatePresence>
           {isOpen ? (
             <>

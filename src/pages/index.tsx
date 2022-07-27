@@ -20,10 +20,11 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import { userAtom } from "src/state";
+import { userAtom, web3AuthUserInfoAtom } from "src/state";
 
 const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
+  const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -45,8 +46,13 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // State for !user
-  if (!user) {
+  // data state: web3Auth user available but store user not yet available
+  const userAuthorizedWithoutUserData = web3AuthUserInfo && !user;
+  // data state: Hasura is loading
+  const hasuraIsLoading = isModulesLoading || isUserModulesDataLoading;
+
+  // State prior to authenticated store user
+  if (!web3AuthUserInfo) {
     return (
       <>
         <TitleAndMetaTags color="black" />
@@ -59,12 +65,14 @@ const HomePage: NextPage = () => {
     );
   }
 
-  // State for loading Apollo
-  if (isModulesLoading || isUserModulesDataLoading) {
+  // State for loading Hasura or web3Auth user but not store user
+  if (userAuthorizedWithoutUserData || hasuraIsLoading) {
     return (
       <PageVault>
         <Flex tw="w-full items-center justify-center">
           <Spinner />
+          {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+          <Login />
         </Flex>
       </PageVault>
     );
@@ -72,7 +80,10 @@ const HomePage: NextPage = () => {
 
   return (
     <>
-      <TitleAndMetaTags color="black" />
+      <TitleAndMetaTags color="black" title="Vault | Vana" />
+
+      {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+      <Login />
 
       <PageVault>
         <Flex tw="w-full flex-col gap-4">
