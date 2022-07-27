@@ -119,6 +119,11 @@ const Login = () => {
     }
   };
 
+  // don't render any markup when the user is logged in
+  if (web3AuthUserInfo) {
+    return null;
+  }
+
   return (
     <>
       <Button
