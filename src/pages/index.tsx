@@ -20,11 +20,10 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import { userAtom, web3AuthUserInfoAtom } from "src/state";
+import { userAtom } from "src/state";
 
 const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
-  const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -46,13 +45,11 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // data state: web3Auth user available but store user not yet available
-  const userAuthorizedWithoutUserData = web3AuthUserInfo && !user;
   // data state: Hasura is loading
   const hasuraIsLoading = isModulesLoading || isUserModulesDataLoading;
 
   // State prior to authenticated store user
-  if (!web3AuthUserInfo) {
+  if (!user) {
     return (
       <>
         <TitleAndMetaTags color="black" />
@@ -65,8 +62,8 @@ const HomePage: NextPage = () => {
     );
   }
 
-  // State for loading Hasura or web3Auth user but not store user
-  if (userAuthorizedWithoutUserData || hasuraIsLoading) {
+  // State for loading Hasura but not store user
+  if (hasuraIsLoading) {
     return (
       <PageVault>
         <Flex tw="w-full items-center justify-center">
