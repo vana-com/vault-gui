@@ -41,9 +41,10 @@ onmessage = async (event: MessageEvent) => {
  * @returns File
  */
 const fetchData = async (url: string) => {
+  console.log('using application/x-zip');
   const res = await fetch(url);
   const blob = await res.blob();
-  const file = new File([blob], 'data.zip.enc');
+  const file = new File([blob], 'data.zip.enc', {type:  'application/x-zip'});
 
   postUpdateMessage({
     stage: 'FETCH_DATA',
@@ -61,7 +62,7 @@ const fetchData = async (url: string) => {
  */
 const decryptData = async (encryptedFile: File, key: any) => {
   // TODO: decrypt data
-  const decrypted = new File([encryptedFile], 'joe2.zip');;
+  const decrypted = encryptedFile; //new File([encryptedFile], 'joe.zip', {type:  'application/x-zip'});;
 
   postUpdateMessage({
     stage: 'DECRYPTED_DATA',
@@ -78,9 +79,9 @@ const decryptData = async (encryptedFile: File, key: any) => {
  */
 const extractData = async (data: File) => {
 
-  const extracted = data; //await zipToSQLiteInstance('instagram', data);
+  const extracted = data; // await zipToSQLiteInstance('instagram', data);
 
-  //console.log(extracted.exportDatabase())
+  // console.log(extracted.exportDatabase())
 
   postUpdateMessage({
     stage: 'EXTRACTED_DATA',
@@ -98,7 +99,7 @@ const extractData = async (data: File) => {
  */
 const queryData = async (db: any, query: string) => {
 
-  const rows = ['row1', 'row2']
+  const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe']
 
   postUpdateMessage({
     stage: 'QUERY_DATA',
