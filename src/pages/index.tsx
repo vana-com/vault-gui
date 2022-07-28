@@ -20,11 +20,13 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
+import { useLogin } from "src/hooks";
 import { userAtom, web3AuthUserInfoAtom } from "src/state";
 
 const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
+  const { logIn, loginError, setLoginError } = useLogin();
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -55,10 +57,14 @@ const HomePage: NextPage = () => {
   if (!web3AuthUserInfo) {
     return (
       <>
-        <TitleAndMetaTags color="black" />
+        <TitleAndMetaTags color="black" title="Login to Vault" />
         <PageVault>
           <Flex tw="w-full items-center justify-center">
-            <Login />
+            <Login
+              logIn={logIn}
+              loginError={loginError}
+              setLoginError={setLoginError}
+            />
           </Flex>
         </PageVault>
       </>
@@ -68,22 +74,20 @@ const HomePage: NextPage = () => {
   // State for loading Hasura or web3Auth user but not store user
   if (userAuthorizedWithoutUserData || hasuraIsLoading) {
     return (
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-          {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-          <Login />
-        </Flex>
-      </PageVault>
+      <>
+        <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
+        <PageVault>
+          <Flex tw="w-full items-center justify-center">
+            <Spinner />
+          </Flex>
+        </PageVault>
+      </>
     );
   }
 
   return (
     <>
       <TitleAndMetaTags color="black" title="Vault | Vana" />
-
-      {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-      <Login />
 
       <PageVault>
         <Flex tw="w-full flex-col gap-4">

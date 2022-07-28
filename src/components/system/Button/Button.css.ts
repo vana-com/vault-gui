@@ -54,6 +54,6 @@ export const buttonStyle = ({
   // variants
   variant && buttonVariants[variant],
   size && buttonSizes[size],
-  round ? tw`rounded-full` : tw`rounded-lg`,
+  round ? tw`rounded-full` : tw`rounded`,
   isDisabled && tw`cursor-not-allowed opacity-80`,
 ];
