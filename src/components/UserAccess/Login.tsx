@@ -74,10 +74,11 @@ const Login = () => {
       web3Auth.on(
         ADAPTER_EVENTS.CONNECTED,
         async (data: CONNECTED_EVENT_DATA) => {
+          const ethProvider = getWalletProvider(web3Auth.provider!);
+          setWalletProvider(ethProvider);
+
           if (data.adapter === WALLET_ADAPTERS.WALLET_CONNECT_V1) {
             // Signed in with a wallet
-            const ethProvider = getWalletProvider(web3Auth.provider!);
-            setWalletProvider(ethProvider);
             const walletAddresses = await ethProvider.getAccounts();
             if (walletAddresses?.length > 0) {
               setUserWalletAddress(walletAddresses[0]);
@@ -90,7 +91,6 @@ const Login = () => {
               setWeb3AuthUserInfo(userInfo);
               setIdToken(userInfo.idToken);
             });
-            setWalletProvider(web3Auth.provider!);
           }
         },
       );
