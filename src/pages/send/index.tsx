@@ -32,7 +32,7 @@ const SendPage: NextPage = () => {
 
     console.log('sharing...')
 
-    workerRef.current?.postMessage({ query: dummySQLQuery, dataUrl: "../../joe2.zip.enc" });
+    workerRef.current?.postMessage({ query: dummySQLQuery, dataUrl: "../../joe.zip.enc" });
   };
 
   // STATE TESTS
@@ -87,19 +87,24 @@ const SendPage: NextPage = () => {
   }
 
   useEffect(() => {
+    // Set the window context 
+    const w = window;
+
+
     // Preload the worker script
     workerRef.current = new Worker(new URL('../../workers/sender.ts', import.meta.url));
 
     // Listen for messages from the worker
     workerRef.current.onmessage = (event: MessageEvent) => {
       const { data } = event;
-      console.log("worker message", data);
+      console.log("worker message:", data);
 
       // If it's a data message, send the data to the underlying website
       // and terminate the worker
-      if (data?.done) {
-        console.log("worker done");
-        workerRef?.current?.terminate();
+      if (data?.type === 'data' && data?.done) {
+        console.log("worker done | data:", JSON.stringify(data));
+        // workerRef?.current?.terminate();
+        w.opener.postMessage(JSON.stringify(data), '*');
       }
     };
   }, []);
