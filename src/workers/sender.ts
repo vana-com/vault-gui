@@ -99,7 +99,7 @@ const extractData = async (data: File) => {
  */
 const queryData = async (db: any, query: string) => {
 
-  const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe']
+  const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe', 'dunkin', 'tim hortons', 'mccafe', 'donut king', 'muffin break']
 
   postUpdateMessage({
     stage: 'QUERY_DATA',
