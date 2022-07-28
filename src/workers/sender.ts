@@ -41,10 +41,17 @@ onmessage = async (event: MessageEvent) => {
  * @returns File
  */
 const fetchData = async (url: string) => {
-  console.log('using application/x-zip');
-  const res = await fetch(url);
+  console.log('using application/zip');
+  const res = await fetch(url, {
+    headers: {
+      'Accept': 'application/zip',
+    }
+  });
   const blob = await res.blob();
-  const file = new File([blob], 'data.zip.enc', {type:  'application/x-zip'});
+  // const zblob = blob.slice(0, blob.size, "application/zip");
+  const file = new File([blob], 'data.zip', {type:  'application/zip'});
+
+  console.log(file);
 
   postUpdateMessage({
     stage: 'FETCH_DATA',
@@ -62,7 +69,7 @@ const fetchData = async (url: string) => {
  */
 const decryptData = async (encryptedFile: File, key: any) => {
   // TODO: decrypt data
-  const decrypted = encryptedFile; //new File([encryptedFile], 'joe.zip', {type:  'application/x-zip'});;
+  const decrypted = new File([encryptedFile], 'joe.zip', {type:  'application/x-zip'});;
 
   postUpdateMessage({
     stage: 'DECRYPTED_DATA',
@@ -79,9 +86,9 @@ const decryptData = async (encryptedFile: File, key: any) => {
  */
 const extractData = async (data: File) => {
 
-  const extracted = data; // await zipToSQLiteInstance('instagram', data);
+  const extracted = await zipToSQLiteInstance('instagram', data);
 
-  // console.log(extracted.exportDatabase())
+  // console.log(await extracted.runQuery('SELECT * FROM ads_interests'))
 
   postUpdateMessage({
     stage: 'EXTRACTED_DATA',
@@ -99,14 +106,19 @@ const extractData = async (data: File) => {
  */
 const queryData = async (db: any, query: string) => {
 
-  const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe', 'dunkin', 'tim hortons', 'mccafe', 'donut king', 'muffin break']
+  const rows = await db.runQuery('SELECT * FROM ads_interests')[0].values;
+
+
+  const flat = rows.map((row: any) => row[0]);
+  
+  // const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe', 'dunkin', 'tim hortons', 'mccafe', 'donut king', 'muffin break']
 
   postUpdateMessage({
     stage: 'QUERY_DATA',
     message: `Queried data with query '${query}' and returned ${rows.length} rows`,
   });
 
-  return rows;
+  return flat;
 };
 
 const sendData = (data: any) => {
