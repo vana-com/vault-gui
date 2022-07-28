@@ -1,7 +1,11 @@
 import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useState } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import tw from "twin.macro";
 
+import { Container, TitleAndMetaTags } from "src/components";
+import { PermissionContract, PermissionList } from "src/components/VaultShare";
 import { web3AuthUserInfoAtom } from "src/state";
 import { runDataQueryPipeline } from "src/utils";
 
@@ -29,19 +33,24 @@ const SendPage: NextPage = () => {
   }
 
   return (
-    <div>
-      <h1>Do you accept sharing your data</h1>
-      <h2>Query: {dummySQLQuery}</h2>
-      <button onClick={onDataRequestApproval}>Yes</button>
-      <button
-        onClick={() => {
-          // TODO: close popup or prompt the user to close popup
-          console.log("hi");
-        }}
-      >
-        No
-      </button>
-    </div>
+    <>
+      <TitleAndMetaTags color="black" title="Send your Vault data | Vana" />
+
+      <div tw="min-h-screen flex items-center justify-center">
+        <Container tw="relative" size="lg">
+          <PermissionContract
+            accessor="Dall•e"
+            onAccept={onDataRequestApproval}
+            onDeny={() => {
+              // TODO: close popup or prompt the user to close popup
+              console.log("close popup");
+            }}
+          >
+            <PermissionList query={dummySQLQuery} />
+          </PermissionContract>
+        </Container>
+      </div>
+    </>
   );
 };
 

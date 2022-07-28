@@ -1,2 +1,2 @@
-export * from "./DataList";
 export * from "./PermissionContract";
+export * from "./PermissionList";

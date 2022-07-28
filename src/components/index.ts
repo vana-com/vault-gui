@@ -19,6 +19,7 @@ export * from "./Vault";
 /* DESIGN SYSTEM PRIMITIVES */
 export * from "./system/Box";
 export * from "./system/Button";
+export * from "./system/Checkbox";
 export * from "./system/Collapsible";
 export * from "./system/Dialog";
 export * from "./system/Input";

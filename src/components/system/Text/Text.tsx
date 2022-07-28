@@ -4,14 +4,14 @@ import tw, { styled } from "twin.macro";
 export const textVariants = {
   footnote: tw`text-xs tracking-[0]`,
   note: tw`text-sm tracking-[0]`,
-  subbody: tw`text-base tracking-[-0.005em]`,
+  base: tw`text-base tracking-[-0.005em]`,
   body: tw`text-md tracking-[-0.001em]`,
   headingMeta: tw`text-sm tracking-[0.05em] leading-none uppercase`,
   subheading: tw`text-sm tracking-[-0.025em] font-semibold`,
   heading: tw`text-lg tracking-[-0.005em] font-semibold font-heading`,
-  title1: tw`text-xl tracking-[-0.025em] font-semibold font-heading`,
-  title2: tw`text-2xl tracking-[-0.025em] font-bold font-heading`,
-  title3: tw`text-3xl tracking-[-0.025em] font-black font-title`,
+  title1: tw`text-xl tracking-[-0.001em] font-semibold font-heading`,
+  title2: tw`text-2xl tracking-[-0.001em] font-bold font-heading`,
+  title3: tw`text-3xl tracking-[-0.001em] font-black font-heading`,
   display: tw`text-4xl tracking-[-0.025em] font-black font-title`,
 } as const;
 
@@ -55,6 +55,8 @@ export interface TextProps {
   variant?: TextVariant;
   weight?: TextWeight;
   color?: TextColor;
+  // used for HTML label, not available from twin.macro but should be…
+  htmlFor?: string;
 }
 
 export const Text = styled.div(({ variant, weight, color }: TextProps) => [

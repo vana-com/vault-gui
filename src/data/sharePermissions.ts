@@ -1,5 +1,11 @@
 export const testPermissionList = [
-  "Hey I'm a data share item you're confirming access to",
-  "Hey I'm also a data share item you're confirming access to",
-  "Hey don't forget about me baby",
+  {
+    id: "1",
+    text: "Read access to metadata",
+  },
+  {
+    id: "2",
+    text: "No write access",
+    denial: true,
+  },
 ];

@@ -43,6 +43,13 @@
 }
 @font-face {
   font-family: "GintoNord";
+  src: url("/fonts/ModernEra-ExtraBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GintoNord";
   src: url("/fonts/Ginto-Nord-Black.woff") format("woff");
   src: url("/fonts/ModernEra-Black.woff") format("woff");
   font-style: normal;
