@@ -9,17 +9,23 @@ import {
   Text,
   VanaLogoNew,
 } from "src/components";
-import { CarbonArrowRight, ShareTestIcon } from "src/components/Icons";
+import {
+  CarbonArrowRight,
+  CarbonRotate,
+  ShareTestIcon,
+} from "src/components/Icons";
 
 interface Props {
   children: React.ReactNode;
   heading?: string;
   lede: string;
+  accessDenied?: boolean;
 }
 
 const ICON_SIZE = "36px";
 
 const VaultSharePage = ({
+  accessDenied,
   heading = "Allow Vault access",
   lede,
   children,
@@ -31,7 +37,13 @@ const VaultSharePage = ({
           <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">
             <Group tw="gap-2 items-center pb-4">
               <VanaLogoNew boxSize={ICON_SIZE} tw="rounded-md bg-orange-500" />
-              <CarbonArrowRight boxSize={ICON_SIZE} />
+              {accessDenied ? (
+                <div tw="flex justify-center" style={{ width: ICON_SIZE }}>
+                  <CarbonRotate boxSize="27px" />
+                </div>
+              ) : (
+                <CarbonArrowRight boxSize={ICON_SIZE} />
+              )}
               {/* TODO: allow accessor to configure their logo */}
               <ShareTestIcon
                 boxSize={ICON_SIZE}
