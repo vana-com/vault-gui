@@ -90,7 +90,16 @@ const Login = () => {
               setWeb3AuthUserInfo(userInfo);
               setIdToken(userInfo.idToken);
             });
-            setWalletProvider(web3Auth.provider!);
+            const ethProvider = getWalletProvider(web3Auth.provider!);
+            console.log("ethProvider", ethProvider);
+            setWalletProvider(ethProvider);
+            const walletAddresses = await ethProvider.getAccounts();
+            console.log("walletAddresses", walletAddresses);
+            if (walletAddresses?.length > 0) {
+              setUserWalletAddress(walletAddresses[0]);
+            } else {
+              console.error("Unable to get user wallet address");
+            }
           }
         },
       );
@@ -135,8 +144,7 @@ const Login = () => {
       return;
     }
     try {
-      const web3AuthProvider = await web3AuthInstance.connect();
-      setWalletProvider(web3AuthProvider);
+      await web3AuthInstance.connect();
     } catch (error: any) {
       console.error(error);
       setLoginError(true);

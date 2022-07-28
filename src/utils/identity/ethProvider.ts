@@ -19,8 +19,22 @@ const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
       return [];
     }
   };
+
+  const dangerouslyGetPrivateKey = async (): Promise<string | undefined> => {
+    try {
+      const dangerousPrivateKey = (await provider.request({
+        method: "eth_private_key",
+      })) as string;
+      return dangerousPrivateKey;
+    } catch (error: any) {
+      // user not logged in
+      console.log("error", error.toString());
+      return undefined;
+    }
+  };
   return {
     getAccounts,
+    dangerouslyGetPrivateKey,
   };
 };
 

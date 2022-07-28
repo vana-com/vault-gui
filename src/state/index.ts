@@ -1,4 +1,4 @@
-import { SafeEventEmitterProvider, UserInfo } from "@web3auth/base";
+import { UserInfo } from "@web3auth/base";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
 import { IWalletProvider } from "src/utils/identity/walletProvider";
@@ -27,9 +27,10 @@ const web3AuthUserInfoAtom = createAtom<Partial<UserInfo> | undefined>(
   "web3auth-user-info",
   undefined,
 );
-const web3AuthWalletProviderAtom = createAtom<
-  SafeEventEmitterProvider | IWalletProvider | undefined
->("web3auth-wallet-provider", undefined);
+const web3AuthWalletProviderAtom = createAtom<IWalletProvider | undefined>(
+  "web3auth-wallet-provider",
+  undefined,
+);
 
 export {
   hasuraTokenAtom,
