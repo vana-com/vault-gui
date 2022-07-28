@@ -20,6 +20,13 @@ const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
     }
   };
 
+  /**
+   * DO NOT USE THIS METHOD UNLESS ABSOLUTELY NECESSARY
+   *
+   * NEVER PERSIST OR LOG THE PRIVATE KEY
+   *
+   * @returns Users private key if they are logged in, undefined otherwise
+   */
   const dangerouslyGetPrivateKey = async (): Promise<string | undefined> => {
     try {
       const dangerousPrivateKey = (await provider.request({
