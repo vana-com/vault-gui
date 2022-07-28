@@ -2,6 +2,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Regular.woff") format("woff");
+  src: url("/fonts/ModernEra-Regular.woff") format("woff");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -9,6 +10,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Medium.woff") format("woff");
+  src: url("/fonts/ModernEra-Medium.woff") format("woff");
   font-style: normal;
   font-weight: 500;
   font-display: swap;
@@ -16,6 +18,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Bold.woff") format("woff");
+  src: url("/fonts/ModernEra-Bold.woff") format("woff");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -23,6 +26,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Black.woff") format("woff");
+  src: url("/fonts/ModernEra-Black.woff") format("woff");
   font-style: normal;
   font-weight: 900;
   font-display: swap;
@@ -32,6 +36,7 @@
 @font-face {
   font-family: "GintoNord";
   src: url("/fonts/Ginto-Nord-Bold.woff") format("woff");
+  src: url("/fonts/ModernEra-Bold.woff") format("woff");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -39,6 +44,7 @@
 @font-face {
   font-family: "GintoNord";
   src: url("/fonts/Ginto-Nord-Black.woff") format("woff");
+  src: url("/fonts/ModernEra-Black.woff") format("woff");
   font-style: normal;
   font-weight: 900;
   font-display: swap;
