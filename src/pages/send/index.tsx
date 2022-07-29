@@ -14,7 +14,7 @@ import {
 } from "src/components/VaultShare";
 import { web3AuthUserInfoAtom } from "src/state";
 
-// import * as dpw from '../../types/DataPipelineWorker';
+import * as dpw from '../../types/DataPipelineWorker';
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -41,20 +41,49 @@ const SendPage: NextPage = () => {
     });
   };
 
-  const onMessageReceived = (window: Window, self: Window) => (event: MessageEvent) => {
-    const { data } = event;
+  const onMessageReceived = (window: Window, self: Window) => async (event: MessageEvent) => {
+    const data = event.data as dpw.Message;
+    
     console.log("worker message:", data);
 
-    // If it's a data message, send the data to the underlying website
-    // and terminate the worker
-    if (data?.type === "data" && data?.done) {
-      console.log("worker done | data:", JSON.stringify(data));
-      // workerRef?.current?.terminate();
-      window.opener.postMessage(JSON.stringify(data), "*");
-
-      // Close ourselves
-      self.close();
+    // Handle each message type differently
+    switch (data.type) {
+      case dpw.MessageType.UPDATE:
+        await handleUpdateMessage(data);
+        break;
+      case dpw.MessageType.DATA:
+        await handleDataMessage(data, window, self);
+        break;
+      case dpw.MessageType.ERROR:
+        await handleErrorMessage(data);
+        break;
+      default: console.log(`Unknown message type: ${data.type}`);
     }
+  };
+
+  const handleUpdateMessage = async (data: dpw.Message) => {
+    // Worker not (quite) done yet these are just "status" reports
+    // TODO: update ui w/ stages here
+  };
+
+  const handleDataMessage = async (data: dpw.Message, window: Window, self: Window) => {
+    // This is the "final" message -- the data payload
+    
+    console.log("worker done | data:", JSON.stringify(data));
+    
+    // Send the data to the "parent" window
+    // TODO: @joe - change to only send to the parent, rather than globally
+    window.opener.postMessage(JSON.stringify(data), "*");
+
+    // TODO: Do some vudu here before we close the window???
+
+    // Close ourselves
+    self.close();
+  };
+
+  const handleErrorMessage = async (data: dpw.Message) => {
+    // Something definitely went wrong
+    // TODO: gracefully show errors to the user?
   };
 
   // STATE TESTS
