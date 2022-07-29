@@ -55,12 +55,16 @@ export interface TextProps {
   variant?: TextVariant;
   weight?: TextWeight;
   color?: TextColor;
+  mono?: boolean;
   // used for HTML label, not available from twin.macro but should be…
   htmlFor?: string;
 }
 
-export const Text = styled.div(({ variant, weight, color }: TextProps) => [
-  variant && textVariants[variant],
-  weight && textWeights[weight],
-  color && textColors[color],
-]);
+export const Text = styled.div(
+  ({ variant, weight, color, mono }: TextProps) => [
+    variant && textVariants[variant],
+    weight && textWeights[weight],
+    color && textColors[color],
+    mono && tw`!font-mono`,
+  ],
+);

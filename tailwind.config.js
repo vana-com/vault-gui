@@ -3,6 +3,8 @@
 
 // const theme = require('tailwindcss/defaultTheme')
 
+const sans = ['ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','sans-serif'];
+
 // screens
 // sm: '640px',
 // md: '768px',
@@ -65,9 +67,9 @@ module.exports = {
       fontFamily: {
         // title: ['GintoNord', ...fontFamily.sans],
         title: ['GintoNord'],
-        heading: ['Ginto'],
-        sans: ['Inter'],
-        mono: 'SFMono, ui-monospace, monospace',
+        heading: ['Ginto', ...sans],
+        sans: ['Inter','ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','sans-serif'],
+        mono: ['IBM Plex Mono','SFMono-Regular','ui-monospace','monospace'],
       },
       fontSize: {
         xs: ['11px', { lineHeight: '1.5' }],
