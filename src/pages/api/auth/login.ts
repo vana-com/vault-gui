@@ -21,12 +21,12 @@ export default async (
       });
     }
 
-    let externalId = walletAddress;
-    let emailAddress = `${new Date().getTime()}@dummy-email.com`;
-    let name = `Wallet User`;
+    let externalId;
+    let emailAddress;
+    let name;
     let hasuraJwt;
-
     if (idToken) {
+      // SSO Login
       const idTokenPayload = (await getIdTokenPayload(idToken)) as any;
       if (!idTokenPayload) {
         return res.status(401).json({
@@ -39,6 +39,10 @@ export default async (
       name = idTokenPayload.name;
       hasuraJwt = await createHasuraJWT(idTokenPayload, externalId);
     } else {
+      // External Wallet Login
+      externalId = walletAddress;
+      emailAddress = `${new Date().getTime()}@dummy-email.com`;
+      name = `Wallet User`;
       hasuraJwt = await createHasuraJWT(undefined, externalId);
     }
 

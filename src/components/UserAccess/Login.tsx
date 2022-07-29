@@ -74,21 +74,23 @@ const Login = () => {
       web3Auth.on(
         ADAPTER_EVENTS.CONNECTED,
         async (data: CONNECTED_EVENT_DATA) => {
-          if (data.adapter === WALLET_ADAPTERS.OPENLOGIN) {
+          const ethProvider = getWalletProvider(web3Auth.provider!);
+          setWalletProvider(ethProvider);
+
+          if (data.adapter === WALLET_ADAPTERS.WALLET_CONNECT_V1) {
+            // Signed in with a wallet
+            const walletAddresses = await ethProvider.getAccounts();
+            if (walletAddresses?.length > 0) {
+              setUserWalletAddress(walletAddresses[0]);
+            } else {
+              console.error("Unable to get user wallet address");
+            }
+          } else {
             // Signed in with a social network
             web3Auth.getUserInfo().then(async (userInfo) => {
               setWeb3AuthUserInfo(userInfo);
               setIdToken(userInfo.idToken);
             });
-          }
-
-          const ethProvider = getWalletProvider(web3Auth.provider!);
-          setWalletProvider(ethProvider);
-          const walletAddresses = await ethProvider.getAccounts();
-          if (walletAddresses?.length > 0) {
-            setUserWalletAddress(walletAddresses[0]);
-          } else {
-            console.error("Unable to get user wallet address");
           }
         },
       );
