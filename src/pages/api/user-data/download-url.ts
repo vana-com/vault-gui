@@ -9,7 +9,7 @@ import { getSdk } from "src/graphql/generated";
 import { getHasuraTokenPayload } from "src/utils";
 
 /**
- * Return a short-lived URL to allow uploading to a Google Cloud Storage bucket
+ * Return a short-lived URL to allow downloading the user data.
  */
 export default async (
   req: NextApiRequest,

@@ -18,7 +18,7 @@ import {
 } from "src/graphql/generated";
 import { hasuraTokenAtom, userAtom, web3AuthUserInfoAtom, web3AuthWalletProviderAtom } from "src/state";
 
-import * as dpw from '../../types/DataPipelineWorker';
+import * as dataPipelineWorker from '../../types/DataPipelineWorker';
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -34,11 +34,21 @@ const SendPage: NextPage = () => {
 
   // Get popup's query params
   // TODO: @joe - replace w/ more secure method
-  const { appName, serviceName } = router.query;
+  /*
+    * appName: The name of "client" that is requesting data (helloworld-gui)
+    * serviceName: The name of the data service that is being requested (instagram)
+  */
+  const { appName, serviceName, queryString } = router.query;
 
+  // Make it human readable again
   const prettyAppName = decodeURI(appName as string);
 
-  const dummySQLQuery = "SELECT * FROM ads_interests;";
+  // normalize service name
+  const normalizedServiceName = ((serviceName as string) ?? '').toLowerCase()
+
+  // TODO: @joe - Clean up query to prevent sql injection
+  const cleanQueryString = queryString as string;
+
   // TODO: @joe - load url from window.origin?
   const testAccessDomain = "openai.com";
 
@@ -50,12 +60,12 @@ const SendPage: NextPage = () => {
 
   const selectedModule = userModulesData
     ? userModulesData.usersModules.filter(
-        (userModule) => userModule.module.name === serviceName
+        (userModule) => userModule.module.name.toLowerCase() === normalizedServiceName
       )
     : [];
 
   const fetchSignedUrl = async (token: string, userModuleId: string) => {
-    const { signedUrl } = await fetch('/api/user-data/download-url', {
+    const result = await fetch('/api/user-data/download-url', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -64,9 +74,16 @@ const SendPage: NextPage = () => {
         hasuraToken: token,
         userModuleId,
       }),
-    }).then((res) => res.json());
+    });
 
-    return signedUrl;
+    if (result.status !== 200) {
+      throw new Error(`Failed to fetch signed url: ${result.status}`);
+    }
+
+    const parsed = await result.json();
+
+    if (!parsed?.success) throw new Error(`Failed to fetch signed url: ${result.status}`);
+    else return parsed.signedUrl;
   };
 
   const onDataRequestApproval = async () => {
@@ -78,30 +95,35 @@ const SendPage: NextPage = () => {
     const userModuleId = selectedModule[0].id;
     const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
 
+    // Check all attributes are present
+    if(!userModuleId || !signedUrl || !dangerousPrivateKey) {
+      throw new Error("Missing attributes");
+    }
+
     // Sends data to the DataPipeline (Worker)
     console.log("Sending data to the worker...");
     workerRef.current?.postMessage({
-      queries: [dummySQLQuery],
+      queries: [cleanQueryString],
       dataUrl: signedUrl,
       decryptionKey: dangerousPrivateKey,
-      serviceName: (serviceName as string).toLowerCase(),
+      serviceName: normalizedServiceName,
     });
   };
 
   const onMessageReceived = (window: Window, self: Window) => async (event: MessageEvent) => {
-    const data = event.data as dpw.Message;
+    const data = event.data as dataPipelineWorker.Message;
     
     console.log("DataPipeline message:", data);
 
     // Handle each message type differently
     switch (data.type) {
-      case dpw.MessageType.UPDATE:
+      case dataPipelineWorker.MessageType.UPDATE:
         await handleUpdateMessage(data);
         break;
-      case dpw.MessageType.DATA:
+      case dataPipelineWorker.MessageType.DATA:
         await handleDataMessage(data, window, self);
         break;
-      case dpw.MessageType.ERROR:
+      case dataPipelineWorker.MessageType.ERROR:
         await handleErrorMessage(data);
         break;
       default: console.log(`Unknown message type: ${data?.type}`);
@@ -115,23 +137,23 @@ const SendPage: NextPage = () => {
    */
   const closePopup = (self: Window) => self.close();
 
-  const handleUpdateMessage = async (data: dpw.Message) => {
+  const handleUpdateMessage = async (data: dataPipelineWorker.Message) => {
     // Worker not (quite) done yet these are just "status" reports
     // TODO: update ui w/ stages here
     switch (data.payload.stage) {
-      case dpw.Stage.FETCH_DATA:
+      case dataPipelineWorker.Stage.FETCH_DATA:
         break;
-      case dpw.Stage.DECRYPTED_DATA:
+      case dataPipelineWorker.Stage.DECRYPTED_DATA:
         break;
-      case dpw.Stage.EXTRACTED_DATA:
+      case dataPipelineWorker.Stage.EXTRACTED_DATA:
         break;
-      case dpw.Stage.QUERY_DATA:
+      case dataPipelineWorker.Stage.QUERY_DATA:
         break;
       default: console.log(`Unknown stage: ${data?.payload?.stage}`);
     }
   };
 
-  const handleDataMessage = async (data: dpw.Message, window: Window, self: Window) => {
+  const handleDataMessage = async (data: dataPipelineWorker.Message, window: Window, self: Window) => {
     // This is the "final" message -- the data payload
     console.log("worker done | data:", JSON.stringify(data));
 
@@ -143,7 +165,7 @@ const SendPage: NextPage = () => {
     setTimeout( () => closePopup(self), 1 * 1000);
   };
 
-  const handleErrorMessage = async (data: dpw.Message) => {
+  const handleErrorMessage = async (data: dataPipelineWorker.Message) => {
     // Something definitely went wrong
     // TODO: gracefully show errors to the user?
     console.log("worker error | data:", data?.payload?.error);
@@ -200,6 +222,9 @@ const SendPage: NextPage = () => {
     <div>Sending your data... Cool animation</div>;
   }
 
+  /**
+   * Create the worker once the client loaded the page and sets up the event listener
+   */
   useEffect(() => {
     // Set the window context
     const w = window;
