@@ -47,7 +47,7 @@ const SendPage: NextPage = () => {
   const normalizedServiceName = ((serviceName as string) ?? '').toLowerCase()
 
   // TODO: @joe - Clean up query to prevent sql injection
-  const cleanQueryString = queryString as string;
+  const cleanQueryString = decodeURI(queryString as string);
 
   // TODO: @joe - load url from window.origin?
   const testAccessDomain = "openai.com";
