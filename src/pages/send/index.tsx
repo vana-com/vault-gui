@@ -52,27 +52,29 @@ const SendPage: NextPage = () => {
       )
     : [];
 
-  const onDataRequestApproval = async () => {
-    setHasUserAcceptedSharingRequest(true);
-
-    console.log("Starting the sharing process...");
-
-    const dangerousPrivateKey = await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
-    console.log(`dangerousPrivateKey: ${dangerousPrivateKey?.substring(0,4)}*****`);
-
-    const userModuleId = selectedModule[0].id;
-    console.log('selectedModule[0].id: ', userModuleId);
-
+  const fetchSignedUrl = async (token: string, userModuleId: string) => {
     const { signedUrl } = await fetch('/api/user-data/download-url', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        hasuraToken,
+        hasuraToken: token,
         userModuleId,
       }),
     }).then((res) => res.json());
+
+    return signedUrl;
+  };
+
+  const onDataRequestApproval = async () => {
+    setHasUserAcceptedSharingRequest(true);
+
+    console.log("Starting the sharing process...");
+
+    const dangerousPrivateKey = await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
+    const userModuleId = selectedModule[0].id;
+    const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
 
     // Sends data to the DataPipeline (Worker)
     console.log("Sending data to the worker...");
@@ -87,7 +89,7 @@ const SendPage: NextPage = () => {
   const onMessageReceived = (window: Window, self: Window) => async (event: MessageEvent) => {
     const data = event.data as dpw.Message;
     
-    console.log("worker message:", data);
+    console.log("DataPipeline message:", data);
 
     // Handle each message type differently
     switch (data.type) {
@@ -104,24 +106,34 @@ const SendPage: NextPage = () => {
     }
   };
 
+  const closePopup = (self: Window) => self.close();
+
   const handleUpdateMessage = async (data: dpw.Message) => {
     // Worker not (quite) done yet these are just "status" reports
     // TODO: update ui w/ stages here
+    switch (data.payload.stage) {
+      case dpw.Stage.FETCH_DATA:
+        break;
+      case dpw.Stage.DECRYPTED_DATA:
+        break;
+      case dpw.Stage.EXTRACTED_DATA:
+        break;
+      case dpw.Stage.QUERY_DATA:
+        break;
+      default: console.log(`Unknown stage: ${data.payload.stage}`);
+    }
   };
 
   const handleDataMessage = async (data: dpw.Message, window: Window, self: Window) => {
     // This is the "final" message -- the data payload
-    
     console.log("worker done | data:", JSON.stringify(data));
-    
+
     // Send the data to the "parent" window
     // TODO: @joe - change to only send to the parent, rather than globally
     window.opener.postMessage(JSON.stringify(data), "*");
 
-    // TODO: Do some vudu here before we close the window???
-
-    // Close ourselves
-    self.close();
+    // TODO: @callum - Do some vudu here before we close the window???
+    setTimeout( () => closePopup(self), 1 * 1000);
   };
 
   const handleErrorMessage = async (data: dpw.Message) => {
