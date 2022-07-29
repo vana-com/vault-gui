@@ -13,16 +13,19 @@ import {
   PermissionList,
   VaultSharePage,
 } from "src/components/VaultShare";
+import { useGetUserModulesSubscription } from "src/graphql/generated";
 import {
-  useGetUserModulesSubscription,
-} from "src/graphql/generated";
-import { hasuraTokenAtom, userAtom, web3AuthUserInfoAtom, web3AuthWalletProviderAtom } from "src/state";
+  hasuraTokenAtom,
+  userAtom,
+  web3AuthUserInfoAtom,
+  web3AuthWalletProviderAtom,
+} from "src/state";
 
-import * as dataPipelineWorker from '../../types/DataPipelineWorker';
+import * as dataPipelineWorker from "../../types/DataPipelineWorker";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [user] = useAtom(userAtom);
   const [hasuraToken] = useAtom(hasuraTokenAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
@@ -35,16 +38,16 @@ const SendPage: NextPage = () => {
   // Get popup's query params
   // TODO: @joe - replace w/ more secure method
   /*
-    * appName: The name of "client" that is requesting data (helloworld-gui)
-    * serviceName: The name of the data service that is being requested (instagram)
-  */
+   * appName: The name of "client" that is requesting data (helloworld-gui)
+   * serviceName: The name of the data service that is being requested (instagram)
+   */
   const { appName, serviceName, queryString } = router.query;
 
   // Make it human readable again
   const prettyAppName = decodeURI(appName as string);
 
   // normalize service name
-  const normalizedServiceName = ((serviceName as string) ?? '').toLowerCase()
+  const normalizedServiceName = ((serviceName as string) ?? "").toLowerCase();
 
   // TODO: @joe - Clean up query to prevent sql injection
   const cleanQueryString = decodeURI(queryString as string);
@@ -52,21 +55,21 @@ const SendPage: NextPage = () => {
   // TODO: @joe - load url from window.origin?
   const testAccessDomain = "openai.com";
 
-  const { data: userModulesData } =
-    useGetUserModulesSubscription({
-      variables: { userId: user?.id },
-      skip: !user?.id,
-    });
+  const { data: userModulesData } = useGetUserModulesSubscription({
+    variables: { userId: user?.id },
+    skip: !user?.id,
+  });
 
   const selectedModule = userModulesData
     ? userModulesData.usersModules.filter(
-        (userModule) => userModule.module.name.toLowerCase() === normalizedServiceName
+        (userModule) =>
+          userModule.module.name.toLowerCase() === normalizedServiceName,
       )
     : [];
 
   const fetchSignedUrl = async (token: string, userModuleId: string) => {
-    const result = await fetch('/api/user-data/download-url', {
-      method: 'POST',
+    const result = await fetch("/api/user-data/download-url", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -82,7 +85,8 @@ const SendPage: NextPage = () => {
 
     const parsed = await result.json();
 
-    if (!parsed?.success) throw new Error(`Failed to fetch signed url: ${result.status}`);
+    if (!parsed?.success)
+      throw new Error(`Failed to fetch signed url: ${result.status}`);
     else return parsed.signedUrl;
   };
 
@@ -91,12 +95,13 @@ const SendPage: NextPage = () => {
 
     console.log("Starting the sharing process...");
 
-    const dangerousPrivateKey = await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
+    const dangerousPrivateKey =
+      await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
     const userModuleId = selectedModule[0].id;
     const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
 
     // Check all attributes are present
-    if(!userModuleId || !signedUrl || !dangerousPrivateKey) {
+    if (!userModuleId || !signedUrl || !dangerousPrivateKey) {
       throw new Error("Missing attributes");
     }
 
@@ -110,25 +115,27 @@ const SendPage: NextPage = () => {
     });
   };
 
-  const onMessageReceived = (window: Window, self: Window) => async (event: MessageEvent) => {
-    const data = event.data as dataPipelineWorker.Message;
-    
-    console.log("DataPipeline message:", data);
+  const onMessageReceived =
+    (window: Window, self: Window) => async (event: MessageEvent) => {
+      const data = event.data as dataPipelineWorker.Message;
 
-    // Handle each message type differently
-    switch (data.type) {
-      case dataPipelineWorker.MessageType.UPDATE:
-        await handleUpdateMessage(data);
-        break;
-      case dataPipelineWorker.MessageType.DATA:
-        await handleDataMessage(data, window, self);
-        break;
-      case dataPipelineWorker.MessageType.ERROR:
-        await handleErrorMessage(data);
-        break;
-      default: console.log(`Unknown message type: ${data?.type}`);
-    }
-  };
+      console.log("DataPipeline message:", data);
+
+      // Handle each message type differently
+      switch (data.type) {
+        case dataPipelineWorker.MessageType.UPDATE:
+          await handleUpdateMessage(data);
+          break;
+        case dataPipelineWorker.MessageType.DATA:
+          await handleDataMessage(data, window, self);
+          break;
+        case dataPipelineWorker.MessageType.ERROR:
+          await handleErrorMessage(data);
+          break;
+        default:
+          console.log(`Unknown message type: ${data?.type}`);
+      }
+    };
 
   /**
    * Closes the popup window
@@ -149,11 +156,16 @@ const SendPage: NextPage = () => {
         break;
       case dataPipelineWorker.Stage.QUERY_DATA:
         break;
-      default: console.log(`Unknown stage: ${data?.payload?.stage}`);
+      default:
+        console.log(`Unknown stage: ${data?.payload?.stage}`);
     }
   };
 
-  const handleDataMessage = async (data: dataPipelineWorker.Message, window: Window, self: Window) => {
+  const handleDataMessage = async (
+    data: dataPipelineWorker.Message,
+    window: Window,
+    self: Window,
+  ) => {
     // This is the "final" message -- the data payload
     console.log("worker done | data:", JSON.stringify(data));
 
@@ -162,7 +174,7 @@ const SendPage: NextPage = () => {
     window.opener.postMessage(JSON.stringify(data), "*");
 
     // TODO: @callum - Do some vudu here before we close the window???
-    setTimeout( () => closePopup(self), 1 * 1000);
+    setTimeout(() => closePopup(self), 1 * 1000);
   };
 
   const handleErrorMessage = async (data: dataPipelineWorker.Message) => {
@@ -260,7 +272,7 @@ const SendPage: NextPage = () => {
             console.log("close popup");
           }}
         >
-          <PermissionList query={dummySQLQuery} />
+          <PermissionList query={cleanQueryString} />
         </PermissionContract>
       </VaultSharePage>
     </>
