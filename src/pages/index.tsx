@@ -64,7 +64,6 @@ const HomePage: NextPage = () => {
         <TitleAndMetaTags color="black" title="Login to Vault" />
         <PageVault>
           <Flex tw="w-full items-center justify-center">
-            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
             <Login />
           </Flex>
         </PageVault>
