@@ -19,13 +19,14 @@ import {
   useCreateUserModuleMutation,
   useGetModuleQuery,
 } from "src/graphql/generated";
-import { userAtom } from "src/state";
+import { userAtom, web3AuthWalletProviderAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
 
   const [user] = useAtom(userAtom);
+  const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -96,6 +97,7 @@ const VaultStoragePage: NextPage = () => {
               moduleName={moduleName}
               createUserModule={createUserModuleCallback}
               appPubKey={user?.externalId ?? ""}
+              web3AuthWalletProvider={web3AuthWalletProvider}
             />
           </div>
         </div>

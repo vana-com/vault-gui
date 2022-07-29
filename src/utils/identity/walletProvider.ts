@@ -4,6 +4,7 @@ import ethProvider from "./ethProvider";
 
 export interface IWalletProvider {
   getAccounts: () => Promise<string[]>;
+  dangerouslyGetPrivateKey: () => Promise<string | undefined>;
 }
 
 export const getWalletProvider = (

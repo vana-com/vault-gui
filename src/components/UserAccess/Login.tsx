@@ -135,8 +135,7 @@ const Login = () => {
       return;
     }
     try {
-      const web3AuthProvider = await web3AuthInstance.connect();
-      setWalletProvider(web3AuthProvider);
+      await web3AuthInstance.connect();
     } catch (error: any) {
       console.error(error);
       setLoginError(true);
