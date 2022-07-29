@@ -6,8 +6,9 @@ import {
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
-  web3AuthAdapterAtom,
+  userWalletAddressAtom,
   web3AuthUserInfoAtom,
+  web3AuthWalletProviderAtom,
 } from "src/state";
 import { logOut, parseJwt } from "src/utils";
 
@@ -18,7 +19,8 @@ const useExpireJWTs = () => {
   const [, setUser] = useAtom(userAtom);
   const [idToken, setIdToken] = useAtom(idTokenAtom);
   const [, setHasuraToken] = useAtom(hasuraTokenAtom);
-  const [, setWalletProvider] = useAtom(web3AuthAdapterAtom);
+  const [, setWalletProvider] = useAtom(web3AuthWalletProviderAtom);
+  const [, setUserWalletAddress] = useAtom(userWalletAddressAtom);
 
   const expireJWTs = async () => {
     if (idToken) {
@@ -28,6 +30,7 @@ const useExpireJWTs = () => {
       if (now > expireDate) {
         logOut(
           setWalletProvider,
+          setUserWalletAddress,
           setWeb3AuthUserInfo,
           setUser,
           setHasuraToken,

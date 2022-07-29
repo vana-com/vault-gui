@@ -1,5 +1,6 @@
 import {
   ADAPTER_EVENTS,
+  ADAPTER_STATUS,
   CONNECTED_EVENT_DATA,
   WALLET_ADAPTERS,
 } from "@web3auth/base";
@@ -16,19 +17,22 @@ import {
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
-  web3AuthAdapterAtom,
+  userWalletAddressAtom,
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
+import { getWalletProvider } from "src/utils/identity/walletProvider";
 
 const { openLoginModalConfig, web3AuthInstance } = config;
 
 const Login = () => {
   const [web3AuthUserInfo, setWeb3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [user, setUser] = useAtom(userAtom);
+  const [userWalletAddress, setUserWalletAddress] = useAtom(
+    userWalletAddressAtom,
+  );
   const setHasuraToken = useAtom(hasuraTokenAtom)[1];
   const setWalletProvider = useAtom(web3AuthWalletProviderAtom)[1];
-  const [walletAdapter, setWalletAdapter] = useAtom(web3AuthAdapterAtom);
   const [idToken, setIdToken] = useAtom(idTokenAtom);
   const [loginError, setLoginError] = useState(false);
 
@@ -41,7 +45,7 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ idToken, issuer: walletAdapter }),
+          body: JSON.stringify({ idToken, walletAddress: userWalletAddress }),
         });
         const { user: userFromResponse, hasuraToken } =
           await loginResponse.json();
@@ -52,27 +56,44 @@ const Login = () => {
         setUser(userFromResponse);
         setHasuraToken(hasuraToken);
       } catch (error: any) {
-        console.log(error.toString());
+        console.error(error);
         setLoginError(true);
       }
     };
 
-    if (!user && web3AuthUserInfo) {
+    // Get the user from the database if we've logged in with web3Auth
+    // (either web3AuthUserInfo via openLogin or userWalletAddress via wallet login)
+    if (!user && (web3AuthUserInfo || userWalletAddress)) {
       loginVanaUser();
     }
-  }, [user, web3AuthUserInfo]);
+  }, [user, web3AuthUserInfo, userWalletAddress]);
 
   useEffect(() => {
     const subscribeAuthEvents = (web3Auth: Web3Auth) => {
       // Subscribe to ADAPTER_EVENTS. Additional ADAPTER_EVENTS and LOGIN_MODAL_EVENTS exist.
-      web3Auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
-        web3Auth.getUserInfo().then((userInfo) => {
-          setWeb3AuthUserInfo(userInfo);
-          setIdToken(userInfo.idToken);
-        });
-        setWalletAdapter(data.adapter);
-        setWalletProvider(web3Auth.provider ? web3Auth.provider : undefined);
-      });
+      web3Auth.on(
+        ADAPTER_EVENTS.CONNECTED,
+        async (data: CONNECTED_EVENT_DATA) => {
+          const ethProvider = getWalletProvider(web3Auth.provider!);
+          setWalletProvider(ethProvider);
+
+          if (data.adapter === WALLET_ADAPTERS.WALLET_CONNECT_V1) {
+            // Signed in with a wallet
+            const walletAddresses = await ethProvider.getAccounts();
+            if (walletAddresses?.length > 0) {
+              setUserWalletAddress(walletAddresses[0]);
+            } else {
+              console.error("Unable to get user wallet address");
+            }
+          } else {
+            // Signed in with a social network
+            web3Auth.getUserInfo().then(async (userInfo) => {
+              setWeb3AuthUserInfo(userInfo);
+              setIdToken(userInfo.idToken);
+            });
+          }
+        },
+      );
 
       web3Auth.on(ADAPTER_EVENTS.CONNECTING, () => {
         console.log("adapter connecting");
@@ -93,7 +114,10 @@ const Login = () => {
     if (web3AuthInstance) {
       // TODO: Make sure event listeners are not added multiple times
       subscribeAuthEvents(web3AuthInstance);
-      if (web3AuthInstance.status !== "connected") {
+      if (
+        web3AuthInstance.status !== ADAPTER_STATUS.CONNECTED &&
+        web3AuthInstance.status !== ADAPTER_STATUS.READY
+      ) {
         web3AuthInstance.initModal({
           modalConfig: {
             [WALLET_ADAPTERS.OPENLOGIN]: openLoginModalConfig,
@@ -111,16 +135,15 @@ const Login = () => {
       return;
     }
     try {
-      const web3AuthProvider = await web3AuthInstance.connect();
-      setWalletProvider(web3AuthProvider);
+      await web3AuthInstance.connect();
     } catch (error: any) {
-      console.log(error.toString());
+      console.error(error);
       setLoginError(true);
     }
   };
 
   // don't render any markup when the user is logged in
-  if (web3AuthUserInfo) {
+  if (web3AuthUserInfo || userWalletAddress) {
     return null;
   }
 
