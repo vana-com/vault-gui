@@ -1,4 +1,5 @@
-// import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
+import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
+
 import { Message, MessageType, Stage } from "../types/DataPipelineWorker";
 import { decryptFileChaCha20Poly1305 } from "../utils/decryptFileChaCha20Poly1305";
 
@@ -6,13 +7,19 @@ interface DataMessage {
   query: string;
   dataUrl: string;
   decryptionKey: string;
+  serviceName: string;
+}
+
+interface SQLiteQueryResult {
+  queryString: string;
+  queryResult: string[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 onmessage = async (event: MessageEvent) => {
   const { data } = event;
 
-  const { query, dataUrl, decryptionKey } = data as DataMessage;
+  const { query, dataUrl, decryptionKey, serviceName } = data as DataMessage;
 
   try {
     // Download data
@@ -22,10 +29,10 @@ onmessage = async (event: MessageEvent) => {
     const decrypted = await decryptData(file, decryptionKey);
 
     // Extract
-    const extracted = await extractData(decrypted);
+    const extracted = await extractData(decrypted, 'instagram');
 
     // Run SQL query
-    const queried = await queryData(extracted, query);
+    const queried = await queryData(extracted, ['SELECT * FROM ads_interests;']);
 
     // Send data
     sendData(queried);
@@ -48,8 +55,7 @@ const fetchData = async (url: string) => {
     },
   });
   const blob = await res.blob();
-  // const zblob = blob.slice(0, blob.size, "application/zip");
-  const file = new File([blob], "data.zip", { type: "application/zip" });
+  const file = new File([blob], "data.zip.enc", { type: "application/zip" });
 
   console.log(file);
 
@@ -88,10 +94,8 @@ const decryptData = async (encryptedFile: File, key: any) => {
  * @param data File to extract
  * @returns sqlite database
  */
-const extractData = async (data: File) => {
-  const extracted = data; // await zipToSQLiteInstance("instagram", data);
-
-  // console.log(await extracted.runQuery('SELECT * FROM ads_interests'))
+const extractData = async (data: File, serviceName: string) => {
+  const extracted = await zipToSQLiteInstance(serviceName, data);
 
   postUpdateMessage({
     stage: Stage.EXTRACTED_DATA,
@@ -107,19 +111,16 @@ const extractData = async (data: File) => {
  * @param query SQL query
  * @returns matching rows
  */
-const queryData = async (db: any, query: string) => {
-  // const rows = await db.runQuery("SELECT * FROM ads_interests")[0].values;
-
-  // const flat = rows.map((row: any) => row[0]);
-
-  const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe', 'dunkin', 'tim hortons', 'mccafe', 'donut king', 'muffin break']
-
+const queryData = async (db: any, queries: string[]) => {
+  const query = queries.join(" ");
+  const queryResults: SQLiteQueryResult[] = await db.runQuery(query);
+  
   postUpdateMessage({
     stage: Stage.QUERY_DATA,
-    message: `Queried data with query '${query}' and returned ${rows.length} rows`,
+    message: `Queried db with ${queries.length} queries '${query}' and returned ${queryResults.length} results`,
   });
 
-  return rows;
+  return queryResults;
 };
 
 const sendData = (data: any) => {
