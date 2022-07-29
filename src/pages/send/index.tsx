@@ -33,11 +33,13 @@ const SendPage: NextPage = () => {
   const workerRef = useRef<Worker>();
 
   // Get popup's query params
+  // TODO: @joe - replace w/ more secure method
   const { appName, serviceName } = router.query;
 
   const prettyAppName = decodeURI(appName as string);
 
   const dummySQLQuery = "SELECT * FROM ads_interests;";
+  // TODO: @joe - load url from window.origin?
   const testAccessDomain = "openai.com";
 
   const { data: userModulesData } =
@@ -102,10 +104,15 @@ const SendPage: NextPage = () => {
       case dpw.MessageType.ERROR:
         await handleErrorMessage(data);
         break;
-      default: console.log(`Unknown message type: ${data.type}`);
+      default: console.log(`Unknown message type: ${data?.type}`);
     }
   };
 
+  /**
+   * Closes the popup window
+   * @param self window ref
+   * @returns nothing
+   */
   const closePopup = (self: Window) => self.close();
 
   const handleUpdateMessage = async (data: dpw.Message) => {
@@ -120,7 +127,7 @@ const SendPage: NextPage = () => {
         break;
       case dpw.Stage.QUERY_DATA:
         break;
-      default: console.log(`Unknown stage: ${data.payload.stage}`);
+      default: console.log(`Unknown stage: ${data?.payload?.stage}`);
     }
   };
 
@@ -129,7 +136,7 @@ const SendPage: NextPage = () => {
     console.log("worker done | data:", JSON.stringify(data));
 
     // Send the data to the "parent" window
-    // TODO: @joe - change to only send to the parent, rather than globally
+    // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
     window.opener.postMessage(JSON.stringify(data), "*");
 
     // TODO: @callum - Do some vudu here before we close the window???
@@ -139,6 +146,7 @@ const SendPage: NextPage = () => {
   const handleErrorMessage = async (data: dpw.Message) => {
     // Something definitely went wrong
     // TODO: gracefully show errors to the user?
+    console.log("worker error | data:", data?.payload?.error);
   };
 
   // STATE TESTS
