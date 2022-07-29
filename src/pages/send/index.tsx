@@ -13,7 +13,6 @@ import {
   VaultSharePage,
 } from "src/components/VaultShare";
 import {
-  useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
 import { hasuraTokenAtom, userAtom, web3AuthUserInfoAtom, web3AuthWalletProviderAtom } from "src/state";
@@ -23,7 +22,6 @@ import * as dpw from '../../types/DataPipelineWorker';
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
   const [user] = useAtom(userAtom);
-  const [hasuraToken] = useAtom(hasuraTokenAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
@@ -62,12 +60,19 @@ const SendPage: NextPage = () => {
     console.log('instagramModules[0].urlToData: ', url);
 
     // TODO: @joe - we propably need to hit our own /api/ to generate a signed url for our web worker to use
+    const { signedUrl } = await fetch('/api/generate-signed-data-url', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({unsignedURL: url}),
+    }).then((res) => res.json());
 
     // Sends data to the DataPipeline (Worker)
     console.log("Sending data to the worker...");
     workerRef.current?.postMessage({
       query: dummySQLQuery,
-      dataUrl: "http://localhost:6969/zip",
+      dataUrl: signedUrl,
       decryptionKey: dangerousPrivateKey,
     });
   };
