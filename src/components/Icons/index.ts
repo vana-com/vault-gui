@@ -10,6 +10,7 @@ export * from "./CarbonChevronUp";
 export * from "./CarbonCloseFilled";
 export * from "./CarbonCloseOutline";
 export * from "./CarbonError";
+export * from "./CarbonErrorFilled";
 export * from "./CarbonLocked";
 export * from "./CarbonLogoFacebook";
 export * from "./CarbonLogoGoogle";

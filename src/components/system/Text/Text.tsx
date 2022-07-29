@@ -4,15 +4,16 @@ import tw, { styled } from "twin.macro";
 export const textVariants = {
   footnote: tw`text-xs tracking-[0]`,
   note: tw`text-sm tracking-[0]`,
-  base: tw`text-base tracking-[-0.005em]`,
-  body: tw`text-md tracking-[-0.001em]`,
   headingMeta: tw`text-sm tracking-[0.05em] leading-none uppercase`,
   subheading: tw`text-sm tracking-[-0.025em] font-semibold`,
+  base: tw`text-base tracking-[-0.005em]`,
+  body: tw`text-md tracking-[-0.001em]`,
+  large: tw`text-lg tracking-[-0.001em]`,
   heading: tw`text-lg tracking-[-0.005em] font-semibold font-heading`,
   title1: tw`text-xl tracking-[-0.001em] font-semibold font-heading`,
   title2: tw`text-2xl tracking-[-0.001em] font-bold font-heading`,
   title3: tw`text-3xl tracking-[-0.001em] font-black font-heading`,
-  display: tw`text-4xl tracking-[-0.025em] font-black font-title`,
+  display: tw`text-4xl tracking-[-0.01em] font-medium font-heading`,
 } as const;
 
 export type TextVariant = keyof typeof textVariants;
@@ -45,6 +46,7 @@ export const textColors = {
   fillElevated: tw`text-fillElevated`,
   background: tw`text-background`,
   backgroundElevated: tw`text-backgroundElevated`,
+  error: tw`text-error`,
 } as const;
 
 export type TextColor = keyof typeof textColors;

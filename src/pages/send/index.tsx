@@ -10,6 +10,7 @@ import {
   NoModuleMessage,
   PermissionContract,
   PermissionList,
+  SendStatus,
   VaultSharePage,
 } from "src/components/VaultShare";
 import { web3AuthUserInfoAtom } from "src/state";
@@ -19,7 +20,9 @@ import { runDataQueryPipeline } from "src/utils";
 const SendPage: NextPage = () => {
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
-    useState(false);
+    useState(true);
+  // const [shareSuccess, setShareSuccess] = useState(false);
+  // const [shareFailure, setShareFailure] = useState(false);
 
   const dummySQLQuery = "select * from instagram_interests";
   const testAccessor = "Dall•e";
@@ -33,8 +36,8 @@ const SendPage: NextPage = () => {
   };
 
   // STATE TESTS
-  // const testUserAvailable = true;
   const testUserWithoutData = false;
+  // const testUserAccepted = true;
 
   // Login state: prior to authenticated store user
   if (!web3AuthUserInfo) {
@@ -50,7 +53,6 @@ const SendPage: NextPage = () => {
         >
           <FocusStack>
             <Flex tw="p-8 w-full items-center justify-center">
-              {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
               <Login />
             </Flex>
           </FocusStack>
@@ -68,7 +70,7 @@ const SendPage: NextPage = () => {
           accessDenied
           accessDomain={testAccessDomain}
           heading="No Vault data"
-          lede={`${testAccessor} can't access any Vault data`}
+          lede={`You don't have any Vault data to share`}
         >
           <NoModuleMessage />
           {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
@@ -79,18 +81,29 @@ const SendPage: NextPage = () => {
   }
 
   // Confirmed state: sending data
+  // hasUserAcceptedSharingRequest
   if (hasUserAcceptedSharingRequest) {
-    <div>Sending your data... Cool animation</div>;
+    return (
+      <>
+        <TitleAndMetaTags color="black" title="Share your Vault data | Vana" />
+        {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+        <Login />
+        <VaultSharePage
+          accessDomain={testAccessDomain}
+          lede={`Sending Vault data to ${testAccessor}`}
+        >
+          <SendStatus status="inProgress" />
+        </VaultSharePage>
+      </>
+    );
   }
 
   // Permissions contract state: requesting permissions
   return (
     <>
       <TitleAndMetaTags color="black" title="Share your Vault data | Vana" />
-
       {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
       <Login />
-
       <VaultSharePage
         accessDomain={testAccessDomain}
         lede={`Do you want to give ${testAccessor} access to your Vault?`}

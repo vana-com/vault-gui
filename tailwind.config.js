@@ -33,6 +33,7 @@ module.exports = {
         backgroundScrim: 'var(--backgroundScrim)',
         neutral: 'var(--neutral)',
         separator: 'var(--separator)',
+        error: 'var(--error)',
         gray: {
           10: 'var(--gray10)',
           20: 'var(--gray20)',

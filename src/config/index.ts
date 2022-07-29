@@ -4,6 +4,7 @@ const generalConfig = {
   vanaURL: "https://vana.xyz",
   vanaAboutURL: "https://vana.xyz/about",
   vanaManifestsURL: "https://vana.xyz/manifesto",
+  vanaSupportEmail: "support@vanahelp.zendesk.com",
 
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
