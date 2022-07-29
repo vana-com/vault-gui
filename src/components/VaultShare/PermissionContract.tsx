@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Group, Stack, Text } from "src/components";
+import { Button, Group, Text } from "src/components";
 
 interface PermissionContractProps {
   children: React.ReactNode;
@@ -28,16 +28,14 @@ const PermissionContract = ({
     </Group>
 
     {/* CONFIRM */}
-    <Stack tw="gap-3">
-      <Group tw="justify-end gap-3">
-        <Button variant="solid" size="xl" onClick={onAccept}>
-          Allow
-        </Button>
-        <Button variant="outline" size="xl" onClick={onDeny}>
-          Cancel
-        </Button>
-      </Group>
-    </Stack>
+    <Group tw="justify-end gap-3">
+      <Button variant="solid" size="xl" onClick={onAccept}>
+        Allow
+      </Button>
+      <Button variant="outline" size="xl" onClick={onDeny}>
+        Cancel
+      </Button>
+    </Group>
   </>
 );
 
