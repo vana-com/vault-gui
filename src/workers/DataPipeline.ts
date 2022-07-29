@@ -4,7 +4,7 @@ import { Message, MessageType, Stage } from "../types/DataPipelineWorker";
 import { decryptFileChaCha20Poly1305 } from "../utils/decryptFileChaCha20Poly1305";
 
 interface DataMessage {
-  query: string;
+  queries: string[];
   dataUrl: string;
   decryptionKey: string;
   serviceName: string;
@@ -19,7 +19,7 @@ interface SQLiteQueryResult {
 onmessage = async (event: MessageEvent) => {
   const { data } = event;
 
-  const { query, dataUrl, decryptionKey, serviceName } = data as DataMessage;
+  const { queries, dataUrl, decryptionKey, serviceName } = data as DataMessage;
 
   try {
     // Download data
@@ -29,10 +29,10 @@ onmessage = async (event: MessageEvent) => {
     const decrypted = await decryptData(file, decryptionKey);
 
     // Extract
-    const extracted = await extractData(decrypted, 'instagram');
+    const extracted = await extractData(decrypted, serviceName);
 
     // Run SQL query
-    const queried = await queryData(extracted, ['SELECT * FROM ads_interests;']);
+    const queried = await queryData(extracted, queries);
 
     // Send data
     sendData(queried);

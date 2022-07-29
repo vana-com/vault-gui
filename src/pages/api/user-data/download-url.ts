@@ -74,7 +74,7 @@ export default async (
         const options = {
           version: "v4",
           action: "read",
-          expires: config.preSignedObjectURLTTLInMilliseconds,
+          expires: Date.now() + config.preSignedObjectURLTTLInMilliseconds,
         } as GetSignedUrlConfig;
 
         // Get a v4 signed URL for reading the file

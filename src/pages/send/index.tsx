@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -21,7 +22,9 @@ import * as dpw from '../../types/DataPipelineWorker';
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
+  const router = useRouter()
   const [user] = useAtom(userAtom);
+  const [hasuraToken] = useAtom(hasuraTokenAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
@@ -29,24 +32,25 @@ const SendPage: NextPage = () => {
 
   const workerRef = useRef<Worker>();
 
-  const dummySQLQuery = "select * from instagram_interests";
-  const testAccessor = "Dall•e";
+  // Get popup's query params
+  const { appName, serviceName } = router.query;
+
+  const prettyAppName = decodeURI(appName as string);
+
+  const dummySQLQuery = "SELECT * FROM ads_interests;";
   const testAccessDomain = "openai.com";
 
-  // TODO: See if there is a better way we can grab the urls
-  const { data: userModulesData, loading: isDataLoading } =
+  const { data: userModulesData } =
     useGetUserModulesSubscription({
       variables: { userId: user?.id },
       skip: !user?.id,
     });
 
-  const instagramModules = userModulesData
+  const selectedModule = userModulesData
     ? userModulesData.usersModules.filter(
-        (userModule) => userModule.module.name === "Instagram",
+        (userModule) => userModule.module.name === serviceName
       )
     : [];
-
-  // END of TODO
 
   const onDataRequestApproval = async () => {
     setHasUserAcceptedSharingRequest(true);
@@ -56,8 +60,8 @@ const SendPage: NextPage = () => {
     const dangerousPrivateKey = await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
     console.log(`dangerousPrivateKey: ${dangerousPrivateKey?.substring(0,4)}*****`);
 
-    const userModuleId = instagramModules[0].id;
-    console.log('instagramModules[0].userModuleId: ', userModuleId);
+    const userModuleId = selectedModule[0].id;
+    console.log('selectedModule[0].id: ', userModuleId);
 
     const { signedUrl } = await fetch('/api/user-data/download-url', {
       method: 'POST',
@@ -65,7 +69,7 @@ const SendPage: NextPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        hasuraToken:
+        hasuraToken,
         userModuleId,
       }),
     }).then((res) => res.json());
@@ -73,9 +77,10 @@ const SendPage: NextPage = () => {
     // Sends data to the DataPipeline (Worker)
     console.log("Sending data to the worker...");
     workerRef.current?.postMessage({
-      query: dummySQLQuery,
+      queries: [dummySQLQuery],
       dataUrl: signedUrl,
       decryptionKey: dangerousPrivateKey,
+      serviceName: (serviceName as string).toLowerCase(),
     });
   };
 
@@ -160,7 +165,7 @@ const SendPage: NextPage = () => {
           accessDenied
           accessDomain={testAccessDomain}
           heading="No Vault data"
-          lede={`${testAccessor} can't access any Vault data`}
+          lede={`${prettyAppName} can't access any Vault data`}
         >
           <NoModuleMessage />
           {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
@@ -201,7 +206,7 @@ const SendPage: NextPage = () => {
 
       <VaultSharePage
         accessDomain={testAccessDomain}
-        lede={`Do you want to give ${testAccessor} access to your Vault?`}
+        lede={`Do you want to give ${prettyAppName} access to your Vault?`}
       >
         <PermissionContract
           onAccept={onDataRequestApproval}
