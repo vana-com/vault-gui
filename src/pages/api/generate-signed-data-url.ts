@@ -3,6 +3,7 @@ import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import config from "src/config";
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
 import { getHasuraTokenPayload } from "src/utils";
@@ -73,7 +74,7 @@ export default async (
         const options = {
           version: "v4",
           action: "read",
-          expires: Date.now() + 1 * 60 * 1000, // 1 minute
+          expires: config.preSignedObjectURLTTLInMilliseconds,
         } as GetSignedUrlConfig;
 
         // Get a v4 signed URL for reading the file
