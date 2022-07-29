@@ -35,7 +35,7 @@ const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
       return dangerousPrivateKey;
     } catch (error: any) {
       // user not logged in
-      console.log("error", error.toString());
+      console.error("Error getting private key", error);
       return undefined;
     }
   };
