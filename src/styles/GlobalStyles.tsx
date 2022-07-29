@@ -67,6 +67,7 @@ const stylesBase = css`
     --fillElevated: var(--white100);
     --background: var(--blueGray10);
     --backgroundElevated: var(--white100);
+    --backgroundTertiary: var(--white70);
     --backgroundScrim: rgba(0, 0, 0, 0.2);
     
     --neutral: var(--neutral20);
@@ -88,6 +89,7 @@ const stylesBase = css`
     --fillElevated: var(--blueGray90);
     --background: var(--slate100);
     --backgroundElevated: var(--slate90);
+    --backgroundTertiary: var(--gray50);
     --backgroundScrim: rgba(0, 0, 0, 0.4);
 
     --neutral: var(--neutral60);

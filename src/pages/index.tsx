@@ -61,9 +61,10 @@ const HomePage: NextPage = () => {
   if (!web3AuthUserInfo && !userWalletAddress) {
     return (
       <>
-        <TitleAndMetaTags color="black" />
+        <TitleAndMetaTags color="black" title="Login to Vault" />
         <PageVault>
           <Flex tw="w-full items-center justify-center">
+            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
             <Login />
           </Flex>
         </PageVault>
@@ -74,13 +75,16 @@ const HomePage: NextPage = () => {
   // State for loading Hasura but not store user
   if (userAuthorizedWithoutUserData || hasuraIsLoading) {
     return (
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-          {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-          <Login />
-        </Flex>
-      </PageVault>
+      <>
+        <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
+        <PageVault>
+          <Flex tw="w-full items-center justify-center">
+            <Spinner />
+            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+            <Login />
+          </Flex>
+        </PageVault>
+      </>
     );
   }
 

@@ -23,7 +23,7 @@ const StoragePassword = () => {
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label tw="flex bg-whites-20 items-center relative select-none">
           <Input
-            variant="subbody"
+            variant="base"
             color="black"
             type={showPassword ? "text" : "password"}
             placeholder="Create password"

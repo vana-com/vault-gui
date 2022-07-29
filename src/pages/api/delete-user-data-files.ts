@@ -30,8 +30,7 @@ export default async (
     if (!hasuraTokenPayload) {
       return res.status(401).json({
         deleteSuccessful: false,
-        message:
-          "User does not have a valid Hasura token. Please log in again.",
+        message: "User does not have a valid Hasura token. Please login again.",
       });
     }
 

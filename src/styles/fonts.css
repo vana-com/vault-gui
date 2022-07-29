@@ -1,7 +1,12 @@
+/* 
+  Guide for english-only subsets: https://markoskon.com/creating-font-subsets/
+ */
+
 /* GINTO */
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Regular.woff") format("woff");
+  src: url("/fonts/ModernEra-Regular.woff") format("woff");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -9,6 +14,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Medium.woff") format("woff");
+  src: url("/fonts/ModernEra-Medium.woff") format("woff");
   font-style: normal;
   font-weight: 500;
   font-display: swap;
@@ -16,6 +22,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Bold.woff") format("woff");
+  src: url("/fonts/ModernEra-Bold.woff") format("woff");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -23,6 +30,7 @@
 @font-face {
   font-family: "Ginto";
   src: url("/fonts/Ginto-Black.woff") format("woff");
+  src: url("/fonts/ModernEra-Black.woff") format("woff");
   font-style: normal;
   font-weight: 900;
   font-display: swap;
@@ -32,13 +40,22 @@
 @font-face {
   font-family: "GintoNord";
   src: url("/fonts/Ginto-Nord-Bold.woff") format("woff");
+  src: url("/fonts/ModernEra-Bold.woff") format("woff");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: "GintoNord";
+  src: url("/fonts/ModernEra-ExtraBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GintoNord";
   src: url("/fonts/Ginto-Nord-Black.woff") format("woff");
+  src: url("/fonts/ModernEra-Black.woff") format("woff");
   font-style: normal;
   font-weight: 900;
   font-display: swap;
@@ -79,4 +96,28 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
+}
+
+/* PLEX MONO */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("IBM Plex Mono"), local("IBMPlexMono"),
+    url("/fonts/IBMPlexMono-Regular-Latin1.woff") format("woff");
+  unicode-range: "U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,\
+  U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,\
+  U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD";
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local("IBM Plex Mono"), local("IBMPlexMono"),
+    url("/fonts/IBMPlexMono-Italic-Latin1.woff") format("woff");
+  unicode-range: "U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,\
+  U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,\
+  U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD";
 }
