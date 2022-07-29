@@ -1,24 +1,25 @@
-import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
-
+// import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
 import { Message, MessageType, Stage } from "../types/DataPipelineWorker";
+import { decryptFileChaCha20Poly1305 } from "../utils/decryptFileChaCha20Poly1305";
 
 interface DataMessage {
   query: string;
   dataUrl: string;
+  decryptionKey: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 onmessage = async (event: MessageEvent) => {
   const { data } = event;
 
-  const { query, dataUrl } = data as DataMessage;
+  const { query, dataUrl, decryptionKey } = data as DataMessage;
 
   try {
     // Download data
     const file = await fetchData(dataUrl);
 
     // decrypt
-    const decrypted = await decryptData(file, "secret");
+    const decrypted = await decryptData(file, decryptionKey);
 
     // Extract
     const extracted = await extractData(decrypted);
@@ -41,7 +42,6 @@ onmessage = async (event: MessageEvent) => {
  * @returns File
  */
 const fetchData = async (url: string) => {
-  console.log("using application/zip");
   const res = await fetch(url, {
     headers: {
       Accept: "application/zip",
@@ -68,10 +68,13 @@ const fetchData = async (url: string) => {
  * @returns Unencrypted file (.zip)
  */
 const decryptData = async (encryptedFile: File, key: any) => {
-  // TODO: decrypt data
-  const decrypted = new File([encryptedFile], "joe.zip", {
-    type: "application/x-zip",
-  });
+  // TODO: decrypt data  
+  const decrypted = await decryptFileChaCha20Poly1305(encryptedFile, key);
+  
+  if(!decrypted) {
+    // Failed to decrypt
+    throw new Error("Failed to decrypt data, probably used the wrong key");
+  }
 
   postUpdateMessage({
     stage: Stage.DECRYPTED_DATA,
@@ -87,7 +90,7 @@ const decryptData = async (encryptedFile: File, key: any) => {
  * @returns sqlite database
  */
 const extractData = async (data: File) => {
-  const extracted = await zipToSQLiteInstance("instagram", data);
+  const extracted = data; // await zipToSQLiteInstance("instagram", data);
 
   // console.log(await extracted.runQuery('SELECT * FROM ads_interests'))
 
@@ -106,18 +109,18 @@ const extractData = async (data: File) => {
  * @returns matching rows
  */
 const queryData = async (db: any, query: string) => {
-  const rows = await db.runQuery("SELECT * FROM ads_interests")[0].values;
+  // const rows = await db.runQuery("SELECT * FROM ads_interests")[0].values;
 
-  const flat = rows.map((row: any) => row[0]);
+  // const flat = rows.map((row: any) => row[0]);
 
-  // const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe', 'dunkin', 'tim hortons', 'mccafe', 'donut king', 'muffin break']
+  const rows = ['coffee', 'peets', 'whole foods', 'philz', 'starbucks', 'la columbe', 'dunkin', 'tim hortons', 'mccafe', 'donut king', 'muffin break']
 
   postUpdateMessage({
     stage: Stage.QUERY_DATA,
     message: `Queried data with query '${query}' and returned ${rows.length} rows`,
   });
 
-  return flat;
+  return rows;
 };
 
 const sendData = (data: any) => {
