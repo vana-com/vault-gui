@@ -4,7 +4,6 @@ const { web3AuthInstance } = config;
 
 const logOut = async (
   setWalletProvider: (a: undefined) => void,
-  setUserWalletAddress: (a: string) => void,
   setWeb3AuthUserInfo: (a: undefined) => void,
   setUser: (a: undefined) => void,
   setHasuraToken: (a: string) => void,
@@ -18,7 +17,6 @@ const logOut = async (
   }
 
   setWalletProvider(undefined);
-  setUserWalletAddress("");
   setWeb3AuthUserInfo(undefined);
   setUser(undefined);
   setHasuraToken("");

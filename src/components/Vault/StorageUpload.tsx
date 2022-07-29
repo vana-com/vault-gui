@@ -1,4 +1,5 @@
 import { stripZipFiles } from "@corsali/userdata-extractor";
+import { Form, Formik, FormikProps } from "formik";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -8,24 +9,21 @@ import { Button, Stack, ToastDefault } from "src/components";
 import { CarbonArrowRight } from "src/components/Icons";
 import config from "src/config";
 import { encryptAndUploadUserDataFiles, heapTrack } from "src/utils";
-import { IWalletProvider } from "src/utils/identity/walletProvider";
 
 import { useFileDropzone } from "./FileDropzone";
-import { StorageUploadPresenter } from "./index";
+import { StoragePassword, StorageUploadPresenter } from "./index";
+
+interface FormikValues {
+  password: string;
+}
 
 interface Props {
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
   appPubKey: string;
-  web3AuthWalletProvider: IWalletProvider | undefined;
 }
 
-const StorageUpload = ({
-  moduleName,
-  createUserModule,
-  appPubKey,
-  web3AuthWalletProvider,
-}: Props) => {
+const StorageUpload = ({ moduleName, createUserModule, appPubKey }: Props) => {
   const router = useRouter();
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
@@ -108,22 +106,14 @@ const StorageUpload = ({
    * - Encrypts the data use ChaCha20-Poly1305
    * - Uploads the encrypted zip files to Google Cloud Storage
    */
-  const encryptAndUploadFiles = async () => {
+  const encryptAndUploadFiles = async (password: string) => {
     setIsDataUploading(true);
     try {
       const sanitizedFiles = await stripZipFiles(filesToUpload);
 
-      const dangerousPrivateKey =
-        await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
-
-      if (!dangerousPrivateKey) {
-        setShowStoreErrorToast(true);
-        return;
-      }
-
       await encryptAndUploadUserDataFiles(
         sanitizedFiles,
-        dangerousPrivateKey,
+        password,
         moduleName,
         appPubKey,
         handleUploadProgress,
@@ -161,35 +151,70 @@ const StorageUpload = ({
 
   return (
     <>
-      <Stack tw="rounded-sm">
-        <Stack tw="w-full gap-1 lg:gap-4">
-          {/* UPLOADER */}
-          <StorageUploadPresenter
-            onDropFile={onDropFile}
-            isDataUploading={isDataUploading}
-            FileInput={FileInput}
-            handleSelectFile={handleSelectFile}
-            filesToUpload={filesToUpload}
-            setFilesToUpload={setFilesToUpload}
-            openFileDialog={openFileDialog}
-            uploadProgress={uploadProgress}
-            filesToUploadDescription={describeFilesRequired()}
-          />
-          {/* BUTTON */}
-          <Button
-            onClick={encryptAndUploadFiles}
-            variant="solid"
-            size="xl"
-            tw="w-full"
-            suffix={<CarbonArrowRight />}
-            isDisabled={!filesToUpload.length}
-            // TODO: check what analytics depend on this before updating
-            id="connect-upload-button"
-          >
-            Encrypt and store
-          </Button>
-        </Stack>
-      </Stack>
+      <Formik
+        initialStatus={{
+          successful: false,
+        }}
+        initialValues={{ password: "" }}
+        validate={(values) => {
+          const errors: any = {};
+          if (!values.password) {
+            errors.password = "Required";
+          } else if (
+            !/^(?=.{10,}$)(?=.*[a-zA-Z])(?=.*[0-9])(?=.*\W).*$/.test(
+              values.password,
+            )
+          ) {
+            errors.password = "Invalid";
+          }
+          return errors;
+        }}
+        onSubmit={async (values, { setStatus }) => {
+          setStatus({ successful: false });
+          encryptAndUploadFiles(values.password);
+          setStatus({ successful: true });
+        }}
+      >
+        {(formik: FormikProps<FormikValues>) => (
+          <Form style={{ width: "100%" }}>
+            <Stack tw="rounded-sm">
+              <Stack tw="w-full gap-1 lg:gap-4">
+                {/* UPLOADER */}
+                <StorageUploadPresenter
+                  onDropFile={onDropFile}
+                  isDataUploading={isDataUploading}
+                  FileInput={FileInput}
+                  handleSelectFile={handleSelectFile}
+                  filesToUpload={filesToUpload}
+                  setFilesToUpload={setFilesToUpload}
+                  openFileDialog={openFileDialog}
+                  uploadProgress={uploadProgress}
+                  filesToUploadDescription={describeFilesRequired()}
+                  passwordNode={<StoragePassword />}
+                />
+
+                {/* BUTTON */}
+                <Button
+                  variant="solid"
+                  size="xl"
+                  tw="w-full"
+                  suffix={<CarbonArrowRight />}
+                  isLoading={formik.isSubmitting}
+                  isDisabled={
+                    !filesToUpload.length || !formik.dirty || !formik.isValid
+                  }
+                  // Formik only needs this to run it's onSubmit
+                  type="submit"
+                  // TODO: check what analytics depend on this before updating
+                  id="connect-upload-button"
+                >
+                  Encrypt and store
+                </Button>
+              </Stack>
+            </Stack>
+          </Form>
+        )}
+      </Formik>
 
       {/* INTERACTION STATUS TOASTS */}
       <ToastDefault

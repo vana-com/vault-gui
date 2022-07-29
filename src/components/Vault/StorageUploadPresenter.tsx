@@ -17,6 +17,7 @@ interface Props {
   openFileDialog: () => void;
   uploadProgress: number;
   filesToUploadDescription: string;
+  passwordNode: React.ReactNode;
 }
 
 const boxStyle = tw`w-full p-6 text-black bg-white border rounded-lg lg:p-8`;
@@ -31,6 +32,7 @@ const StorageUploadPresenter = ({
   openFileDialog,
   uploadProgress,
   filesToUploadDescription,
+  passwordNode,
 }: Props) => (
   <>
     {/* <SecurityMessage /> */}
@@ -95,6 +97,9 @@ const StorageUploadPresenter = ({
               </Button>
             </Group>
           ))}
+
+          {/* password node */}
+          {passwordNode}
         </Stack>
       )}
 
