@@ -51,7 +51,7 @@ const VaultModulePage: NextPage = () => {
       (userModule) => userModule.id,
     );
     const { deleteSuccessful } = await (
-      await fetch(`/api/user-data`, {
+      await fetch(`/api/user-data/delete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
