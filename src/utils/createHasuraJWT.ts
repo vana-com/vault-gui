@@ -1,10 +1,9 @@
 import * as jose from "jose";
 
-import { getSecret } from "../getSecret";
+import { getSecret } from "./getSecret";
 
 const createHasuraJWT = async (
-  idTokenPayload: jose.JWTPayload = {},
-  walletAddress = "",
+  idTokenPayload: jose.JWTPayload,
 ): Promise<string> => {
   const userEmail = (idTokenPayload.email as string) || "";
   let defaultRole = "worker";
@@ -24,8 +23,7 @@ const createHasuraJWT = async (
     "https://hasura.io/jwt/claims": {
       "x-hasura-default-role": defaultRole,
       "x-hasura-allowed-roles": allowedRoles,
-      "x-hasura-user-id":
-        walletAddress || (idTokenPayload as any).wallets[0].public_key,
+      "x-hasura-user-id": (idTokenPayload as any).wallets[0].public_key,
     },
   })
     .setProtectedHeader({ alg: "RS256" })

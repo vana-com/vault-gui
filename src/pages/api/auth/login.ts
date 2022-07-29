@@ -13,38 +13,25 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { idToken, walletAddress } = req.body;
+  const { idToken, issuer } = req.body;
   try {
-    if (!idToken && !walletAddress) {
+    if (!idToken || !issuer) {
       return res.status(400).json({
-        message: "Missing required params: idToken or walletAddress",
+        message: "Missing required params: idToken or issuer",
       });
     }
 
-    let externalId;
-    let emailAddress;
-    let name;
-    let hasuraJwt;
-    if (idToken) {
-      // SSO Login
-      const idTokenPayload = (await getIdTokenPayload(idToken)) as any;
-      if (!idTokenPayload) {
-        return res.status(401).json({
-          message: "User not authenticated via Web3Auth",
-        });
-      }
+    const idTokenPayload = (await getIdTokenPayload(idToken, issuer)) as any;
 
-      externalId = idTokenPayload.wallets[0]?.public_key;
-      emailAddress = idTokenPayload.email;
-      name = idTokenPayload.name;
-      hasuraJwt = await createHasuraJWT(idTokenPayload, externalId);
-    } else {
-      // External Wallet Login
-      externalId = walletAddress;
-      emailAddress = `${new Date().getTime()}@dummy-email.com`;
-      name = `Wallet User`;
-      hasuraJwt = await createHasuraJWT(undefined, externalId);
+    if (!idTokenPayload) {
+      return res.status(401).json({
+        message: "User not authenticated via Web3Auth",
+      });
     }
+
+    const appPubKey = idTokenPayload?.wallets[0]?.public_key;
+    const emailAddress = idTokenPayload?.email || "";
+    const hasuraJwt = await createHasuraJWT(idTokenPayload);
 
     const graphQLClient = new GraphQLClient(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
@@ -60,7 +47,7 @@ export default async (
     let user;
     const { users } = await sdk.getUserFromExternalIdOrEmail({
       emailAddress,
-      externalId,
+      externalId: appPubKey,
     });
 
     if (users?.length >= 1) {
@@ -74,16 +61,18 @@ export default async (
         // Migrate user external ID from Auth0 to Web3Auth
         await sdk.updateUserExternalId({
           userId: users[0].id,
-          externalId,
+          externalId: appPubKey,
         });
-        user.externalId = externalId;
+        user.externalId = appPubKey;
       }
     } else {
       // Create a new user. Generate a dummy email for users that sign in with a wallet
       const { createOneUser } = await sdk.createUser({
-        name,
-        emailAddress,
-        externalId,
+        name: idTokenPayload?.name as string,
+        emailAddress:
+          (idTokenPayload?.email as string) ||
+          `${new Date().getTime()}@dummy-email.com`,
+        externalId: appPubKey as string,
       });
       user = createOneUser;
     }

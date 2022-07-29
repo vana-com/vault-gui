@@ -16,7 +16,6 @@ import {
   hasuraTokenAtom,
   idTokenAtom,
   userAtom,
-  userWalletAddressAtom,
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
@@ -25,7 +24,6 @@ import { logOut as logOutUtil } from "src/utils";
 const Logout = () => {
   const [, setWeb3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [, setUser] = useAtom(userAtom);
-  const [, setUserWalletAddress] = useAtom(userWalletAddressAtom);
   const [, setIdToken] = useAtom(idTokenAtom);
   const [, setHasuraToken] = useAtom(hasuraTokenAtom);
   const [, setWalletProvider] = useAtom(web3AuthWalletProviderAtom);
@@ -35,7 +33,6 @@ const Logout = () => {
     setIsLoading(true);
     logOutUtil(
       setWalletProvider,
-      setUserWalletAddress,
       setWeb3AuthUserInfo,
       setUser,
       setHasuraToken,
