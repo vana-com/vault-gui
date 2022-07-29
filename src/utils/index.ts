@@ -12,6 +12,5 @@ export * from "./identity/getIdTokenPayload";
 export * from "./logOut";
 export * from "./parseJwt";
 export * from "./renderModuleStoreInstructions";
-export * from "./runDataQueryPipeline";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";
