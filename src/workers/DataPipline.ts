@@ -1,4 +1,4 @@
-import { zipToSQLiteInstance } from "@corsali/userdata-extractor"
+import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
 
 import { Message, MessageType, Stage } from "../types/DataPipelineWorker";
 
@@ -14,22 +14,20 @@ onmessage = async (event: MessageEvent) => {
   const { query, dataUrl } = data as DataMessage;
 
   try {
+    // Download data
+    const file = await fetchData(dataUrl);
 
-  // Download data
-  const file = await fetchData(dataUrl);
+    // decrypt
+    const decrypted = await decryptData(file, "secret");
 
-  // decrypt
-  const decrypted = await decryptData(file, 'secret');
+    // Extract
+    const extracted = await extractData(decrypted);
 
-  // Extract
-  const extracted = await extractData(decrypted);
+    // Run SQL query
+    const queried = await queryData(extracted, query);
 
-  // Run SQL query
-  const queried = await queryData(extracted, query);
-
-  // Send data
-  sendData(queried);
-
+    // Send data
+    sendData(queried);
   } catch (error) {
     postErrorMessage({
       message: error,
@@ -43,15 +41,15 @@ onmessage = async (event: MessageEvent) => {
  * @returns File
  */
 const fetchData = async (url: string) => {
-  console.log('using application/zip');
+  console.log("using application/zip");
   const res = await fetch(url, {
     headers: {
-      'Accept': 'application/zip',
-    }
+      Accept: "application/zip",
+    },
   });
   const blob = await res.blob();
   // const zblob = blob.slice(0, blob.size, "application/zip");
-  const file = new File([blob], 'data.zip', {type:  'application/zip'});
+  const file = new File([blob], "data.zip", { type: "application/zip" });
 
   console.log(file);
 
@@ -71,7 +69,9 @@ const fetchData = async (url: string) => {
  */
 const decryptData = async (encryptedFile: File, key: any) => {
   // TODO: decrypt data
-  const decrypted = new File([encryptedFile], 'joe.zip', {type:  'application/x-zip'});;
+  const decrypted = new File([encryptedFile], "joe.zip", {
+    type: "application/x-zip",
+  });
 
   postUpdateMessage({
     stage: Stage.DECRYPTED_DATA,
@@ -87,8 +87,7 @@ const decryptData = async (encryptedFile: File, key: any) => {
  * @returns sqlite database
  */
 const extractData = async (data: File) => {
-
-  const extracted = await zipToSQLiteInstance('instagram', data);
+  const extracted = await zipToSQLiteInstance("instagram", data);
 
   // console.log(await extracted.runQuery('SELECT * FROM ads_interests'))
 
@@ -107,9 +106,7 @@ const extractData = async (data: File) => {
  * @returns matching rows
  */
 const queryData = async (db: any, query: string) => {
-
-  const rows = await db.runQuery('SELECT * FROM ads_interests')[0].values;
-
+  const rows = await db.runQuery("SELECT * FROM ads_interests")[0].values;
 
   const flat = rows.map((row: any) => row[0]);
 
@@ -134,13 +131,14 @@ const sendData = (data: any) => {
  * @param message message to send to the main thread
  */
 const postUpdateMessage = (message: any) => {
-  postMessage({
+  const m: Message = {
     type: MessageType.UPDATE,
     done: false,
     payload: {
-      ...message
+      ...message,
     },
-  });
+  };
+  postMessage(m);
 };
 
 /**
@@ -148,12 +146,14 @@ const postUpdateMessage = (message: any) => {
  * @param error error to send to the main thread
  */
 const postErrorMessage = (error: any) => {
-  postMessage({
+  const m: Message = {
     type: MessageType.ERROR,
+    done: false,
     payload: {
-      ...error
+      ...error,
     },
-  });
+  };
+  postMessage(m);
 };
 
 /**
@@ -161,14 +161,15 @@ const postErrorMessage = (error: any) => {
  * @param data data to send to the main thread
  */
 const postDataMessage = (data: any) => {
-  postMessage({
+  const m: Message = {
     type: MessageType.DATA,
     done: true,
     payload: {
-      ...data
+      ...data,
     },
-  });
+  };
+  postMessage(m);
 };
 
-// Dummy export (needed for bundling)
-export type {}
+// Dummy export (DO NOT REMOVE)
+export type {};
