@@ -12,12 +12,18 @@ import {
   PermissionList,
   VaultSharePage,
 } from "src/components/VaultShare";
-import { web3AuthUserInfoAtom, web3AuthWalletProviderAtom } from "src/state";
+import {
+  useGetModulesQuery,
+  useGetUserModulesSubscription,
+} from "src/graphql/generated";
+import { hasuraTokenAtom, userAtom, web3AuthUserInfoAtom, web3AuthWalletProviderAtom } from "src/state";
 
 import * as dpw from '../../types/DataPipelineWorker';
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
+  const [user] = useAtom(userAtom);
+  const [hasuraToken] = useAtom(hasuraTokenAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
@@ -29,16 +35,36 @@ const SendPage: NextPage = () => {
   const testAccessor = "Dall•e";
   const testAccessDomain = "openai.com";
 
+  // TODO: See if there is a better way we can grab the urls
+  const { data: userModulesData, loading: isDataLoading } =
+    useGetUserModulesSubscription({
+      variables: { userId: user?.id },
+      skip: !user?.id,
+    });
+
+  const instagramModules = userModulesData
+    ? userModulesData.usersModules.filter(
+        (userModule) => userModule.module.name === "Instagram",
+      )
+    : [];
+
+  // END of TODO
+
   const onDataRequestApproval = async () => {
     setHasUserAcceptedSharingRequest(true);
-    setHasUserAcceptedSharingRequest(true);
 
-    console.log("sharing...");
+    console.log("Starting the sharing process...");
 
     const dangerousPrivateKey = await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
+    console.log(`dangerousPrivateKey: ${dangerousPrivateKey?.substring(0,4)}*****`);
 
-    console.log('dangerousPrivateKey:', dangerousPrivateKey?.substring(0,4), '*****');
+    const url = instagramModules[0].urlToData;
+    console.log('instagramModules[0].urlToData: ', url);
 
+    // TODO: @joe - we propably need to hit our own /api/ to generate a signed url for our web worker to use
+
+    // Sends data to the DataPipeline (Worker)
+    console.log("Sending data to the worker...");
     workerRef.current?.postMessage({
       query: dummySQLQuery,
       dataUrl: "http://localhost:6969/zip",

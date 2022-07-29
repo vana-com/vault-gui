@@ -68,7 +68,6 @@ const fetchData = async (url: string) => {
  * @returns Unencrypted file (.zip)
  */
 const decryptData = async (encryptedFile: File, key: any) => {
-  // TODO: decrypt data  
   const decrypted = await decryptFileChaCha20Poly1305(encryptedFile, key);
   
   if(!decrypted) {
