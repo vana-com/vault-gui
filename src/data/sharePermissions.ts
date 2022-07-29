@@ -1,7 +1,7 @@
 export const testPermissionList = [
   {
     id: "1",
-    text: "Read access to metadata",
+    text: "Read access to Instagram Interests data",
   },
   {
     id: "2",

@@ -16,19 +16,21 @@ import {
 } from "src/components/Icons";
 
 interface Props {
+  accessDenied?: boolean;
+  accessDomain: string;
   children: React.ReactNode;
   heading?: string;
   lede: string;
-  accessDenied?: boolean;
 }
 
 const ICON_SIZE = "36px";
 
 const VaultSharePage = ({
   accessDenied,
-  heading = "Allow Vault access",
-  lede,
+  accessDomain,
   children,
+  heading = "Give Vault access",
+  lede,
 }: Props) => (
   <div tw="min-h-screen flex items-center justify-center">
     <Container tw="relative" size="lg">
@@ -55,6 +57,9 @@ const VaultSharePage = ({
             </Text>
             <Text variant="body" color="labelTertiary">
               {lede}
+            </Text>
+            <Text variant="footnote" mono color="labelQuaternary" tw="pt-1.5">
+              Requested from: {accessDomain}
             </Text>
           </Stack>
 

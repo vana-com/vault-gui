@@ -1,31 +1,30 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, CheckboxDefault, Group, Stack } from "src/components";
-import { VaultSharePage } from "src/components/VaultShare";
+import { Button, Group, Stack, Text } from "src/components";
 
 interface PermissionContractProps {
-  accessor: string;
   children: React.ReactNode;
   onAccept: () => void;
   onDeny: () => void;
 }
 
 const PermissionContract = ({
-  accessor,
   onAccept,
   onDeny,
   children,
 }: PermissionContractProps) => (
-  <VaultSharePage
-    lede={`Do you want to allow ${accessor} access to your Vault?`}
-  >
+  <>
     {/* COMPOSE: PERMISSION ASKS LIST */}
     {children}
 
-    {/* ACCESS ONLY ONCE? */}
-    <Group tw="justify-end pr-1.5">
-      <CheckboxDefault label="Give access only once" />
+    {/* ACCESS TIMESPAN */}
+    <Group tw="justify-end pr-1">
+      {/* LATER: check or select access time */}
+      {/* <CheckboxDefault label="Give access only once" /> */}
+      <Text color="labelTertiary" variant="note">
+        This will give access only once
+      </Text>
     </Group>
 
     {/* CONFIRM */}
@@ -39,7 +38,7 @@ const PermissionContract = ({
         </Button>
       </Group>
     </Stack>
-  </VaultSharePage>
+  </>
 );
 
 export { PermissionContract };

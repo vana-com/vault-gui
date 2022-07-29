@@ -23,6 +23,7 @@ const SendPage: NextPage = () => {
 
   const dummySQLQuery = "select * from instagram_interests";
   const testAccessor = "Dall•e";
+  const testAccessDomain = "openai.com";
 
   const onDataRequestApproval = async () => {
     setHasUserAcceptedSharingRequest(true);
@@ -65,6 +66,7 @@ const SendPage: NextPage = () => {
         <TitleAndMetaTags color="black" title="Add data to your Vault | Vana" />
         <VaultSharePage
           accessDenied
+          accessDomain={testAccessDomain}
           heading="No Vault data"
           lede={`${testAccessor} can't access any Vault data`}
         >

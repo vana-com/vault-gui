@@ -19,8 +19,8 @@ export const buttonSizes = {
   md: tw`h-[27px] gap-1 px-2 text-sm`,
   // set a min-width so it looks good when the loading spinner is active
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
-  lg: tw`h-[38px] gap-2 px-4 text-md w-full md:w-auto min-w-[130px]`,
-  xl: tw`h-[44px] gap-2 px-6 text-md w-full md:w-auto min-w-[130px]`,
+  lg: tw`h-[38px] gap-1.5 px-4 text-md w-full md:w-auto min-w-[130px]`,
+  xl: tw`h-[44px] gap-1.5 px-6 text-md w-full md:w-auto min-w-[130px]`,
   full: tw`flex-1 h-full gap-2 px-6 text-lg`,
 } as const;
 

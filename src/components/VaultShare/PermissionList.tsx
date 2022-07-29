@@ -9,6 +9,8 @@ import {
 import { testPermissionList } from "src/data";
 import { SharePermissionKind } from "src/types";
 
+import { FocusStack } from "./Subelement";
+
 interface PermissionListItemProps {
   id: string;
   text: string | React.ReactNode;
@@ -16,7 +18,7 @@ interface PermissionListItemProps {
 }
 
 const PermissionListItem = ({ item }: { item: PermissionListItemProps }) => (
-  <Group tw="items-center gap-2 text-labelSecondary">
+  <Group tw="items-center gap-2 text-labelTertiary">
     {item.denial ? <CarbonCloseOutline /> : <CarbonCheckmarkOutline />}
     <Text variant="body">{item.text}</Text>
   </Group>
@@ -46,7 +48,7 @@ const PermissionList = ({ query }: Props) => {
   const queryPermissions = getQueryPermissionsList(queryKind);
 
   return (
-    <Stack tw="rounded-lg overflow-hidden gap-0 border bg-gray-40 border-separator">
+    <FocusStack>
       <Group tw="p-4">
         <Text variant="body" tw="flex">
           Share your&nbsp;<Text weight="bold">Instagram interests</Text>
@@ -58,7 +60,7 @@ const PermissionList = ({ query }: Props) => {
           <PermissionListItem key={item.id} item={item} />
         ))}
       </Stack>
-    </Stack>
+    </FocusStack>
   );
 };
 
