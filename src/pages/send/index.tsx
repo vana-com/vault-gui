@@ -56,16 +56,18 @@ const SendPage: NextPage = () => {
     const dangerousPrivateKey = await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
     console.log(`dangerousPrivateKey: ${dangerousPrivateKey?.substring(0,4)}*****`);
 
-    const url = instagramModules[0].urlToData;
-    console.log('instagramModules[0].urlToData: ', url);
+    const userModuleId = instagramModules[0].id;
+    console.log('instagramModules[0].userModuleId: ', userModuleId);
 
-    // TODO: @joe - we propably need to hit our own /api/ to generate a signed url for our web worker to use
-    const { signedUrl } = await fetch('/api/generate-signed-data-url', {
+    const { signedUrl } = await fetch('/api/user-data/download-url', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({unsignedURL: url}),
+      body: JSON.stringify({
+        hasuraToken:
+        userModuleId,
+      }),
     }).then((res) => res.json());
 
     // Sends data to the DataPipeline (Worker)
