@@ -6,18 +6,17 @@ import tw from "twin.macro";
 
 import { Flex, Login, TitleAndMetaTags } from "src/components";
 import {
+  FocusStack,
   NoModuleMessage,
   PermissionContract,
   PermissionList,
   VaultSharePage,
 } from "src/components/VaultShare";
-import { useLogin } from "src/hooks";
 import { web3AuthUserInfoAtom } from "src/state";
 import { runDataQueryPipeline } from "src/utils";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
-  const { logIn, loginError, setLoginError } = useLogin();
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
     useState(false);
@@ -44,14 +43,16 @@ const SendPage: NextPage = () => {
           color="black"
           title="Login to share your Vault | Vana"
         />
-        <VaultSharePage lede="Login to allow Vault access">
-          <Flex tw="w-full items-center justify-center">
-            <Login
-              logIn={logIn}
-              loginError={loginError}
-              setLoginError={setLoginError}
-            />
-          </Flex>
+        <VaultSharePage
+          lede="You need to Login to give Vault access"
+          accessDomain={testAccessDomain}
+        >
+          <FocusStack>
+            <Flex tw="p-8 w-full items-center justify-center">
+              {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+              <Login />
+            </Flex>
+          </FocusStack>
         </VaultSharePage>
       </>
     );
@@ -68,6 +69,8 @@ const SendPage: NextPage = () => {
           lede={`${testAccessor} can't access any Vault data`}
         >
           <NoModuleMessage />
+          {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+          <Login />
         </VaultSharePage>
       </>
     );
@@ -82,16 +85,24 @@ const SendPage: NextPage = () => {
   return (
     <>
       <TitleAndMetaTags color="black" title="Share your Vault data | Vana" />
-      <PermissionContract
-        accessor={testAccessor}
-        onAccept={onDataRequestApproval}
-        onDeny={() => {
-          // TODO: close popup or prompt the user to close popup
-          console.log("close popup");
-        }}
+
+      {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+      <Login />
+
+      <VaultSharePage
+        accessDomain={testAccessDomain}
+        lede={`Do you want to give ${testAccessor} access to your Vault?`}
       >
-        <PermissionList query={dummySQLQuery} />
-      </PermissionContract>
+        <PermissionContract
+          onAccept={onDataRequestApproval}
+          onDeny={() => {
+            // TODO: close popup or prompt the user to close popup
+            console.log("close popup");
+          }}
+        >
+          <PermissionList query={dummySQLQuery} />
+        </PermissionContract>
+      </VaultSharePage>
     </>
   );
 };

@@ -20,13 +20,11 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import { useLogin } from "src/hooks";
 import { userAtom, web3AuthUserInfoAtom } from "src/state";
 
 const HomePage: NextPage = () => {
   const [user] = useAtom(userAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
-  const { logIn, loginError, setLoginError } = useLogin();
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -60,11 +58,8 @@ const HomePage: NextPage = () => {
         <TitleAndMetaTags color="black" title="Login to Vault" />
         <PageVault>
           <Flex tw="w-full items-center justify-center">
-            <Login
-              logIn={logIn}
-              loginError={loginError}
-              setLoginError={setLoginError}
-            />
+            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+            <Login />
           </Flex>
         </PageVault>
       </>
@@ -79,6 +74,8 @@ const HomePage: NextPage = () => {
         <PageVault>
           <Flex tw="w-full items-center justify-center">
             <Spinner />
+            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+            <Login />
           </Flex>
         </PageVault>
       </>
@@ -88,6 +85,9 @@ const HomePage: NextPage = () => {
   return (
     <>
       <TitleAndMetaTags color="black" title="Vault | Vana" />
+
+      {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+      <Login />
 
       <PageVault>
         <Flex tw="w-full flex-col gap-4">
