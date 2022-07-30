@@ -33,6 +33,25 @@ const SendPage: NextPage = () => {
   const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
     useState(false);
 
+  /**
+   * Create the worker once the client loaded the page and sets up the event listener
+   */
+  useEffect(() => {
+    // Set the window context
+    const w = window;
+    // eslint-disable-next-line no-restricted-globals
+    const s = self;
+
+    // Preload the worker script
+    workerRef.current = new Worker(
+      new URL("../../workers/DataPipeline.ts", import.meta.url),
+    );
+
+    // Give the "window" context to the listener
+    const onMessage = onMessageReceived(w, s);
+    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
+  }, []);
+
   const workerRef = useRef<Worker>();
 
   // Get popup's query params
@@ -233,25 +252,6 @@ const SendPage: NextPage = () => {
   if (hasUserAcceptedSharingRequest) {
     <div>Sending your data... Cool animation</div>;
   }
-
-  /**
-   * Create the worker once the client loaded the page and sets up the event listener
-   */
-  useEffect(() => {
-    // Set the window context
-    const w = window;
-    // eslint-disable-next-line no-restricted-globals
-    const s = self;
-
-    // Preload the worker script
-    workerRef.current = new Worker(
-      new URL("../../workers/DataPipeline.ts", import.meta.url),
-    );
-
-    // Give the "window" context to the listener
-    const onMessage = onMessageReceived(w, s);
-    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
-  }, []);
 
   // Permissions contract state: requesting permissions
   return (
