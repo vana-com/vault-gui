@@ -22,7 +22,7 @@ const uploadFile = async (
   try {
     // get the pre-signed URL for S3 or GCS
     const res = await fetch(
-      `/api/upload-url?fileName=${filename}&moduleName=${moduleName}&appPubKey=${appPubKey}`,
+      `/api/user-data/upload-url?fileName=${filename}&moduleName=${moduleName}&appPubKey=${appPubKey}`,
     );
     const { fullFileName, url, fields } = await res.json();
     const formData = new FormData();

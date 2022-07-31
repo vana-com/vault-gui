@@ -10,9 +10,7 @@ export const generateUserDataObjectName = (
   appPubKey: string,
   moduleName: string,
 ) => {
-  const timestamp = Math.floor(
-    new Date("2012.08.10").getTime() / 1000,
-  ).toString();
+  const timestamp = Math.floor(new Date().getTime() / 1000).toString();
 
   const randomPiece = (Math.floor(Math.random() * 899) + 100).toString();
 
