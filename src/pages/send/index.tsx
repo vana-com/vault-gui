@@ -97,6 +97,27 @@ const SendPage: NextPage = () => {
       )
     : [];
 
+
+  /**
+   * This useEffect is only fired once on page load.
+   * It preps the worker to start the data pipeline and hooks up our event listener
+   */
+  useEffect(() => {
+    // Set the window context
+    const w = window;
+    // eslint-disable-next-line no-restricted-globals
+    const s = self;
+
+    // Preload the worker script
+    workerRef.current = new Worker(
+      new URL("../../workers/DataPipeline.ts", import.meta.url),
+    );
+
+    // Give the "window" context to the listener
+    const onMessage = onMessageReceived(w, s);
+    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
+  }, []);
+
   /**
    * Set the UI status for the page
    */
@@ -116,6 +137,8 @@ const SendPage: NextPage = () => {
     if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.userHasAcceptedRequest);
     }
+
+    
   }, [
     web3AuthUserInfo,
     isUserModulesDataLoading,
