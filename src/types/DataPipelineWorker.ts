@@ -11,11 +11,18 @@ enum Stage {
   QUERY_DATA = "QUERY_DATA",
 }
 
+enum Status {
+  IDLE = "IDLE",
+  PENDING = "PENDING",
+  RESOLVED = "RESOLVED",
+  REJECTED = "REJECTED",
+}
+
 interface Message {
   type: MessageType;
   done: boolean;
   payload: any;
 }
 
-export { MessageType, Stage };
+export { MessageType, Stage, Status };
 export type { Message };
