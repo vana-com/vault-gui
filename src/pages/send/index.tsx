@@ -69,6 +69,7 @@ const SendPage: NextPage = () => {
   /*
    * appName: The name of "client" that is requesting data (helloworld-gui)
    * serviceName: The name of the data service that is being requested (instagram)
+   * queryString: The query to be executed on the data service (sql: select * from posts)
    */
   const { appName, serviceName, queryString } = router.query;
 
@@ -96,7 +97,6 @@ const SendPage: NextPage = () => {
           userModule.module.name.toLowerCase() === normalizedServiceName,
       )
     : [];
-
 
   /**
    * This useEffect is only fired once on page load.
@@ -137,8 +137,6 @@ const SendPage: NextPage = () => {
     if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.userHasAcceptedRequest);
     }
-
-    
   }, [
     web3AuthUserInfo,
     isUserModulesDataLoading,
