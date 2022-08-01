@@ -1,13 +1,6 @@
 import { VaultSharePage } from "src/components/VaultShare";
 import { ShareUiStatus } from "src/types";
 
-// export interface VaultShareUIProps {
-//   hasuraIsLoading: boolean;
-//   userDoesNotHaveModuleData: boolean;
-//   userHasAcceptedSharingRequest: boolean;
-//   userIsNotLoggedIn: boolean;
-// }
-
 interface Props {
   children: React.ReactNode;
   accessingDomain: string;
