@@ -8,3 +8,11 @@ export interface ShareModule {
 export enum SharePermissionKind {
   InstagramInterests = "InstagramInterests",
 }
+
+export enum ShareUiStatus {
+  hasuraIsLoading = "hasuraIsLoading",
+  userDoesNotHaveModuleData = "userDoesNotHaveModuleData",
+  userIsReadyToAccept = "userIsReadyToAccept",
+  userHasAcceptedRequest = "userHasAcceptedRequest",
+  userIsNotLoggedIn = "userIsNotLoggedIn",
+}

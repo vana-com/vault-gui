@@ -75,8 +75,8 @@ const fetchData = async (url: string) => {
  */
 const decryptData = async (encryptedFile: File, key: any) => {
   const decrypted = await decryptFileChaCha20Poly1305(encryptedFile, key);
-  
-  if(!decrypted) {
+
+  if (!decrypted) {
     // Failed to decrypt
     throw new Error("Failed to decrypt data, probably used the wrong key");
   }
@@ -114,7 +114,7 @@ const extractData = async (data: File, serviceName: string) => {
 const queryData = async (db: any, queries: string[]) => {
   const query = queries.join(" ");
   const queryResults: SQLiteQueryResult[] = await db.runQuery(query);
-  
+
   postUpdateMessage({
     stage: Stage.QUERY_DATA,
     message: `Queried db with ${queries.length} queries '${query}' and returned ${queryResults.length} results`,

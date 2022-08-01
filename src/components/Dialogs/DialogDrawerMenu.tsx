@@ -55,7 +55,7 @@ const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
                 {/* css={styledContent} */}
                 <DialogContent
                   forceMount
-                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh]"
+                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh] min-w-[580px]"
                 >
                   {children}
                 </DialogContent>

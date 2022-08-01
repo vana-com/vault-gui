@@ -5,13 +5,15 @@ import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Flex, Login, TitleAndMetaTags } from "src/components";
+import { Flex, Login, Spinner } from "src/components";
 import {
   FocusStack,
   NoModuleMessage,
   PermissionContract,
   PermissionList,
-  VaultSharePage,
+  SendStatus,
+  VaultSharePageTitle,
+  VaultSharePageWithStatus,
 } from "src/components/VaultShare";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import {
@@ -20,8 +22,8 @@ import {
   web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
-
-import * as dataPipelineWorker from "../../types/DataPipelineWorker";
+import { ShareUiStatus } from "src/types";
+import * as dataPipelineWorker from "src/types/DataPipelineWorker";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -30,8 +32,15 @@ const SendPage: NextPage = () => {
   const [hasuraToken] = useAtom(hasuraTokenAtom);
   const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
-  const [hasUserAcceptedSharingRequest, setHasUserAcceptedSharingRequest] =
+  const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
+  const [shareStatus, setShareStatus] = useState(
+    dataPipelineWorker.Status.IDLE,
+  );
+  const [updateStatus, setUpdateStatus] = useState(
+    dataPipelineWorker.Stage.FETCH_DATA,
+  );
+  const [uiStatus, setUiStatus] = useState(ShareUiStatus.hasuraIsLoading);
 
   /**
    * Create the worker once the client loaded the page and sets up the event listener
@@ -56,6 +65,7 @@ const SendPage: NextPage = () => {
 
   // Get popup's query params
   // TODO: @joe - replace w/ more secure method
+  // TODO: @joe - add domain to the query params, for use on UI
   /*
    * appName: The name of "client" that is requesting data (helloworld-gui)
    * serviceName: The name of the data service that is being requested (instagram)
@@ -63,7 +73,7 @@ const SendPage: NextPage = () => {
   const { appName, serviceName, queryString } = router.query;
 
   // Make it human readable again
-  const prettyAppName = decodeURI(appName as string);
+  const prettyAppName = decodeURI(appName as string).replace(`-`, ` `);
 
   // normalize service name
   const normalizedServiceName = ((serviceName as string) ?? "").toLowerCase();
@@ -72,12 +82,13 @@ const SendPage: NextPage = () => {
   const cleanQueryString = decodeURI(queryString as string);
 
   // TODO: @joe - load url from window.origin?
-  const testAccessDomain = "openai.com";
+  const accessingDomain = "openai.com";
 
-  const { data: userModulesData } = useGetUserModulesSubscription({
-    variables: { userId: user?.id },
-    skip: !user?.id,
-  });
+  const { data: userModulesData, loading: isUserModulesDataLoading } =
+    useGetUserModulesSubscription({
+      variables: { userId: user?.id },
+      skip: !user?.id,
+    });
 
   const selectedModule = userModulesData
     ? userModulesData.usersModules.filter(
@@ -85,6 +96,33 @@ const SendPage: NextPage = () => {
           userModule.module.name.toLowerCase() === normalizedServiceName,
       )
     : [];
+
+  /**
+   * Set the UI status for the page
+   */
+  useEffect(() => {
+    if (!web3AuthUserInfo) {
+      setUiStatus(ShareUiStatus.userIsNotLoggedIn);
+    }
+    if (isUserModulesDataLoading) {
+      setUiStatus(ShareUiStatus.hasuraIsLoading);
+    }
+    if (!selectedModule && !selectedModule[0]) {
+      setUiStatus(ShareUiStatus.userDoesNotHaveModuleData);
+    }
+    if (web3AuthUserInfo && selectedModule[0]) {
+      setUiStatus(ShareUiStatus.userIsReadyToAccept);
+    }
+    if (userHasAcceptedSharingRequest) {
+      setUiStatus(ShareUiStatus.userHasAcceptedRequest);
+    }
+  }, [
+    web3AuthUserInfo,
+    isUserModulesDataLoading,
+    selectedModule,
+    userHasAcceptedSharingRequest,
+  ]);
+  console.log("uiStatus", uiStatus);
 
   const fetchSignedUrl = async (token: string, userModuleId: string) => {
     const result = await fetch("/api/user-data/download-url", {
@@ -110,7 +148,7 @@ const SendPage: NextPage = () => {
   };
 
   const onDataRequestApproval = async () => {
-    setHasUserAcceptedSharingRequest(true);
+    setUserHasAcceptedSharingRequest(true);
 
     console.log("Starting the sharing process...");
 
@@ -142,12 +180,16 @@ const SendPage: NextPage = () => {
 
       // Handle each message type differently
       switch (data.type) {
+        // Message: data is being sent (pending)
         case dataPipelineWorker.MessageType.UPDATE:
           await handleUpdateMessage(data);
+          setShareStatus(dataPipelineWorker.Status.PENDING);
           break;
+        // Message: data sending resolved
         case dataPipelineWorker.MessageType.DATA:
           await handleDataMessage(data, window, self);
           break;
+        // Message: data sending failed
         case dataPipelineWorker.MessageType.ERROR:
           await handleErrorMessage(data);
           break;
@@ -164,16 +206,19 @@ const SendPage: NextPage = () => {
   const closePopup = (self: Window) => self.close();
 
   const handleUpdateMessage = async (data: dataPipelineWorker.Message) => {
-    // Worker not (quite) done yet these are just "status" reports
-    // TODO: update ui w/ stages here
+    // Worker not (quite) done yet, these are just "status" reports
     switch (data.payload.stage) {
       case dataPipelineWorker.Stage.FETCH_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.FETCH_DATA);
         break;
       case dataPipelineWorker.Stage.DECRYPTED_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.DECRYPTED_DATA);
         break;
       case dataPipelineWorker.Stage.EXTRACTED_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.EXTRACTED_DATA);
         break;
       case dataPipelineWorker.Stage.QUERY_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.QUERY_DATA);
         break;
       default:
         console.log(`Unknown stage: ${data?.payload?.stage}`);
@@ -192,89 +237,67 @@ const SendPage: NextPage = () => {
     // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
     window.opener.postMessage(JSON.stringify(data), "*");
 
-    // TODO: @callum - Do some vudu here before we close the window???
-    setTimeout(() => closePopup(self), 1 * 1000);
+    // Show success message before we close the window
+    setTimeout(() => {
+      setShareStatus(dataPipelineWorker.Status.RESOLVED);
+      closePopup(self);
+    }, 5 * 1000);
   };
 
   const handleErrorMessage = async (data: dataPipelineWorker.Message) => {
-    // Something definitely went wrong
-    // TODO: gracefully show errors to the user?
+    // Something definitely went wrong, gracefully show errors to the user
+    setShareStatus(dataPipelineWorker.Status.REJECTED);
     console.log("worker error | data:", data?.payload?.error);
   };
 
-  // STATE TESTS
-  // const testUserAvailable = true;
-  const testUserWithoutData = false;
+  return (
+    <>
+      {/* These 2 component take uiStatus and handle their own internal UI */}
+      <VaultSharePageTitle uiStatus={uiStatus} />
+      <VaultSharePageWithStatus
+        accessingDomain={accessingDomain}
+        appName={prettyAppName}
+        uiStatus={uiStatus}
+      >
+        {/* TECH DEBT, LEAVE AS IS!: must be always available in order to run the useEffects within the component. Only renders to the DOM when !web3AuthUserInfo. We'll refactor useEffect vs Markup in Login soon. */}
+        <Login />
 
-  // Login state: prior to authenticated store user
-  if (!web3AuthUserInfo) {
-    return (
-      <>
-        <TitleAndMetaTags
-          color="black"
-          title="Login to share your Vault | Vana"
-        />
-        <VaultSharePage
-          lede="You need to Login to give Vault access"
-          accessDomain={testAccessDomain}
-        >
+        {/* NOT LOGGED IN */}
+        {uiStatus === ShareUiStatus.userIsNotLoggedIn && (
           <FocusStack>
             <Flex tw="p-8 w-full items-center justify-center">
-              {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
               <Login />
             </Flex>
           </FocusStack>
-        </VaultSharePage>
-      </>
-    );
-  }
+        )}
 
-  // No Module state: Logged-in but without a Module
-  if (testUserWithoutData) {
-    return (
-      <>
-        <TitleAndMetaTags color="black" title="Add data to your Vault | Vana" />
-        <VaultSharePage
-          accessDenied
-          accessDomain={testAccessDomain}
-          heading="No Vault data"
-          lede={`${prettyAppName} can't access any Vault data`}
-        >
-          <NoModuleMessage />
-          {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-          <Login />
-        </VaultSharePage>
-      </>
-    );
-  }
+        {/* SERVER DATA IS LOADING */}
+        {uiStatus === ShareUiStatus.hasuraIsLoading && (
+          <FocusStack tw="min-h-[268px] items-center justify-center">
+            <Spinner />
+          </FocusStack>
+        )}
 
-  // Confirmed state: sending data
-  if (hasUserAcceptedSharingRequest) {
-    <div>Sending your data... Cool animation</div>;
-  }
+        {/* NO USER MODULE DATA */}
+        {uiStatus === ShareUiStatus.userDoesNotHaveModuleData && (
+          <NoModuleMessage handleClick={() => closePopup(window)} />
+        )}
 
-  // Permissions contract state: requesting permissions
-  return (
-    <>
-      <TitleAndMetaTags color="black" title="Share your Vault data | Vana" />
+        {/* READY TO ACCEPT */}
+        {uiStatus === ShareUiStatus.userIsReadyToAccept && (
+          <PermissionContract
+            onAccept={onDataRequestApproval}
+            onDeny={() => closePopup(window)}
+          >
+            <PermissionList query={cleanQueryString} />
+          </PermissionContract>
+        )}
 
-      {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-      <Login />
-
-      <VaultSharePage
-        accessDomain={testAccessDomain}
-        lede={`Do you want to give ${prettyAppName} access to your Vault?`}
-      >
-        <PermissionContract
-          onAccept={onDataRequestApproval}
-          onDeny={() => {
-            // TODO: close popup or prompt the user to close popup
-            console.log("close popup");
-          }}
-        >
-          <PermissionList query={cleanQueryString} />
-        </PermissionContract>
-      </VaultSharePage>
+        {/* ACCEPTED, RUN QUERY */}
+        {uiStatus === ShareUiStatus.userHasAcceptedRequest && (
+          <SendStatus status={shareStatus} stage={updateStatus} />
+        )}
+      </VaultSharePageWithStatus>
     </>
   );
 };

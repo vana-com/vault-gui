@@ -13,12 +13,11 @@ const StorageProgress = ({ value }: Props) => (
     {/* <div tw="pt-2 pb-4 max-w-[75%]">
       <Progress hasStripe isAnimated value={value} bg="white" />
     </div> */}
-    <Text variant="display" weight="semibold" tw="text-center">
+    <Text variant="display" weight="semibold" tw="text-center text-5xl">
       {value}%
     </Text>
-    {/* color={vars.colors.gray70} */}
     <Text variant="note" color="labelTertiary" tw="text-center">
-      {value < 4 ? "Encrypting your data. Hold tight…" : "Sending securely…"}
+      {value < 6 ? "Encrypting your data. Hold tight…" : "Sending securely…"}
     </Text>
   </Stack>
 );

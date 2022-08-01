@@ -33,7 +33,7 @@ const VaultSharePage = ({
   lede,
 }: Props) => (
   <div tw="min-h-screen flex items-center justify-center">
-    <Container tw="relative" size="lg">
+    <Container size="lg">
       <Card shadow={false} bg="bg">
         <Stack tw="flex-1 gap-6">
           <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">

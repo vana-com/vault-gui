@@ -50,6 +50,8 @@ const stylesBase = css`
     --orange80: #AD530E;
     --orange90: #703B12;
     --orange100: #3D1E0A;
+    --error50: hsl(1, 62%, 60%);
+    --error60: hsl(1deg 62% 44%);
   }
   .light {
     --primary: var(--orange60);
@@ -72,18 +74,19 @@ const stylesBase = css`
     
     --neutral: var(--neutral20);
     --separator: var(--gray30);
+    --error: var(--error50);
   }
   .dark {
     --primary: var(--orange50);
     --accent: var(--black100);
-
+    
     --label: var(--white100);
     --labelSecondary: var(--white80);
     --labelTertiary: var(--white70);
     --labelQuaternary: var(--white60);
     --labelInverse: var(--gray100);
     --labelWhite: var(--white100);
-
+    
     --fill: var(--white30);
     --fillSecondary: var(--white20);
     --fillElevated: var(--blueGray90);
@@ -91,9 +94,10 @@ const stylesBase = css`
     --backgroundElevated: var(--slate90);
     --backgroundTertiary: var(--gray50);
     --backgroundScrim: rgba(0, 0, 0, 0.4);
-
+    
     --neutral: var(--neutral60);
     --separator: var(--white20);
+    --error: var(--error60);
   }
   body {
     "WebkitTapHighlightColor": ${theme`colors.purple.500`};
