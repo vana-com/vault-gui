@@ -2,6 +2,7 @@ import web3AuthConfig from "./web3auth";
 
 const generalConfig = {
   vanaURL: "https://vana.xyz",
+  vanaVaultURL: "https://vault.vana.xyz",
   vanaAboutURL: "https://vana.xyz/about",
   vanaManifestsURL: "https://vana.xyz/manifesto",
   vanaSupportEmail: "support@vanahelp.zendesk.com",

@@ -206,7 +206,7 @@ const SendPage: NextPage = () => {
   };
 
   // STATE TESTS
-  const testUserWithoutData = false;
+  const doesNotHaveModuleData = !selectedModule[0];
   // const testUserAccepted = true;
 
   // Login state: prior to authenticated store user
@@ -231,8 +231,8 @@ const SendPage: NextPage = () => {
     );
   }
 
-  // No Module state: Logged-in but without a Module
-  if (testUserWithoutData) {
+  // No Module state: Logged-in but without the Module data being asking for
+  if (doesNotHaveModuleData) {
     return (
       <>
         <TitleAndMetaTags color="black" title="Add data to your Vault | Vana" />
@@ -242,7 +242,7 @@ const SendPage: NextPage = () => {
           heading="No Vault data"
           lede={`You don't have any Vault data to share`}
         >
-          <NoModuleMessage />
+          <NoModuleMessage handleClick={() => closePopup(window)} />
           {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
           <Login />
         </VaultSharePage>
