@@ -6,24 +6,37 @@ import * as dataPipelineWorker from "src/types/DataPipelineWorker";
 
 interface Props {
   stage: dataPipelineWorker.Stage;
+  status: dataPipelineWorker.Status;
 }
 
-const SendUpdateStatus = ({ stage }: Props) => {
+const SendUpdateStatus = ({ stage, status }: Props) => {
   const decryptedOrExtracted =
     stage === dataPipelineWorker.Stage.DECRYPTED_DATA ||
     stage === dataPipelineWorker.Stage.EXTRACTED_DATA;
 
   let heading;
-  if (stage === dataPipelineWorker.Stage.FETCH_DATA) heading = "Requesting";
-  if (decryptedOrExtracted) heading = "Preparing";
-  if (stage === dataPipelineWorker.Stage.QUERY_DATA) heading = "Ready";
-
   let lede;
-  if (stage === dataPipelineWorker.Stage.FETCH_DATA)
+
+  // Requesting
+  if (
+    status === dataPipelineWorker.Status.IDLE ||
+    stage === dataPipelineWorker.Stage.FETCH_DATA
+  ) {
+    heading = "Requesting";
     lede = "Decrypting your data. Hold tight…";
-  if (decryptedOrExtracted) lede = "Structuring your data…";
-  if (stage === dataPipelineWorker.Stage.QUERY_DATA)
+  }
+
+  // Preparing
+  if (decryptedOrExtracted) {
+    heading = "Preparing";
+    lede = "Structuring your data…";
+  }
+
+  // Ready
+  if (stage === dataPipelineWorker.Stage.QUERY_DATA) {
+    heading = "Ready";
     lede = "Your data has been securely shared.";
+  }
 
   return (
     <Stack tw="gap-1 mx-auto justify-center pt-3 pb-5">
