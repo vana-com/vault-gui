@@ -9,19 +9,19 @@ interface Props {
 }
 
 const SendUpdateStatus = ({ stage }: Props) => {
-  const decruptedOrExtracted =
+  const decryptedOrExtracted =
     stage === dataPipelineWorker.Stage.DECRYPTED_DATA ||
     stage === dataPipelineWorker.Stage.EXTRACTED_DATA;
 
   let heading;
   if (stage === dataPipelineWorker.Stage.FETCH_DATA) heading = "Requesting";
-  if (decruptedOrExtracted) heading = "Preparing";
+  if (decryptedOrExtracted) heading = "Preparing";
   if (stage === dataPipelineWorker.Stage.QUERY_DATA) heading = "Ready";
 
   let lede;
   if (stage === dataPipelineWorker.Stage.FETCH_DATA)
     lede = "Decrypting your data. Hold tight…";
-  if (decruptedOrExtracted) lede = "Structuring your data…";
+  if (decryptedOrExtracted) lede = "Structuring your data…";
   if (stage === dataPipelineWorker.Stage.QUERY_DATA)
     lede = "Your data has been securely shared.";
 
