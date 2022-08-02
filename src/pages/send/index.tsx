@@ -122,7 +122,10 @@ const SendPage: NextPage = () => {
    * Set the UI status for the page
    */
   useEffect(() => {
-    if (!web3AuthUserInfo) {
+    // The order of these if statements is important!
+    if (userHasAcceptedSharingRequest) {
+      setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
+    } else if (!web3AuthUserInfo) {
       setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
     } else if (isUserModulesDataLoading) {
       setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
@@ -130,8 +133,6 @@ const SendPage: NextPage = () => {
       setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
     } else if (web3AuthUserInfo && selectedModule[0]) {
       setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
-    } else if (userHasAcceptedSharingRequest) {
-      setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     }
   }, [
     web3AuthUserInfo,
