@@ -3,18 +3,16 @@ import { ShareUiStatus } from "src/types";
 
 interface Props {
   children: React.ReactNode;
+  // TODO: add back in when we have the data
   // accessingDomain: string;
   appName: string;
   uiStatus: ShareUiStatus;
 }
 
-const VaultSharePageWithStatus = ({
-  uiStatus,
-  appName,
-  children,
-}: // accessingDomain,
-Props) => {
-  let lede = `Do you want to give ${appName} access to your Vault?`;
+const VaultSharePageWithStatus = ({ uiStatus, appName, children }: Props) => {
+  let lede = appName
+    ? `Do you want to give ${appName} access to your Vault?`
+    : "";
   if (uiStatus === ShareUiStatus.userIsNotLoggedIn)
     lede = "You need to Login to give Vault access";
   if (uiStatus === ShareUiStatus.hasuraIsLoading)
