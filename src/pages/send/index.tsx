@@ -251,6 +251,8 @@ const SendPage: NextPage = () => {
     window: Window,
     self: Window,
   ) => {
+    setShareStatus(dataPipelineWorker.Status.RESOLVED);
+
     // This is the "final" message -- the data payload
     console.log("worker done | data:", JSON.stringify(data));
 
@@ -258,11 +260,10 @@ const SendPage: NextPage = () => {
     // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
     window.opener.postMessage(JSON.stringify(data), "*");
 
-    // Show success message before we close the window
+    // Allow time to show success message before we close the window
     setTimeout(() => {
-      setShareStatus(dataPipelineWorker.Status.RESOLVED);
       closePopup(self);
-    }, 5 * 1000);
+    }, 3 * 1000);
   };
 
   const handleErrorMessage = async (data: dataPipelineWorker.Message) => {
