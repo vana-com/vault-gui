@@ -69,7 +69,7 @@ module.exports = {
         // title: ['GintoNord', ...fontFamily.sans],
         title: ['GintoNord'],
         heading: ['Ginto', ...sans],
-        sans: ['Inter','ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','sans-serif'],
+        sans: ['Inter',...sans],
         mono: ['IBM Plex Mono','SFMono-Regular','ui-monospace','monospace'],
       },
       fontSize: {
