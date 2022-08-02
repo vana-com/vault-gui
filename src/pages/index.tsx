@@ -103,7 +103,7 @@ const HomePage: NextPage = () => {
             <PopoverHelp />
           </Flex>
           <hr />
-          <div tw="grid grid-cols-3 grid-flow-col gap-4 min-h-[180px]">
+          <div tw="grid grid-cols-2 lg:grid-cols-3 gap-4 min-h-[180px]">
             {/* ADD A MODULE */}
             <DialogDrawerMenu buttonLabel="Add">
               <CardHeaderVaultNoModules>
