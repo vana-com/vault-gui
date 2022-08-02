@@ -2,14 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import {
-  Group,
-  Link,
-  Spinner,
-  Stack,
-  styledMotionDiv,
-  Text,
-} from "src/components";
+import { Group, Link, Stack, styledMotionDiv, Text } from "src/components";
 import { CarbonCheckmarkOutline, CarbonError } from "src/components/Icons";
 import { SendUpdateStatus } from "src/components/VaultShare";
 import config from "src/config";
@@ -32,15 +25,9 @@ const SendStatus = ({ status, stage }: Props) => {
 
   return (
     <FocusStack tw="min-h-[268px] justify-center relative">
-      {/* IDLE */}
-      {status === dataPipelineWorker.Status.IDLE && (
-        <Stack tw="h-full items-center justify-center">
-          <Spinner />
-        </Stack>
-      )}
-
-      {/* PENDING */}
-      {status === dataPipelineWorker.Status.PENDING && (
+      {/* IDLE OR PENDING */}
+      {(status === dataPipelineWorker.Status.IDLE ||
+        status === dataPipelineWorker.Status.PENDING) && (
         <AnimatePresence>
           <motion.div
             initial={{ x: 540 }}
@@ -51,7 +38,7 @@ const SendStatus = ({ status, stage }: Props) => {
           >
             <Stack tw="h-full items-center justify-center">
               <Stack tw="items-center -mt-3">
-                <SendUpdateStatus stage={stage} />
+                <SendUpdateStatus stage={stage} status={status} />
               </Stack>
             </Stack>
           </motion.div>
