@@ -128,7 +128,7 @@ const SendPage: NextPage = () => {
     if (isUserModulesDataLoading) {
       setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
     }
-    if (selectedModule.length === 0) {
+    if (web3AuthUserInfo && selectedModule.length === 0) {
       setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
     }
     if (web3AuthUserInfo && selectedModule[0]) {
