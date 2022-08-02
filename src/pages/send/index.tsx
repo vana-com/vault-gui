@@ -83,7 +83,7 @@ const SendPage: NextPage = () => {
   const cleanQueryString = decodeURI(queryString as string);
 
   // TODO: @joe - load url from window.origin?
-  const accessingDomain = "openai.com";
+  // const accessingDomain = "openai.com";
 
   const { data: userModulesData, loading: isUserModulesDataLoading } =
     useGetUserModulesSubscription({
@@ -276,7 +276,7 @@ const SendPage: NextPage = () => {
       {/* These 2 component take uiStatus and handle their own internal UI */}
       <VaultSharePageTitle uiStatus={uiStatus} />
       <VaultSharePageWithStatus
-        accessingDomain={accessingDomain}
+        // accessingDomain={accessingDomain}
         appName={prettyAppName}
         uiStatus={uiStatus}
       >

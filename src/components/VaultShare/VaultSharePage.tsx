@@ -17,7 +17,7 @@ import {
 
 interface Props {
   accessDenied?: boolean;
-  accessDomain: string;
+  // accessDomain: string;
   children: React.ReactNode;
   heading?: string;
   lede: string;
@@ -27,7 +27,7 @@ const ICON_SIZE = "36px";
 
 const VaultSharePage = ({
   accessDenied,
-  accessDomain,
+  // accessDomain,
   children,
   heading = "Give Vault access",
   lede,
@@ -58,9 +58,9 @@ const VaultSharePage = ({
             <Text variant="body" color="labelTertiary">
               {lede}
             </Text>
-            <Text variant="footnote" mono color="labelQuaternary" tw="pt-1.5">
+            {/* <Text variant="footnote" mono color="labelQuaternary" tw="pt-1.5">
               Requested from: {accessDomain}
-            </Text>
+            </Text> */}
           </Stack>
 
           {/* CHILDREN */}
