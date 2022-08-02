@@ -282,7 +282,7 @@ const SendPage: NextPage = () => {
         uiStatus={uiStatus}
       >
         {/* When NOT LOGGED IN, this shows a Login button */}
-        {/* TECH DEBT, LEAVE AS IS!: must be always be rendered in order to run the useEffects within the component. Only renders markup to the DOM when !web3AuthUserInfo. We'll refactor useEffect vs Markup in Login soon. */}
+        {/* TECH DEBT, REFACTOR SOON!: must be always be rendered unconditionally in order to run the useEffects within the component. Only renders markup to the DOM when !web3AuthUserInfo. */}
         <Login withLayout />
 
         {/* SERVER DATA IS LOADING */}
