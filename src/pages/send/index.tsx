@@ -40,7 +40,7 @@ const SendPage: NextPage = () => {
   const [updateStatus, setUpdateStatus] = useState(
     dataPipelineWorker.Stage.FETCH_DATA,
   );
-  const [uiStatus, setUiStatus] = useState(ShareUiStatus.hasuraIsLoading);
+  const [uiStatus, setUiStatus] = useState(ShareUiStatus.HASURA_IS_LOADING);
 
   /**
    * Create the worker once the client loaded the page and sets up the event listener
@@ -123,19 +123,19 @@ const SendPage: NextPage = () => {
    */
   useEffect(() => {
     if (!web3AuthUserInfo) {
-      setUiStatus(ShareUiStatus.userIsNotLoggedIn);
+      setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
     }
     if (isUserModulesDataLoading) {
-      setUiStatus(ShareUiStatus.hasuraIsLoading);
+      setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
     }
     if (!selectedModule && !selectedModule[0]) {
-      setUiStatus(ShareUiStatus.userDoesNotHaveModuleData);
+      setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
     }
     if (web3AuthUserInfo && selectedModule[0]) {
-      setUiStatus(ShareUiStatus.userIsReadyToAccept);
+      setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
     }
     if (userHasAcceptedSharingRequest) {
-      setUiStatus(ShareUiStatus.userHasAcceptedRequest);
+      setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     }
   }, [
     web3AuthUserInfo,
@@ -285,19 +285,19 @@ const SendPage: NextPage = () => {
         <Login withLayout />
 
         {/* SERVER DATA IS LOADING */}
-        {uiStatus === ShareUiStatus.hasuraIsLoading && (
+        {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
           <FocusStack tw="min-h-[268px] items-center justify-center">
             <Spinner />
           </FocusStack>
         )}
 
         {/* NO USER MODULE DATA */}
-        {uiStatus === ShareUiStatus.userDoesNotHaveModuleData && (
+        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
           <NoModuleMessage handleClick={() => closePopup(window)} />
         )}
 
         {/* READY TO ACCEPT */}
-        {uiStatus === ShareUiStatus.userIsReadyToAccept && (
+        {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
           <PermissionContract
             onAccept={onDataRequestApproval}
             onDeny={() => closePopup(window)}
@@ -307,7 +307,7 @@ const SendPage: NextPage = () => {
         )}
 
         {/* ACCEPTED, RUN QUERY */}
-        {uiStatus === ShareUiStatus.userHasAcceptedRequest && (
+        {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
           <SendStatus status={shareStatus} stage={updateStatus} />
         )}
       </VaultSharePageWithStatus>

@@ -55,7 +55,7 @@ const HomePage: NextPage = () => {
   const userAuthorizedWithoutUserData =
     (web3AuthUserInfo || userWalletAddress) && !user;
   // data state: Hasura is loading
-  const hasuraIsLoading = isModulesLoading || isUserModulesDataLoading;
+  const HASURA_IS_LOADING = isModulesLoading || isUserModulesDataLoading;
 
   // State prior to authenticated store user
   if (!web3AuthUserInfo && !userWalletAddress) {
@@ -72,7 +72,7 @@ const HomePage: NextPage = () => {
   }
 
   // State for loading Hasura but not store user
-  if (userAuthorizedWithoutUserData || hasuraIsLoading) {
+  if (userAuthorizedWithoutUserData || HASURA_IS_LOADING) {
     return (
       <>
         <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
