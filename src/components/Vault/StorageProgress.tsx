@@ -17,6 +17,7 @@ const StorageProgress = ({ value }: Props) => (
       {value}%
     </Text>
     <Text variant="note" color="labelTertiary" tw="text-center">
+      {/* We don't track encryption progress, only uploading progress. But we do know it's not linear and that encryption is faster. So we arbitrarily fake an encryption progress message until uploading progress is at 5% */}
       {value < 6 ? "Encrypting your data. Hold tight…" : "Sending securely…"}
     </Text>
   </Stack>
