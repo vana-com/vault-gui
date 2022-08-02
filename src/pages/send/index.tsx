@@ -294,7 +294,10 @@ const SendPage: NextPage = () => {
 
         {/* NO USER MODULE DATA */}
         {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
-          <NoModuleMessage handleClick={() => closePopup(window)} />
+          <NoModuleMessage
+            serviceName={serviceName as string}
+            handleClick={() => closePopup(window)}
+          />
         )}
 
         {/* READY TO ACCEPT */}
