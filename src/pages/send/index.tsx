@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Flex, Login, Spinner } from "src/components";
+import { Login, Spinner } from "src/components";
 import {
   FocusStack,
   NoModuleMessage,
@@ -280,17 +280,9 @@ const SendPage: NextPage = () => {
         appName={prettyAppName}
         uiStatus={uiStatus}
       >
-        {/* TECH DEBT, LEAVE AS IS!: must be always available in order to run the useEffects within the component. Only renders to the DOM when !web3AuthUserInfo. We'll refactor useEffect vs Markup in Login soon. */}
-        <Login />
-
-        {/* NOT LOGGED IN */}
-        {uiStatus === ShareUiStatus.userIsNotLoggedIn && (
-          <FocusStack>
-            <Flex tw="p-8 w-full items-center justify-center">
-              <Login />
-            </Flex>
-          </FocusStack>
-        )}
+        {/* When NOT LOGGED IN, this shows a Login button */}
+        {/* TECH DEBT, LEAVE AS IS!: must be always be rendered in order to run the useEffects within the component. Only renders markup to the DOM when !web3AuthUserInfo. We'll refactor useEffect vs Markup in Login soon. */}
+        <Login withLayout />
 
         {/* SERVER DATA IS LOADING */}
         {uiStatus === ShareUiStatus.hasuraIsLoading && (
