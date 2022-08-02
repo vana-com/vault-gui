@@ -124,17 +124,13 @@ const SendPage: NextPage = () => {
   useEffect(() => {
     if (!web3AuthUserInfo) {
       setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
-    }
-    if (isUserModulesDataLoading) {
+    } else if (isUserModulesDataLoading) {
       setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
-    }
-    if (web3AuthUserInfo && selectedModule.length === 0) {
+    } else if (web3AuthUserInfo && selectedModule.length === 0) {
       setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
-    }
-    if (web3AuthUserInfo && selectedModule[0]) {
+    } else if (web3AuthUserInfo && selectedModule[0]) {
       setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
-    }
-    if (userHasAcceptedSharingRequest) {
+    } else if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     }
   }, [
