@@ -172,7 +172,7 @@ const SendPage: NextPage = () => {
     const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
 
     // TODO: fix race condition where dangerouslyGetPrivateKey is not available
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const dangerousPrivateKey =
       await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
 
