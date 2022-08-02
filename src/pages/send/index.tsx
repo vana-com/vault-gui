@@ -69,6 +69,7 @@ const SendPage: NextPage = () => {
   /*
    * appName: The name of "client" that is requesting data (helloworld-gui)
    * serviceName: The name of the data service that is being requested (instagram)
+   * queryString: The query to be executed on the data service (sql: select * from posts)
    */
   const { appName, serviceName, queryString } = router.query;
 
@@ -96,6 +97,26 @@ const SendPage: NextPage = () => {
           userModule.module.name.toLowerCase() === normalizedServiceName,
       )
     : [];
+
+  /**
+   * This useEffect is only fired once on page load.
+   * It preps the worker to start the data pipeline and hooks up our event listener
+   */
+  useEffect(() => {
+    // Set the window context
+    const w = window;
+    // eslint-disable-next-line no-restricted-globals
+    const s = self;
+
+    // Preload the worker script
+    workerRef.current = new Worker(
+      new URL("../../workers/DataPipeline.ts", import.meta.url),
+    );
+
+    // Give the "window" context to the listener
+    const onMessage = onMessageReceived(w, s);
+    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
+  }, []);
 
   /**
    * Set the UI status for the page
