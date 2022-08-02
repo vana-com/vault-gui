@@ -7,12 +7,12 @@ interface Props {
 
 const VaultSharePageTitle = ({ uiStatus }: Props) => {
   const title = () => {
-    if (uiStatus === ShareUiStatus.userIsNotLoggedIn)
+    if (uiStatus === ShareUiStatus.USER_IS_NOT_LOGGED_IN)
       return "Login to share your Vault";
-    if (uiStatus === ShareUiStatus.hasuraIsLoading) return "Loading Vault…";
-    if (uiStatus === ShareUiStatus.userDoesNotHaveModuleData)
+    if (uiStatus === ShareUiStatus.HASURA_IS_LOADING) return "Loading Vault…";
+    if (uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA)
       return "Add data to your Vault";
-    if (uiStatus === ShareUiStatus.userHasAcceptedRequest)
+    if (uiStatus === ShareUiStatus.USER_HAS_ACCEPTED)
       return "Sharing your Vault data";
     return "Share your Vault data";
   };

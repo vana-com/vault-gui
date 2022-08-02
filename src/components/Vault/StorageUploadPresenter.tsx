@@ -99,7 +99,7 @@ const StorageUploadPresenter = ({
       )}
 
       {/* STEP 3: UPLOAD */}
-      {isDataUploading && <StorageProgress value={uploadProgress} />}
+      {isDataUploading && <StorageProgress storeProgress={uploadProgress} />}
     </div>
   </>
 );

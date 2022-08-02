@@ -9,6 +9,8 @@ export * from "./CarbonChevronDown";
 export * from "./CarbonChevronUp";
 export * from "./CarbonCloseFilled";
 export * from "./CarbonCloseOutline";
+export * from "./CarbonConcept";
+export * from "./CarbonDataRefineryReference";
 export * from "./CarbonError";
 export * from "./CarbonErrorFilled";
 export * from "./CarbonLocked";

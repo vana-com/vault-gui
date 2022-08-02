@@ -104,13 +104,15 @@ const SendStatus = ({ status, stage }: Props) => {
             transition={{ duration: 0.25 }}
             css={styledMotionDiv}
           >
-            <Stack tw="gap-1.5 items-center text-primary -mt-3">
-              <div tw="text-3xl">
-                <CarbonCheckmarkOutline />
-              </div>
-              <Text variant="body" weight="medium" tw="text-center">
-                Done
-              </Text>
+            <Stack tw="h-full items-center justify-center">
+              <Stack tw="gap-1.5 items-center text-primary -mt-3">
+                <div tw="text-3xl">
+                  <CarbonCheckmarkOutline />
+                </div>
+                <Text variant="body" weight="medium" tw="text-center">
+                  Done
+                </Text>
+              </Stack>
             </Stack>
           </motion.div>
         </AnimatePresence>

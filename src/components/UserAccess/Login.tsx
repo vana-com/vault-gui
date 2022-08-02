@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Link } from "src/components";
-import { ToastDefault } from "src/components/Toast";
+import { LoginButton } from "src/components";
+import { FocusStack } from "src/components/VaultShare/Subelement";
 import config from "src/config";
 import {
   hasuraTokenAtom,
@@ -25,7 +25,11 @@ import { getWalletProvider } from "src/utils/identity/walletProvider";
 
 const { openLoginModalConfig, web3AuthInstance } = config;
 
-const Login = () => {
+interface Props {
+  withLayout?: boolean;
+}
+
+const Login = ({ withLayout }: Props) => {
   const [web3AuthUserInfo, setWeb3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [user, setUser] = useAtom(userAtom);
   const [userWalletAddress, setUserWalletAddress] = useAtom(
@@ -149,31 +153,13 @@ const Login = () => {
 
   return (
     <>
-      <Button
-        type="button"
-        variant="solid"
-        size="xl"
-        css={tw`min-w-[220px] max-w-[220px]`}
-        onClick={logIn}
-      >
-        Log In
-      </Button>
-
-      {/* TOAST for any errors */}
-      <ToastDefault
-        open={loginError}
-        onOpenChange={setLoginError}
-        duration={12000}
-        variant="error"
-        title="Something went wrong"
-        content={
-          <>
-            Please{" "}
-            <Link href="mailto:support@vanahelp.zendesk.com">email us</Link>{" "}
-            with details of your login attempt.
-          </>
-        }
-      />
+      {withLayout ? (
+        <FocusStack tw="items-center justify-center min-h-[268px]">
+          <LoginButton logIn={logIn} loginError={loginError} />
+        </FocusStack>
+      ) : (
+        <LoginButton logIn={logIn} loginError={loginError} />
+      )}
     </>
   );
 };

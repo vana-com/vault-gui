@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Flex, Login, Spinner } from "src/components";
+import { Login, Spinner } from "src/components";
 import {
   FocusStack,
   NoModuleMessage,
@@ -40,7 +40,7 @@ const SendPage: NextPage = () => {
   const [updateStatus, setUpdateStatus] = useState(
     dataPipelineWorker.Stage.FETCH_DATA,
   );
-  const [uiStatus, setUiStatus] = useState(ShareUiStatus.hasuraIsLoading);
+  const [uiStatus, setUiStatus] = useState(ShareUiStatus.HASURA_IS_LOADING);
 
   /**
    * Create the worker once the client loaded the page and sets up the event listener
@@ -83,7 +83,7 @@ const SendPage: NextPage = () => {
   const cleanQueryString = decodeURI(queryString as string);
 
   // TODO: @joe - load url from window.origin?
-  const accessingDomain = "openai.com";
+  // const accessingDomain = "openai.com";
 
   const { data: userModulesData, loading: isUserModulesDataLoading } =
     useGetUserModulesSubscription({
@@ -123,19 +123,19 @@ const SendPage: NextPage = () => {
    */
   useEffect(() => {
     if (!web3AuthUserInfo) {
-      setUiStatus(ShareUiStatus.userIsNotLoggedIn);
+      setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
     }
     if (isUserModulesDataLoading) {
-      setUiStatus(ShareUiStatus.hasuraIsLoading);
+      setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
     }
-    if (!selectedModule && !selectedModule[0]) {
-      setUiStatus(ShareUiStatus.userDoesNotHaveModuleData);
+    if (selectedModule.length === 0) {
+      setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
     }
     if (web3AuthUserInfo && selectedModule[0]) {
-      setUiStatus(ShareUiStatus.userIsReadyToAccept);
+      setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
     }
     if (userHasAcceptedSharingRequest) {
-      setUiStatus(ShareUiStatus.userHasAcceptedRequest);
+      setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     }
   }, [
     web3AuthUserInfo,
@@ -251,6 +251,8 @@ const SendPage: NextPage = () => {
     window: Window,
     self: Window,
   ) => {
+    setShareStatus(dataPipelineWorker.Status.RESOLVED);
+
     // This is the "final" message -- the data payload
     console.log("worker done | data:", JSON.stringify(data));
 
@@ -258,11 +260,10 @@ const SendPage: NextPage = () => {
     // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
     window.opener.postMessage(JSON.stringify(data), "*");
 
-    // Show success message before we close the window
+    // Allow time to show success message before we close the window
     setTimeout(() => {
-      setShareStatus(dataPipelineWorker.Status.RESOLVED);
       closePopup(self);
-    }, 5 * 1000);
+    }, 3 * 1000);
   };
 
   const handleErrorMessage = async (data: dataPipelineWorker.Message) => {
@@ -276,36 +277,28 @@ const SendPage: NextPage = () => {
       {/* These 2 component take uiStatus and handle their own internal UI */}
       <VaultSharePageTitle uiStatus={uiStatus} />
       <VaultSharePageWithStatus
-        accessingDomain={accessingDomain}
+        // accessingDomain={accessingDomain}
         appName={prettyAppName}
         uiStatus={uiStatus}
       >
-        {/* TECH DEBT, LEAVE AS IS!: must be always available in order to run the useEffects within the component. Only renders to the DOM when !web3AuthUserInfo. We'll refactor useEffect vs Markup in Login soon. */}
-        <Login />
-
-        {/* NOT LOGGED IN */}
-        {uiStatus === ShareUiStatus.userIsNotLoggedIn && (
-          <FocusStack>
-            <Flex tw="p-8 w-full items-center justify-center">
-              <Login />
-            </Flex>
-          </FocusStack>
-        )}
+        {/* When NOT LOGGED IN, this shows a Login button */}
+        {/* TECH DEBT, LEAVE AS IS!: must be always be rendered in order to run the useEffects within the component. Only renders markup to the DOM when !web3AuthUserInfo. We'll refactor useEffect vs Markup in Login soon. */}
+        <Login withLayout />
 
         {/* SERVER DATA IS LOADING */}
-        {uiStatus === ShareUiStatus.hasuraIsLoading && (
+        {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
           <FocusStack tw="min-h-[268px] items-center justify-center">
             <Spinner />
           </FocusStack>
         )}
 
         {/* NO USER MODULE DATA */}
-        {uiStatus === ShareUiStatus.userDoesNotHaveModuleData && (
+        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
           <NoModuleMessage handleClick={() => closePopup(window)} />
         )}
 
         {/* READY TO ACCEPT */}
-        {uiStatus === ShareUiStatus.userIsReadyToAccept && (
+        {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
           <PermissionContract
             onAccept={onDataRequestApproval}
             onDeny={() => closePopup(window)}
@@ -315,7 +308,7 @@ const SendPage: NextPage = () => {
         )}
 
         {/* ACCEPTED, RUN QUERY */}
-        {uiStatus === ShareUiStatus.userHasAcceptedRequest && (
+        {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
           <SendStatus status={shareStatus} stage={updateStatus} />
         )}
       </VaultSharePageWithStatus>
