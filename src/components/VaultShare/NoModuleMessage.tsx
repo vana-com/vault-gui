@@ -8,10 +8,11 @@ import config from "src/config";
 
 interface Props {
   handleClick: () => void;
+  serviceName: string;
 }
 
-const NoModuleMessage = ({ handleClick }: Props) => (
-  <FocusStack tw="rounded-lg overflow-hidden gap-0 border bg-gray-40 border-separator items-center">
+const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
+  <FocusStack tw="rounded-lg overflow-hidden gap-0 border bg-gray-40 border-separator items-center min-h-[268px] items-center justify-center">
     <Link
       underline={false}
       href={config.vanaVaultURL}
@@ -26,7 +27,7 @@ const NoModuleMessage = ({ handleClick }: Props) => (
         tw="min-w-[220px]"
         onClick={handleClick}
       >
-        Add data
+        Add {serviceName} data
       </Button>
     </Link>
   </FocusStack>
