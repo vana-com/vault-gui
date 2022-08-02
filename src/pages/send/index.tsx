@@ -19,7 +19,6 @@ import { useGetUserModulesSubscription } from "src/graphql/generated";
 import {
   hasuraTokenAtom,
   userAtom,
-  web3AuthUserInfoAtom,
   web3AuthWalletProviderAtom,
 } from "src/state";
 import { ShareUiStatus } from "src/types";
@@ -30,7 +29,6 @@ const SendPage: NextPage = () => {
   const router = useRouter();
   const [user] = useAtom(userAtom);
   const [hasuraToken] = useAtom(hasuraTokenAtom);
-  const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
   const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
@@ -125,17 +123,17 @@ const SendPage: NextPage = () => {
     // The order of these if statements is important!
     if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
-    } else if (!web3AuthUserInfo) {
+    } else if (!user) {
       setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
-    } else if (isUserModulesDataLoading) {
+    } else if (user && isUserModulesDataLoading) {
       setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
-    } else if (web3AuthUserInfo && selectedModule.length === 0) {
+    } else if (user && selectedModule.length === 0) {
       setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
-    } else if (web3AuthUserInfo && selectedModule[0]) {
+    } else if (user && selectedModule[0] && !userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
     }
   }, [
-    web3AuthUserInfo,
+    user,
     isUserModulesDataLoading,
     selectedModule,
     userHasAcceptedSharingRequest,
@@ -170,10 +168,13 @@ const SendPage: NextPage = () => {
 
     console.log("Starting the sharing process...");
 
-    const dangerousPrivateKey =
-      await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
     const userModuleId = selectedModule[0].id;
     const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
+
+    // TODO: fix race condition where dangerouslyGetPrivateKey is not available
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const dangerousPrivateKey =
+      await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
 
     // Check all attributes are present
     if (!userModuleId || !signedUrl || !dangerousPrivateKey) {
