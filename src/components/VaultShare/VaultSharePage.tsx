@@ -4,6 +4,7 @@ import tw from "twin.macro";
 import {
   Card,
   Container,
+  Flex,
   Group,
   Stack,
   Text,
@@ -11,8 +12,8 @@ import {
 } from "src/components";
 import {
   CarbonArrowRight,
+  CarbonConcept,
   CarbonRotate,
-  ShareTestIcon,
 } from "src/components/Icons";
 
 interface Props {
@@ -47,10 +48,9 @@ const VaultSharePage = ({
                 <CarbonArrowRight boxSize={ICON_SIZE} />
               )}
               {/* TODO: allow accessor to configure their logo */}
-              <ShareTestIcon
-                boxSize={ICON_SIZE}
-                tw="rounded-md bg-label text-background"
-              />
+              <Flex tw="items-center justify-center rounded-md bg-label text-background h-[36px] w-[36px]">
+                <CarbonConcept boxSize="21px" />
+              </Flex>
             </Group>
             <Text as="h1" variant="title3" weight="medium" color="label">
               {heading}
