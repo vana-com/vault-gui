@@ -17,7 +17,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
       underline={false}
       href={config.vanaVaultURL}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="external noopener noreferrer"
       tw="p-8"
     >
       <Button
