@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         primary: 'var(--primary)',
         accent: 'var(--accent)',
+        newAccent: 'var(--new-accent)',
         label: 'var(--label)',
         labelSecondary: 'var(--labelSecondary)',
         labelTertiary: 'var(--labelTertiary)',
@@ -30,6 +31,7 @@ module.exports = {
         fillElevated: 'var(--fillElevated)',
         background: 'var(--background)',
         backgroundElevated: 'var(--backgroundElevated)',
+        backgroundTertiary: 'var(--backgroundTertiary)',
         backgroundScrim: 'var(--backgroundScrim)',
         neutral: 'var(--neutral)',
         separator: 'var(--separator)',
@@ -84,6 +86,13 @@ module.exports = {
         '4xl': ['40px', { lineHeight: '1.0' }],
         '5xl': ['52px', { lineHeight: '1.0' }],
       },
+      // clamp()
+      // https://codesandbox.io/s/clamp-linear-intepolation-based-on-viewport-width-builder-forked-c37i3
+      // set between 414 thru 1240
+      // or, easier: 17px at 1024 wide = 17/1024 = 1.66vw
+      spacing: {
+        navH: "clamp(4rem, 12vw, 5rem)",
+      }
     },
     borderColor: ({ theme }) => ({
       ...theme('colors'),

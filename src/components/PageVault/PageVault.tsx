@@ -3,7 +3,14 @@ import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Card, Container, HeaderBasic, Logout } from "src/components";
+import {
+  Button,
+  Card,
+  Container,
+  HeaderBasic,
+  Logout,
+  NAV_HEIGHT,
+} from "src/components";
 import { CarbonArrowLeft } from "src/components/Icons";
 import { userAtom } from "src/state";
 
@@ -19,8 +26,9 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
 
   return (
     <div tw="relative">
+      {/* HIDDEN */}
       {showBackLink && (
-        <div tw="fixed top-8 left-8 z-10">
+        <div tw="fixed top-8 left-8 z-10 hidden">
           <NextLink passHref href="/">
             <Button
               as="a"
@@ -34,16 +42,22 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
         </div>
       )}
       {user && (
-        <div tw="fixed top-8 right-8 z-10">
+        <div tw="fixed top-8 right-8 z-10 hidden">
           <Logout />
         </div>
       )}
-      <Container tw="relative pt-[6vh]" size="lg">
+
+      {/* NOT HIDDEN */}
+      <Container
+        tw="relative"
+        css={{ paddingTop: `${NAV_HEIGHT * 2}px` }}
+        size="lg"
+      >
         <div tw="flex flex-col gap-8 relative">
-          <HeaderBasic
+          {/* <HeaderBasic
             heading="Vault"
             subheading="Unlock the power of your data"
-          />
+          /> */}
 
           <Card>{children}</Card>
         </div>

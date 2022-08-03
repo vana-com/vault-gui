@@ -6,13 +6,16 @@ import tw from "twin.macro";
 
 import {
   CardHeaderVaultNoModules,
+  ContainerFull,
   DialogDrawerMenu,
   Flex,
   Login,
   ModuleButton,
+  Navbar,
   PageVault,
   PopoverHelp,
   Spinner,
+  Stack,
   Text,
   TitleAndMetaTags,
 } from "src/components";
@@ -93,6 +96,21 @@ const HomePage: NextPage = () => {
 
       {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
       <Login />
+
+      <Navbar />
+
+      <header tw="pt-navH bg-background">
+        <ContainerFull tw="relative py-navH">
+          <Stack tw="gap-0.5">
+            <Text variant="base" weight="medium" tw="text-labelTertiary">
+              Welcome!
+            </Text>
+            <Text variant="title3" weight="semibold" tw="-ml-0.5">
+              Let&apos;s get started
+            </Text>
+          </Stack>
+        </ContainerFull>
+      </header>
 
       <PageVault>
         <Flex tw="w-full flex-col gap-4">

@@ -22,7 +22,7 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
     <JotaiProvider>
       <ApolloProvider client={client}>
         <CacheProvider value={cache}>
-          <ThemeProvider attribute="class" defaultTheme="dark">
+          <ThemeProvider attribute="class">
             <GlobalStyles />
             {/* <div tw="relative">
               <div tw="fixed top-8 right-8 z-10">

@@ -8,7 +8,7 @@ import {
   Group,
   Stack,
   Text,
-  VanaLogoNew,
+  VanaLogo,
 } from "src/components";
 import {
   CarbonArrowRight,
@@ -39,7 +39,7 @@ const VaultSharePage = ({
         <Stack tw="flex-1 gap-6">
           <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">
             <Group tw="gap-2 items-center pb-4">
-              <VanaLogoNew boxSize={ICON_SIZE} tw="rounded-md bg-orange-500" />
+              <VanaLogo boxSize={ICON_SIZE} tw="rounded-md bg-orange-500" />
               {accessDenied ? (
                 <div tw="flex justify-center" style={{ width: ICON_SIZE }}>
                   <CarbonRotate boxSize="27px" />

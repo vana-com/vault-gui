@@ -15,7 +15,7 @@ const stylesBase = css`
     --white80: rgba(245, 248, 255, 0.76);
     --white90: rgba(247, 250, 255, 0.92);
     --white100: white;
-    --gray10: #F0F1F5;
+    --gray10: #f0f1f5;
     --gray20: rgba(9, 17, 31, 0.06);
     --gray30: rgba(16, 21, 31, 0.1);
     --gray40: rgba(16, 21, 31, 0.16);
@@ -25,53 +25,55 @@ const stylesBase = css`
     --gray80: rgba(27, 29, 31, 0.7);
     --gray90: rgba(27, 29, 31, 0.88);
     --gray100: black;
-    --blueGray10: #F0F1F5;
-    --blueGray20: #E6E9F0;
-    --blueGray30: #DADEE5;
-    --blueGray40: #CAD0D9;
-    --blueGray50: #AFB9C7;
-    --blueGray60: #929EAD;
-    --blueGray70: #78828F;
-    --blueGray80: #5F6670;
-    --blueGray90: #3C4047;
+    --blueGray10: #f0f1f5;
+    --blueGray20: #e6e9f0;
+    --blueGray30: #dadee5;
+    --blueGray40: #cad0d9;
+    --blueGray50: #afb9c7;
+    --blueGray60: #929ead;
+    --blueGray70: #78828f;
+    --blueGray80: #5f6670;
+    --blueGray90: #3c4047;
     --blueGray100: #242529;
     --slate90: #2f393f;
     --slate100: #262d31;
     --neutral20: #eeebdc;
     --neutral50: #c2bca0;
     --neutral60: #b9b49e;
-    --orange10: #FFF6EB;
-    --orange20: #FFE7CC;
-    --orange30: #FFCF99;
-    --orange40: #FFB266;
+    --orange10: #fff6eb;
+    --orange20: #ffe7cc;
+    --orange30: #ffcf99;
+    --orange40: #ffb266;
     --orange50: #ff6800;
-    --orange60: #FF801F;
-    --orange70: #E06E16;
-    --orange80: #AD530E;
-    --orange90: #703B12;
-    --orange100: #3D1E0A;
+    --orange60: #ff801f;
+    --orange70: #e06e16;
+    --orange80: #ad530e;
+    --orange90: #703b12;
+    --orange100: #3d1e0a;
     --error50: hsl(1, 62%, 60%);
     --error60: hsl(1deg 62% 44%);
+
+    --new-accent: #dbff00;
   }
   .light {
     --primary: var(--orange60);
     --accent: var(--white100);
-    
+
     --label: var(--gray100);
     --labelSecondary: var(--gray80);
     --labelTertiary: var(--gray70);
     --labelQuaternary: var(--gray60);
     --labelInverse: var(--white100);
     --labelWhite: var(--white100);
-    
+
     --fill: var(--gray30);
     --fillSecondary: var(--gray20);
     --fillElevated: var(--white100);
-    --background: var(--blueGray10);
+    --background: var(--white100);
     --backgroundElevated: var(--white100);
     --backgroundTertiary: var(--white70);
     --backgroundScrim: rgba(0, 0, 0, 0.2);
-    
+
     --neutral: var(--neutral20);
     --separator: var(--gray30);
     --error: var(--error50);
@@ -79,14 +81,14 @@ const stylesBase = css`
   .dark {
     --primary: var(--orange50);
     --accent: var(--black100);
-    
+
     --label: var(--white100);
     --labelSecondary: var(--white80);
     --labelTertiary: var(--white70);
     --labelQuaternary: var(--white60);
     --labelInverse: var(--gray100);
     --labelWhite: var(--white100);
-    
+
     --fill: var(--white30);
     --fillSecondary: var(--white20);
     --fillElevated: var(--blueGray90);
@@ -94,14 +96,14 @@ const stylesBase = css`
     --backgroundElevated: var(--slate90);
     --backgroundTertiary: var(--gray50);
     --backgroundScrim: rgba(0, 0, 0, 0.4);
-    
+
     --neutral: var(--neutral60);
     --separator: var(--white20);
     --error: var(--error60);
   }
   body {
-    "WebkitTapHighlightColor": ${theme`colors.purple.500`};
-    ${tw`min-h-screen antialiased transition-all duration-150 bg-background text-label`};
+    webkittaphighlightcolor: ${theme`colors.purple.500`};
+    ${tw`min-h-screen antialiased transition-all duration-150 bg-fillSecondary text-label`};
   }
   .w3ajs-external-wallet {
     display: none;

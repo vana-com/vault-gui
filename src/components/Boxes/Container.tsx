@@ -12,6 +12,8 @@ interface Props {
 }
 
 export const Container = styled.div(({ size = "sm" }: Props) => [
-  tw`w-full px-4 mx-auto`,
+  tw`w-full px-4 mx-auto lg:px-12`,
   containerSize[size],
 ]);
+
+export const ContainerFull = styled.div([tw`w-full px-4 mx-auto lg:px-12`]);
