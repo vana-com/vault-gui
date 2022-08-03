@@ -38,7 +38,7 @@ export function TitleAndMetaTags({
       <meta content="@usevana" name="twitter:site" />
       <meta content="summary_large_image" name="twitter:card" />
 
-      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+      <link href="/vana-favicon.svg" rel="shortcut icon" type="image/x-icon" />
 
       <meta content={color} name="theme-color" />
     </Head>
