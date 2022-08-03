@@ -173,11 +173,9 @@ const SendPage: NextPage = () => {
 
     // TODO: fix race condition where dangerouslyGetPrivateKey is not available
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    const dangerousPrivateKey =
-      await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
 
     // Check all attributes are present
-    if (!userModuleId || !signedUrl || !dangerousPrivateKey) {
+    if (!userModuleId || !signedUrl) {
       throw new Error("Missing attributes");
     }
 
@@ -186,7 +184,7 @@ const SendPage: NextPage = () => {
     workerRef.current?.postMessage({
       queries: [cleanQueryString],
       dataUrl: signedUrl,
-      decryptionKey: dangerousPrivateKey,
+      walletProvider: web3AuthWalletProvider,
       serviceName: normalizedServiceName,
     });
   };
@@ -225,22 +223,14 @@ const SendPage: NextPage = () => {
   const closePopup = (self: Window) => self.close();
 
   const handleUpdateMessage = async (data: dataPipelineWorker.Message) => {
-    // Worker not (quite) done yet, these are just "status" reports
-    switch (data.payload.stage) {
-      case dataPipelineWorker.Stage.FETCH_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.FETCH_DATA);
-        break;
-      case dataPipelineWorker.Stage.DECRYPTED_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.DECRYPTED_DATA);
-        break;
-      case dataPipelineWorker.Stage.EXTRACTED_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.EXTRACTED_DATA);
-        break;
-      case dataPipelineWorker.Stage.QUERY_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.QUERY_DATA);
-        break;
-      default:
-        console.log(`Unknown stage: ${data?.payload?.stage}`);
+    if (
+      Object.values(dataPipelineWorker.Stage).includes(
+        data.payload.stage as unknown as dataPipelineWorker.Stage,
+      )
+    ) {
+      setUpdateStatus(data.payload.stage);
+    } else {
+      console.warn(`Unknown stage: ${data?.payload?.stage}`);
     }
   };
 

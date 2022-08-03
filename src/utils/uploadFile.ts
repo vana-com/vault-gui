@@ -15,6 +15,7 @@ const uploadFile = async (
   file: File,
   moduleName: string,
   appPubKey: string,
+  encryptedPassword: string,
   progressHandler: ProgressHandler,
 ) => {
   const filename = encodeURIComponent(file.name);
@@ -22,7 +23,7 @@ const uploadFile = async (
   try {
     // get the pre-signed URL for S3 or GCS
     const res = await fetch(
-      `/api/user-data/upload-url?fileName=${filename}&moduleName=${moduleName}&appPubKey=${appPubKey}`,
+      `/api/user-data/upload-url?fileName=${filename}&moduleName=${moduleName}&appPubKey=${appPubKey}&encryptedPassword=${encryptedPassword}`,
     );
     const { fullFileName, url, fields } = await res.json();
     const formData = new FormData();

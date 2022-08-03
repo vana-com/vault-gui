@@ -1524,10 +1524,10 @@
   dependencies:
     prettier "^2.2.1"
 
-"@corsali/userdata-extractor@0.0.2":
-  version "0.0.2"
-  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.0.2/8c74be7725078e08a84aaa29bfb2aeaee8d3ec28a56f9b100806a4a851ec29c7#1099a4ae9653622af033e4317e30fdf3e866fff3"
-  integrity sha512-HJB+Rr0O0G5rnxmKilpdxFtvMVb0QkAXwdwfFGHIVSxrKcgs9Cdwck3nRpY2PlYo/qe/mzUNCQmrb5mipk7gVQ==
+"@corsali/userdata-extractor@^0.0.3":
+  version "0.0.3"
+  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.0.3/11f31edb89232a9d7957cfc0a1e40345ffb35fd5dbe79806f77d7bee5af42fc4#1b1b917cd809ddf5a7613c49e19495113b67185c"
+  integrity sha512-2si6whKkUe/IDMFT4+474QTID4FXJ4Spd0zV/+hRxxK8tJRbPRN1xd9dE32CenE2UUJvBf9ahqmJDIc6lEb3fA==
   dependencies:
     "@zip.js/zip.js" "2.4.21"
     axios "^0.27.2"
@@ -2786,7 +2786,7 @@
 
 "@metamask/eth-sig-util@^4.0.1":
   version "4.0.1"
-  resolved "https://registry.npmjs.org/@metamask/eth-sig-util/-/eth-sig-util-4.0.1.tgz#3ad61f6ea9ad73ba5b19db780d40d9aae5157088"
+  resolved "https://registry.yarnpkg.com/@metamask/eth-sig-util/-/eth-sig-util-4.0.1.tgz#3ad61f6ea9ad73ba5b19db780d40d9aae5157088"
   integrity sha512-tghyZKLHZjcdlDqCA3gNZmLeR0XvOE9U1qoQO9ohyAZT6Pya+H9vkBPcsyXytmYLNgVoin7CKCmweo/R43V+tQ==
   dependencies:
     ethereumjs-abi "^0.6.8"
@@ -4350,6 +4350,15 @@
     loglevel "^1.8.0"
     ts-custom-error "^3.2.0"
 
+"@web3auth/base@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@web3auth/base/-/base-1.1.2.tgz#2ecd0b72749caef5353206f6aa2515502117604a"
+  integrity sha512-yeNcd0GDmYyUn1MyD/6UKve+OosBWCZ187+87C4rabLmqzxdM6cAHSziFeLFaY18x9VEXMQn9g0N9m80hV1h+Q==
+  dependencies:
+    "@toruslabs/openlogin-jrpc" "^2.1.0"
+    loglevel "^1.8.0"
+    ts-custom-error "^3.2.0"
+
 "@web3auth/core@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@web3auth/core/-/core-1.1.1.tgz#6788fb3cd4a296fa962551c2e4b7b09a2f3dc86f"
@@ -4384,6 +4393,14 @@
   dependencies:
     "@metamask/detect-provider" "^1.2.0"
     "@web3auth/base" "^1.1.1"
+
+"@web3auth/metamask-adapter@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@web3auth/metamask-adapter/-/metamask-adapter-1.1.2.tgz#1b193fec11ee7d841484fdd28d0b16c4b5b47529"
+  integrity sha512-Fmqta3FfS44mqMNfInDA7l8IgQAjuQR1z71EyXYu3LOgSvL1xL95scoCK/bJBvDKgN+p8canhaJYEZ2ifbaiaw==
+  dependencies:
+    "@metamask/detect-provider" "^1.2.0"
+    "@web3auth/base" "^1.1.2"
 
 "@web3auth/openlogin-adapter@^1.1.1":
   version "1.1.1"
@@ -7050,7 +7067,7 @@ ethereumjs-util@^6.0.0, ethereumjs-util@^6.2.1:
 
 ethereumjs-util@^7.0.10, ethereumjs-util@^7.1.0, ethereumjs-util@^7.1.5:
   version "7.1.5"
-  resolved "https://registry.npmjs.org/ethereumjs-util/-/ethereumjs-util-7.1.5.tgz#9ecf04861e4fbbeed7465ece5f23317ad1129181"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.1.5.tgz#9ecf04861e4fbbeed7465ece5f23317ad1129181"
   integrity sha512-SDl5kKrQAudFBUe5OJM9Ac6WmMyYmXX/6sTmLZ3ffG2eY6ZIGBes3pEDxNN6V72WyOw4CPD5RomKdsa8DAAwLg==
   dependencies:
     "@types/bn.js" "^5.1.0"

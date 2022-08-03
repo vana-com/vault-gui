@@ -1,10 +1,13 @@
 import { CHAIN_NAMESPACES } from "@web3auth/base";
+import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 
-const WEB_3_AUTH_CLIENT_ID = process.env.NEXT_PUBLIC_WEB_3_AUTH_CLIENT_ID;
-const WEB_3_AUTH_RPC_TARGET = process.env.NEXT_PUBLIC_WEB_3_AUTH_RPC_TARGET;
-const WEB_3_AUTH_ETHEREUM_CHAIN_ID =
-  process.env.NEXT_PUBLIC_WEB_3_AUTH_ETHEREUM_CHAIN_ID;
-const WEB_3_AUTH_NETWORK = process.env.NEXT_PUBLIC_WEB_3_AUTH_NETWORK;
+const WEB_3_AUTH_CLIENT_ID = process.env
+  .NEXT_PUBLIC_WEB_3_AUTH_CLIENT_ID as string;
+const WEB_3_AUTH_RPC_TARGET = process.env
+  .NEXT_PUBLIC_WEB_3_AUTH_RPC_TARGET as string;
+const WEB_3_AUTH_ETHEREUM_CHAIN_ID = process.env
+  .NEXT_PUBLIC_WEB_3_AUTH_ETHEREUM_CHAIN_ID as string;
+const WEB_3_AUTH_NETWORK = process.env.NEXT_PUBLIC_WEB_3_AUTH_NETWORK as string;
 
 // function is needed to dynamically import Web3Auth libraries that will error out
 // if document object is undefined
@@ -35,6 +38,10 @@ function initWeb3Auth() {
         },
       });
       web3AuthInstance.configureAdapter(web3AuthAdapter);
+
+      const metamaskAdapter = new MetamaskAdapter();
+      web3AuthInstance.configureAdapter(metamaskAdapter);
+
       return [web3AuthInstance, web3AuthAdapter];
     } catch (error: any) {
       console.log(error.toString());

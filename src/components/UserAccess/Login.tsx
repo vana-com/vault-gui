@@ -81,15 +81,14 @@ const Login = ({ withLayout }: Props) => {
           const ethProvider = getWalletProvider(web3Auth.provider!);
           setWalletProvider(ethProvider);
 
-          if (data.adapter === WALLET_ADAPTERS.WALLET_CONNECT_V1) {
-            // Signed in with a wallet
-            const walletAddresses = await ethProvider.getAccounts();
-            if (walletAddresses?.length > 0) {
-              setUserWalletAddress(walletAddresses[0]);
-            } else {
-              console.error("Unable to get user wallet address");
-            }
+          const walletAddress = await ethProvider.getWalletAddress();
+          if (walletAddress) {
+            setUserWalletAddress(walletAddress);
           } else {
+            console.error("Unable to get user wallet address");
+          }
+
+          if (data.adapter === WALLET_ADAPTERS.OPENLOGIN) {
             // Signed in with a social network
             web3Auth.getUserInfo().then(async (userInfo) => {
               setWeb3AuthUserInfo(userInfo);

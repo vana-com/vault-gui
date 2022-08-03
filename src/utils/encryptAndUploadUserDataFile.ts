@@ -1,5 +1,7 @@
 import { encryptFileChaCha20Poly1305, uploadFile } from "src/utils";
 
+import { IWalletProvider } from "./identity/walletProvider";
+
 /**
  * This the only method that encrypts and uploads user data zip files from email integrations
  *
@@ -13,16 +15,20 @@ import { encryptFileChaCha20Poly1305, uploadFile } from "src/utils";
  */
 const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
-  password: string,
   moduleName: string,
   appPubKey: string,
+  walletProvider: IWalletProvider | undefined,
   handleUploadProgress: (event: any) => void,
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>,
 ) => {
   // Multiple files should be processed uploaded in parallel so we create arrays and use Promise.all
 
-  // use the same password for each password
-  const passwords = files.map(() => password);
+  const passwords = files.map(() => Math.random().toString(36));
+  const encryptedPasswords = await Promise.all(
+    passwords.map(
+      async (p) => (await walletProvider?.encryptMessage(p)) as string,
+    ),
+  );
 
   const encryptionFilePromises = files.map((file, i) =>
     encryptFileChaCha20Poly1305(file, passwords[i]),
@@ -31,8 +37,14 @@ const encryptAndUploadUserDataFiles = async (
   const encryptedFilesToUpload = await Promise.all(encryptionFilePromises);
 
   // Upload files to object store (S3 or GCS)
-  const uploadPromises = encryptedFilesToUpload.map((file) =>
-    uploadFile(file, moduleName, appPubKey, handleUploadProgress),
+  const uploadPromises = encryptedFilesToUpload.map((file, i) =>
+    uploadFile(
+      file,
+      moduleName,
+      appPubKey,
+      encryptedPasswords[i],
+      handleUploadProgress,
+    ),
   );
 
   const uploadResults = await Promise.all(uploadPromises);

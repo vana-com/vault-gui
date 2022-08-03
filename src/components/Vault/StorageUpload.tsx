@@ -113,19 +113,11 @@ const StorageUpload = ({
     try {
       const sanitizedFiles = await stripZipFiles(filesToUpload);
 
-      const dangerousPrivateKey =
-        await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
-
-      if (!dangerousPrivateKey) {
-        setShowStoreErrorToast(true);
-        return;
-      }
-
       await encryptAndUploadUserDataFiles(
         sanitizedFiles,
-        dangerousPrivateKey,
         moduleName,
         appPubKey,
+        web3AuthWalletProvider,
         handleUploadProgress,
         createUserModule,
       );

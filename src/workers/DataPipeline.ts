@@ -1,12 +1,14 @@
 import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
 
+import { IWalletProvider } from "src/utils/identity/walletProvider";
+
 import { Message, MessageType, Stage } from "../types/DataPipelineWorker";
 import { decryptFileChaCha20Poly1305 } from "../utils/decryptFileChaCha20Poly1305";
 
 interface DataMessage {
   queries: string[];
   dataUrl: string;
-  decryptionKey: string;
+  walletProvider: IWalletProvider | undefined;
   serviceName: string;
 }
 
@@ -19,11 +21,11 @@ interface SQLiteQueryResult {
 onmessage = async (event: MessageEvent) => {
   const { data } = event;
 
-  const { queries, dataUrl, decryptionKey, serviceName } = data as DataMessage;
+  const { queries, dataUrl, walletProvider, serviceName } = data as DataMessage;
 
   try {
     // Download data
-    const file = await fetchData(dataUrl);
+    const { file, decryptionKey } = await fetchData(dataUrl, walletProvider);
 
     // decrypt
     const decrypted = await decryptData(file, decryptionKey);
@@ -48,7 +50,10 @@ onmessage = async (event: MessageEvent) => {
  * @param url location of data
  * @returns File
  */
-const fetchData = async (url: string) => {
+const fetchData = async (
+  url: string,
+  walletProvider: IWalletProvider | undefined,
+) => {
   const res = await fetch(url, {
     headers: {
       Accept: "application/zip",
@@ -56,15 +61,18 @@ const fetchData = async (url: string) => {
   });
   const blob = await res.blob();
   const file = new File([blob], "data.zip.enc", { type: "application/zip" });
+  const encryptedPassword = res.headers.get(
+    "x-goog-meta-encrypted-password",
+  ) as string;
 
-  console.log(file);
+  const decryptionKey = await walletProvider?.decryptMessage(encryptedPassword);
 
   postUpdateMessage({
     stage: Stage.FETCH_DATA,
     message: `Downloaded ${file.name} (${file.size} bytes)`,
   });
 
-  return file;
+  return { file, decryptionKey };
 };
 
 /**

@@ -16,7 +16,7 @@ export default async (
   const { fileName, moduleName, appPubKey, encryptedPassword } = req.query;
 
   try {
-    if (fileName && moduleName && appPubKey) {
+    if (fileName && moduleName && appPubKey && encryptedPassword) {
       const fullFileName = generateUserDataObjectName(
         fileName as string,
         appPubKey as string,
@@ -29,9 +29,7 @@ export default async (
         fields: {
           // Save module name as metadata, so we can identify which module this file belongs to
           "x-goog-meta-module-name": moduleName,
-          ...(encryptedPassword && {
-            "x-goog-meta-encrypted-password": encryptedPassword,
-          }),
+          "x-goog-meta-encrypted-password": encryptedPassword,
         },
       } as GenerateSignedPostPolicyV4Options;
 
