@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
-    "@corsali/userdata-extractor": "0.0.2",
+    "@corsali/userdata-extractor": "0.0.3",
     "@emotion/css": "^11.9.0",
     "@emotion/react": "^11.9.3",
     "@emotion/serialize": "^1.0.4",
