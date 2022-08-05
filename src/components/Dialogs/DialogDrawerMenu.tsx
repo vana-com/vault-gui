@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,7 +26,12 @@ const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button size="full" variant="outline" prefix={<CarbonAddFilled />}>
+        <Button
+          size="full"
+          variant="outline"
+          tw="bg-newAccent bg-opacity-20"
+          prefix={<Icon icon="heroicons-outline:plus" />}
+        >
           {buttonLabel}
         </Button>
       </DialogTrigger>

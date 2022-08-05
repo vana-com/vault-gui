@@ -1,29 +1,19 @@
-import tw, { css } from "twin.macro";
-
-import { ContainerFull } from "src/components";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import tw from "twin.macro";
 
 export const NAV_HEIGHT = 80;
 
-const outerStyle = () => [tw`fixed z-10 bg-background`];
-
-const innerStyle = () => [
-  tw`grid items-center grid-cols-12 gap-4`,
-  css`
-    height: ${NAV_HEIGHT}px;
-  `,
-];
+// const innerStyle = () => [tw`grid items-center grid-cols-12 gap-4 h-navH`];
 
 interface Props {
   children: React.ReactNode;
 }
-
+// fixed
 const NavbarWrapper = ({ children }: Props) => (
-  <ContainerFull css={outerStyle()}>
-    <div>
-      <div css={innerStyle()}>{children}</div>
-      <hr />
-    </div>
-  </ContainerFull>
+  <div tw="z-10 bg-background w-full sticky">
+    <div tw="px-inset flex justify-between items-center h-navH">{children}</div>
+    <hr />
+  </div>
 );
 
 export { NavbarWrapper };

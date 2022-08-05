@@ -16,6 +16,7 @@ const stylesBase = css`
     --white90: rgba(247, 250, 255, 0.92);
     --white100: white;
     --gray10: #f0f1f5;
+    --gray15: #f4f4f5;
     --gray20: rgba(9, 17, 31, 0.06);
     --gray30: rgba(16, 21, 31, 0.1);
     --gray40: rgba(16, 21, 31, 0.16);
@@ -25,6 +26,22 @@ const stylesBase = css`
     --gray80: rgba(27, 29, 31, 0.7);
     --gray90: rgba(27, 29, 31, 0.88);
     --gray100: black;
+
+    // islands.xyz
+    --colors-gray900: #0f0f10;
+    --colors-gray800: #151617;
+    --colors-gray700: #242628;
+    --colors-gray600: #313336;
+    --colors-gray500: #414348;
+    --colors-gray400: #696c74;
+    --colors-gray300: #757981;
+    --colors-gray200: #8f939a;
+    --colors-gray100: #aaadb2;
+    --colors-gray50: #c5c6ca;
+    --colors-gray25: #dfe0e2;
+    --colors-gray15: #f4f4f5;
+    --colors-gray10: #f6f6f6;
+
     --blueGray10: #f0f1f5;
     --blueGray20: #e6e9f0;
     --blueGray30: #dadee5;
@@ -52,8 +69,6 @@ const stylesBase = css`
     --orange100: #3d1e0a;
     --error50: hsl(1, 62%, 60%);
     --error60: hsl(1deg 62% 44%);
-
-    --new-accent: #dbff00;
   }
   .light {
     --primary: var(--orange60);
@@ -67,15 +82,15 @@ const stylesBase = css`
     --labelWhite: var(--white100);
 
     --fill: var(--gray30);
-    --fillSecondary: var(--gray20);
+    --fillSecondary: var(--gray15);
     --fillElevated: var(--white100);
     --background: var(--white100);
-    --backgroundElevated: var(--white100);
+    --backgroundElevated: var(--white90);
     --backgroundTertiary: var(--white70);
     --backgroundScrim: rgba(0, 0, 0, 0.2);
 
     --neutral: var(--neutral20);
-    --separator: var(--gray30);
+    --separator: var(--gray20);
     --error: var(--error50);
   }
   .dark {
@@ -103,7 +118,7 @@ const stylesBase = css`
   }
   body {
     webkittaphighlightcolor: ${theme`colors.purple.500`};
-    ${tw`min-h-screen antialiased transition-all duration-150 bg-fillSecondary text-label`};
+    ${tw`min-h-screen antialiased transition-all duration-150 bg-background text-label`};
   }
   .w3ajs-external-wallet {
     display: none;

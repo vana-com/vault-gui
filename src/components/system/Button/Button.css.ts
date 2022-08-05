@@ -5,7 +5,7 @@ export const buttonVariants = {
   info: tw`bg-gray-500`,
   contrast: tw`bg-fillElevated text-label`,
   solid: tw`bg-primary text-label`,
-  outline: tw`bg-transparent text-primary ring-1 ring-inset ring-primary`,
+  outline: tw`bg-transparent text-label ring-1 ring-inset ring-separator`,
   ghost: tw`bg-fillSecondary text-label`,
   ghostSecondary: tw`bg-fillSecondary text-labelSecondary`,
   icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
@@ -21,7 +21,7 @@ export const buttonSizes = {
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
   lg: tw`h-[38px] gap-1.5 px-4 text-md w-full md:w-auto min-w-[130px]`,
   xl: tw`h-[44px] gap-1.5 px-6 text-md w-full md:w-auto min-w-[130px]`,
-  full: tw`flex-1 h-full gap-2 px-6 text-lg`,
+  full: tw`flex-1 h-full gap-2 px-6 text-md`,
 } as const;
 
 export type ButtonSize = keyof typeof buttonSizes;

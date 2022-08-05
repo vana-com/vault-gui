@@ -2,7 +2,8 @@
 import tw, { styled } from "twin.macro";
 
 export const textVariants = {
-  footnote: tw`text-xs tracking-[0]`,
+  footnote: tw`text-xs tracking-[0.02em]`,
+  footnoteMeta: tw`text-xs tracking-[0.05em] leading-none uppercase`,
   note: tw`text-sm tracking-[0]`,
   headingMeta: tw`text-sm tracking-[0.05em] leading-none uppercase`,
   subheading: tw`text-sm tracking-[-0.025em] font-semibold`,
@@ -12,7 +13,7 @@ export const textVariants = {
   heading: tw`text-lg tracking-[-0.005em] font-semibold font-heading`,
   title1: tw`text-xl tracking-[-0.001em] font-semibold font-heading`,
   title2: tw`text-2xl tracking-[-0.001em] font-bold font-heading`,
-  title3: tw`text-3xl tracking-[-0.002em] font-black font-heading`,
+  title3: tw`text-3xl tracking-[-0.005em] font-black font-heading`,
   display: tw`text-4xl tracking-[-0.01em] font-medium font-heading`,
 } as const;
 

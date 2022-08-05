@@ -18,8 +18,9 @@ module.exports = {
     extend: {
       colors: {
         primary: 'var(--primary)',
+        newPrimary: '#0061fe',
         accent: 'var(--accent)',
-        newAccent: 'var(--new-accent)',
+        newAccent: '#dbff00',
         label: 'var(--label)',
         labelSecondary: 'var(--labelSecondary)',
         labelTertiary: 'var(--labelTertiary)',
@@ -38,6 +39,7 @@ module.exports = {
         error: 'var(--error)',
         gray: {
           10: 'var(--gray10)',
+          15: "var(--gray15)",
           20: 'var(--gray20)',
           30: 'var(--gray30)',
           40: 'var(--gray40)',
@@ -91,7 +93,9 @@ module.exports = {
       // set between 414 thru 1240
       // or, easier: 17px at 1024 wide = 17/1024 = 1.66vw
       spacing: {
-        navH: "clamp(4rem, 12vw, 5rem)",
+        navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 4.5rem)",
+        inset: "clamp(1.5rem, 0.9988rem + 1.9370vw, 2.25rem)",
+        insetx2: "clamp(3rem, 1.9976rem + 3.8741vw, 4.5rem)",
       }
     },
     borderColor: ({ theme }) => ({

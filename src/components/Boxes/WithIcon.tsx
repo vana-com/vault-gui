@@ -11,9 +11,13 @@ interface Props {
 
 const WithIcon = ({ children, prefix, suffix }: Props) => (
   <>
-    {prefix && <div tw="inline-flex">{prefix}</div>}
+    {prefix && (
+      <div tw="inline-flex transform -translate-y-[0.5px]">{prefix}</div>
+    )}
     {children}
-    {suffix && <div tw="inline-flex">{suffix}</div>}
+    {suffix && (
+      <div tw="inline-flex transform -translate-y-[0.5px]">{suffix}</div>
+    )}
   </>
 );
 

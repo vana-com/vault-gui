@@ -4,6 +4,7 @@ import { ApolloProvider } from "@apollo/client";
 import { cache } from "@emotion/css";
 import { CacheProvider } from "@emotion/react";
 import * as Toast from "@radix-ui/react-toast";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
@@ -30,9 +31,11 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
               </div>
             </div> */}
             <Toast.Provider swipeDirection="right">
-              <AppHook>
-                <Component {...pageProps} />
-              </AppHook>
+              <Tooltip.Provider delayDuration={300}>
+                <AppHook>
+                  <Component {...pageProps} />
+                </AppHook>
+              </Tooltip.Provider>
             </Toast.Provider>
           </ThemeProvider>
         </CacheProvider>
