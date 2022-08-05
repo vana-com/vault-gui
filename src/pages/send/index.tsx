@@ -270,6 +270,7 @@ const SendPage: NextPage = () => {
 
   return (
     <AuthenticatedPage>
+      {/* TODO: Remove PageVault during `/login` page redirect refactor */}
       <PageVault>
         {/* These 2 component take uiStatus and handle their own internal UI */}
         <VaultSharePageTitle uiStatus={uiStatus} />

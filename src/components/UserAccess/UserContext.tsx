@@ -93,16 +93,16 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
   useEffect(() => {
     // Redirect the user to where they were before logging in
-    if (router.query?.location) {
+    if (router.query?.origin && user) {
       router.push(
-        decodeURIComponent(router.query.location.toString()),
+        decodeURIComponent(router.query.origin.toString()),
         undefined,
         {
           shallow: true,
         },
       );
     }
-  }, [user]);
+  }, [router.isReady, user]);
 
   /**
    * Listen to events from a Web3Auth instance

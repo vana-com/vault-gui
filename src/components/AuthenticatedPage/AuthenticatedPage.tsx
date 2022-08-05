@@ -22,7 +22,7 @@ const AuthenticatedPage = ({ children }: any) => {
   }
 
   if (!user) {
-    router.push(`/?location=${encodeURIComponent(router.asPath)}`);
+    router.push(`/?origin=${encodeURIComponent(router.asPath)}`);
     loginUser();
     return <></>;
   }
