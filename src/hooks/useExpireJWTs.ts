@@ -1,41 +1,20 @@
-import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import {
-  hasuraTokenAtom,
-  idTokenAtom,
-  userAtom,
-  userWalletAddressAtom,
-  web3AuthUserInfoAtom,
-  web3AuthWalletProviderAtom,
-} from "src/state";
-import { logOut, parseJwt } from "src/utils";
+import { useUserContext } from "src/components/UserAccess/UserContext";
+import { getJwtPayload } from "src/utils";
 
 const useExpireJWTs = () => {
   const router = useRouter();
-
-  const [, setWeb3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
-  const [, setUser] = useAtom(userAtom);
-  const [idToken, setIdToken] = useAtom(idTokenAtom);
-  const [, setHasuraToken] = useAtom(hasuraTokenAtom);
-  const [, setWalletProvider] = useAtom(web3AuthWalletProviderAtom);
-  const [, setUserWalletAddress] = useAtom(userWalletAddressAtom);
+  const { hasuraToken, logoutUser } = useUserContext();
 
   const expireJWTs = async () => {
-    if (idToken) {
-      const idTokenPayload = await parseJwt(idToken);
+    if (hasuraToken) {
+      const hasuraTokenPayload = await getJwtPayload(hasuraToken);
       const now = new Date();
-      const expireDate = new Date(idTokenPayload.exp * 1000);
+      const expireDate = new Date(hasuraTokenPayload.exp * 1000);
       if (now > expireDate) {
-        logOut(
-          setWalletProvider,
-          setUserWalletAddress,
-          setWeb3AuthUserInfo,
-          setUser,
-          setHasuraToken,
-          setIdToken,
-        );
+        await logoutUser();
         router.push("/");
       }
     }
