@@ -12,6 +12,7 @@ import {
   Spinner,
   TitleAndMetaTags,
 } from "src/components";
+import { AuthenticatedPage } from "src/components/AuthenticatedPage";
 import { useUserContext } from "src/components/UserAccess/UserContext";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { formatModuleNameFromQueryString } from "src/utils";
@@ -81,7 +82,7 @@ const VaultModulePage: NextPage = () => {
   }
 
   return (
-    <>
+    <AuthenticatedPage>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
 
       <PageVault showBackLink>
@@ -101,7 +102,7 @@ const VaultModulePage: NextPage = () => {
           </div>
         </div>
       </PageVault>
-    </>
+    </AuthenticatedPage>
   );
 };
 

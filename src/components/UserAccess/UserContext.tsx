@@ -7,6 +7,7 @@ import {
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
+import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import config from "src/config";
@@ -44,6 +45,7 @@ interface UserProviderProps {
 }
 
 const UserProvider = ({ children }: UserProviderProps) => {
+  const router = useRouter();
   const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null);
   const [provider, setProvider] = useState<IWalletProvider | null>(null);
   const [user, setUser] = useState<Users | null>(null);
@@ -84,6 +86,19 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    // Redirect the user to where they were before logging in
+    if (router.query?.location) {
+      router.push(
+        decodeURIComponent(router.query.location.toString()),
+        undefined,
+        {
+          shallow: true,
+        },
+      );
+    }
+  }, [user]);
 
   /**
    * Listen to events from a Web3Auth instance
@@ -204,14 +219,15 @@ const UserProvider = ({ children }: UserProviderProps) => {
         setIsLoading(true);
         await web3Auth.logout();
       }
-      setProvider(null);
-      setUser(null);
-      setUserWalletAddress("");
-      saveHasuraToken("");
     } catch (error: any) {
       console.error("Error trying to log out.", error);
     } finally {
       setIsLoading(false);
+      setProvider(null);
+      setUser(null);
+      setUserWalletAddress("");
+      saveHasuraToken("");
+      router.push("/");
     }
   };
 

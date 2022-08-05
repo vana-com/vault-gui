@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import tw from "twin.macro";
 
 import { PageVault, Spinner } from "src/components";
+import { AuthenticatedPage } from "src/components/AuthenticatedPage";
 import { useUserContext } from "src/components/UserAccess/UserContext";
 import {
   FocusStack,
@@ -263,45 +264,47 @@ const SendPage: NextPage = () => {
   };
 
   return (
-    <PageVault>
-      {/* These 2 component take uiStatus and handle their own internal UI */}
-      <VaultSharePageTitle uiStatus={uiStatus} />
-      <VaultSharePageWithStatus
-        // accessingDomain={accessingDomain}
-        appName={prettyAppName}
-        uiStatus={uiStatus}
-      >
-        {/* SERVER DATA IS LOADING */}
-        {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
-          <FocusStack tw="min-h-[268px] items-center justify-center">
-            <Spinner />
-          </FocusStack>
-        )}
+    <AuthenticatedPage>
+      <PageVault>
+        {/* These 2 component take uiStatus and handle their own internal UI */}
+        <VaultSharePageTitle uiStatus={uiStatus} />
+        <VaultSharePageWithStatus
+          // accessingDomain={accessingDomain}
+          appName={prettyAppName}
+          uiStatus={uiStatus}
+        >
+          {/* SERVER DATA IS LOADING */}
+          {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
+            <FocusStack tw="min-h-[268px] items-center justify-center">
+              <Spinner />
+            </FocusStack>
+          )}
 
-        {/* NO USER MODULE DATA */}
-        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
-          <NoModuleMessage
-            serviceName={serviceName as string}
-            handleClick={() => closePopup(window)}
-          />
-        )}
+          {/* NO USER MODULE DATA */}
+          {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
+            <NoModuleMessage
+              serviceName={serviceName as string}
+              handleClick={() => closePopup(window)}
+            />
+          )}
 
-        {/* READY TO ACCEPT */}
-        {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
-          <PermissionContract
-            onAccept={onDataRequestApproval}
-            onDeny={() => closePopup(window)}
-          >
-            <PermissionList query={cleanQueryString} />
-          </PermissionContract>
-        )}
+          {/* READY TO ACCEPT */}
+          {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
+            <PermissionContract
+              onAccept={onDataRequestApproval}
+              onDeny={() => closePopup(window)}
+            >
+              <PermissionList query={cleanQueryString} />
+            </PermissionContract>
+          )}
 
-        {/* ACCEPTED, RUN QUERY */}
-        {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
-          <SendStatus status={shareStatus} stage={updateStatus} />
-        )}
-      </VaultSharePageWithStatus>
-    </PageVault>
+          {/* ACCEPTED, RUN QUERY */}
+          {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
+            <SendStatus status={shareStatus} stage={updateStatus} />
+          )}
+        </VaultSharePageWithStatus>
+      </PageVault>
+    </AuthenticatedPage>
   );
 };
 

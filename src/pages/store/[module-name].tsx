@@ -14,6 +14,7 @@ import {
   StorageUpload,
   TitleAndMetaTags,
 } from "src/components";
+import { AuthenticatedPage } from "src/components/AuthenticatedPage";
 import { useUserContext } from "src/components/UserAccess/UserContext";
 import {
   useCreateUserModuleMutation,
@@ -71,7 +72,7 @@ const VaultStoragePage: NextPage = () => {
   }
 
   return (
-    <>
+    <AuthenticatedPage>
       <TitleAndMetaTags
         color="black"
         title={`Store ${moduleName} Data | Vana`}
@@ -99,7 +100,7 @@ const VaultStoragePage: NextPage = () => {
           </div>
         </div>
       </PageVault>
-    </>
+    </AuthenticatedPage>
   );
 };
 
