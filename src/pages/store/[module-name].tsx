@@ -1,4 +1,3 @@
-import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -15,18 +14,16 @@ import {
   StorageUpload,
   TitleAndMetaTags,
 } from "src/components";
+import { useUserContext } from "src/components/UserAccess/UserContext";
 import {
   useCreateUserModuleMutation,
   useGetModuleQuery,
 } from "src/graphql/generated";
-import { userAtom, web3AuthWalletProviderAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-
-  const [user] = useAtom(userAtom);
-  const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
+  const { user, provider } = useUserContext();
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -97,7 +94,7 @@ const VaultStoragePage: NextPage = () => {
               moduleName={moduleName}
               createUserModule={createUserModuleCallback}
               appPubKey={user?.externalId ?? ""}
-              web3AuthWalletProvider={web3AuthWalletProvider}
+              web3AuthWalletProvider={provider}
             />
           </div>
         </div>

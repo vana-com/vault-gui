@@ -1,11 +1,11 @@
-import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Login, Spinner } from "src/components";
+import { PageVault, Spinner } from "src/components";
+import { useUserContext } from "src/components/UserAccess/UserContext";
 import {
   FocusStack,
   NoModuleMessage,
@@ -16,20 +16,13 @@ import {
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import {
-  hasuraTokenAtom,
-  userAtom,
-  web3AuthWalletProviderAtom,
-} from "src/state";
 import { ShareUiStatus } from "src/types";
 import * as dataPipelineWorker from "src/types/DataPipelineWorker";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
   const router = useRouter();
-  const [user] = useAtom(userAtom);
-  const [hasuraToken] = useAtom(hasuraTokenAtom);
-  const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
+  const { user, hasuraToken, provider } = useUserContext();
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
   const [shareStatus, setShareStatus] = useState(
@@ -173,8 +166,7 @@ const SendPage: NextPage = () => {
 
     // TODO: fix race condition where dangerouslyGetPrivateKey is not available
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    const dangerousPrivateKey =
-      await web3AuthWalletProvider?.dangerouslyGetPrivateKey();
+    const dangerousPrivateKey = await provider?.dangerouslyGetPrivateKey();
 
     // Check all attributes are present
     if (!userModuleId || !signedUrl || !dangerousPrivateKey) {
@@ -271,7 +263,7 @@ const SendPage: NextPage = () => {
   };
 
   return (
-    <>
+    <PageVault>
       {/* These 2 component take uiStatus and handle their own internal UI */}
       <VaultSharePageTitle uiStatus={uiStatus} />
       <VaultSharePageWithStatus
@@ -279,10 +271,6 @@ const SendPage: NextPage = () => {
         appName={prettyAppName}
         uiStatus={uiStatus}
       >
-        {/* When NOT LOGGED IN, this shows a Login button */}
-        {/* TECH DEBT, REFACTOR SOON!: must be always be rendered unconditionally in order to run the useEffects within the component. Only renders markup to the DOM when !web3AuthUserInfo. */}
-        <Login withLayout />
-
         {/* SERVER DATA IS LOADING */}
         {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
           <FocusStack tw="min-h-[268px] items-center justify-center">
@@ -313,7 +301,7 @@ const SendPage: NextPage = () => {
           <SendStatus status={shareStatus} stage={updateStatus} />
         )}
       </VaultSharePageWithStatus>
-    </>
+    </PageVault>
   );
 };
 

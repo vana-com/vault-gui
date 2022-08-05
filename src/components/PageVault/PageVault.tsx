@@ -1,11 +1,18 @@
-import { useAtom } from "jotai";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Card, Container, HeaderBasic, Logout } from "src/components";
+import {
+  Button,
+  Card,
+  Container,
+  HeaderBasic,
+  LoginButton,
+  LogoutButton,
+} from "src/components";
 import { CarbonArrowLeft } from "src/components/Icons";
-import { userAtom } from "src/state";
+
+import { useUserContext } from "../UserAccess/UserContext";
 
 /* PageVault is the default page layout + header for a Vault page */
 
@@ -15,7 +22,8 @@ type PageVaultProps = {
 };
 
 const PageVault = ({ children, showBackLink }: PageVaultProps) => {
-  const [user] = useAtom(userAtom);
+  const { user, loginUser, logoutUser, loginError, isLoading } =
+    useUserContext();
 
   return (
     <div tw="relative">
@@ -33,11 +41,11 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
           </NextLink>
         </div>
       )}
-      {user && (
-        <div tw="fixed top-8 right-8 z-10">
-          <Logout />
-        </div>
-      )}
+      <div tw="fixed top-8 right-8 z-10">
+        {user && <LogoutButton logOut={logoutUser} isLoading={isLoading} />}
+        {!user && <LoginButton logIn={loginUser} loginError={loginError} />}
+      </div>
+
       <Container tw="relative pt-[6vh]" size="lg">
         <div tw="flex flex-col gap-8 relative">
           <HeaderBasic

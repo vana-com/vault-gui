@@ -3634,6 +3634,19 @@
     loglevel "^1.8.0"
     pump "^3.0.0"
 
+"@toruslabs/openlogin@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin/-/openlogin-2.4.0.tgz#05cf91d3711ef630e60ad6fbe65a35032094004d"
+  integrity sha512-nE7wGW2+Pi51oTloh4A9DSFP4W/2zx4IoKA8TLFSzW4Z5pYTVPVRsfICkrV4EdzCw8JLfDTvG8GNk6Dbl/kRkA==
+  dependencies:
+    "@toruslabs/eccrypto" "^1.1.8"
+    "@toruslabs/http-helpers" "^3.1.0"
+    "@toruslabs/openlogin-jrpc" "^2.1.0"
+    "@toruslabs/openlogin-utils" "^2.1.0"
+    lodash.merge "^4.6.2"
+    loglevel "^1.8.0"
+    pump "^3.0.0"
+
 "@toruslabs/solana-embed@^0.2.2":
   version "0.2.2"
   resolved "https://registry.npmjs.org/@toruslabs/solana-embed/-/solana-embed-0.2.2.tgz#4bb5784c769050a2e41051b0085632606862c904"
@@ -9084,11 +9097,6 @@ jose@^4.8.3:
   version "4.8.3"
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.8.3.tgz#5a754fb4aa5f2806608d083f438e6916b11087da"
   integrity sha512-7rySkpW78d8LBp4YU70Wb7+OTgE3OwAALNVZxhoIhp4Kscp+p/fBkdpxGAMKxvCAMV4QfXBU9m6l9nX/vGwd2g==
-
-jotai@^1.7.6:
-  version "1.7.6"
-  resolved "https://registry.npmjs.org/jotai/-/jotai-1.7.6.tgz#234165b0b139e11ef40e660e8fa1b420b23bb24b"
-  integrity sha512-D3R5f6OvwUPUyTPQY3wGP800nb6bDEOl/mqftjxg3gcHVITeFcldr9W9IBK+gXsow357vhNXuci/LfD+rl92PA==
 
 js-sha3@0.8.0, js-sha3@^0.8.0:
   version "0.8.0"

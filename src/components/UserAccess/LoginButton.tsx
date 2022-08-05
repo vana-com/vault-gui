@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Link } from "src/components";
+import { Button, CarbonSecurity, Link } from "src/components";
 import { ToastDefault } from "src/components/Toast";
 
 interface Props {
@@ -13,10 +13,9 @@ interface Props {
 const LoginButton = ({ logIn, loginError, setLoginError }: Props) => (
   <>
     <Button
-      type="button"
       variant="solid"
-      size="xl"
-      css={tw`min-w-[220px] max-w-[220px]`}
+      size="md"
+      prefix={<CarbonSecurity />}
       onClick={logIn}
     >
       Log In
