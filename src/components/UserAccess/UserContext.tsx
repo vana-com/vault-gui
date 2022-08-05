@@ -5,6 +5,7 @@ import {
   WALLET_ADAPTERS,
 } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
+import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -49,6 +50,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [userWalletAddress, setUserWalletAddress] = useState<string>("");
   const [hasuraToken, setHasuraToken] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
   /**
@@ -58,6 +60,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
    */
   const loginVanaUser = async (idToken: string, walletAddress: string) => {
     try {
+      setIsUserLoading(true);
       const loginResponse = await fetch(`/api/auth/login`, {
         method: "POST",
         headers: {
@@ -77,6 +80,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
     } finally {
+      setIsUserLoading(false);
       setIsLoading(false);
     }
   };
@@ -89,6 +93,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     web3AuthInstance.on(
       ADAPTER_EVENTS.CONNECTED,
       async (data: CONNECTED_EVENT_DATA) => {
+        console.log("Web3Auth adapter connected");
         const ethProvider = getWalletProvider(web3AuthInstance.provider!);
         setProvider(ethProvider);
 
@@ -129,6 +134,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
       );
       setIsLoading(false);
     });
+
+    web3AuthInstance.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
+      setIsLoading(isVisible);
+    });
   };
 
   const saveHasuraToken = (token: string) => {
@@ -160,7 +169,12 @@ const UserProvider = ({ children }: UserProviderProps) => {
         console.error("Unable to initialize Web3Auth", error);
         setLoginError(true);
       } finally {
-        setIsLoading(false);
+        // Prevent prematurely disabling loading state if we're fetching a Vana user
+        setTimeout(() => {
+          if (!isUserLoading && !user) {
+            setIsLoading(false);
+          }
+        }, 1000);
       }
     };
     initWeb3Auth();

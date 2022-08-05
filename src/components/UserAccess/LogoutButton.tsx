@@ -23,6 +23,7 @@ const LogoutButton = ({ logOut, isLoading }: Props) => (
         type="button"
         variant="outline"
         size="md"
+        disabled={isLoading}
         prefix={<CarbonSecurity />}
       >
         Log Out

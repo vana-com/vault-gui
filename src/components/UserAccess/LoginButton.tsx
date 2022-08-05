@@ -7,14 +7,21 @@ import { ToastDefault } from "src/components/Toast";
 interface Props {
   logIn?: () => void;
   loginError: boolean;
+  isLoading: boolean;
   setLoginError?: () => void;
 }
 
-const LoginButton = ({ logIn, loginError, setLoginError }: Props) => (
+const LoginButton = ({
+  logIn,
+  isLoading,
+  loginError,
+  setLoginError,
+}: Props) => (
   <>
     <Button
       variant="solid"
       size="md"
+      disabled={isLoading}
       prefix={<CarbonSecurity />}
       onClick={logIn}
     >

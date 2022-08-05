@@ -43,10 +43,50 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
+  const isHasuraLoading =
+    isUserLoading || isModulesLoading || isUserModulesDataLoading;
+
+  if (user && userModulesData !== undefined) {
+    return (
+      <>
+        <TitleAndMetaTags color="black" title="Vault | Vana" />
+        <PageVault>
+          <Flex tw="w-full flex-col gap-4">
+            <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
+              <Text as="h3" variant="heading" color="label">
+                Your Data
+              </Text>
+              <PopoverHelp />
+            </Flex>
+            <hr />
+            <div tw="grid grid-cols-2 lg:grid-cols-3 gap-4 min-h-[180px]">
+              {/* ADD A MODULE */}
+              <DialogDrawerMenu buttonLabel="Add">
+                <CardHeaderVaultNoModules>
+                  {notStoredModules?.map((module) => (
+                    <ModuleButton key={module.id} name={module.name} />
+                  ))}
+                </CardHeaderVaultNoModules>
+              </DialogDrawerMenu>
+
+              {/* STORED MODULES */}
+              {storedUsersModules.map((module) => (
+                <ModuleButton
+                  key={module.module.name?.toLowerCase()}
+                  name={module.module.name}
+                  isLarge
+                  isStored
+                />
+              ))}
+            </div>
+          </Flex>
+        </PageVault>
+      </>
+    );
+  }
 
   // State prior to authenticated store user
-  if (!user || isUserLoading) {
+  if (!user && !isHasuraLoading) {
     return (
       <>
         <TitleAndMetaTags color="black" title="Login to Vault" />
@@ -60,51 +100,12 @@ const HomePage: NextPage = () => {
   }
 
   // State for loading Hasura but not store user
-  if (isHasuraLoading) {
-    return (
-      <>
-        <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
-        <PageVault>
-          <Flex tw="w-full items-center justify-center">
-            <Spinner />
-          </Flex>
-        </PageVault>
-      </>
-    );
-  }
-
   return (
     <>
-      <TitleAndMetaTags color="black" title="Vault | Vana" />
+      <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
       <PageVault>
-        <Flex tw="w-full flex-col gap-4">
-          <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
-            <Text as="h3" variant="heading" color="label">
-              Your Data
-            </Text>
-            <PopoverHelp />
-          </Flex>
-          <hr />
-          <div tw="grid grid-cols-2 lg:grid-cols-3 gap-4 min-h-[180px]">
-            {/* ADD A MODULE */}
-            <DialogDrawerMenu buttonLabel="Add">
-              <CardHeaderVaultNoModules>
-                {notStoredModules?.map((module) => (
-                  <ModuleButton key={module.id} name={module.name} />
-                ))}
-              </CardHeaderVaultNoModules>
-            </DialogDrawerMenu>
-
-            {/* STORED MODULES */}
-            {storedUsersModules.map((module) => (
-              <ModuleButton
-                key={module.module.name?.toLowerCase()}
-                name={module.module.name}
-                isLarge
-                isStored
-              />
-            ))}
-          </div>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
         </Flex>
       </PageVault>
     </>

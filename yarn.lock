@@ -4363,6 +4363,15 @@
     loglevel "^1.8.0"
     ts-custom-error "^3.2.0"
 
+"@web3auth/base@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@web3auth/base/-/base-1.1.4.tgz#9d0c3f2eb56d53446a6bef75662cce2a3ffae0ee"
+  integrity sha512-IacIHMbz2ue4LOXfwyA3RTY+txEWW6sVCOGYkCw9BqqmyQz3Kq6R1cwIGSdiSlR0VPws+b7IAttcl4RgqJi3Pg==
+  dependencies:
+    "@toruslabs/openlogin-jrpc" "^2.1.0"
+    loglevel "^1.8.0"
+    ts-custom-error "^3.2.0"
+
 "@web3auth/core@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@web3auth/core/-/core-1.1.1.tgz#6788fb3cd4a296fa962551c2e4b7b09a2f3dc86f"
@@ -4463,6 +4472,22 @@
     "@toruslabs/openlogin" "^2.3.0"
     "@toruslabs/openlogin-jrpc" "^2.1.0"
     "@web3auth/base" "^1.1.1"
+    bowser "^2.11.0"
+    classnames "^2.3.1"
+    lodash.clonedeep "^4.5.0"
+    lodash.merge "^4.6.2"
+    react "^17"
+    react-dom "^17"
+    react-qr-code "^2.0.7"
+
+"@web3auth/ui@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@web3auth/ui/-/ui-1.1.4.tgz#93ffac5cdcc8ef2b895965bb44ff9524b249822c"
+  integrity sha512-7RFw4i0Af3PN7HxuY0Pb+rA29VFIPWWz2doWNILJtT2CifuUA1caggDinoptdFpCQxYYrYLLoudowg1fZEXj5A==
+  dependencies:
+    "@toruslabs/openlogin" "^2.4.0"
+    "@toruslabs/openlogin-jrpc" "^2.1.0"
+    "@web3auth/base" "^1.1.4"
     bowser "^2.11.0"
     classnames "^2.3.1"
     lodash.clonedeep "^4.5.0"

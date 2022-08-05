@@ -43,7 +43,13 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
       )}
       <div tw="fixed top-8 right-8 z-10">
         {user && <LogoutButton logOut={logoutUser} isLoading={isLoading} />}
-        {!user && <LoginButton logIn={loginUser} loginError={loginError} />}
+        {!user && (
+          <LoginButton
+            logIn={loginUser}
+            loginError={loginError}
+            isLoading={isLoading}
+          />
+        )}
       </div>
 
       <Container tw="relative pt-[6vh]" size="lg">
