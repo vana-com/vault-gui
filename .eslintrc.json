@@ -2,5 +2,8 @@
   "extends": [
     "@corsali",
     "plugin:@next/next/core-web-vitals"
-  ]
+  ],
+  "rules": {
+    "no-console": 0
+  }
 }
