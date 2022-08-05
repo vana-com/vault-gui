@@ -23,7 +23,7 @@ import * as dataPipelineWorker from "src/types/DataPipelineWorker";
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
   const router = useRouter();
-  const { user, hasuraToken, provider } = useUserContext();
+  const { user, hasuraToken, walletProvider } = useUserContext();
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
   const [shareStatus, setShareStatus] = useState(
@@ -134,7 +134,11 @@ const SendPage: NextPage = () => {
   ]);
   console.log("uiStatus", uiStatus);
 
-  const fetchSignedUrl = async (token: string, userModuleId: string) => {
+  const fetchSignedUrl = async (token: string | null, userModuleId: string) => {
+    if (!token) {
+      throw new Error(`Failed to fetch signed url: hasuraToken missing`);
+    }
+
     const result = await fetch("/api/user-data/download-url", {
       method: "POST",
       headers: {
@@ -167,7 +171,8 @@ const SendPage: NextPage = () => {
 
     // TODO: fix race condition where dangerouslyGetPrivateKey is not available
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    const dangerousPrivateKey = await provider?.dangerouslyGetPrivateKey();
+    const dangerousPrivateKey =
+      await walletProvider?.dangerouslyGetPrivateKey();
 
     // Check all attributes are present
     if (!userModuleId || !signedUrl || !dangerousPrivateKey) {

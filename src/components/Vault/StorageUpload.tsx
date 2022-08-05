@@ -136,7 +136,7 @@ const StorageUpload = ({
         module: moduleName,
         numFilesUploaded: filesToUpload.length,
       });
-      setTimeout(() => router.push("/?completed-store=true"), 500);
+      setTimeout(() => router.push("/"), 500);
     } catch (error: any) {
       console.error("Unable to encrypt and upload user data", error);
       setIsDataUploading(false);

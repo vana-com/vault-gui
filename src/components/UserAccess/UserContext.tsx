@@ -19,24 +19,24 @@ import {
 
 interface UserContextProps {
   user: Users | null;
-  provider: IWalletProvider | null;
+  walletProvider: IWalletProvider | null;
   loginUser: () => Promise<void>;
   logoutUser: () => Promise<void>;
   isLoading: boolean;
   loginError: boolean;
-  userWalletAddress: string;
-  hasuraToken: string;
+  userWalletAddress: string | null;
+  hasuraToken: string | null;
 }
 
 const UserContext = createContext<UserContextProps>({
   user: null,
-  provider: null,
+  walletProvider: null,
   loginUser: async () => {},
   logoutUser: async () => {},
   isLoading: false,
   loginError: false,
-  userWalletAddress: "",
-  hasuraToken: "",
+  userWalletAddress: null,
+  hasuraToken: null,
 });
 const useUserContext = () => useContext(UserContext);
 
@@ -47,11 +47,15 @@ interface UserProviderProps {
 const UserProvider = ({ children }: UserProviderProps) => {
   const router = useRouter();
   const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null);
-  const [provider, setProvider] = useState<IWalletProvider | null>(null);
+  const [walletProvider, setWalletProvider] = useState<IWalletProvider | null>(
+    null,
+  );
   const [user, setUser] = useState<Users | null>(null);
-  const [userWalletAddress, setUserWalletAddress] = useState<string>("");
-  const [hasuraToken, setHasuraToken] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [userWalletAddress, setUserWalletAddress] = useState<string | null>(
+    null,
+  );
+  const [hasuraToken, setHasuraToken] = useState<string | null>(null);
+  const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
@@ -83,7 +87,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setLoginError(true);
     } finally {
       setIsUserLoading(false);
-      setIsLoading(false);
+      setIsWeb3AuthLoading(false);
     }
   };
 
@@ -105,12 +109,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
    * @param web3AuthInstance
    */
   const subscribeAuthEvents = (web3AuthInstance: Web3Auth) => {
+    // User is logged in with Web3Auth. `web3auth.provider` is available here
     web3AuthInstance.on(
       ADAPTER_EVENTS.CONNECTED,
       async (data: CONNECTED_EVENT_DATA) => {
         console.log("Web3Auth adapter connected");
         const ethProvider = getWalletProvider(web3AuthInstance.provider!);
-        setProvider(ethProvider);
+        setWalletProvider(ethProvider);
 
         const walletAddress = (await ethProvider.getAccounts())[0];
         if (walletAddress) {
@@ -133,12 +138,12 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     web3AuthInstance.on(ADAPTER_EVENTS.CONNECTING, () => {
       console.log("Web3Auth adapter connecting");
-      setIsLoading(true);
+      setIsWeb3AuthLoading(true);
     });
 
     web3AuthInstance.on(ADAPTER_EVENTS.DISCONNECTED, async () => {
       console.log("Web3Auth adapter disconnected");
-      setIsLoading(false);
+      setIsWeb3AuthLoading(false);
       await logoutUser();
     });
 
@@ -147,17 +152,25 @@ const UserProvider = ({ children }: UserProviderProps) => {
         "Web3Auth adapter error or user has cancelled login request",
         error,
       );
-      setIsLoading(false);
+      setIsWeb3AuthLoading(false);
     });
 
     web3AuthInstance.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
-      setIsLoading(isVisible);
+      setIsWeb3AuthLoading(isVisible);
     });
   };
 
-  const saveHasuraToken = (token: string) => {
+  /**
+   * The Hasura token is accessed by ApolloClient, which is outside of UserContext. Use LocalStorage to access it.
+   * @param token
+   */
+  const saveHasuraToken = (token: string | null) => {
     setHasuraToken(token);
-    localStorage.setItem("hasura-token", token);
+    if (!token) {
+      localStorage.removeItem("hasura-token");
+    } else {
+      localStorage.setItem("hasura-token", token);
+    }
   };
 
   // Initialize Web3Auth only once
@@ -187,7 +200,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // Prevent prematurely disabling loading state if we're fetching a Vana user
         setTimeout(() => {
           if (!isUserLoading && !user) {
-            setIsLoading(false);
+            setIsWeb3AuthLoading(false);
           }
         }, 1000);
       }
@@ -205,7 +218,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
 
     try {
-      setIsLoading(true);
+      setIsWeb3AuthLoading(true);
       await web3Auth.connect();
     } catch (error: any) {
       console.error("Unable to connect with Web3auth.", error);
@@ -216,17 +229,17 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const logoutUser = async () => {
     try {
       if (web3Auth?.status === ADAPTER_STATUS.CONNECTED) {
-        setIsLoading(true);
+        setIsWeb3AuthLoading(true);
         await web3Auth.logout();
       }
     } catch (error: any) {
       console.error("Error trying to log out.", error);
     } finally {
-      setIsLoading(false);
-      setProvider(null);
+      setIsWeb3AuthLoading(false);
+      setWalletProvider(null);
       setUser(null);
-      setUserWalletAddress("");
-      saveHasuraToken("");
+      setUserWalletAddress(null);
+      saveHasuraToken(null);
       router.push("/");
     }
   };
@@ -234,13 +247,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
   return (
     <UserContext.Provider
       value={{
-        provider,
+        walletProvider,
         loginUser,
         logoutUser,
         user,
         userWalletAddress,
         hasuraToken,
-        isLoading,
+        isLoading: isWeb3AuthLoading,
         loginError,
       }}
     >
