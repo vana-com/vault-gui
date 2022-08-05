@@ -1,3 +1,4 @@
+import { zipToSQLiteInstance } from "@corsali/userdata-extractor";
 import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -23,6 +24,18 @@ import {
 } from "src/state";
 import { ShareUiStatus } from "src/types";
 import * as dataPipelineWorker from "src/types/DataPipelineWorker";
+import { decryptFileChaCha20Poly1305 } from "src/utils/decryptFileChaCha20Poly1305";
+
+interface DataMessage {
+  queries: string[];
+  dataUrl: string;
+  decryptionKey: string;
+  serviceName: string;
+}
+interface SQLiteQueryResult {
+  queryString: string;
+  queryResult: string[];
+}
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -39,6 +52,7 @@ const SendPage: NextPage = () => {
     dataPipelineWorker.Stage.FETCH_DATA,
   );
   const [uiStatus, setUiStatus] = useState(ShareUiStatus.HASURA_IS_LOADING);
+  const windowRef = useRef<Window>();
 
   /**
    * Create the worker once the client loaded the page and sets up the event listener
@@ -47,19 +61,10 @@ const SendPage: NextPage = () => {
     // Set the window context
     const w = window;
     // eslint-disable-next-line no-restricted-globals
-    const s = self;
+    // const s = self;
 
-    // Preload the worker script
-    workerRef.current = new Worker(
-      new URL("../../workers/DataPipeline.ts", import.meta.url),
-    );
-
-    // Give the "window" context to the listener
-    const onMessage = onMessageReceived(w, s);
-    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
+    windowRef.current = w;
   }, []);
-
-  const workerRef = useRef<Worker>();
 
   // Get popup's query params
   // TODO: @joe - replace w/ more secure method
@@ -95,26 +100,6 @@ const SendPage: NextPage = () => {
           userModule.module.name.toLowerCase() === normalizedServiceName,
       )
     : [];
-
-  /**
-   * This useEffect is only fired once on page load.
-   * It preps the worker to start the data pipeline and hooks up our event listener
-   */
-  useEffect(() => {
-    // Set the window context
-    const w = window;
-    // eslint-disable-next-line no-restricted-globals
-    const s = self;
-
-    // Preload the worker script
-    workerRef.current = new Worker(
-      new URL("../../workers/DataPipeline.ts", import.meta.url),
-    );
-
-    // Give the "window" context to the listener
-    const onMessage = onMessageReceived(w, s);
-    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
-  }, []);
 
   /**
    * Set the UI status for the page
@@ -163,6 +148,31 @@ const SendPage: NextPage = () => {
     else return parsed.signedUrl;
   };
 
+  const startPipeline = async (data: DataMessage) => {
+    const { queries, dataUrl, decryptionKey, serviceName: _serviceName } = data;
+
+    try {
+      // Download data
+      const file = await fetchData(dataUrl);
+
+      // decrypt
+      const decrypted = await decryptData(file, decryptionKey);
+
+      // Extract
+      const extracted = await extractData(decrypted, _serviceName);
+
+      // Run SQL query
+      const queried = await queryData(extracted, queries);
+
+      // Send data
+      sendData(queried);
+    } catch (error) {
+      postErrorMessage({
+        message: error,
+      });
+    }
+  };
+
   const onDataRequestApproval = async () => {
     setUserHasAcceptedSharingRequest(true);
 
@@ -181,9 +191,8 @@ const SendPage: NextPage = () => {
       throw new Error("Missing attributes");
     }
 
-    // Sends data to the DataPipeline (Worker)
-    console.log("Sending data to the worker...");
-    workerRef.current?.postMessage({
+    // call the "old worker" (now in the ui/main thread)
+    startPipeline({
       queries: [cleanQueryString],
       dataUrl: signedUrl,
       decryptionKey: dangerousPrivateKey,
@@ -192,9 +201,8 @@ const SendPage: NextPage = () => {
   };
 
   const onMessageReceived =
-    (window: Window, self: Window) => async (event: MessageEvent) => {
-      const data = event.data as dataPipelineWorker.Message;
-
+    (window: Window, self: Window) =>
+    async (data: dataPipelineWorker.Message) => {
       console.log("DataPipeline message:", data);
 
       // Handle each message type differently
@@ -268,6 +276,147 @@ const SendPage: NextPage = () => {
     // Something definitely went wrong, gracefully show errors to the user
     setShareStatus(dataPipelineWorker.Status.REJECTED);
     console.log("worker error | data:", data?.payload?.error);
+  };
+
+  // TODO: @joe - refactor this, all old worker functions are here:
+  /**
+   * Fetches data from a url as a file
+   * @param url location of data
+   * @returns File
+   */
+  const fetchData = async (url: string) => {
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/zip",
+      },
+    });
+    const blob = await res.blob();
+    const file = new File([blob], "data.zip.enc", { type: "application/zip" });
+
+    console.log(file);
+
+    postUpdateMessage({
+      stage: dataPipelineWorker.Stage.FETCH_DATA,
+      message: `Downloaded ${file.name} (${file.size} bytes)`,
+    });
+
+    return file;
+  };
+
+  /**
+   * Decrypts a .enc file with a given key
+   * @param encryptedFile encrypted file
+   * @param key used to decrypt data
+   * @returns Unencrypted file (.zip)
+   */
+  const decryptData = async (encryptedFile: File, key: any) => {
+    const decrypted = await decryptFileChaCha20Poly1305(encryptedFile, key);
+
+    if (!decrypted) {
+      // Failed to decrypt
+      throw new Error("Failed to decrypt data, probably used the wrong key");
+    }
+
+    postUpdateMessage({
+      stage: dataPipelineWorker.Stage.DECRYPTED_DATA,
+      message: `Decrypted ${decrypted.name} (${decrypted.size} bytes)`,
+    });
+
+    return decrypted;
+  };
+
+  /**
+   * Extracts a .zip file into a sqlite database
+   * @param data File to extract
+   * @returns sqlite database
+   */
+  const extractData = async (data: File, _serviceName: string) => {
+    const extracted = await zipToSQLiteInstance(_serviceName, data, false);
+
+    postUpdateMessage({
+      stage: dataPipelineWorker.Stage.EXTRACTED_DATA,
+      message: `Extracted data into sqllite db`,
+    });
+
+    return extracted;
+  };
+
+  /**
+   * Runs a query on a sqlite database
+   * @param data sqlite database
+   * @param query SQL query
+   * @returns matching rows
+   */
+  const queryData = async (db: any, queries: string[]) => {
+    const query = queries.join(" ");
+    const queryResults: SQLiteQueryResult[] = await db.runQuery(query);
+
+    postUpdateMessage({
+      stage: dataPipelineWorker.Stage.QUERY_DATA,
+      message: `Queried db with ${queries.length} queries '${query}' and returned ${queryResults.length} results`,
+    });
+
+    return queryResults;
+  };
+
+  const sendData = (data: any) => {
+    postDataMessage({
+      rows: data,
+    });
+  };
+
+  /**
+   * Update Message
+   * @param message message to send to the main thread
+   */
+  const postUpdateMessage = (message: any) => {
+    const m: dataPipelineWorker.Message = {
+      type: dataPipelineWorker.MessageType.UPDATE,
+      done: false,
+      payload: {
+        ...message,
+      },
+    };
+    onMessageReceived(
+      windowRef.current as Window,
+      windowRef.current as Window,
+    )(m);
+  };
+
+  /**
+   * Error Message
+   * @param error error to send to the main thread
+   */
+  const postErrorMessage = (error: any) => {
+    const m: dataPipelineWorker.Message = {
+      type: dataPipelineWorker.MessageType.ERROR,
+      done: false,
+      payload: {
+        ...error,
+      },
+    };
+    onMessageReceived(
+      windowRef.current as Window,
+      windowRef.current as Window,
+    )(m);
+  };
+
+  /**
+   * Data Message (closing message)
+   * @param data data to send to the main thread
+   */
+  const postDataMessage = (data: any) => {
+    const m: dataPipelineWorker.Message = {
+      type: dataPipelineWorker.MessageType.DATA,
+      done: true,
+      payload: {
+        ...data,
+      },
+    };
+    onMessageReceived(
+      windowRef.current as Window,
+      windowRef.current as Window,
+    )(m);
   };
 
   return (
