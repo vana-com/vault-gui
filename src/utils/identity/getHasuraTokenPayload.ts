@@ -1,6 +1,6 @@
 import * as jose from "jose";
 
-import { getSecret } from "./getSecret";
+import { getSecret } from "../getSecret";
 
 /**
  * Retrieve the Hasura Token payload, issued by Vault.

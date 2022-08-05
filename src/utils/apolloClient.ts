@@ -43,7 +43,7 @@ const createApolloClient = () => {
   const authLink = setContext(async (_, { headers }) => {
     const cachedToken = localStorage.getItem("hasura-token");
     if (cachedToken) {
-      accessToken = JSON.parse(cachedToken);
+      accessToken = cachedToken;
     } else {
       return headers;
     }
