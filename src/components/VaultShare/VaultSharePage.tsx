@@ -2,7 +2,6 @@
 import tw from "twin.macro";
 
 import {
-  Card,
   Container,
   Flex,
   Group,
@@ -33,40 +32,38 @@ const VaultSharePage = ({
   heading = "Give Vault access",
   lede,
 }: Props) => (
-  <div tw="min-h-screen flex items-center justify-center">
+  <div tw="w-full flex items-center justify-center">
     <Container size="lg">
-      <Card shadow={false} bg="bg">
-        <Stack tw="flex-1 gap-6">
-          <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">
-            <Group tw="gap-2 items-center pb-4">
-              <VanaLogoNew boxSize={ICON_SIZE} tw="rounded-md bg-orange-500" />
-              {accessDenied ? (
-                <div tw="flex justify-center" style={{ width: ICON_SIZE }}>
-                  <CarbonRotate boxSize="27px" />
-                </div>
-              ) : (
-                <CarbonArrowRight boxSize={ICON_SIZE} />
-              )}
-              {/* TODO: allow accessor to configure their logo */}
-              <Flex tw="items-center justify-center rounded-md bg-label text-background h-[36px] w-[36px]">
-                <CarbonConcept boxSize="21px" />
-              </Flex>
-            </Group>
-            <Text as="h1" variant="title3" weight="medium" color="label">
-              {heading}
-            </Text>
-            <Text variant="body" color="labelTertiary">
-              {lede}
-            </Text>
-            {/* <Text variant="footnote" mono color="labelQuaternary" tw="pt-1.5">
+      <Stack tw="flex-1 gap-6">
+        <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">
+          <Group tw="gap-2 items-center pb-4">
+            <VanaLogoNew boxSize={ICON_SIZE} tw="rounded-md bg-orange-500" />
+            {accessDenied ? (
+              <div tw="flex justify-center" style={{ width: ICON_SIZE }}>
+                <CarbonRotate boxSize="27px" />
+              </div>
+            ) : (
+              <CarbonArrowRight boxSize={ICON_SIZE} />
+            )}
+            {/* TODO: allow accessor to configure their logo */}
+            <Flex tw="items-center justify-center rounded-md bg-label text-background h-[36px] w-[36px]">
+              <CarbonConcept boxSize="21px" />
+            </Flex>
+          </Group>
+          <Text as="h1" variant="title3" weight="medium" color="label">
+            {heading}
+          </Text>
+          <Text variant="body" color="labelTertiary">
+            {lede}
+          </Text>
+          {/* <Text variant="footnote" mono color="labelQuaternary" tw="pt-1.5">
               Requested from: {accessDomain}
             </Text> */}
-          </Stack>
-
-          {/* CHILDREN */}
-          {children}
         </Stack>
-      </Card>
+
+        {/* CHILDREN */}
+        {children}
+      </Stack>
     </Container>
   </div>
 );

@@ -103,6 +103,9 @@ const stylesBase = css`
     "WebkitTapHighlightColor": ${theme`colors.purple.500`};
     ${tw`min-h-screen antialiased transition-all duration-150 bg-background text-label`};
   }
+  :disabled, [disabled] {
+    opacity: 0.6;
+  }
 `;
 
 const GlobalStyles = () => (

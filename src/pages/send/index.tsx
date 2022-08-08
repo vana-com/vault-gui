@@ -1,11 +1,12 @@
-import { useAtom } from "jotai";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Login, Spinner } from "src/components";
+import { PageVault, Spinner } from "src/components";
+import { AuthenticatedPage } from "src/components/AuthenticatedPage";
+import { useUserContext } from "src/components/UserAccess/UserContext";
 import {
   FocusStack,
   NoModuleMessage,
@@ -16,20 +17,13 @@ import {
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import {
-  hasuraTokenAtom,
-  userAtom,
-  web3AuthWalletProviderAtom,
-} from "src/state";
 import { ShareUiStatus } from "src/types";
 import * as dataPipelineWorker from "src/types/DataPipelineWorker";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
   const router = useRouter();
-  const [user] = useAtom(userAtom);
-  const [hasuraToken] = useAtom(hasuraTokenAtom);
-  const [web3AuthWalletProvider] = useAtom(web3AuthWalletProviderAtom);
+  const { user, hasuraToken, walletProvider } = useUserContext();
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
   const [shareStatus, setShareStatus] = useState(
@@ -140,7 +134,11 @@ const SendPage: NextPage = () => {
   ]);
   console.log("uiStatus", uiStatus);
 
-  const fetchSignedUrl = async (token: string, userModuleId: string) => {
+  const fetchSignedUrl = async (token: string | null, userModuleId: string) => {
+    if (!token) {
+      throw new Error(`Failed to fetch signed url: hasuraToken missing`);
+    }
+
     const result = await fetch("/api/user-data/download-url", {
       method: "POST",
       headers: {
@@ -173,9 +171,11 @@ const SendPage: NextPage = () => {
 
     // TODO: fix race condition where dangerouslyGetPrivateKey is not available
     await new Promise((resolve) => setTimeout(resolve, 3000));
+    const dangerousPrivateKey =
+      await walletProvider?.dangerouslyGetPrivateKey();
 
     // Check all attributes are present
-    if (!userModuleId || !signedUrl) {
+    if (!userModuleId || !signedUrl || !dangerousPrivateKey) {
       throw new Error("Missing attributes");
     }
 
@@ -184,7 +184,7 @@ const SendPage: NextPage = () => {
     workerRef.current?.postMessage({
       queries: [cleanQueryString],
       dataUrl: signedUrl,
-      walletProvider: web3AuthWalletProvider,
+      decryptionKey: dangerousPrivateKey,
       serviceName: normalizedServiceName,
     });
   };
@@ -223,14 +223,22 @@ const SendPage: NextPage = () => {
   const closePopup = (self: Window) => self.close();
 
   const handleUpdateMessage = async (data: dataPipelineWorker.Message) => {
-    if (
-      Object.values(dataPipelineWorker.Stage).includes(
-        data.payload.stage as unknown as dataPipelineWorker.Stage,
-      )
-    ) {
-      setUpdateStatus(data.payload.stage);
-    } else {
-      console.warn(`Unknown stage: ${data?.payload?.stage}`);
+    // Worker not (quite) done yet, these are just "status" reports
+    switch (data.payload.stage) {
+      case dataPipelineWorker.Stage.FETCH_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.FETCH_DATA);
+        break;
+      case dataPipelineWorker.Stage.DECRYPTED_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.DECRYPTED_DATA);
+        break;
+      case dataPipelineWorker.Stage.EXTRACTED_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.EXTRACTED_DATA);
+        break;
+      case dataPipelineWorker.Stage.QUERY_DATA:
+        setUpdateStatus(dataPipelineWorker.Stage.QUERY_DATA);
+        break;
+      default:
+        console.log(`Unknown stage: ${data?.payload?.stage}`);
     }
   };
 
@@ -261,49 +269,48 @@ const SendPage: NextPage = () => {
   };
 
   return (
-    <>
-      {/* These 2 component take uiStatus and handle their own internal UI */}
-      <VaultSharePageTitle uiStatus={uiStatus} />
-      <VaultSharePageWithStatus
-        // accessingDomain={accessingDomain}
-        appName={prettyAppName}
-        uiStatus={uiStatus}
-      >
-        {/* When NOT LOGGED IN, this shows a Login button */}
-        {/* TECH DEBT, REFACTOR SOON!: must be always be rendered unconditionally in order to run the useEffects within the component. Only renders markup to the DOM when !web3AuthUserInfo. */}
-        <Login withLayout />
+    <AuthenticatedPage>
+      {/* TODO: Remove PageVault during `/login` page redirect refactor */}
+      <PageVault>
+        {/* These 2 component take uiStatus and handle their own internal UI */}
+        <VaultSharePageTitle uiStatus={uiStatus} />
+        <VaultSharePageWithStatus
+          // accessingDomain={accessingDomain}
+          appName={prettyAppName}
+          uiStatus={uiStatus}
+        >
+          {/* SERVER DATA IS LOADING */}
+          {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
+            <FocusStack tw="min-h-[268px] items-center justify-center">
+              <Spinner />
+            </FocusStack>
+          )}
 
-        {/* SERVER DATA IS LOADING */}
-        {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
-          <FocusStack tw="min-h-[268px] items-center justify-center">
-            <Spinner />
-          </FocusStack>
-        )}
+          {/* NO USER MODULE DATA */}
+          {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
+            <NoModuleMessage
+              serviceName={serviceName as string}
+              handleClick={() => closePopup(window)}
+            />
+          )}
 
-        {/* NO USER MODULE DATA */}
-        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
-          <NoModuleMessage
-            serviceName={serviceName as string}
-            handleClick={() => closePopup(window)}
-          />
-        )}
+          {/* READY TO ACCEPT */}
+          {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
+            <PermissionContract
+              onAccept={onDataRequestApproval}
+              onDeny={() => closePopup(window)}
+            >
+              <PermissionList query={cleanQueryString} />
+            </PermissionContract>
+          )}
 
-        {/* READY TO ACCEPT */}
-        {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
-          <PermissionContract
-            onAccept={onDataRequestApproval}
-            onDeny={() => closePopup(window)}
-          >
-            <PermissionList query={cleanQueryString} />
-          </PermissionContract>
-        )}
-
-        {/* ACCEPTED, RUN QUERY */}
-        {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
-          <SendStatus status={shareStatus} stage={updateStatus} />
-        )}
-      </VaultSharePageWithStatus>
-    </>
+          {/* ACCEPTED, RUN QUERY */}
+          {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
+            <SendStatus status={shareStatus} stage={updateStatus} />
+          )}
+        </VaultSharePageWithStatus>
+      </PageVault>
+    </AuthenticatedPage>
   );
 };
 

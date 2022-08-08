@@ -103,7 +103,7 @@ const decryptData = async (encryptedFile: File, key: any) => {
  * @returns sqlite database
  */
 const extractData = async (data: File, serviceName: string) => {
-  const extracted = await zipToSQLiteInstance(serviceName, data);
+  const extracted = await zipToSQLiteInstance(serviceName, data, false);
 
   postUpdateMessage({
     stage: Stage.EXTRACTED_DATA,
