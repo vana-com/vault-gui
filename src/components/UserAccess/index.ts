@@ -1,3 +1,2 @@
-export * from "./Login";
 export * from "./LoginButton";
-export * from "./Logout";
+export * from "./LogoutButton";

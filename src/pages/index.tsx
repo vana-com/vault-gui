@@ -1,4 +1,3 @@
-import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import * as React from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -8,7 +7,6 @@ import {
   CardHeaderVaultNoModules,
   DialogDrawerMenu,
   Flex,
-  Login,
   ModuleButton,
   PageVault,
   PopoverHelp,
@@ -16,20 +14,14 @@ import {
   Text,
   TitleAndMetaTags,
 } from "src/components";
+import { useUserContext } from "src/components/UserAccess/UserContext";
 import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import {
-  userAtom,
-  userWalletAddressAtom,
-  web3AuthUserInfoAtom,
-} from "src/state";
 
 const HomePage: NextPage = () => {
-  const [user] = useAtom(userAtom);
-  const [web3AuthUserInfo] = useAtom(web3AuthUserInfoAtom);
-  const [userWalletAddress] = useAtom(userWalletAddressAtom);
+  const { user, isLoading: isUserLoading } = useUserContext();
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -51,20 +43,56 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // data state: web3Auth user available but store user not yet available
-  const userAuthorizedWithoutUserData =
-    (web3AuthUserInfo || userWalletAddress) && !user;
-  // data state: Hasura is loading
-  const HASURA_IS_LOADING = isModulesLoading || isUserModulesDataLoading;
+  const isHasuraLoading =
+    isUserLoading || isModulesLoading || isUserModulesDataLoading;
+
+  if (user && userModulesData !== undefined) {
+    return (
+      <>
+        <TitleAndMetaTags color="black" title="Vault | Vana" />
+        <PageVault>
+          <Flex tw="w-full flex-col gap-4">
+            <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
+              <Text as="h3" variant="heading" color="label">
+                Your Data
+              </Text>
+              <PopoverHelp />
+            </Flex>
+            <hr />
+            <div tw="grid grid-cols-2 lg:grid-cols-3 gap-4 min-h-[180px]">
+              {/* ADD A MODULE */}
+              <DialogDrawerMenu buttonLabel="Add">
+                <CardHeaderVaultNoModules>
+                  {notStoredModules?.map((module) => (
+                    <ModuleButton key={module.id} name={module.name} />
+                  ))}
+                </CardHeaderVaultNoModules>
+              </DialogDrawerMenu>
+
+              {/* STORED MODULES */}
+              {storedUsersModules.map((module) => (
+                <ModuleButton
+                  key={module.module.name?.toLowerCase()}
+                  name={module.module.name}
+                  isLarge
+                  isStored
+                />
+              ))}
+            </div>
+          </Flex>
+        </PageVault>
+      </>
+    );
+  }
 
   // State prior to authenticated store user
-  if (!web3AuthUserInfo && !userWalletAddress) {
+  if (!user && !isHasuraLoading) {
     return (
       <>
         <TitleAndMetaTags color="black" title="Login to Vault" />
         <PageVault>
           <Flex tw="w-full items-center justify-center">
-            <Login />
+            Login to get started
           </Flex>
         </PageVault>
       </>
@@ -72,57 +100,12 @@ const HomePage: NextPage = () => {
   }
 
   // State for loading Hasura but not store user
-  if (userAuthorizedWithoutUserData || HASURA_IS_LOADING) {
-    return (
-      <>
-        <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
-        <PageVault>
-          <Flex tw="w-full items-center justify-center">
-            <Spinner />
-            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-            <Login />
-          </Flex>
-        </PageVault>
-      </>
-    );
-  }
-
   return (
     <>
-      <TitleAndMetaTags color="black" title="Vault | Vana" />
-
-      {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-      <Login />
-
+      <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
       <PageVault>
-        <Flex tw="w-full flex-col gap-4">
-          <Flex tw="relative items-end justify-between gap-1 text-gray-500 z-10">
-            <Text as="h3" variant="heading" color="label">
-              Your Data
-            </Text>
-            <PopoverHelp />
-          </Flex>
-          <hr />
-          <div tw="grid grid-cols-2 lg:grid-cols-3 gap-4 min-h-[180px]">
-            {/* ADD A MODULE */}
-            <DialogDrawerMenu buttonLabel="Add">
-              <CardHeaderVaultNoModules>
-                {notStoredModules?.map((module) => (
-                  <ModuleButton key={module.id} name={module.name} />
-                ))}
-              </CardHeaderVaultNoModules>
-            </DialogDrawerMenu>
-
-            {/* STORED MODULES */}
-            {storedUsersModules.map((module) => (
-              <ModuleButton
-                key={module.module.name?.toLowerCase()}
-                name={module.module.name}
-                isLarge
-                isStored
-              />
-            ))}
-          </div>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
         </Flex>
       </PageVault>
     </>
