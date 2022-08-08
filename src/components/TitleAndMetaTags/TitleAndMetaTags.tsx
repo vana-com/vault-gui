@@ -35,7 +35,7 @@ export function TitleAndMetaTags({
       <meta content={description} property="og:description" />
       <meta content={imageUrl} property="og:image" />
 
-      <meta content="@rainbowdotme" name="twitter:site" />
+      <meta content="@usevana" name="twitter:site" />
       <meta content="summary_large_image" name="twitter:card" />
 
       <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
