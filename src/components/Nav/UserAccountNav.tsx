@@ -17,20 +17,21 @@ import {
 
 import { navLinkStyle } from "./Nav.css";
 
-const accountAvatarStyle = tw`flex items-center justify-center border rounded-full border-label text-label bg-fillSecondary`;
+const accountAvatarStyle = tw`flex items-center justify-center border rounded-full border-label text-label bg-background`;
 
 interface Props {
   user: any;
+  accountLoginService: string;
 }
 
-const UserAccountNav = ({ user }: Props) => {
+const UserAccountNav = ({ user, accountLoginService }: Props) => {
   console.log("user", user);
 
   return (
     <DropdownMenu tw="z-20">
       <DropdownMenuTrigger asChild>
         <button
-          css={[accountAvatarStyle, tw`h-[40px] w-[40px]`]}
+          css={[accountAvatarStyle, tw`h-[32px] w-[32px]`]}
           aria-label="Your account"
           type="button"
         >
@@ -41,7 +42,7 @@ const UserAccountNav = ({ user }: Props) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent sideOffset={12} align="end">
-        <Stack tw="gap-2">
+        <Stack tw="gap-2 min-w-[320px]">
           <Group tw="px-3 py-4 gap-3 items-center">
             <div css={[accountAvatarStyle, tw`h-[55px] w-[55px]`]}>
               <Text variant="large" weight="bold">
@@ -49,8 +50,11 @@ const UserAccountNav = ({ user }: Props) => {
               </Text>
             </div>
             <Stack tw="gap-0.5">
-              <Text variant="note" weight="semibold">
-                Logged-in with MetaMask
+              <Text variant="note" weight="medium" tw="flex">
+                Login:
+                <Text variant="note" weight="semibold" tw="pl-1">
+                  {accountLoginService}
+                </Text>
               </Text>
               <Text variant="footnote" weight="medium" tw="text-labelTertiary">
                 ID ends with {user.id.slice(-8)}
@@ -83,7 +87,7 @@ const UserAccountNav = ({ user }: Props) => {
                   <Icon icon="heroicons-solid:shield-check" height="0.85em" />
                 }
               >
-                Delete your Vault
+                Delete Vault
               </WithIcon>
             </Text>
           </Stack>

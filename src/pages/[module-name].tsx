@@ -6,13 +6,14 @@ import { useState } from "react";
 import tw from "twin.macro";
 
 import {
-  CardHeaderVaultModule,
   DeleteData,
-  Flex,
-  PageVault,
-  Spinner,
+  LayoutApp,
+  LayoutLoading,
+  NavBreadcrumb,
+  NavHeader,
   TitleAndMetaTags,
 } from "src/components";
+import { navigationBreadcrumbs } from "src/data";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { hasuraTokenAtom, userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
@@ -73,36 +74,30 @@ const VaultModulePage: NextPage = () => {
   };
 
   if (isDataLoading) {
-    return (
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-        </Flex>
-      </PageVault>
-    );
+    return <LayoutLoading crumbs={[navigationBreadcrumbs[1]]} />;
   }
 
   return (
     <>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
 
-      <PageVault showBackLink>
-        <div tw="flex flex-col gap-8 w-full">
-          <CardHeaderVaultModule moduleName={moduleName}>
-            Vana encrypts your data before storing.
-          </CardHeaderVaultModule>
-          <hr />
-          <div tw="flex flex-col gap-2 items-center">
-            <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
-              <DeleteData
-                onDelete={() => deleteAllModuleFiles()}
-                isDeleting={isDeleting}
-                buttonLabel={`Delete all your ${moduleName} data`}
-              />
-            </div>
-          </div>
-        </div>
-      </PageVault>
+      <LayoutApp>
+        <NavBreadcrumb crumbs={[navigationBreadcrumbs[1]]}>
+          {/* <AddData modules={notStoredModules} buttonSize="md" /> */}
+        </NavBreadcrumb>
+
+        <NavHeader heading={`My ${moduleName} data`}>
+          {/* <PopoverHelp css={tw`text-labelTertiary`} /> */}
+        </NavHeader>
+
+        <main tw="px-inset pt-inset">
+          <DeleteData
+            onDelete={() => deleteAllModuleFiles()}
+            isDeleting={isDeleting}
+            buttonLabel={`Delete all your ${moduleName} data`}
+          />
+        </main>
+      </LayoutApp>
     </>
   );
 };

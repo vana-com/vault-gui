@@ -9,7 +9,7 @@ import {
 
 export const styledTooltipContent = [
   // card
-  tw`px-3 py-2.5 rounded-sm shadow-xl bg-label text-background`,
+  tw`px-3 py-2.5 rounded-sm shadow-xl bg-label text-background relative z-10`,
   // typography
   tw`text-sm font-normal leading-none`,
   // state

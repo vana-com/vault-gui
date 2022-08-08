@@ -36,6 +36,7 @@ module.exports = {
         backgroundScrim: 'var(--backgroundScrim)',
         neutral: 'var(--neutral)',
         separator: 'var(--separator)',
+        separatorLight: 'var(--separatorLight)',
         error: 'var(--error)',
         gray: {
           10: 'var(--gray10)',
@@ -43,7 +44,7 @@ module.exports = {
           20: 'var(--gray20)',
           30: 'var(--gray30)',
           40: 'var(--gray40)',
-          50: 'var(--gray50)',
+          55: 'var(--gray50)', // avoid clash with TW gray-50
           60: 'var(--gray60)',
           70: 'var(--gray70)',
           80: 'var(--gray80)',
@@ -61,6 +62,22 @@ module.exports = {
           80: 'var(--white80)',
           90: 'var(--white90)',
           100: 'var(--white100)',
+        },
+        primarys: {
+          10: 'var(--orange10)',
+          20: 'var(--orange20)',
+          30: 'var(--orange30)',
+          40: 'var(--orange40)',
+          50: 'var(--orange50)',
+          60: 'var(--orange60)',
+          70: 'var(--orange70)',
+          80: 'var(--orange80)',
+          90: 'var(--orange90)',
+          100: 'var(--orange100)',
+        },
+        errors:{
+          50: 'var(--error50)',
+          60: 'var(--error60)',
         }
       },
       // borderColor: {
@@ -79,8 +96,9 @@ module.exports = {
       fontSize: {
         xs: ['11px', { lineHeight: '1.5' }],
         sm: ['13px', { lineHeight: '1.5' }],
+        smPlus: ['14px', { lineHeight: '1.5' }],
         base: ['15px', { lineHeight: '1.5' }],
-        md: ['17px', { lineHeight: '1.5' }],
+        md: ['16px', { lineHeight: '1.5' }],
         lg: ['20px', { lineHeight: '1.3' }],
         xl: ['24px', { lineHeight: '1.2' }],
         '2xl': ['27px', { lineHeight: '1.1' }],
@@ -93,7 +111,12 @@ module.exports = {
       // set between 414 thru 1240
       // or, easier: 17px at 1024 wide = 17/1024 = 1.66vw
       spacing: {
-        navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 4.5rem)",
+        // navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 4.5rem)",
+        // navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 3.5rem)",
+        navH: "56px",
+        navLinkH: "42px",
+        asideW: "200px",
+        insetHalf: "clamp(0.75rem, 0.9988rem + 0.9370vw, 1.125rem)",
         inset: "clamp(1.5rem, 0.9988rem + 1.9370vw, 2.25rem)",
         insetx2: "clamp(3rem, 1.9976rem + 3.8741vw, 4.5rem)",
       }

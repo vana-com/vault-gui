@@ -3,7 +3,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { css } from "twin.macro";
 
 import {
   Flex,
@@ -12,9 +12,9 @@ import {
   Stack,
   Text,
   TooltipDefault,
-  VanaLogo,
   WithIcon,
 } from "src/components";
+import config from "src/config";
 
 import {
   navLinkActiveStyle,
@@ -28,9 +28,10 @@ interface Props {
   children?: React.ReactNode;
 }
 
-// zinc-900
+// zinc-900 bg-fillSecondary
 const outerStyle = [
-  tw`z-10 flex flex-col h-full border-r border-opacity-20 border-separator bg-fillSecondary`,
+  tw`relative flex flex-col h-full border-r border-opacity-20 border-separator`,
+  // tw`before:(content-[' '] absolute top-px right-0 bottom-0 w-8 h-full bg-gradient-to-l from-gray-10)`,
 ];
 
 const NavAside = ({ children }: Props) => {
@@ -38,9 +39,8 @@ const NavAside = ({ children }: Props) => {
   console.log("path", router.pathname);
 
   return (
-    // you can add className="dark" to the wrapper to make it dark
-    <div css={outerStyle} className="">
-      <div tw="px-inset">
+    <div css={outerStyle}>
+      {/* <div tw="px-inset">
         <div tw="flex items-center gap-2.5 h-navH">
           <VanaLogo boxSize="1.3em" tw="bg-label text-background" />
           <Text variant="footnoteMeta" weight="bold" tw="text-label">
@@ -48,15 +48,15 @@ const NavAside = ({ children }: Props) => {
           </Text>
         </div>
       </div>
-      <hr />
+      <hr /> */}
 
       {/* MENU */}
-      <Stack tw="pt-inset gap-[2px]">
+      <Stack tw="pt-insetHalf gap-[2px]">
         <NextLink passHref href="/">
           <Text
             as="a"
             variant="base"
-            weight="medium"
+            weight="semibold"
             css={[navLinkStyle, router.pathname === "/" && navLinkActiveStyle]}
           >
             <WithIcon
@@ -66,30 +66,30 @@ const NavAside = ({ children }: Props) => {
             </WithIcon>
           </Text>
         </NextLink>
-        <Text
-          variant="base"
-          weight="medium"
-          css={navLinkBoxStyle}
-          tw="text-labelSecondary cursor-default"
-        >
+        <div css={navLinkBoxStyle}>
           <TooltipDefault label="Coming soon">
-            <div css={navLinkWithIconStyle}>
+            <Text
+              variant="base"
+              weight="semibold"
+              tw="text-labelTertiary cursor-default"
+              css={navLinkWithIconStyle}
+            >
               <WithIcon
                 prefix={<Icon icon="heroicons-solid:clock" height="0.85em" />}
               >
                 Access log
               </WithIcon>
-            </div>
+            </Text>
           </TooltipDefault>
-        </Text>
+        </div>
         <div />
       </Stack>
 
       {/* BETA */}
       <div tw="mt-auto pb-insetx2">
-        <hr />
+        <hr tw="border-separatorLight" />
         <Link
-          href="https://www.google.com/search?q=something"
+          href={config.vanaBetaFeedback}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -98,8 +98,8 @@ const NavAside = ({ children }: Props) => {
             <Image
               src="/images/vana-keys-beta.png"
               layout="intrinsic"
-              width="128"
-              height={128}
+              width="100"
+              height="100"
               alt="Vana is in Beta. We'd love your feedback."
               priority
             />
@@ -109,30 +109,25 @@ const NavAside = ({ children }: Props) => {
                   Beta
                 </Text>
                 <Text
-                  variant="base"
+                  variant="note"
                   weight="medium"
-                  tw="flex items-center gap-1"
+                  tw="flex items-center gap-1 "
                 >
                   <WithIcon
-                    suffix={
-                      <Icon
-                        icon="heroicons-outline:arrow-sm-right"
-                        rotate="0deg"
-                      />
-                    }
+                    suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}
                   >
-                    Give us feedback
+                    Give feedback
                   </WithIcon>
                 </Text>
               </Stack>
             </Flex>
           </Flex>
         </Link>
-        <hr />
+        <hr tw="border-separatorLight" />
 
         {/* SUPPORT */}
         <Stack tw="pt-5">
-          <div css={navLinkStyle} tw="px-inset">
+          <div css={navLinkStyle}>
             <PopoverHelp />
           </div>
           <Link
@@ -141,12 +136,8 @@ const NavAside = ({ children }: Props) => {
             rel="noopener noreferrer"
             underline={false}
           >
-            <Text
-              variant="note"
-              weight="medium"
-              css={[navLinkStyle, tw`text-labelSecondary`]}
-            >
-              Data security
+            <Text variant="note" weight="medium" css={navLinkStyle}>
+              Security &amp; privacy
             </Text>
           </Link>
         </Stack>

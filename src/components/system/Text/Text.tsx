@@ -10,7 +10,7 @@ export const textVariants = {
   base: tw`text-base tracking-[-0.005em]`,
   body: tw`text-md tracking-[-0.001em]`,
   large: tw`text-lg tracking-[-0.001em]`,
-  heading: tw`text-lg tracking-[-0.005em] font-semibold font-heading`,
+  heading: tw`text-lg tracking-[-0.003em] font-semibold font-heading`,
   title1: tw`text-xl tracking-[-0.001em] font-semibold font-heading`,
   title2: tw`text-2xl tracking-[-0.001em] font-bold font-heading`,
   title3: tw`text-3xl tracking-[-0.005em] font-black font-heading`,

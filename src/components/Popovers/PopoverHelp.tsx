@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { TwStyle } from "twin.macro";
 
 import {
   Markdown,
@@ -12,13 +12,21 @@ import {
 } from "src/components";
 import { HELP_INFORMATION } from "src/data";
 
-const PopoverHelp = () => (
+interface Props {
+  css?: TwStyle;
+}
+
+const PopoverHelp = ({ css }: Props) => (
   <Popover>
     <PopoverTrigger asChild>
       {/* <Button size="sm" variant="ghostSecondary" tw="text-labelTertiary">
         Need help?
       </Button> */}
-      <Text variant="note" weight="medium" tw="hover:cursor-pointer w-full">
+      <Text
+        variant="note"
+        weight="medium"
+        css={[tw`hover:cursor-pointer`, css]}
+      >
         Need help?
       </Text>
     </PopoverTrigger>

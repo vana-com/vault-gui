@@ -19,7 +19,7 @@ interface Props {
   filesToUploadDescription: string;
 }
 
-const boxStyle = tw`w-full p-6 text-black bg-white border rounded-lg lg:p-8`;
+const boxStyle = tw`w-full p-6 text-black border rounded-lg bg-neutral lg:p-8`;
 
 const StorageUploadPresenter = ({
   onDropFile,

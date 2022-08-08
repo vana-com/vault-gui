@@ -26,7 +26,8 @@ const DeleteData = ({
     buttonSlot={
       <Button
         variant="outline"
-        size="lg"
+        size="full"
+        tw="text-error ring-error font-semibold min-h-[220px] w-full bg-red-500 bg-opacity-10 hover:(bg-opacity-20)"
         prefix={<CarbonCloseFilled />}
         isLoading={isDeleting}
         // loadingText="Deleting…"

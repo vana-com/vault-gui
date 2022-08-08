@@ -180,7 +180,7 @@ const StorageUpload = ({
             onClick={encryptAndUploadFiles}
             variant="solid"
             size="xl"
-            tw="w-full"
+            tw="w-full font-semibold"
             suffix={<CarbonArrowRight />}
             isDisabled={!filesToUpload.length}
             // TODO: check what analytics depend on this before updating

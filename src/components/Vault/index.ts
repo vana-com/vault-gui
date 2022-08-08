@@ -1,5 +1,7 @@
+export * from "./AddData";
 export * from "./DeleteData";
 export * from "./StorageInstructions";
+export * from "./StorageInstructionsModal";
 export * from "./StoragePassword";
 export * from "./StoragePasswordLabel";
 export * from "./StorageProgress";

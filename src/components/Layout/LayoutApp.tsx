@@ -26,22 +26,29 @@ const LayoutApp = ({ children }: Props) => {
 
   return (
     <>
-      <Shell>
-        {/* ASIDE NAV */}
-        <Shell.Sidebar>
-          <NavAside />
-        </Shell.Sidebar>
-
-        {/* CONTENT */}
-        <Shell.Body>
+      <div tw="z-10 left-0 right-0 fixed bg-background">
+        <div tw="max-w-[1280px] mx-auto">
+          {/* NAVBAR */}
           <Navbar />
+        </div>
+        <hr />
+      </div>
+      <div tw="max-w-[1280px] mx-auto pt-navH">
+        <Shell>
+          {/* ASIDE NAV */}
+          <Shell.Sidebar>
+            <NavAside />
+          </Shell.Sidebar>
 
-          {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-          <Login withLayout={!user} />
+          {/* CONTENT */}
+          <Shell.Body>
+            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
+            <Login withLayout={!user} />
 
-          {children}
-        </Shell.Body>
-      </Shell>
+            {children}
+          </Shell.Body>
+        </Shell>
+      </div>
     </>
   );
 };

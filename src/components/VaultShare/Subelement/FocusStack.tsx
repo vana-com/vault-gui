@@ -9,8 +9,8 @@ import tw from "twin.macro";
   NB! PLEASE DO NOT DELETE THE COMMENTED COMPONENT. The initial pattern worked ysterday but not today. It shoudl work as it is a valid, recommended pattern from twin.macro 
  */
 
-// const FocusStack = tw(Stack)`rounded-lg overflow-hidden gap-0 border bg-gray-50 border-separator`;
+// const FocusStack = tw(Stack)`rounded-lg overflow-hidden gap-0 border bg-gray-55 border-separator`;
 
-const FocusStack = tw.div`flex flex-col gap-0 overflow-hidden border rounded-lg bg-gray-50 border-separator`;
+const FocusStack = tw.div`flex flex-col gap-0 overflow-hidden border rounded-lg bg-gray-55 border-separator`;
 
 export { FocusStack };

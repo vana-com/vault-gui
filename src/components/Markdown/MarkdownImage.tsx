@@ -26,7 +26,7 @@ export const MarkdownImage = ({ image }: MarkdownImageProps) => {
   const caption = metastring?.match(/{caption: (.*?)}/)?.pop();
 
   return (
-    <div tw="pt-1.5">
+    <div tw="pt-1.5 [> span]:border">
       <Image
         src={image.properties.src}
         width={width}

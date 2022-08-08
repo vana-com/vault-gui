@@ -54,6 +54,7 @@ const stylesBase = css`
     --blueGray100: #242529;
     --slate90: #2f393f;
     --slate100: #262d31;
+    --neutral10: #f2f2f2;
     --neutral20: #eeebdc;
     --neutral50: #c2bca0;
     --neutral60: #b9b49e;
@@ -82,15 +83,16 @@ const stylesBase = css`
     --labelWhite: var(--white100);
 
     --fill: var(--gray30);
-    --fillSecondary: var(--gray15);
+    --fillSecondary: var(--gray10);
     --fillElevated: var(--white100);
     --background: var(--white100);
     --backgroundElevated: var(--white90);
     --backgroundTertiary: var(--white70);
     --backgroundScrim: rgba(0, 0, 0, 0.2);
 
-    --neutral: var(--neutral20);
-    --separator: var(--gray20);
+    --neutral: var(--neutral10);
+    --separator: var(--gray40);
+    --separatorLight: var(--gray20);
     --error: var(--error50);
   }
   .dark {
@@ -110,15 +112,16 @@ const stylesBase = css`
     --background: var(--slate100);
     --backgroundElevated: var(--slate90);
     --backgroundTertiary: var(--gray50);
-    --backgroundScrim: rgba(0, 0, 0, 0.4);
+    --backgroundScrim: rgba(0, 0, 0, 0.7);
 
     --neutral: var(--neutral60);
     --separator: var(--white20);
+    --separatorLight: var(--white10);
     --error: var(--error60);
   }
   body {
     webkittaphighlightcolor: ${theme`colors.purple.500`};
-    ${tw`min-h-screen antialiased transition-all duration-150 bg-background text-label`};
+    ${tw`min-h-screen antialiased transition-all duration-150 bg-[#fcfcfc] bg-background text-label`};
   }
   .w3ajs-external-wallet {
     display: none;

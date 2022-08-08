@@ -15,13 +15,13 @@ export type ButtonVariant = keyof typeof buttonVariants;
 
 export const buttonSizes = {
   initial: tw``,
-  sm: tw`gap-1 px-2 py-1.5 text-xs md:py-0.5`,
+  sm: tw`h-[21px] gap-1 px-2 text-xs`,
   md: tw`h-[27px] gap-1 px-2 text-sm`,
   // set a min-width so it looks good when the loading spinner is active
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
   lg: tw`h-[38px] gap-1.5 px-4 text-md w-full md:w-auto min-w-[130px]`,
   xl: tw`h-[44px] gap-1.5 px-6 text-md w-full md:w-auto min-w-[130px]`,
-  full: tw`flex-1 h-full gap-2 px-6 text-md`,
+  full: tw`flex-1 h-full gap-2 px-6 text-md rounded-[15px]`,
 } as const;
 
 export type ButtonSize = keyof typeof buttonSizes;
@@ -52,8 +52,8 @@ export const buttonStyle = ({
   // states
   tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-primary)`,
   // variants
+  round ? tw`rounded-full` : tw`rounded`,
   variant && buttonVariants[variant],
   size && buttonSizes[size],
-  round ? tw`rounded-full` : tw`rounded`,
   isDisabled && tw`cursor-not-allowed opacity-80`,
 ];
