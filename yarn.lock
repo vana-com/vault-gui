@@ -630,9 +630,9 @@
   dependencies:
     prettier "^2.2.1"
 
-"@corsali/userdata-extractor@0.0.3":
+"@corsali/userdata-extractor@^0.0.3":
   version "0.0.3"
-  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.0.3/b922bcb9b8eb15f2be944b3c93f2e831ec19c4c29dd3ef7424152cd08cab6e9a#50557a29f5e8e5aabfcf9e573620b43937905b7b"
+  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.0.3/50557a29f5e8e5aabfcf9e573620b43937905b7b#50557a29f5e8e5aabfcf9e573620b43937905b7b"
   integrity sha512-2YQGbOnihoP4cfeU9ZQ5jbLUyToZSvBJ+UcWANsJ18Kp4hfTiMq0bTCoV6WwhuVijJI5yWLXbl8PG2RfxkP/ig==
   dependencies:
     "@zip.js/zip.js" "2.4.21"
@@ -3512,6 +3512,14 @@
   dependencies:
     "@metamask/detect-provider" "^1.2.0"
     "@web3auth/base" "^1.1.1"
+
+"@web3auth/metamask-adapter@^1.1.2":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@web3auth/metamask-adapter/-/metamask-adapter-1.1.4.tgz#af7aa523313fc696086924602d58fc98355e02da"
+  integrity sha512-s6TItGZT5KTxGuuLEsV1ds6kmEc4p1a3e/awGQ6qoSEWjX6Qziej54UQpDlEr/wWbf4ApseAkKpCvT+mUQW6sw==
+  dependencies:
+    "@metamask/detect-provider" "^1.2.0"
+    "@web3auth/base" "^1.1.4"
 
 "@web3auth/openlogin-adapter@^1.1.1":
   version "1.1.1"

@@ -6,7 +6,7 @@ import Web3 from "web3";
 import { IWalletProvider } from "./walletProvider";
 
 /**
- * Implements wallet functionality specific to EVM compatible wallets, such as getting the wallet address and private key
+ * Implements wallet functionality specific to EVM compatible wallets, such as getting the wallet address encrypting/decrypting
  * @param provider - Web3Auth provider
  * @returns
  */

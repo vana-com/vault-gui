@@ -34,7 +34,7 @@ export default async (
       });
     }
 
-    const appPubKey =
+    const externalId =
       hasuraTokenPayload["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
 
     const graphQLClient = new GraphQLClient(
@@ -49,7 +49,7 @@ export default async (
     const sdk = getSdk(graphQLClient);
 
     const { users } = await sdk.getUserUUIDFromExternalId({
-      externalId: appPubKey,
+      externalId,
     });
 
     const { id: userId } = users && users[0];
@@ -74,6 +74,7 @@ export default async (
       if (urlParts.length === 2) {
         const fileName = urlParts[1];
         const file = serverConfig.userDataBucket.file(fileName);
+        // TODO: any non 200 response throws an error. Catch them and delete the corresponding userModule
         // eslint-disable-next-line no-await-in-loop
         const [response] = await file.delete();
 

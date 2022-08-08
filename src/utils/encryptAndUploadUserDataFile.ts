@@ -8,7 +8,7 @@ import { IWalletProvider } from "./identity/walletProvider";
  * @param files - The user data files to encrypt and upload
  * @param password - The password used to symmetrically encrypt
  * @param moduleName - Name of the email integration the file is for
- * @param appPubKey - Public key of the user
+ * @param externalId - Hasura external ID of the user
  * @param handleUploadProgress - callback to show user progress of upload
  * @param createUserModule - callback to create a row in users_modules table in hasura
  *
@@ -16,8 +16,8 @@ import { IWalletProvider } from "./identity/walletProvider";
 const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
   moduleName: string,
-  appPubKey: string,
-  walletProvider: IWalletProvider | undefined,
+  externalId: string,
+  walletProvider: IWalletProvider | null,
   handleUploadProgress: (event: any) => void,
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>,
 ) => {
@@ -41,7 +41,7 @@ const encryptAndUploadUserDataFiles = async (
     uploadFile(
       file,
       moduleName,
-      appPubKey,
+      externalId,
       encryptedPasswords[i],
       handleUploadProgress,
     ),

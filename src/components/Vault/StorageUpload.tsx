@@ -16,14 +16,14 @@ import { StorageUploadPresenter } from "./index";
 interface Props {
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
-  appPubKey: string;
+  externalId: string;
   web3AuthWalletProvider: IWalletProvider | null;
 }
 
 const StorageUpload = ({
   moduleName,
   createUserModule,
-  appPubKey,
+  externalId,
   web3AuthWalletProvider,
 }: Props) => {
   const router = useRouter();
@@ -116,7 +116,7 @@ const StorageUpload = ({
       await encryptAndUploadUserDataFiles(
         sanitizedFiles,
         moduleName,
-        appPubKey,
+        externalId,
         web3AuthWalletProvider,
         handleUploadProgress,
         createUserModule,

@@ -13,13 +13,13 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { fileName, moduleName, appPubKey, encryptedPassword } = req.query;
+  const { fileName, moduleName, externalId, encryptedPassword } = req.query;
 
   try {
-    if (fileName && moduleName && appPubKey && encryptedPassword) {
+    if (fileName && moduleName && externalId && encryptedPassword) {
       const fullFileName = generateUserDataObjectName(
         fileName as string,
-        appPubKey as string,
+        externalId as string,
         moduleName as string,
       );
       const file = serverConfig.userDataBucket.file(fullFileName);

@@ -4,6 +4,7 @@ import {
   CONNECTED_EVENT_DATA,
   WALLET_ADAPTERS,
 } from "@web3auth/base";
+import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
@@ -117,7 +118,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         const ethProvider = getWalletProvider(web3AuthInstance.provider!);
         setWalletProvider(ethProvider);
 
-        const walletAddress = (await ethProvider.getAccounts())[0];
+        const walletAddress = await ethProvider.getWalletAddress();
         if (walletAddress) {
           setUserWalletAddress(walletAddress);
         } else {
@@ -182,10 +183,17 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const { Web3Auth } = await import("@web3auth/web3auth");
         const web3AuthInstance = new Web3Auth(config.web3AuthOptions);
-        const web3AuthAdapter = new OpenloginAdapter(
+
+        // OpenLogin adapter
+        const openLoginAdapter = new OpenloginAdapter(
           config.openLoginAdapterConfig,
         );
-        web3AuthInstance.configureAdapter(web3AuthAdapter);
+        web3AuthInstance.configureAdapter(openLoginAdapter);
+
+        // Metamask Adapter
+        const metamaskAdapter = new MetamaskAdapter();
+        web3AuthInstance.configureAdapter(metamaskAdapter);
+
         setWeb3Auth(web3AuthInstance);
         subscribeAuthEvents(web3AuthInstance);
         await web3AuthInstance.initModal({

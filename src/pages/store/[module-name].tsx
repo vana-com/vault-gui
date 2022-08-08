@@ -94,7 +94,7 @@ const VaultStoragePage: NextPage = () => {
             <StorageUpload
               moduleName={moduleName}
               createUserModule={createUserModuleCallback}
-              appPubKey={user?.externalId ?? ""}
+              externalId={user?.externalId ?? ""}
               web3AuthWalletProvider={walletProvider}
             />
           </div>
