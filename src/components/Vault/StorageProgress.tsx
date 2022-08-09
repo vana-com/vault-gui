@@ -10,12 +10,12 @@ interface Props {
 const ENCRYPTION_PROGRESS_CUTOFF = 6;
 
 const StorageProgress = ({ storeProgress }: Props) => (
-  <Stack tw="gap-1 mx-auto justify-center pt-3 pb-5">
+  <Stack tw="gap-1 mx-auto justify-center pt-3 pb-5 min-h-[160px]">
     {/* TODO: recreate this! */}
     {/* <div tw="pt-2 pb-4 max-w-[75%]">
       <Progress hasStripe isAnimated value={storeProgress} bg="white" />
     </div> */}
-    <Text variant="display" weight="semibold" tw="text-center text-5xl">
+    <Text variant="display" weight="bold" tw="text-center text-6xl">
       {storeProgress}%
     </Text>
     <Text variant="note" color="labelTertiary" tw="text-center">

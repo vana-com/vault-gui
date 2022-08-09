@@ -31,7 +31,7 @@ const contentShow2 = keyframes({
 
 export const styledDialogContent2 = [
   // layout
-  tw`fixed top-navH left-[50%] w-[90vw] max-w-2xl h-auto max-h-[85vh] min-h-[195px] transform -translate-x-1/2 -translate-y-1/2`,
+  tw`fixed top-navH left-[50%] w-[90vw] max-w-2xl h-auto max-h-[85vh] min-h-[30vh] transform -translate-x-1/2 -translate-y-1/2`,
   // card
   tw`p-inset overflow-auto rounded-[40px] shadow-xl bg-background`,
   // typography

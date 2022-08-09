@@ -15,16 +15,16 @@ import {
 import * as styles from "./Dialog.css";
 
 interface Props {
-  buttonSlot: React.ReactNode;
+  buttonNode: React.ReactNode;
   children: React.ReactNode;
 }
 
-const DialogModal = ({ buttonSlot, children }: Props) => {
+const DialogModal = ({ buttonNode, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogTrigger asChild>{buttonSlot}</DialogTrigger>
+      <DialogTrigger asChild>{buttonNode}</DialogTrigger>
       <DialogPortal forceMount>
         <AnimatePresence>
           {isOpen ? (

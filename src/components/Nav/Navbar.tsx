@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -13,9 +14,9 @@ const Navbar = ({ children }: Props) => {
   const [user] = useAtom(userAtom);
 
   return (
-    <>
-      <div tw="px-inset flex justify-between items-center h-navH">
-        <div tw="flex items-center gap-2.5 h-navH">
+    <div tw="px-inset flex justify-between items-center h-navH">
+      <NextLink passHref href="/">
+        <div tw="flex items-center gap-2.5 h-navH cursor-pointer">
           <VanaLogo
             boxSize="1.5em"
             tw="bg-label text-background rounded-[4px]"
@@ -24,16 +25,13 @@ const Navbar = ({ children }: Props) => {
             Vault
           </Text>
         </div>
+      </NextLink>
 
-        {/* <NavBreadcrumb /> */}
+      {/* USER AVATAR */}
+      {user && <UserAccountNav user={user} accountLoginService="MetaMask" />}
 
-        {/* USER AVATAR */}
-        {user && <UserAccountNav user={user} accountLoginService="MetaMask" />}
-
-        {children}
-      </div>
-      {/* <hr /> */}
-    </>
+      {children}
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Login, NavAside, Navbar, Shell } from "src/components";
+import { LayoutShell, Login, NavAside, Navbar } from "src/components";
 import { userAtom } from "src/state";
 
 interface Props {
@@ -11,9 +11,10 @@ interface Props {
 }
 
 const LayoutApp = ({ children }: Props) => {
+  const [user] = useAtom(userAtom);
+
   // only render UI when the page is mounted on the client
   const [mounted, setMounted] = useState(false);
-  const [user] = useAtom(userAtom);
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
@@ -26,28 +27,30 @@ const LayoutApp = ({ children }: Props) => {
 
   return (
     <>
-      <div tw="z-10 left-0 right-0 fixed bg-background">
+      <div tw="z-[1] left-0 right-0 fixed bg-background">
         <div tw="max-w-[1280px] mx-auto">
           {/* NAVBAR */}
           <Navbar />
         </div>
         <hr />
       </div>
-      <div tw="max-w-[1280px] mx-auto pt-navH">
-        <Shell>
+      <div css={[tw`max-w-[1280px] mx-auto pt-navH`, !user && tw`border-l`]}>
+        <LayoutShell>
           {/* ASIDE NAV */}
-          <Shell.Sidebar>
-            <NavAside />
-          </Shell.Sidebar>
+          {user && (
+            <LayoutShell.Sidebar>
+              <NavAside />
+            </LayoutShell.Sidebar>
+          )}
 
           {/* CONTENT */}
-          <Shell.Body>
+          <LayoutShell.Body>
             {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-            <Login withLayout={!user} />
+            <Login withLayout />
 
             {children}
-          </Shell.Body>
-        </Shell>
+          </LayoutShell.Body>
+        </LayoutShell>
       </div>
     </>
   );

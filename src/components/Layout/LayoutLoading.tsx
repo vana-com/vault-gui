@@ -4,7 +4,10 @@ import tw, { styled } from "twin.macro";
 import {
   Flex,
   LayoutApp,
+  LayoutCanvas,
+  LayoutCanvasPattern,
   NavBreadcrumb,
+  NavHeaderRule,
   Spinner,
   TitleAndMetaTags,
 } from "src/components";
@@ -21,12 +24,13 @@ const LayoutLoading = ({ crumbs }: Props) => {
       <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
       <LayoutApp>
         <NavBreadcrumb crumbs={crumbs} />
-        <div tw="px-inset pt-2.5">
-          <hr />
-        </div>
-        <Flex tw="px-inset pt-inset min-h-[260px] w-full items-center justify-center">
-          <Spinner />
-        </Flex>
+        <NavHeaderRule />
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          <Flex tw="px-inset pt-inset min-h-[260px] w-full items-center justify-center">
+            <Spinner />
+          </Flex>
+        </LayoutCanvas>
       </LayoutApp>
     </>
   );

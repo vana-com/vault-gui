@@ -5,7 +5,7 @@ export const navLinkBoxStyle = [
   navLinkWithIconStyle,
   tw`h-navLinkH px-inset text-labelSecondary`,
 ];
-export const navLinkHoverStyle = [tw`hover:(bg-gray-500 bg-opacity-5)`];
+export const navLinkHoverStyle = [tw`hover:(bg-fillSecondary)`];
 export const navLinkStyle = [navLinkBoxStyle, navLinkHoverStyle];
 // bg-gray-400 bg-opacity-10
 export const navLinkActiveStyle = [tw`text-label`];

@@ -57,7 +57,7 @@ const NavAside = ({ children }: Props) => {
             as="a"
             variant="base"
             weight="semibold"
-            css={[navLinkStyle, router.pathname === "/" && navLinkActiveStyle]}
+            css={[navLinkStyle, navLinkActiveStyle]}
           >
             <WithIcon
               prefix={<Icon icon="heroicons-solid:folder" height="0.85em" />}

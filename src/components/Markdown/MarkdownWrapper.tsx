@@ -5,6 +5,6 @@ interface Props {
 }
 
 export const MarkdownWrapper = styled.div(({ isNote = false }: Props) => [
-  tw`flex flex-col gap-1 sm:w-11/12 lg:w-7/12`,
+  tw`flex flex-col gap-1`,
   isNote && tw`[*]:text-base`,
 ]);

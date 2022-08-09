@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -16,7 +17,8 @@ const LoginButton = ({ logIn, loginError, setLoginError }: Props) => (
       type="button"
       variant="solid"
       size="xl"
-      css={tw`min-w-[220px] max-w-[220px]`}
+      prefix={<Icon icon="carbon:locked" height="1.125em" />}
+      css={tw`min-w-[280px] max-w-[220px] font-semibold`}
       onClick={logIn}
     >
       Log In

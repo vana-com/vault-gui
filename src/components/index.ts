@@ -17,6 +17,7 @@ export * from "./TitleAndMetaTags";
 export * from "./Toast";
 export * from "./UserAccess";
 export * from "./Vault";
+export * from "./VaultDataModule";
 
 /* DESIGN SYSTEM PRIMITIVES */
 export * from "./system/Box";

@@ -18,6 +18,8 @@ const ShellRoot = ({ children }: Props) => (
 
 const sidebarStyle = [
   tw`relative w-asideW`,
+  // hidden on mobile
+  tw`hidden sm:block`,
   css`
     grid-area: sidebar;
   `,
@@ -29,6 +31,7 @@ const Sidebar = ({ children }: Props) => (
 
 const bodyStyle = [
   tw`relative border-r bg-background border-opacity-20 border-separator`,
+  tw`flex flex-col`,
   css`
     grid-area: body;
   `,
@@ -36,8 +39,7 @@ const bodyStyle = [
 
 const Body = ({ children }: Props) => <div css={bodyStyle}>{children}</div>;
 
-// export { LayoutShell };
-export const Shell = Object.assign(ShellRoot, {
+export const LayoutShell = Object.assign(ShellRoot, {
   Sidebar,
   Body,
 });

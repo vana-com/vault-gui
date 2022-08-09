@@ -1,14 +1,7 @@
 import { Icon } from "@iconify/react";
-// import {
-//   CheckIcon,
-//   ChevronRightIcon,
-//   DotFilledIcon,
-//   HamburgerMenuIcon,
-// } from "@radix-ui/react-icons";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw, { styled } from "twin.macro";
+import tw from "twin.macro";
 
-import { Group, Stack, Text, WithIcon } from "src/components";
+import { Group, Logout, Stack, Text, WithIcon } from "src/components";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +10,7 @@ import {
 
 import { navLinkStyle } from "./Nav.css";
 
-const accountAvatarStyle = tw`flex items-center justify-center border rounded-full border-label text-label bg-background`;
+const accountAvatarStyle = tw`flex items-center justify-center rounded-full text-label bg-background hover:bg-fillSecondary`;
 
 interface Props {
   user: any;
@@ -31,23 +24,26 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
     <DropdownMenu tw="z-20">
       <DropdownMenuTrigger asChild>
         <button
-          css={[accountAvatarStyle, tw`h-[32px] w-[32px]`]}
+          css={[accountAvatarStyle, tw`h-[40px] w-[40px]`]}
           aria-label="Your account"
           type="button"
         >
-          <Text as="a" variant="base" weight="bold">
-            {/* TODO: get initials from user name */}C
-          </Text>
+          {/* TODO: get initials from user name */}
+          {/* <Text as="a" variant="base" weight="bold">
+            C
+          </Text> */}
+          <Icon icon="carbon:user-avatar-filled-alt" height="1.75em" />
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent sideOffset={12} align="end">
-        <Stack tw="gap-2 min-w-[320px]">
+      <DropdownMenuContent sideOffset={9} align="end">
+        <Stack tw="gap-2 min-w-[300px]">
           <Group tw="px-3 py-4 gap-3 items-center">
             <div css={[accountAvatarStyle, tw`h-[55px] w-[55px]`]}>
-              <Text variant="large" weight="bold">
+              {/* <Text variant="large" weight="bold">
                 C
-              </Text>
+              </Text> */}
+              <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
             </div>
             <Stack tw="gap-0.5">
               <Text variant="note" weight="medium" tw="flex">
@@ -57,13 +53,16 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
                 </Text>
               </Text>
               <Text variant="footnote" weight="medium" tw="text-labelTertiary">
-                ID ends with {user.id.slice(-8)}
+                ID ends in{" "}
+                <Text as="span" tw="font-mono">
+                  {user.id.slice(-8)}
+                </Text>
               </Text>
             </Stack>
           </Group>
-          <hr />
+          <hr tw="border-separatorLight" />
           <Stack tw="gap-[2px]">
-            <Text
+            {/* <Text
               as="button"
               variant="base"
               weight="medium"
@@ -74,7 +73,8 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
               >
                 Log out
               </WithIcon>
-            </Text>
+            </Text> */}
+            <Logout />
             <Text
               as="button"
               variant="base"
@@ -82,11 +82,7 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
               css={[navLinkStyle, tw`px-3`]}
               tw="text-error"
             >
-              <WithIcon
-                prefix={
-                  <Icon icon="heroicons-solid:shield-check" height="0.85em" />
-                }
-              >
+              <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>
                 Delete Vault
               </WithIcon>
             </Text>

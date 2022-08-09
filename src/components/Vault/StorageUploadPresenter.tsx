@@ -1,8 +1,16 @@
+import { Icon } from "@iconify/react";
 import { DragEventHandler } from "react";
 import tw from "twin.macro";
 
-import { Button, Group, Stack, Text } from "src/components";
-import { CarbonAttachment, CarbonCloseFilled } from "src/components/Icons";
+import {
+  Button,
+  Group,
+  Stack,
+  Text,
+  TooltipDefault,
+  WithIcon,
+} from "src/components";
+import { CarbonCloseFilled } from "src/components/Icons";
 import { getAbbreviatedFileName } from "src/utils/getAbbreviatedFileName";
 
 import { StorageProgress } from "./index";
@@ -17,9 +25,10 @@ interface Props {
   openFileDialog: () => void;
   uploadProgress: number;
   filesToUploadDescription: string;
+  instructionsNode?: React.ReactNode;
 }
 
-const boxStyle = tw`w-full p-6 text-black border rounded-lg bg-neutral lg:p-8`;
+const boxStyle = tw`relative flex items-center justify-center w-full h-full text-black rounded p-insetHalf bg-neutral min-h-[160px]`;
 
 const StorageUploadPresenter = ({
   onDropFile,
@@ -31,17 +40,21 @@ const StorageUploadPresenter = ({
   openFileDialog,
   uploadProgress,
   filesToUploadDescription,
+  instructionsNode,
 }: Props) => (
   <>
-    {/* <SecurityMessage /> */}
     <div
-      tw="cursor-default w-full"
+      tw="cursor-default w-full relative"
       onDrop={onDropFile}
       onDragOver={(event) => {
         // Prevent default behavior (prevent file from being opened)
         event.preventDefault();
       }}
     >
+      {/* INSTRUCTIONS */}
+      <div tw="absolute top-1 right-1 z-10">{instructionsNode}</div>
+
+      {/* FILE INPUT */}
       <div tw="sr-only">
         <FileInput onChange={handleSelectFile} />
       </div>
@@ -54,46 +67,65 @@ const StorageUploadPresenter = ({
           onClick={openFileDialog}
           css={boxStyle}
         >
-          <Stack tw="items-center">
-            <CarbonAttachment height="2em" width="2em" />
-            <div tw="pt-2">
+          <Stack tw="items-center gap-0.5">
+            <Icon icon="carbon:upload" height="1.75em" />
+            <div tw="pt-1">
               <Text color="black" weight="semibold" variant="body">
                 Drop file(s) here or click to select
               </Text>
             </div>
-            <Text variant="note" tw="text-gray-70">
+            <Text variant="note" tw="text-labelSecondary">
               {filesToUploadDescription}
             </Text>
           </Stack>
         </Button>
       )}
 
-      {/* STEP 2: CONFIRM & ADD PASSWORD */}
+      {/* STEP 2: CONFIRM */}
       {!isDataUploading && !!filesToUpload.length && (
         <Stack tw="gap-8" css={boxStyle}>
           {filesToUpload.map((fileToUpload, i) => (
-            <Group
+            <Stack
               key={fileToUpload.toString()}
-              tw="gap-0.5 justify-center items-center"
+              tw="gap-1 items-center transform translate-y-1.5"
             >
-              <Text color="black" weight="semibold" variant="body">
-                {getAbbreviatedFileName(fileToUpload.name)}
-              </Text>
-              <Button
-                aria-label="Remove file to upload"
-                variant="icon"
-                tw="text-black"
-                // TODO: test if Formik implicitly gets handle this reset…
-                type="reset"
-                onClick={() => {
-                  const copyFilesToUpload = [...filesToUpload];
-                  copyFilesToUpload.splice(i, 1);
-                  setFilesToUpload(copyFilesToUpload);
-                }}
+              <Group tw="gap-1 justify-center items-center">
+                <Text color="black" weight="semibold" variant="body">
+                  {getAbbreviatedFileName(fileToUpload.name)}
+                </Text>
+                <TooltipDefault
+                  label="Remove file"
+                  align="center"
+                  side="right"
+                  sideOffset={0}
+                >
+                  <Button
+                    aria-label="Remove file to upload"
+                    variant="icon"
+                    tw="text-black"
+                    // TODO: test if Formik implicitly gets handle this reset…
+                    type="reset"
+                    onClick={() => {
+                      const copyFilesToUpload = [...filesToUpload];
+                      copyFilesToUpload.splice(i, 1);
+                      setFilesToUpload(copyFilesToUpload);
+                    }}
+                  >
+                    <CarbonCloseFilled />
+                  </Button>
+                </TooltipDefault>
+              </Group>
+              <Text
+                variant="note"
+                tw="text-labelSecondary flex items-center gap-1"
               >
-                <CarbonCloseFilled />
-              </Button>
-            </Group>
+                <WithIcon
+                  prefix={<Icon icon="carbon:checkmark" height="1.25em" />}
+                >
+                  Looks good
+                </WithIcon>
+              </Text>
+            </Stack>
           ))}
         </Stack>
       )}

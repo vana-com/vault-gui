@@ -32,17 +32,26 @@ export const TooltipContent = Content;
 interface Props {
   children: React.ReactNode;
   label: string;
+  align?: string;
+  side?: string;
+  sideOffset?: number;
 }
 
-const TooltipDefault = ({ children, label }: Props) => (
+const TooltipDefault = ({
+  children,
+  label,
+  align = "start",
+  side,
+  sideOffset = 5,
+}: Props) => (
   <Tooltip>
-    <TooltipTrigger>
+    <TooltipTrigger asChild>
       {/* <IconButton>
           <PlusIcon />
         </IconButton> */}
-      <div>{children}</div>
+      {children}
     </TooltipTrigger>
-    <TooltipContent align="start" sideOffset={5}>
+    <TooltipContent align={align} side={side} sideOffset={sideOffset}>
       {label}
     </TooltipContent>
   </Tooltip>

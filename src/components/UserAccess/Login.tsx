@@ -10,8 +10,14 @@ import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { LoginButton } from "src/components";
-import { FocusStack } from "src/components/VaultShare/Subelement";
+import {
+  Center,
+  LayoutCanvas,
+  LayoutCanvasPattern,
+  LoginButton,
+  Stack,
+  Text,
+} from "src/components";
 import config from "src/config";
 import {
   hasuraTokenAtom,
@@ -154,9 +160,22 @@ const Login = ({ withLayout }: Props) => {
   return (
     <>
       {withLayout ? (
-        <FocusStack tw="items-center justify-center min-h-[268px]">
-          <LoginButton logIn={logIn} loginError={loginError} />
-        </FocusStack>
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          <Center tw="min-h-[300px]">
+            <Stack tw="gap-5 items-center">
+              <Stack tw="gap-1 items-center">
+                <Text variant="base" weight="medium">
+                  Login or create a new account
+                </Text>
+                <Text variant="note" tw="text-labelSecondary">
+                  Tip: if you have an account, use the same login method
+                </Text>
+              </Stack>
+              <LoginButton logIn={logIn} loginError={loginError} />
+            </Stack>
+          </Center>
+        </LayoutCanvas>
       ) : (
         <LoginButton logIn={logIn} loginError={loginError} />
       )}

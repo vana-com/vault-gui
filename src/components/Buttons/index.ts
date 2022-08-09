@@ -1,1 +1,1 @@
-export * from "./ModuleButton";
+export * from "../Card/DataCardButton";

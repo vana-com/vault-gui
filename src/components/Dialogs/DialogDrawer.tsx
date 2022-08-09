@@ -1,11 +1,9 @@
-import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogOverlay,
@@ -13,27 +11,27 @@ import {
   DialogTrigger,
   styledMotionDiv,
 } from "src/components";
-import { CarbonAddFilled } from "src/components/Icons";
 
 interface Props {
-  buttonLabel: string;
+  buttonNode: React.ReactNode;
   children: React.ReactNode;
 }
 
-const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
+const DialogDrawer = ({ buttonNode, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogTrigger asChild>
-        <Button
+      <DialogTrigger>
+        {/* <Button
           size="full"
           variant="outline"
           tw="bg-newAccent bg-opacity-20"
           prefix={<Icon icon="heroicons-outline:plus" />}
         >
           {buttonLabel}
-        </Button>
+        </Button> */}
+        {buttonNode}
       </DialogTrigger>
       <DialogPortal>
         <AnimatePresence>
@@ -61,7 +59,7 @@ const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
                 {/* css={styledContent} */}
                 <DialogContent
                   forceMount
-                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh] min-w-[580px]"
+                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-background h-full overflow-auto w-full max-w-[620px]"
                 >
                   {children}
                 </DialogContent>
@@ -74,4 +72,4 @@ const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
   );
 };
 
-export { DialogDrawerMenu };
+export { DialogDrawer };

@@ -6,9 +6,9 @@ export const buttonVariants = {
   contrast: tw`bg-fillElevated text-label`,
   solid: tw`bg-primary text-label`,
   outline: tw`bg-transparent text-label ring-1 ring-inset ring-separator`,
-  ghost: tw`bg-fillSecondary text-label`,
+  ghost: tw`hover:bg-fillSecondary text-label`,
   ghostSecondary: tw`bg-fillSecondary text-labelSecondary`,
-  icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
+  icon: tw`items-center justify-center text-background h-[25px] w-[25px] hover:bg-fillSecondary`,
 } as const;
 
 export type ButtonVariant = keyof typeof buttonVariants;
@@ -16,12 +16,12 @@ export type ButtonVariant = keyof typeof buttonVariants;
 export const buttonSizes = {
   initial: tw``,
   sm: tw`h-[21px] gap-1 px-2 text-xs`,
-  md: tw`h-[27px] gap-1 px-2 text-sm`,
+  md: tw`h-[28px] gap-1 px-2 text-sm`,
   // set a min-width so it looks good when the loading spinner is active
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
   lg: tw`h-[38px] gap-1.5 px-4 text-md w-full md:w-auto min-w-[130px]`,
   xl: tw`h-[44px] gap-1.5 px-6 text-md w-full md:w-auto min-w-[130px]`,
-  full: tw`flex-1 h-full gap-2 px-6 text-md rounded-[15px]`,
+  full: tw`flex-1 h-full gap-2 px-6 text-md rounded-2xl`,
 } as const;
 
 export type ButtonSize = keyof typeof buttonSizes;
@@ -51,7 +51,7 @@ export const buttonStyle = ({
   tw`transition-transform duration-100 ease-in-out`,
   // states
   tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-primary)`,
-  // variants
+  // variants: rounded first so we can override in variant
   round ? tw`rounded-full` : tw`rounded`,
   variant && buttonVariants[variant],
   size && buttonSizes[size],

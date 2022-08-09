@@ -6,11 +6,16 @@ import { useState } from "react";
 import tw from "twin.macro";
 
 import {
+  DataModule,
   DeleteData,
   LayoutApp,
+  LayoutCanvas,
+  LayoutCanvasGrid,
+  LayoutCanvasPattern,
   LayoutLoading,
   NavBreadcrumb,
   NavHeader,
+  PopoverDataModule,
   TitleAndMetaTags,
 } from "src/components";
 import { navigationBreadcrumbs } from "src/data";
@@ -36,7 +41,7 @@ const VaultModulePage: NextPage = () => {
       skip: !user?.id,
     });
 
-  const usersModulesForName = userModulesData
+  const usersModulesForThisService = userModulesData
     ? userModulesData.usersModules.filter(
         (userModule) => userModule.module.name === moduleName,
       )
@@ -48,7 +53,7 @@ const VaultModulePage: NextPage = () => {
    */
   const deleteAllModuleFiles = async () => {
     setIsDeleting(true);
-    const usersModulesIdsToDelete = usersModulesForName.map(
+    const usersModulesIdsToDelete = usersModulesForThisService.map(
       (userModule) => userModule.id,
     );
     const { deleteSuccessful } = await (
@@ -73,6 +78,10 @@ const VaultModulePage: NextPage = () => {
     }
   };
 
+  // TESTS
+  console.log("userModulesData", userModulesData);
+  console.log("usersModulesForThisService", usersModulesForThisService);
+
   if (isDataLoading) {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[1]]} />;
   }
@@ -80,7 +89,6 @@ const VaultModulePage: NextPage = () => {
   return (
     <>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
-
       <LayoutApp>
         <NavBreadcrumb crumbs={[navigationBreadcrumbs[1]]}>
           {/* <AddData modules={notStoredModules} buttonSize="md" /> */}
@@ -88,15 +96,36 @@ const VaultModulePage: NextPage = () => {
 
         <NavHeader heading={`My ${moduleName} data`}>
           {/* <PopoverHelp css={tw`text-labelTertiary`} /> */}
+          <PopoverDataModule>
+            <DeleteData
+              onDelete={() => deleteAllModuleFiles()}
+              isDeleting={isDeleting}
+              deletionName={`your ${moduleName}`}
+              buttonLabel={`Delete all your ${moduleName} data`}
+            />
+          </PopoverDataModule>
         </NavHeader>
 
-        <main tw="px-inset pt-inset">
-          <DeleteData
-            onDelete={() => deleteAllModuleFiles()}
-            isDeleting={isDeleting}
-            buttonLabel={`Delete all your ${moduleName} data`}
-          />
-        </main>
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          <LayoutCanvasGrid>
+            {/* modules={usersModulesForThisService} */}
+            {usersModulesForThisService.map((module) => (
+              <DataModule
+                key={module.id}
+                module={module}
+                moduleName={moduleName}
+              >
+                <DeleteData
+                  onDelete={() => deleteAllModuleFiles()}
+                  isDeleting={isDeleting}
+                  deletionName="this data module"
+                  buttonLabel="Delete this data module"
+                />
+              </DataModule>
+            ))}
+          </LayoutCanvasGrid>
+        </LayoutCanvas>
       </LayoutApp>
     </>
   );

@@ -4,7 +4,7 @@ import tw from "twin.macro";
 /* WithIcon is a simple utility to set an icone before or after some text */
 
 interface Props {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }

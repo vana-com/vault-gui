@@ -1,19 +1,9 @@
-import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw, { styled } from "twin.macro";
+import tw from "twin.macro";
 
-import {
-  Button,
-  CarbonChevronDown,
-  CarbonChevronUp,
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-  Flex,
-  Markdown,
-  MarkdownWrapper,
-  Text,
-} from "src/components";
+import { Markdown, MarkdownWrapper, Stack, Text } from "src/components";
+import { ptBreadcrumbs } from "src/components/system/Styles";
+import { INSTRUCTIONS_INFORMATION } from "src/data";
 import { ModuleName } from "src/types";
 import { renderModuleStoreInstructions } from "src/utils";
 
@@ -21,32 +11,23 @@ interface Props {
   moduleName: ModuleName;
 }
 
-const StorageInstructions = ({ moduleName }: Props) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <Collapsible open={open} onOpenChange={setOpen} tw="py-3 cursor-pointer">
-      <CollapsibleTrigger asChild>
-        <Flex tw="items-center justify-between">
-          <Text variant="note" weight="semibold" color="labelSecondary">
-            Obtain your {moduleName} data first.{" "}
-            <Text as="span" weight="normal">
-              How do I do that?
-            </Text>
-          </Text>
-          <Button variant="icon" round tw="text-labelSecondary">
-            {open ? <CarbonChevronUp /> : <CarbonChevronDown />}
-          </Button>
-        </Flex>
-      </CollapsibleTrigger>
-
-      <CollapsibleContent tw="pt-3 pb-6">
-        <MarkdownWrapper isNote tw="text-labelSecondary">
-          <Markdown>{renderModuleStoreInstructions(moduleName)}</Markdown>
-        </MarkdownWrapper>
-      </CollapsibleContent>
-    </Collapsible>
-  );
-};
+const StorageInstructions = ({ moduleName }: Props) => (
+  <Stack tw="gap-0">
+    <Stack css={[tw`gap-1 p-inset bg-neutral`, ptBreadcrumbs]}>
+      <Text variant="title1" tw="pb-1">
+        Get your {moduleName} data in 5 minutes
+      </Text>
+      <MarkdownWrapper isNote tw="text-labelSecondary">
+        <Markdown>{INSTRUCTIONS_INFORMATION}</Markdown>
+      </MarkdownWrapper>
+    </Stack>
+    {/* <hr tw="border-labelQuaternary" /> */}
+    <div tw="p-inset">
+      <MarkdownWrapper isNote tw="text-label lg:w-11/12">
+        <Markdown>{renderModuleStoreInstructions(moduleName)}</Markdown>
+      </MarkdownWrapper>
+    </div>
+  </Stack>
+);
 
 export { StorageInstructions };

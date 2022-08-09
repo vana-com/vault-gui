@@ -58,6 +58,8 @@ const stylesBase = css`
     --neutral20: #eeebdc;
     --neutral50: #c2bca0;
     --neutral60: #b9b49e;
+    --neutral80: #46443b;
+    --neutral90: #3c3b32;
     --orange10: #fff6eb;
     --orange20: #ffe7cc;
     --orange30: #ffcf99;
@@ -73,6 +75,8 @@ const stylesBase = css`
   }
   .light {
     --primary: var(--orange60);
+    --primaryTint: var(--orange20);
+    --primaryShade: var(--orange70);
     --accent: var(--white100);
 
     --label: var(--gray100);
@@ -82,7 +86,7 @@ const stylesBase = css`
     --labelInverse: var(--white100);
     --labelWhite: var(--white100);
 
-    --fill: var(--gray30);
+    --fill: var(--gray20);
     --fillSecondary: var(--gray10);
     --fillElevated: var(--white100);
     --background: var(--white100);
@@ -91,12 +95,15 @@ const stylesBase = css`
     --backgroundScrim: rgba(0, 0, 0, 0.2);
 
     --neutral: var(--neutral10);
+    --neutralDark: var(--neutral20);
     --separator: var(--gray40);
     --separatorLight: var(--gray20);
     --error: var(--error50);
   }
   .dark {
     --primary: var(--orange50);
+    --primaryTint: var(--orange10);
+    --primaryShade: var(--orange80);
     --accent: var(--black100);
 
     --label: var(--white100);
@@ -114,7 +121,8 @@ const stylesBase = css`
     --backgroundTertiary: var(--gray50);
     --backgroundScrim: rgba(0, 0, 0, 0.7);
 
-    --neutral: var(--neutral60);
+    --neutral: var(--neutral80);
+    --neutralDark: var(--neutral90);
     --separator: var(--white20);
     --separatorLight: var(--white10);
     --error: var(--error60);

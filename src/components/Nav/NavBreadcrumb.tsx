@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw, { css } from "twin.macro";
+import tw from "twin.macro";
 
 import { Group, Text } from "src/components";
 import { NavCrumb } from "src/types";

@@ -1,4 +1,4 @@
-import { ModuleButton } from "src/components";
+import { DataCardButton } from "src/components";
 
 /* CURRENTLY UNUSED: in corsali-gui, this was used to configure the data for markup. I htink we can do better */
 
@@ -14,7 +14,7 @@ interface StoreModulesProps {
 const StoreModules = ({ modules }: StoreModulesProps) => (
   <>
     {modules.map((module) => (
-      <ModuleButton key={module.id} name={module.name} />
+      <DataCardButton key={module.id} name={module.name} />
     ))}
   </>
 );

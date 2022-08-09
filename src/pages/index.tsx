@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { useAtom } from "jotai";
 import type { NextPage } from "next";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -5,17 +6,21 @@ import tw from "twin.macro";
 
 import {
   AddData,
+  Center,
+  DataCardButton,
   LayoutApp,
+  LayoutCanvas,
+  LayoutCanvasGrid,
+  LayoutCanvasPattern,
   LayoutLoading,
-  ModuleButton,
   NavBreadcrumb,
   NavHeader,
+  NavHeaderRule,
+  Stack,
+  Text,
   TitleAndMetaTags,
+  WithIcon,
 } from "src/components";
-import {
-  layoutCanvasPatternStyle,
-  layoutCanvasStyle,
-} from "src/components/Layout/LayoutCanvas";
 import { navigationBreadcrumbs, testModules } from "src/data";
 import {
   useGetModulesQuery,
@@ -60,6 +65,8 @@ const HomePage: NextPage = () => {
   // data state: has no modules
   const hasNoModules = storedUsersModules.length === 0;
   // const hasNoModules = false;
+
+  // TESTS
   console.log("storedUsersModules", storedUsersModules);
   console.log("hasNoModules", hasNoModules);
   console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
@@ -84,56 +91,56 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <LayoutApp>
+        {/* BREADCRUMB */}
         <NavBreadcrumb
           crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
         >
           {!hasNoModules && (
-            <AddData modules={notStoredModules} buttonSize="md" />
+            <AddData modules={notStoredModules}>Add data</AddData>
           )}
         </NavBreadcrumb>
 
+        {/* HEADER */}
         {hasNoModules ? (
           <NavHeader heading="What data do you want to add?" />
         ) : (
-          <div tw="px-inset pt-2.5">
-            <hr />
-          </div>
+          <NavHeaderRule />
         )}
 
-        <main tw="p-inset relative h-full">
-          <div tw="absolute inset-inset h-full">
-            <div css={[layoutCanvasPatternStyle, tw`absolute inset-0`]} />
-          </div>
-          {/* <div tw="p-[1px] grid grid-cols-2 lg:grid-cols-3 gap-4"> */}
-          <div css={layoutCanvasStyle}>
-            {/* ADD A MODULE */}
-            {hasNoModules && (
-              <AddData
-                modules={notStoredModules}
-                buttonSize="full"
-                tw="min-h-[260px]"
-              />
-            )}
+        {/* CANVAS */}
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          {/* ADD A MODULE */}
+          {hasNoModules && (
+            <Center tw="min-h-[300px]">
+              <Stack tw="gap-5 items-center">
+                <AddData modules={notStoredModules}>Start adding data</AddData>
+                <Text
+                  variant="note"
+                  tw="text-labelSecondary flex items-center gap-1"
+                >
+                  <WithIcon prefix={<Icon icon="carbon:idea" />}>
+                    Add a tip here to incentivize users to add data
+                  </WithIcon>
+                </Text>
+              </Stack>
+            </Center>
+          )}
 
-            {/* STORED MODULES */}
-            {storedUsersModules.map((module) => (
-              <ModuleButton
-                key={module.module.name?.toLowerCase()}
-                module={module.module}
-                isLarge
-                isStored
-              />
-            ))}
-            {/* {testModules.map((module) => (
-              <ModuleButton
-                key={module.name?.toLowerCase()}
-                module={module}
-                isLarge
-                isStored
-              />
-            ))} */}
-          </div>
-        </main>
+          {/* STORED MODULES */}
+          {!hasNoModules && (
+            <LayoutCanvasGrid>
+              {storedUsersModules.map((module) => (
+                <DataCardButton
+                  key={module.module.name?.toLowerCase()}
+                  module={module.module}
+                  isStored
+                  showActionHover
+                />
+              ))}
+            </LayoutCanvasGrid>
+          )}
+        </LayoutCanvas>
       </LayoutApp>
     </>
   );
