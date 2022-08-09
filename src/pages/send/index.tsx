@@ -23,6 +23,7 @@ import {
   decryptData,
   extractData,
   fetchDataFromUrl,
+  PipelineParams,
   queryData,
   SQLiteQueryResult,
 } from "src/utils/pipeline";
@@ -106,13 +107,6 @@ const SendPage: NextPage = () => {
     userHasAcceptedSharingRequest,
   ]);
   console.log("uiStatus", uiStatus);
-
-  interface PipelineParams {
-    dataUrl: string;
-    decryptionKey: string;
-    serviceName: string;
-    queries: string[];
-  }
 
   const sendPipelinePayload = (payload: SQLiteQueryResult[]) => {
     // UI: Resolved/Finish state
