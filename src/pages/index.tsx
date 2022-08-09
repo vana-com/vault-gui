@@ -114,7 +114,9 @@ const HomePage: NextPage = () => {
           {hasNoModules && (
             <Center tw="min-h-[300px]">
               <Stack tw="gap-5 items-center">
-                <AddData modules={notStoredModules}>Start adding data</AddData>
+                <AddData buttonIsLarge modules={notStoredModules}>
+                  Start adding data
+                </AddData>
                 <Text
                   variant="note"
                   tw="text-labelSecondary flex items-center gap-1"

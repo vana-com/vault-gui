@@ -20,6 +20,7 @@ interface Props {
   // buttonSize?: string;
   modules: Module[] | undefined;
   children: React.ReactNode;
+  buttonIsLarge?: boolean;
 }
 
 const styles = ({ buttonSize }: { buttonSize: ButtonSize | undefined }) => [
@@ -28,7 +29,7 @@ const styles = ({ buttonSize }: { buttonSize: ButtonSize | undefined }) => [
     : tw`bg-primarys-60 bg-opacity-10 ring-1 ring-inset ring-labelQuaternary min-w-[140px]`,
 ];
 
-const AddData = ({ modules, children }: Props) => (
+const AddData = ({ modules, children, buttonIsLarge }: Props) => (
   <DialogModalAdd
     buttonNode={
       // <Button
@@ -49,9 +50,12 @@ const AddData = ({ modules, children }: Props) => (
       <Button
         type="button"
         variant="solid"
-        size="xl"
+        size={buttonIsLarge ? "xl" : "md"}
         prefix={<Icon icon="carbon:locked" height="1.125em" />}
-        css={tw`min-w-[280px] max-w-[220px] font-semibold`}
+        css={[
+          tw`font-semibold ring-1 ring-inset ring-labelQuaternary`,
+          buttonIsLarge ? tw`min-w-[280px]` : tw`min-w-[140px]`,
+        ]}
       >
         {children}
       </Button>

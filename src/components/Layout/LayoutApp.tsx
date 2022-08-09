@@ -48,7 +48,7 @@ const LayoutApp = ({ children }: Props) => {
             {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
             <Login withLayout />
 
-            {children}
+            {user && children}
           </LayoutShell.Body>
         </LayoutShell>
       </div>

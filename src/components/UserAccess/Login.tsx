@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import {
   ADAPTER_EVENTS,
   ADAPTER_STATUS,
@@ -17,6 +18,7 @@ import {
   LoginButton,
   Stack,
   Text,
+  WithIcon,
 } from "src/components";
 import config from "src/config";
 import {
@@ -168,8 +170,13 @@ const Login = ({ withLayout }: Props) => {
                 <Text variant="base" weight="medium">
                   Login or create a new account
                 </Text>
-                <Text variant="note" tw="text-labelSecondary">
-                  Tip: if you have an account, use the same login method
+                <Text
+                  variant="note"
+                  tw="text-labelSecondary flex items-center gap-1"
+                >
+                  <WithIcon prefix={<Icon icon="carbon:idea" />}>
+                    Tip: if you have an account, use the same login method
+                  </WithIcon>
                 </Text>
               </Stack>
               <LoginButton logIn={logIn} loginError={loginError} />
