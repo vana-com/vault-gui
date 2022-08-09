@@ -18,7 +18,14 @@ import {
 } from "src/components/VaultShare";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { ShareUiStatus } from "src/types";
-import * as dataPipelineWorker from "src/types/DataPipelineWorker";
+import * as DataPipeline from "src/types/DataPipeline";
+import {
+  decryptData,
+  extractData,
+  fetchDataFromUrl,
+  queryData,
+  SQLiteQueryResult,
+} from "src/utils/pipeline";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -26,34 +33,20 @@ const SendPage: NextPage = () => {
   const { user, hasuraToken, walletProvider } = useUserContext();
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
-  const [shareStatus, setShareStatus] = useState(
-    dataPipelineWorker.Status.IDLE,
-  );
+  const [shareStatus, setShareStatus] = useState(DataPipeline.Status.IDLE);
   const [updateStatus, setUpdateStatus] = useState(
-    dataPipelineWorker.Stage.FETCH_DATA,
+    DataPipeline.Stage.FETCH_DATA,
   );
   const [uiStatus, setUiStatus] = useState(ShareUiStatus.HASURA_IS_LOADING);
+
+  const windowRef = useRef<Window>();
 
   /**
    * Create the worker once the client loaded the page and sets up the event listener
    */
   useEffect(() => {
-    // Set the window context
-    const w = window;
-    // eslint-disable-next-line no-restricted-globals
-    const s = self;
-
-    // Preload the worker script
-    workerRef.current = new Worker(
-      new URL("../../workers/DataPipeline.ts", import.meta.url),
-    );
-
-    // Give the "window" context to the listener
-    const onMessage = onMessageReceived(w, s);
-    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
+    windowRef.current = window;
   }, []);
-
-  const workerRef = useRef<Worker>();
 
   // Get popup's query params
   // TODO: @joe - replace w/ more secure method
@@ -91,26 +84,6 @@ const SendPage: NextPage = () => {
     : [];
 
   /**
-   * This useEffect is only fired once on page load.
-   * It preps the worker to start the data pipeline and hooks up our event listener
-   */
-  useEffect(() => {
-    // Set the window context
-    const w = window;
-    // eslint-disable-next-line no-restricted-globals
-    const s = self;
-
-    // Preload the worker script
-    workerRef.current = new Worker(
-      new URL("../../workers/DataPipeline.ts", import.meta.url),
-    );
-
-    // Give the "window" context to the listener
-    const onMessage = onMessageReceived(w, s);
-    workerRef.current.onmessage = (event: MessageEvent) => onMessage(event);
-  }, []);
-
-  /**
    * Set the UI status for the page
    */
   useEffect(() => {
@@ -133,6 +106,67 @@ const SendPage: NextPage = () => {
     userHasAcceptedSharingRequest,
   ]);
   console.log("uiStatus", uiStatus);
+
+  interface PipelineParams {
+    dataUrl: string;
+    decryptionKey: string;
+    serviceName: string;
+    queries: string[];
+  }
+
+  const sendPipelinePayload = (payload: SQLiteQueryResult[]) => {
+    // UI: Resolved/Finish state
+    setShareStatus(DataPipeline.Status.RESOLVED);
+
+    // Construct the payload to be sent to the client
+    const payloadToSend = {
+      done: true,
+      payload: {
+        rows: payload,
+      },
+    };
+
+    // This is the "final" message -- the data payload
+    console.log("worker done | data:", JSON.stringify(payloadToSend));
+
+    // Get the window context safely
+    const w = windowRef.current;
+
+    // Send the data to the "parent" window
+    // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
+    w?.opener.postMessage(JSON.stringify(payloadToSend), "*");
+
+    // Allow time to show success message before we close the window
+    setTimeout(() => {
+      closePopup(w as Window);
+    }, 3 * 1000);
+  };
+
+  const beginDataPipeline = async (params: PipelineParams) => {
+    console.log("DataPipeline started");
+
+    // UI: Pending State
+    setShareStatus(DataPipeline.Status.PENDING);
+
+    try {
+      const file = await fetchDataFromUrl(params.dataUrl);
+      setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
+
+      const decrypted = await decryptData(file, params.decryptionKey);
+      setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
+
+      const extracted = await extractData(decrypted, params.serviceName);
+      setUpdateStatus(DataPipeline.Stage.EXTRACTED_DATA);
+
+      const queried = await queryData(extracted, params.queries);
+      setUpdateStatus(DataPipeline.Stage.QUERY_DATA);
+
+      sendPipelinePayload(queried);
+    } catch (error) {
+      console.log("error", error);
+      setShareStatus(DataPipeline.Status.REJECTED);
+    }
+  };
 
   const fetchSignedUrl = async (token: string | null, userModuleId: string) => {
     if (!token) {
@@ -179,41 +213,16 @@ const SendPage: NextPage = () => {
       throw new Error("Missing attributes");
     }
 
-    // Sends data to the DataPipeline (Worker)
-    console.log("Sending data to the worker...");
-    workerRef.current?.postMessage({
+    const dataPipelineParams: PipelineParams = {
       queries: [cleanQueryString],
       dataUrl: signedUrl,
       decryptionKey: dangerousPrivateKey,
       serviceName: normalizedServiceName,
-    });
-  };
-
-  const onMessageReceived =
-    (window: Window, self: Window) => async (event: MessageEvent) => {
-      const data = event.data as dataPipelineWorker.Message;
-
-      console.log("DataPipeline message:", data);
-
-      // Handle each message type differently
-      switch (data.type) {
-        // Message: data is being sent (pending)
-        case dataPipelineWorker.MessageType.UPDATE:
-          await handleUpdateMessage(data);
-          setShareStatus(dataPipelineWorker.Status.PENDING);
-          break;
-        // Message: data sending resolved
-        case dataPipelineWorker.MessageType.DATA:
-          await handleDataMessage(data, window, self);
-          break;
-        // Message: data sending failed
-        case dataPipelineWorker.MessageType.ERROR:
-          await handleErrorMessage(data);
-          break;
-        default:
-          console.log(`Unknown message type: ${data?.type}`);
-      }
     };
+
+    // Starts the data pipeline
+    beginDataPipeline(dataPipelineParams);
+  };
 
   /**
    * Closes the popup window
@@ -221,52 +230,6 @@ const SendPage: NextPage = () => {
    * @returns nothing
    */
   const closePopup = (self: Window) => self.close();
-
-  const handleUpdateMessage = async (data: dataPipelineWorker.Message) => {
-    // Worker not (quite) done yet, these are just "status" reports
-    switch (data.payload.stage) {
-      case dataPipelineWorker.Stage.FETCH_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.FETCH_DATA);
-        break;
-      case dataPipelineWorker.Stage.DECRYPTED_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.DECRYPTED_DATA);
-        break;
-      case dataPipelineWorker.Stage.EXTRACTED_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.EXTRACTED_DATA);
-        break;
-      case dataPipelineWorker.Stage.QUERY_DATA:
-        setUpdateStatus(dataPipelineWorker.Stage.QUERY_DATA);
-        break;
-      default:
-        console.log(`Unknown stage: ${data?.payload?.stage}`);
-    }
-  };
-
-  const handleDataMessage = async (
-    data: dataPipelineWorker.Message,
-    window: Window,
-    self: Window,
-  ) => {
-    setShareStatus(dataPipelineWorker.Status.RESOLVED);
-
-    // This is the "final" message -- the data payload
-    console.log("worker done | data:", JSON.stringify(data));
-
-    // Send the data to the "parent" window
-    // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
-    window.opener.postMessage(JSON.stringify(data), "*");
-
-    // Allow time to show success message before we close the window
-    setTimeout(() => {
-      closePopup(self);
-    }, 3 * 1000);
-  };
-
-  const handleErrorMessage = async (data: dataPipelineWorker.Message) => {
-    // Something definitely went wrong, gracefully show errors to the user
-    setShareStatus(dataPipelineWorker.Status.REJECTED);
-    console.log("worker error | data:", data?.payload?.error);
-  };
 
   return (
     <AuthenticatedPage>
