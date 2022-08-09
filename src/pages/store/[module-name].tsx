@@ -24,7 +24,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-  const { user, walletProvider } = useUserContext();
+  const { user, walletProvider, isLoading: isUserLoading } = useUserContext();
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -59,46 +59,48 @@ const VaultStoragePage: NextPage = () => {
     if (router.isReady && !module && !isDataLoading) {
       router.push("/");
     }
-  }, [router]);
+  }, [router, isDataLoading]);
 
-  if (isDataLoading) {
+  if (user && module && !isDataLoading && !isUserLoading) {
     return (
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-        </Flex>
-      </PageVault>
+      <AuthenticatedPage>
+        <TitleAndMetaTags
+          color="black"
+          title={`Store ${moduleName} Data | Vana`}
+        />
+
+        <PageVault showBackLink>
+          <div tw="w-full">
+            <Stack tw="gap-5 w-full">
+              <CardHeaderVaultModule moduleName={moduleName}>
+                Your data is only accessible by you.
+              </CardHeaderVaultModule>
+              <hr />
+            </Stack>
+            <Stack tw="gap-0">
+              <StorageInstructions moduleName={moduleName as any} />
+              <hr />
+            </Stack>
+            <div tw="pt-5">
+              <StorageUpload
+                moduleName={moduleName}
+                createUserModule={createUserModuleCallback}
+                appPubKey={user?.externalId ?? ""}
+                web3AuthWalletProvider={walletProvider}
+              />
+            </div>
+          </div>
+        </PageVault>
+      </AuthenticatedPage>
     );
   }
 
   return (
     <AuthenticatedPage>
-      <TitleAndMetaTags
-        color="black"
-        title={`Store ${moduleName} Data | Vana`}
-      />
-
-      <PageVault showBackLink>
-        <div tw="w-full">
-          <Stack tw="gap-5 w-full">
-            <CardHeaderVaultModule moduleName={moduleName}>
-              Your data is only accessible by you.
-            </CardHeaderVaultModule>
-            <hr />
-          </Stack>
-          <Stack tw="gap-0">
-            <StorageInstructions moduleName={moduleName as any} />
-            <hr />
-          </Stack>
-          <div tw="pt-5">
-            <StorageUpload
-              moduleName={moduleName}
-              createUserModule={createUserModuleCallback}
-              appPubKey={user?.externalId ?? ""}
-              web3AuthWalletProvider={walletProvider}
-            />
-          </div>
-        </div>
+      <PageVault>
+        <Flex tw="w-full items-center justify-center">
+          <Spinner />
+        </Flex>
       </PageVault>
     </AuthenticatedPage>
   );
