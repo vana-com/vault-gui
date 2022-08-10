@@ -112,7 +112,7 @@ const HomePage: NextPage = () => {
           <LayoutCanvasPattern />
           {/* ADD A MODULE */}
           {hasNoModules && (
-            <Center tw="min-h-[300px]">
+            <Center tw="min-h-[300px] relative">
               <Stack tw="gap-5 items-center">
                 <AddData buttonIsLarge modules={notStoredModules}>
                   Start adding data

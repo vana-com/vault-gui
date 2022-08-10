@@ -4,8 +4,8 @@ import tw, { css, GlobalStyles as BaseStyles, theme } from "twin.macro";
 
 const stylesBase = css`
   :root {
-    --black100: black;
     --white10: #262d31;
+    --whiteHover: rgba(245, 248, 255, 0.06);
     --white20: rgba(245, 248, 255, 0.12);
     --white30: rgba(245, 248, 255, 0.16);
     --white40: rgba(245, 248, 255, 0.2);
@@ -15,8 +15,10 @@ const stylesBase = css`
     --white80: rgba(245, 248, 255, 0.76);
     --white90: rgba(247, 250, 255, 0.92);
     --white100: white;
+
     --gray10: #f0f1f5;
     --gray15: #f4f4f5;
+    --grayHover: rgba(9, 17, 31, 0.03);
     --gray20: rgba(9, 17, 31, 0.06);
     --gray30: rgba(16, 21, 31, 0.1);
     --gray40: rgba(16, 21, 31, 0.16);
@@ -26,6 +28,7 @@ const stylesBase = css`
     --gray80: rgba(27, 29, 31, 0.7);
     --gray90: rgba(27, 29, 31, 0.88);
     --gray100: black;
+    --black100: black;
 
     // islands.xyz
     --colors-gray900: #0f0f10;
@@ -70,13 +73,21 @@ const stylesBase = css`
     --orange80: #ad530e;
     --orange90: #703b12;
     --orange100: #3d1e0a;
+    --royalBlue10: #ebf6ff;
+    --royalBlue20: #c2e3ff;
+    --royalBlue30: #85c8ff;
+    --royalBlue40: #4fabff; // #47acff; #33a3ff
+    --royalBlue50: #008cff;
+    --royalBlue60: #007be0;
+    --royalBlue70: #0065b8;
+    --royalBlue80: #004f8f;
     --error50: hsl(1, 62%, 60%);
     --error60: hsl(1deg 62% 44%);
   }
   .light {
-    --primary: var(--orange60);
-    --primaryTint: var(--orange20);
-    --primaryShade: var(--orange70);
+    --primary: var(--royalBlue50);
+    --primaryShade: var(--royalBlue70);
+    --primaryTint: var(--royalBlue10);
     --accent: var(--white100);
 
     --label: var(--gray100);
@@ -98,12 +109,15 @@ const stylesBase = css`
     --neutralDark: var(--neutral20);
     --separator: var(--gray40);
     --separatorLight: var(--gray20);
-    --error: var(--error50);
+    --hover: var(--grayHover);
+
+    --error: ${theme`colors.red.600`};
+    --success: ${theme`colors.emerald.600`};
   }
   .dark {
-    --primary: var(--orange50);
-    --primaryTint: var(--orange10);
-    --primaryShade: var(--orange80);
+    --primary: var(--royalBlue50);
+    --primaryShade: var(--royalBlue80);
+    --primaryTint: var(--royalBlue30);
     --accent: var(--black100);
 
     --label: var(--white100);
@@ -125,7 +139,10 @@ const stylesBase = css`
     --neutralDark: var(--neutral90);
     --separator: var(--white20);
     --separatorLight: var(--white10);
-    --error: var(--error60);
+    --hover: var(--whiteHover);
+
+    --error: ${theme`colors.red.700`};
+    --success: ${theme`colors.emerald.700`};
   }
   body {
     webkittaphighlightcolor: ${theme`colors.purple.500`};

@@ -5,12 +5,7 @@ import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import {
-  Button,
-  Stack,
-  StorageInstructionsModal,
-  ToastDefault,
-} from "src/components";
+import { Button, Stack, ToastDefault } from "src/components";
 import config from "src/config";
 import { encryptAndUploadUserDataFiles, heapTrack } from "src/utils";
 import { IWalletProvider } from "src/utils/identity/walletProvider";
@@ -180,9 +175,6 @@ const StorageUpload = ({
             openFileDialog={openFileDialog}
             uploadProgress={uploadProgress}
             filesToUploadDescription={describeFilesRequired()}
-            instructionsNode={
-              <StorageInstructionsModal moduleName={moduleName} />
-            }
           />
           {/* BUTTON */}
           <Button

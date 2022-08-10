@@ -21,10 +21,10 @@ const PopoverDataModule = ({ children }: Props) => (
       <Button
         round
         variant="icon"
-        tw="text-label h-[28px] w-[28px]"
-        // prefix={<Icon icon="heroicons-outline:dots-vertical" height="1.25em" />}
+        // requires relative to merge with button:after:hover style
+        tw="relative text-label h-[28px] w-[28px]"
       >
-        <Icon icon="heroicons-outline:dots-vertical" height="1.25em" />
+        <Icon icon="carbon:overflow-menu-vertical" height="1.5em" />
       </Button>
     </PopoverTrigger>
     <PopoverContent

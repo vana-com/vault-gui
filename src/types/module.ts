@@ -15,6 +15,7 @@ export interface ModuleObj {
   module: Module;
   id: string;
   moduleId: string;
+  urlToData: string;
 }
 
 export interface NavCrumb {

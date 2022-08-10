@@ -16,37 +16,14 @@ import config from "src/config";
 import { Module } from "src/types";
 
 interface Props {
-  // buttonSize: ButtonSize | undefined;
-  // buttonSize?: string;
   modules: Module[] | undefined;
   children: React.ReactNode;
   buttonIsLarge?: boolean;
 }
 
-const styles = ({ buttonSize }: { buttonSize: ButtonSize | undefined }) => [
-  buttonSize === "full"
-    ? tw`h-[260px] bg-[#f2f2f2] rounded-2xl`
-    : tw`bg-primarys-60 bg-opacity-10 ring-1 ring-inset ring-labelQuaternary min-w-[140px]`,
-];
-
 const AddData = ({ modules, children, buttonIsLarge }: Props) => (
   <DialogModalAdd
     buttonNode={
-      // <Button
-      //   size={buttonSize}
-      //   variant="solid"
-      //   css={styles({ buttonSize })}
-      //   tw="font-semibold"
-      //   prefix={
-      //     <Icon
-      //       icon="heroicons-solid:plus-circle"
-      //       height={buttonSize === "full" ? "1.5em" : "1em"}
-      //     />
-      //   }
-      // >
-      //   Add data
-      // </Button>
-      // heroicons-solid:plus-circle
       <Button
         type="button"
         variant="solid"
@@ -63,7 +40,9 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
   >
     <Stack tw="gap-4">
       <Stack tw="gap-0.5 -mt-1">
-        <Text variant="title1">Add data</Text>
+        <Text variant="title1" tw="text-primary">
+          Add data
+        </Text>
         <Group tw="items-center justify-between">
           <Text variant="base" color="labelSecondary">
             To get started, choose an app

@@ -164,18 +164,18 @@ const Login = ({ withLayout }: Props) => {
       {withLayout ? (
         <LayoutCanvas>
           <LayoutCanvasPattern />
-          <Center tw="min-h-[300px]">
+          <Center tw="min-h-[300px] relative">
             <Stack tw="gap-5 items-center">
               <Stack tw="gap-1 items-center">
-                <Text variant="base" weight="medium">
-                  Login or create a new account
+                <Text variant="base" weight="semibold">
+                  Log in or create a new account
                 </Text>
                 <Text
                   variant="note"
                   tw="text-labelSecondary flex items-center gap-1"
                 >
                   <WithIcon prefix={<Icon icon="carbon:idea" />}>
-                    Tip: if you have an account, use the same login method
+                    If you have an account, use the same login method
                   </WithIcon>
                 </Text>
               </Stack>

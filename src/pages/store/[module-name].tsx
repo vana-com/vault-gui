@@ -78,22 +78,15 @@ const VaultStoragePage: NextPage = () => {
       />
 
       <LayoutApp>
-        {/* BREADCRUMB */}
         <NavBreadcrumb crumbs={[navigationBreadcrumbs[0]]} />
-
-        {/* HEADER */}
         <NavHeader
-          // isDataModule
-          // moduleName={moduleName}
           heading={`Add my ${moduleName} data`}
           headingNode={<PopoverModuleLang />}
         >
-          {/* <StorageInstructionsModal moduleName={moduleName as any} /> */}
+          <StorageInstructionsModal moduleName={moduleName as any} />
           {/* <StorageInstructionsModalOpen moduleName={moduleName as any} /> */}
-          {/* <PopoverModuleLang /> */}
         </NavHeader>
 
-        {/* CANVAS */}
         <LayoutCanvas>
           <LayoutCanvasPattern />
           <StorageUpload

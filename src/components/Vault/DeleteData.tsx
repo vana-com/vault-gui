@@ -11,7 +11,6 @@ import {
   Stack,
   Text,
 } from "src/components";
-import { CarbonCloseFilled } from "src/components/Icons";
 
 interface Props {
   buttonLabel?: string;
@@ -27,22 +26,22 @@ const DeleteData = ({
   onDelete,
 }: Props) => (
   <DialogModalAdd
+    variant="confirm"
     buttonNode={
       <Button
         variant="outline"
-        size="md"
-        tw="text-error ring-error font-semibold bg-red-500 bg-opacity-10 hover:(bg-opacity-20)"
-        prefix={<CarbonCloseFilled />}
+        size="lg"
+        tw="text-error ring-error font-semibold bg-red-500 bg-opacity-10"
+        prefix={<Icon icon="carbon:close-filled" />}
         isLoading={isDeleting}
-        // loadingText="Deleting…"
       >
         {buttonLabel}
       </Button>
     }
   >
-    <Center tw="flex-1">
-      <Stack tw="gap-4 flex-1">
-        <Stack tw="gap-1">
+    <Center tw="py-insetDouble">
+      <Stack tw="gap-insetAlmost flex-1">
+        <Stack tw="gap-2">
           <Text color="label" variant="title2" tw="text-center">
             Are you sure?
           </Text>
@@ -51,9 +50,19 @@ const DeleteData = ({
             it&apos;s gone.
           </Text>
         </Stack>
-        <hr />
+        {/* <hr /> */}
 
         <Group tw="pt-1 gap-4 justify-center">
+          <DialogClose asChild>
+            <Button
+              variant="outline"
+              size="lg"
+              // prefix={<Icon icon="carbon:pause-filled" />}
+              tw="min-w-[220px]"
+            >
+              Not yet
+            </Button>
+          </DialogClose>
           <Button
             variant="solid"
             size="lg"
@@ -64,16 +73,6 @@ const DeleteData = ({
           >
             Delete
           </Button>
-          <DialogClose asChild>
-            <Button
-              variant="outline"
-              size="lg"
-              prefix={<Icon icon="carbon:pause-filled" />}
-              tw="min-w-[220px]"
-            >
-              Not yet
-            </Button>
-          </DialogClose>
         </Group>
       </Stack>
     </Center>

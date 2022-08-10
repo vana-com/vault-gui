@@ -15,14 +15,12 @@ const PopoverModuleLang = () => (
   <Popover>
     <PopoverTrigger asChild>
       <Button
-        size="md"
-        variant="ghost"
-        tw="min-w-0 px-1.5 text-labelTertiary text-xs transform translate-y-[1px]"
-        prefix={
-          <Icon icon="heroicons-outline:information-circle" height="1.25em" />
-        }
+        size="initial"
+        variant="icon"
+        // requires relative to merge with button:after:hover style
+        tw="relative text-labelSecondary"
       >
-        English only
+        <Icon icon="carbon:information" height="1.125em" />
       </Button>
     </PopoverTrigger>
     <PopoverContent

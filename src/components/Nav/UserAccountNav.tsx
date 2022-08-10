@@ -80,7 +80,7 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
               variant="base"
               weight="medium"
               css={[navLinkStyle, tw`px-3`]}
-              tw="text-error"
+              tw="text-labelTertiary"
             >
               <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>
                 Delete Vault

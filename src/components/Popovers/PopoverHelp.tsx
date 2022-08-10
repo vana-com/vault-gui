@@ -25,14 +25,15 @@ const PopoverHelp = ({ css }: Props) => (
       <Text
         variant="note"
         weight="medium"
-        css={[tw`hover:cursor-pointer`, css]}
+        // requires relative to merge with button:after:hover style
+        css={[tw`relative hover:cursor-pointer`, css]}
       >
         Need help?
       </Text>
     </PopoverTrigger>
-    <PopoverContent tw="text-black bg-white">
-      <PopoverArrow tw="fill-white ml-3" />
-      <MarkdownWrapper isNote tw="text-black">
+    <PopoverContent tw="text-background bg-label">
+      <PopoverArrow tw="fill-label ml-3" />
+      <MarkdownWrapper isNote tw="text-background">
         <Markdown>{HELP_INFORMATION}</Markdown>
       </MarkdownWrapper>
     </PopoverContent>

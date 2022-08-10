@@ -10,15 +10,18 @@ interface Props {
 const ENCRYPTION_PROGRESS_CUTOFF = 6;
 
 const StorageProgress = ({ storeProgress }: Props) => (
-  <Stack tw="gap-1 mx-auto justify-center pt-3 pb-5 min-h-[160px]">
+  <Stack tw="gap-1.5 mx-auto justify-center pt-3 pb-5 min-h-[160px]">
     {/* TODO: recreate this! */}
     {/* <div tw="pt-2 pb-4 max-w-[75%]">
       <Progress hasStripe isAnimated value={storeProgress} bg="white" />
     </div> */}
-    <Text variant="display" weight="bold" tw="text-center text-6xl">
-      {storeProgress}%
+    <Text variant="display" weight="normal" tw="text-center text-7xl">
+      {storeProgress}
+      <Text as="span" weight="normal">
+        %
+      </Text>
     </Text>
-    <Text variant="note" color="labelTertiary" tw="text-center">
+    <Text variant="note" color="labelSecondary" tw="text-center">
       {storeProgress < ENCRYPTION_PROGRESS_CUTOFF
         ? "Encrypting your data. Hold tight…"
         : "Sending securely…"}

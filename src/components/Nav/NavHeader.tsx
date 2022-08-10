@@ -30,7 +30,12 @@ const NavHeader = ({
               name={moduleName}
             />
           ) : (
-            <Text as="h1" variant="title1" weight="semibold" tw="-ml-0.5">
+            <Text
+              as="h1"
+              variant="title1"
+              weight="semibold"
+              tw="-ml-0.5 text-primary"
+            >
               {heading}
             </Text>
           )}

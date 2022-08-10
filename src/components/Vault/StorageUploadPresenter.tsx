@@ -10,7 +10,6 @@ import {
   TooltipDefault,
   WithIcon,
 } from "src/components";
-import { CarbonCloseFilled } from "src/components/Icons";
 import { getAbbreviatedFileName } from "src/utils/getAbbreviatedFileName";
 
 import { StorageProgress } from "./index";
@@ -25,10 +24,11 @@ interface Props {
   openFileDialog: () => void;
   uploadProgress: number;
   filesToUploadDescription: string;
-  instructionsNode?: React.ReactNode;
 }
 
 const boxStyle = tw`relative flex items-center justify-center w-full h-full text-black rounded p-insetHalf bg-neutral min-h-[160px]`;
+
+const boxHoverStyle = tw`border border-dashed border-labelQuaternary hover:(border-primary)`;
 
 const StorageUploadPresenter = ({
   onDropFile,
@@ -40,7 +40,6 @@ const StorageUploadPresenter = ({
   openFileDialog,
   uploadProgress,
   filesToUploadDescription,
-  instructionsNode,
 }: Props) => (
   <>
     <div
@@ -51,8 +50,8 @@ const StorageUploadPresenter = ({
         event.preventDefault();
       }}
     >
-      {/* INSTRUCTIONS */}
-      <div tw="absolute top-1 right-1 z-10">{instructionsNode}</div>
+      {/* INSTRUCTIONS top right inner corner: DEPRECATED */}
+      {/* <div tw="absolute top-1 right-1 z-10">{instructionsNode}</div> */}
 
       {/* FILE INPUT */}
       <div tw="sr-only">
@@ -65,7 +64,7 @@ const StorageUploadPresenter = ({
           variant="contrast"
           isDisabled={isDataUploading}
           onClick={openFileDialog}
-          css={boxStyle}
+          css={[boxStyle, boxHoverStyle]}
         >
           <Stack tw="items-center gap-0.5">
             <Icon icon="carbon:upload" height="1.75em" />
@@ -83,7 +82,7 @@ const StorageUploadPresenter = ({
 
       {/* STEP 2: CONFIRM */}
       {!isDataUploading && !!filesToUpload.length && (
-        <Stack tw="gap-8" css={boxStyle}>
+        <Stack tw="gap-3 transform lg:translate-y-2" css={boxStyle}>
           {filesToUpload.map((fileToUpload, i) => (
             <Stack
               key={fileToUpload.toString()}
@@ -103,7 +102,6 @@ const StorageUploadPresenter = ({
                     aria-label="Remove file to upload"
                     variant="icon"
                     tw="text-black"
-                    // TODO: test if Formik implicitly gets handle this reset…
                     type="reset"
                     onClick={() => {
                       const copyFilesToUpload = [...filesToUpload];
@@ -111,22 +109,20 @@ const StorageUploadPresenter = ({
                       setFilesToUpload(copyFilesToUpload);
                     }}
                   >
-                    <CarbonCloseFilled />
+                    <Icon icon="carbon:close-filled" />
                   </Button>
                 </TooltipDefault>
               </Group>
-              <Text
-                variant="note"
-                tw="text-labelSecondary flex items-center gap-1"
-              >
-                <WithIcon
-                  prefix={<Icon icon="carbon:checkmark" height="1.25em" />}
-                >
-                  Looks good
-                </WithIcon>
-              </Text>
             </Stack>
           ))}
+          <Text
+            variant="note"
+            tw="text-success font-medium flex items-center gap-1"
+          >
+            <WithIcon prefix={<Icon icon="carbon:checkmark" height="1.25em" />}>
+              Looks good
+            </WithIcon>
+          </Text>
         </Stack>
       )}
 

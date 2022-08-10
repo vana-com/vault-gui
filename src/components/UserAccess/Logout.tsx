@@ -52,7 +52,7 @@ const Logout = () => {
       as="button"
       variant="base"
       weight="medium"
-      css={[navLinkStyle, tw`px-3`]}
+      css={[navLinkStyle, tw`px-3 text-label`]}
       onClick={logOut}
     >
       <WithIcon

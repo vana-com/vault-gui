@@ -15,14 +15,14 @@ const StorageInstructionsModal = ({ moduleName }: Props) => (
       <Button
         size="md"
         variant="ghost"
-        // primaryShade
-        tw="text-error font-semibold hover:(bg-red-500 bg-opacity-10)"
+        tw="font-normal text-labelSecondary"
         // prefix={<Icon icon="carbon:task" height="1em" />}
-        // prefix={<Icon icon="carbon:list-checked" height="1em" />}
+        prefix={<Icon icon="carbon:list-checked" height="1em" />}
         // prefix={<Icon icon="carbon:warning-alt-filled" height="1em" />}
-        prefix={<Icon icon="carbon:pause-past" height="1.5em" />}
+        // prefix={<Icon icon="carbon:pause-past" height="1.5em" />}
+        // prefix={<Icon icon="carbon:warning-alt-filled" height="1em" />}
       >
-        Get your data first
+        Get your {moduleName} data
       </Button>
     }
   >

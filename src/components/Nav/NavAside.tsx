@@ -3,7 +3,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw, { css } from "twin.macro";
+import tw from "twin.macro";
 
 import {
   Flex,
@@ -56,7 +56,7 @@ const NavAside = ({ children }: Props) => {
           <Text
             as="a"
             variant="base"
-            weight="semibold"
+            weight="medium"
             css={[navLinkStyle, navLinkActiveStyle]}
           >
             <WithIcon
@@ -70,7 +70,7 @@ const NavAside = ({ children }: Props) => {
           <TooltipDefault label="Coming soon">
             <Text
               variant="base"
-              weight="semibold"
+              weight="medium"
               tw="text-labelTertiary cursor-default"
               css={navLinkWithIconStyle}
             >
@@ -86,7 +86,7 @@ const NavAside = ({ children }: Props) => {
       </Stack>
 
       {/* BETA */}
-      <div tw="mt-auto pb-insetx2">
+      <div tw="mt-auto pb-insetDouble">
         <hr tw="border-separatorLight" />
         <Link
           href={config.vanaBetaFeedback}

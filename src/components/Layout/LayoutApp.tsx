@@ -27,14 +27,18 @@ const LayoutApp = ({ children }: Props) => {
 
   return (
     <>
-      <div tw="z-[1] left-0 right-0 fixed bg-background">
+      <div
+        css={[tw`bg-background z-[1]`, user && tw`z-[1] fixed left-0 right-0`]}
+      >
         <div tw="max-w-[1280px] mx-auto">
           {/* NAVBAR */}
           <Navbar />
         </div>
         <hr />
       </div>
-      <div css={[tw`max-w-[1280px] mx-auto pt-navH`, !user && tw`border-l`]}>
+      <div
+        css={[tw`max-w-[1280px] mx-auto`, user ? tw`pt-navH` : tw`border-l`]}
+      >
         <LayoutShell>
           {/* ASIDE NAV */}
           {user && (
