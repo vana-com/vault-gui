@@ -7,6 +7,7 @@ import {
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
+import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -193,6 +194,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // Metamask Adapter
         const metamaskAdapter = new MetamaskAdapter();
         web3AuthInstance.configureAdapter(metamaskAdapter);
+
+        // WalletConnect Adapter
+        const walletConnectAdapter = new WalletConnectV1Adapter();
+        web3AuthInstance.configureAdapter(walletConnectAdapter);
 
         setWeb3Auth(web3AuthInstance);
         subscribeAuthEvents(web3AuthInstance);

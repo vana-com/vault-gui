@@ -65,30 +65,10 @@ const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
     }
   };
 
-  /**
-   * DO NOT USE THIS METHOD UNLESS ABSOLUTELY NECESSARY
-   *
-   * NEVER PERSIST OR LOG THE PRIVATE KEY
-   *
-   * @returns Users private key if they are logged in, undefined otherwise
-   */
-  const dangerouslyGetPrivateKey = async (): Promise<string | undefined> => {
-    try {
-      const dangerousPrivateKey = (await provider.request({
-        method: "eth_private_key",
-      })) as string;
-      return dangerousPrivateKey;
-    } catch (error: any) {
-      // user not logged in
-      console.error("Error getting private key", error);
-      return undefined;
-    }
-  };
   return {
     decryptMessage,
     encryptMessage,
     getWalletAddress,
-    dangerouslyGetPrivateKey,
   };
 };
 

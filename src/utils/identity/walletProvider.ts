@@ -6,7 +6,6 @@ export interface IWalletProvider {
   getWalletAddress: () => Promise<string>;
   encryptMessage(messageToEncrypt: string): Promise<string>;
   decryptMessage(encryptedMessage: string): Promise<string>;
-  dangerouslyGetPrivateKey: () => Promise<string | undefined>; // TODO: delete this method
 }
 
 export const getWalletProvider = (

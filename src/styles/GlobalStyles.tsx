@@ -106,6 +106,9 @@ const stylesBase = css`
   :disabled, [disabled] {
     opacity: 0.6;
   }
+  .w3ajs-external-wallet {
+    display: none;
+  }
 `;
 
 const GlobalStyles = () => (
