@@ -90,9 +90,7 @@ module.exports = {
         standalone: { raw: '(display-mode:standalone)' },
       },
       fontFamily: {
-        // title: ['GintoNord', ...fontFamily.sans],
-        title: ['GintoNord'],
-        heading: ['Ginto', ...sans],
+        heading: ['Sans', ...sans],
         sans: ['Inter',...sans],
         mono: ['IBM Plex Mono','SFMono-Regular','ui-monospace','monospace'],
       },
