@@ -30,7 +30,6 @@ const generalConfig = {
    * Encryption
    */
   encryptionChunkSize: 64 * 1024 * 1024,
-  userDataPasswordPrefix: "user-data-password: ",
   chacha20Poly1305Signature: "zDKO6XYXioc",
 
   zipFileMimeTypes: [

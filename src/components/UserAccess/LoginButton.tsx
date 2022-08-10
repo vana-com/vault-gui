@@ -8,17 +8,23 @@ import { ToastDefault } from "src/components/Toast";
 interface Props {
   logIn?: () => void;
   loginError: boolean;
+  isLoading: boolean;
   setLoginError?: () => void;
 }
 
-const LoginButton = ({ logIn, loginError, setLoginError }: Props) => (
+const LoginButton = ({
+  logIn,
+  isLoading,
+  loginError,
+  setLoginError,
+}: Props) => (
   <>
     <Button
-      type="button"
       variant="solid"
       size="xl"
       prefix={<Icon icon="carbon:locked" height="1.125em" />}
       css={tw`min-w-[280px] max-w-[220px] font-semibold`}
+      disabled={isLoading}
       onClick={logIn}
     >
       Log In

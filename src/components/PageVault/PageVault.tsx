@@ -1,4 +1,3 @@
-import { useAtom } from "jotai";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -7,12 +6,13 @@ import {
   Button,
   Card,
   Container,
-  HeaderBasic,
-  Logout,
+  LoginButton,
+  LogoutButton,
   NAV_HEIGHT,
 } from "src/components";
 import { CarbonArrowLeft } from "src/components/Icons";
-import { userAtom } from "src/state";
+
+import { useUserContext } from "../UserAccess/UserContext";
 
 /* PageVault is the default page layout + header for a Vault page */
 
@@ -22,11 +22,12 @@ type PageVaultProps = {
 };
 
 const PageVault = ({ children, showBackLink }: PageVaultProps) => {
-  const [user] = useAtom(userAtom);
+  const { user, loginUser, logoutUser, loginError, isLoading } =
+    useUserContext();
 
   return (
     <div tw="relative">
-      {/* HIDDEN */}
+      {/* HIDDEN FOR A HOT MINUTE — TODO: Callum refactoring shortly based on new UI design */}
       {showBackLink && (
         <div tw="fixed top-8 left-8 z-10 hidden">
           <NextLink passHref href="/">
@@ -43,11 +44,17 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
       )}
       {user && (
         <div tw="fixed top-8 right-8 z-10 hidden">
-          <Logout />
+          {user && <LogoutButton logOut={logoutUser} isLoading={isLoading} />}
+          {!user && (
+            <LoginButton
+              logIn={loginUser}
+              loginError={loginError}
+              isLoading={isLoading}
+            />
+          )}
         </div>
       )}
 
-      {/* NOT HIDDEN */}
       <Container
         tw="relative"
         css={{ paddingTop: `${NAV_HEIGHT * 2}px` }}

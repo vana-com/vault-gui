@@ -1,4 +1,3 @@
-import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -21,9 +20,10 @@ import {
   TitleAndMetaTags,
   ToastDefault,
 } from "src/components";
+import { AuthenticatedPage } from "src/components/AuthenticatedPage";
+import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import { hasuraTokenAtom, userAtom } from "src/state";
 import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultModulePage: NextPage = () => {
@@ -37,8 +37,7 @@ const VaultModulePage: NextPage = () => {
   const { "module-name": moduleNameFromQuery } = router.query;
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
-  const [user] = useAtom(userAtom);
-  const [hasuraToken] = useAtom(hasuraTokenAtom);
+  const { user, hasuraToken } = useUserContext();
 
   const { data: userModulesData, loading: isDataLoading } =
     useGetUserModulesSubscription({
@@ -92,7 +91,7 @@ const VaultModulePage: NextPage = () => {
   }
 
   return (
-    <>
+    <AuthenticatedPage>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
       <LayoutApp>
         <NavBreadcrumb crumbs={[navigationBreadcrumbs[1]]} />
@@ -150,7 +149,7 @@ const VaultModulePage: NextPage = () => {
           content="Please reload the page and try again"
         />
       </LayoutApp>
-    </>
+    </AuthenticatedPage>
   );
 };
 

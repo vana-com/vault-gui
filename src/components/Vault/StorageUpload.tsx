@@ -17,7 +17,7 @@ interface Props {
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
   appPubKey: string;
-  web3AuthWalletProvider: IWalletProvider | undefined;
+  web3AuthWalletProvider: IWalletProvider | null;
 }
 
 const StorageUpload = ({
@@ -136,9 +136,9 @@ const StorageUpload = ({
         module: moduleName,
         numFilesUploaded: filesToUpload.length,
       });
-      setTimeout(() => router.push("/?completed-store=true"), 500);
+      setTimeout(() => router.push("/"), 500);
     } catch (error: any) {
-      console.log(error.toString());
+      console.error("Unable to encrypt and upload user data", error);
       setIsDataUploading(false);
       setShowStoreSuccessToast(false);
       setShowStoreErrorToast(true);

@@ -148,6 +148,10 @@ const stylesBase = css`
     webkittaphighlightcolor: ${theme`colors.purple.500`};
     ${tw`min-h-screen antialiased transition-all duration-150 bg-[#fcfcfc] bg-background text-label`};
   }
+  :disabled,
+  [disabled] {
+    opacity: 0.6;
+  }
   .w3ajs-external-wallet {
     display: none;
   }
