@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes";
 import tw, { css } from "twin.macro";
 
 import { Children } from "src/types";
@@ -24,31 +23,19 @@ const LayoutCanvasGrid = ({ children }: Children) => (
   A background pattern to provide focus for the Canvas.
   This pattern is from https://heropatterns.com/
  */
-export const patternLight = [
+export const canvasPattern = [
   css`
     background-image: url(/images/plus.svg);
-    opacity: 0.04;
+    opacity: 0.05;
+    @media (prefers-color-scheme: dark) {
+      background-image: url(/images/plus-white.svg);
+      opacity: 0.07;
+    }
   `,
 ];
 
-export const patternDark = [
-  css`
-    background-image: url(/images/plus-white.svg);
-    opacity: 0.07;
-  `,
-];
-
-const LayoutCanvasPattern = () => {
-  const { theme } = useTheme();
-
-  return (
-    <div
-      css={[
-        theme === "dark" ? patternDark : patternLight,
-        tw`absolute inset-0`,
-      ]}
-    />
-  );
-};
+const LayoutCanvasPattern = () => (
+  <div css={[tw`absolute inset-0`, canvasPattern]} />
+);
 
 export { LayoutCanvas, LayoutCanvasGrid, LayoutCanvasPattern };
