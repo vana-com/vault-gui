@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -39,6 +39,18 @@ const VaultModulePage: NextPage = () => {
         (userModule) => userModule.module.name === moduleName,
       )
     : [];
+
+  // If the module doesn't exist, redirect
+  useEffect(() => {
+    if (
+      router.isReady &&
+      usersModulesForName.length === 0 &&
+      !isUserLoading &&
+      !isDataLoading
+    ) {
+      router.push("/");
+    }
+  }, [router, isDataLoading]);
 
   /**
    * Deletes all files a user has stored for a module (ie. Email integration).
