@@ -2,7 +2,7 @@ interface PipelineParams {
   dataUrl: string;
   decryptionKey: string;
   serviceName: string;
-  queries: string[];
+  query: string;
 }
 
 export type { PipelineParams };

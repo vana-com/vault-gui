@@ -22,7 +22,7 @@ import * as DataPipeline from "src/types/DataPipeline";
 import {
   decryptData,
   extractData,
-  fetchDataFromUrl,
+  fetchZipFromUrl,
   PipelineParams,
   queryData,
   SQLiteQueryResult,
@@ -124,15 +124,18 @@ const SendPage: NextPage = () => {
     console.log("worker done | data:", JSON.stringify(payloadToSend));
 
     // Get the window context safely
-    const w = windowRef.current;
+    const _window = windowRef.current;
+
+    // Double sanity check that the window (and it's opener) is available
+    if (!_window || !_window.opener) return;
 
     // Send the data to the "parent" window
     // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
-    w?.opener.postMessage(JSON.stringify(payloadToSend), "*");
+    _window.opener.postMessage(JSON.stringify(payloadToSend), "*");
 
     // Allow time to show success message before we close the window
     setTimeout(() => {
-      closePopup(w as Window);
+      closePopup(_window);
     }, 3 * 1000);
   };
 
@@ -143,7 +146,7 @@ const SendPage: NextPage = () => {
     setShareStatus(DataPipeline.Status.PENDING);
 
     try {
-      const file = await fetchDataFromUrl(params.dataUrl);
+      const file = await fetchZipFromUrl(params.dataUrl);
       setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
 
       const decrypted = await decryptData(file, params.decryptionKey);
@@ -152,12 +155,12 @@ const SendPage: NextPage = () => {
       const extracted = await extractData(decrypted, params.serviceName);
       setUpdateStatus(DataPipeline.Stage.EXTRACTED_DATA);
 
-      const queried = await queryData(extracted, params.queries);
+      const queried = await queryData(extracted, params.query);
       setUpdateStatus(DataPipeline.Stage.QUERY_DATA);
 
       sendPipelinePayload(queried);
     } catch (error) {
-      console.log("error", error);
+      console.error("Error sending data to application", error);
       setShareStatus(DataPipeline.Status.REJECTED);
     }
   };
@@ -208,7 +211,7 @@ const SendPage: NextPage = () => {
     }
 
     const dataPipelineParams: PipelineParams = {
-      queries: [cleanQueryString],
+      query: cleanQueryString,
       dataUrl: signedUrl,
       decryptionKey: dangerousPrivateKey,
       serviceName: normalizedServiceName,

@@ -1,9 +1,9 @@
 /**
- * Fetches data from a url as a file
+ * Fetches data from a url as a .zip file
  * @param url location of data
- * @returns File
+ * @returns File.zip
  */
-const fetchDataFromUrl = async (url: string) => {
+const fetchZipFromUrl = async (url: string) => {
   const res = await fetch(url, {
     headers: {
       Accept: "application/zip",
@@ -12,9 +12,7 @@ const fetchDataFromUrl = async (url: string) => {
   const blob = await res.blob();
   const file = new File([blob], "data.zip.enc", { type: "application/zip" });
 
-  console.log(file);
-
   return file;
 };
 
-export { fetchDataFromUrl };
+export { fetchZipFromUrl };

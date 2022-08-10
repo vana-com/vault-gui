@@ -9,8 +9,9 @@ interface SQLiteQueryResult {
  * @param query SQL query
  * @returns matching rows
  */
-const queryData = async (db: any, queries: string[]) => {
-  const query = queries.join(" ");
+const queryData = async (db: any, query: string) => {
+  if (!query) throw new Error("No query provided");
+
   const queryResults: SQLiteQueryResult[] = await db.runQuery(query);
 
   return queryResults;
