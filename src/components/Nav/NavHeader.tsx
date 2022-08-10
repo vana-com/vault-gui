@@ -34,7 +34,7 @@ const NavHeader = ({
               as="h1"
               variant="title1"
               weight="semibold"
-              tw="-ml-0.5 text-primary"
+              tw="-ml-0.5 text-primaryShade"
             >
               {heading}
             </Text>

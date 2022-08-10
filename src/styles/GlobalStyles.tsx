@@ -80,13 +80,13 @@ const stylesBase = css`
     --royalBlue50: #008cff;
     --royalBlue60: #007be0;
     --royalBlue70: #0065b8;
-    --royalBlue80: #004f8f;
+    --royalBlue80: #003d6f; // #004f90;
     --error50: hsl(1, 62%, 60%);
     --error60: hsl(1deg 62% 44%);
   }
   .light {
     --primary: var(--royalBlue50);
-    --primaryShade: var(--royalBlue70);
+    --primaryShade: var(--royalBlue80);
     --primaryTint: var(--royalBlue10);
     --accent: var(--white100);
 
@@ -116,7 +116,7 @@ const stylesBase = css`
   }
   .dark {
     --primary: var(--royalBlue50);
-    --primaryShade: var(--royalBlue80);
+    --primaryShade: var(--royalBlue70);
     --primaryTint: var(--royalBlue30);
     --accent: var(--black100);
 

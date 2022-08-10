@@ -4,7 +4,6 @@ import tw from "twin.macro";
 
 import {
   Button,
-  ButtonSize,
   DataCardButton,
   DialogModalAdd,
   Group,
@@ -40,7 +39,7 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
   >
     <Stack tw="gap-4">
       <Stack tw="gap-0.5 -mt-1">
-        <Text variant="title1" tw="text-primary">
+        <Text variant="title1" tw="text-primaryShade">
           Add data
         </Text>
         <Group tw="items-center justify-between">
