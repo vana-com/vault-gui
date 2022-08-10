@@ -2,25 +2,25 @@
 import tw from "twin.macro";
 
 import { Stack, Text } from "src/components";
-import * as dataPipelineWorker from "src/types/DataPipelineWorker";
+import * as DataPipeline from "src/types/DataPipeline";
 
 interface Props {
-  stage: dataPipelineWorker.Stage;
-  status: dataPipelineWorker.Status;
+  stage: DataPipeline.Stage;
+  status: DataPipeline.Status;
 }
 
 const SendUpdateStatus = ({ stage, status }: Props) => {
   const decryptedOrExtracted =
-    stage === dataPipelineWorker.Stage.DECRYPTED_DATA ||
-    stage === dataPipelineWorker.Stage.EXTRACTED_DATA;
+    stage === DataPipeline.Stage.DECRYPTED_DATA ||
+    stage === DataPipeline.Stage.EXTRACTED_DATA;
 
   let heading;
   let lede;
 
   // Requesting
   if (
-    status === dataPipelineWorker.Status.IDLE ||
-    stage === dataPipelineWorker.Stage.FETCH_DATA
+    status === DataPipeline.Status.IDLE ||
+    stage === DataPipeline.Stage.FETCH_DATA
   ) {
     heading = "Requesting";
     lede = "Decrypting your data. Hold tight…";
@@ -33,7 +33,7 @@ const SendUpdateStatus = ({ stage, status }: Props) => {
   }
 
   // Ready
-  if (stage === dataPipelineWorker.Stage.QUERY_DATA) {
+  if (stage === DataPipeline.Stage.QUERY_DATA) {
     heading = "Ready";
     lede = "Your data has been securely shared.";
   }
