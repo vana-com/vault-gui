@@ -16,7 +16,10 @@ import {
   NavBreadcrumb,
   NavHeader,
   PopoverDataModule,
+  Stack,
+  Text,
   TitleAndMetaTags,
+  ToastDefault,
 } from "src/components";
 import { navigationBreadcrumbs } from "src/data";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
@@ -27,6 +30,8 @@ const VaultModulePage: NextPage = () => {
   const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
+  const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
 
   // query data
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -70,17 +75,17 @@ const VaultModulePage: NextPage = () => {
     ).json();
 
     if (deleteSuccessful) {
-      // TODO: show success toast
+      setShowDeleteSuccessToast(true);
       setTimeout(() => router.push("/"), 250);
     } else {
       setIsDeleting(false);
-      // TODO: show failure toast
+      setShowDeleteFailureToast(true);
     }
   };
 
   // TESTS
-  console.log("userModulesData", userModulesData);
-  console.log("usersModulesForThisService", usersModulesForThisService);
+  // console.log("userModulesData", userModulesData);
+  // console.log("usersModulesForThisService", usersModulesForThisService);
 
   if (isDataLoading) {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[1]]} />;
@@ -90,26 +95,27 @@ const VaultModulePage: NextPage = () => {
     <>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
       <LayoutApp>
-        <NavBreadcrumb crumbs={[navigationBreadcrumbs[1]]}>
-          {/* <AddData modules={notStoredModules} buttonSize="md" /> */}
-        </NavBreadcrumb>
-
+        <NavBreadcrumb crumbs={[navigationBreadcrumbs[1]]} />
         <NavHeader heading={`My ${moduleName} data`}>
-          {/* <PopoverHelp css={tw`text-labelTertiary`} /> */}
           <PopoverDataModule>
-            <DeleteData
-              onDelete={() => deleteAllModuleFiles()}
-              isDeleting={isDeleting}
-              deletionName={`your ${moduleName}`}
-              buttonLabel={`Delete all your ${moduleName} data`}
-            />
+            <Stack tw="gap-1">
+              <Text variant="note">Action menu for this app category.</Text>
+              <Text variant="note">
+                We&apos;ll make use of this action menu soon…
+              </Text>
+              {/* <DeleteData
+                onDelete={() => deleteAllModuleFiles()}
+                isDeleting={isDeleting}
+                deletionName={`your ${moduleName}`}
+                buttonLabel={`Delete all your ${moduleName} data`}
+              /> */}
+            </Stack>
           </PopoverDataModule>
         </NavHeader>
 
         <LayoutCanvas>
           <LayoutCanvasPattern />
           <LayoutCanvasGrid>
-            {/* modules={usersModulesForThisService} */}
             {usersModulesForThisService.map((module) => (
               <DataModule
                 key={module.id}
@@ -119,13 +125,30 @@ const VaultModulePage: NextPage = () => {
                 <DeleteData
                   onDelete={() => deleteAllModuleFiles()}
                   isDeleting={isDeleting}
-                  deletionName="this data module"
-                  buttonLabel="Delete this data module"
+                  deletionName="this data block"
+                  buttonLabel="Delete this data block"
                 />
               </DataModule>
             ))}
           </LayoutCanvasGrid>
         </LayoutCanvas>
+
+        {/* INTERACTION STATUS TOASTS */}
+        <ToastDefault
+          open={showDeleteSuccessToast}
+          onOpenChange={setShowDeleteSuccessToast}
+          variant="success"
+          title="Success!"
+          content={`Your ${moduleName} data is securely stored`}
+        />
+        <ToastDefault
+          open={showDeleteFailureToast}
+          onOpenChange={setShowDeleteFailureToast}
+          duration={12000}
+          variant="error"
+          title="Error!"
+          content="Please reload the page and try again"
+        />
       </LayoutApp>
     </>
   );
