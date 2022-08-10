@@ -62,9 +62,9 @@ export const Button = React.forwardRef(
         <Spinner />
       ) : (
         <>
-          {prefix && <div tw="inline-flex">{prefix}</div>}
-          {children}
-          {suffix && <div tw="inline-flex">{suffix}</div>}
+          {prefix && <div tw="relative inline-flex">{prefix}</div>}
+          <span tw="relative">{children}</span>
+          {suffix && <div tw="relative inline-flex">{suffix}</div>}
         </>
       )}
     </Box>
