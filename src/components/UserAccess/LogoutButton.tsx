@@ -16,9 +16,10 @@ interface Props {
   isLoading: boolean;
 }
 
+/* TODO: not being used, ready to delete */
 const LogoutButton = ({ logOut, isLoading }: Props) => (
   <DialogModal
-    buttonSlot={
+    buttonNode={
       <Button
         type="button"
         variant="outline"
