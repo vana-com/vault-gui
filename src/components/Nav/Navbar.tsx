@@ -21,7 +21,7 @@ const Navbar = ({ children }: Props) => {
             boxSize="1.5em"
             tw="bg-label text-background rounded-[4px]"
           />
-          <Text variant="footnoteMeta" weight="bold" tw="text-label">
+          <Text variant="footnoteMeta" weight="heavy" tw="text-label">
             Vault
           </Text>
         </div>
