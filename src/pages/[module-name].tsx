@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -26,7 +26,7 @@ const VaultModulePage: NextPage = () => {
   const { "module-name": moduleNameFromQuery } = router.query;
   const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
 
-  const { user, hasuraToken } = useUserContext();
+  const { user, hasuraToken, isLoading: isUserLoading } = useUserContext();
 
   const { data: userModulesData, loading: isDataLoading } =
     useGetUserModulesSubscription({
@@ -39,6 +39,18 @@ const VaultModulePage: NextPage = () => {
         (userModule) => userModule.module.name === moduleName,
       )
     : [];
+
+  // If the module doesn't exist, redirect
+  useEffect(() => {
+    if (
+      router.isReady &&
+      usersModulesForName.length === 0 &&
+      !isUserLoading &&
+      !isDataLoading
+    ) {
+      router.push("/");
+    }
+  }, [router, isDataLoading]);
 
   /**
    * Deletes all files a user has stored for a module (ie. Email integration).
@@ -71,36 +83,32 @@ const VaultModulePage: NextPage = () => {
     }
   };
 
-  if (isDataLoading) {
-    return (
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-        </Flex>
-      </PageVault>
-    );
-  }
-
   return (
     <AuthenticatedPage>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
 
       <PageVault showBackLink>
-        <div tw="flex flex-col gap-8 w-full">
-          <CardHeaderVaultModule moduleName={moduleName}>
-            Vana encrypts your data before storing.
-          </CardHeaderVaultModule>
-          <hr />
-          <div tw="flex flex-col gap-2 items-center">
-            <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
-              <DeleteData
-                onDelete={() => deleteAllModuleFiles()}
-                isDeleting={isDeleting}
-                buttonLabel={`Delete all your ${moduleName} data`}
-              />
+        {userModulesData !== undefined && !isDataLoading && !isUserLoading ? (
+          <div tw="flex flex-col gap-8 w-full">
+            <CardHeaderVaultModule moduleName={moduleName}>
+              Vana encrypts your data before storing.
+            </CardHeaderVaultModule>
+            <hr />
+            <div tw="flex flex-col gap-2 items-center">
+              <div css={usersModulesForName?.length < 2 && tw`pt-1`}>
+                <DeleteData
+                  onDelete={() => deleteAllModuleFiles()}
+                  isDeleting={isDeleting}
+                  buttonLabel={`Delete all your ${moduleName} data`}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <Flex tw="w-full items-center justify-center">
+            <Spinner />
+          </Flex>
+        )}
       </PageVault>
     </AuthenticatedPage>
   );
