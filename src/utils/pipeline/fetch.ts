@@ -3,7 +3,7 @@
  * @param url location of data
  * @returns File.zip
  */
-const fetchZipFromUrl = async (url: string) => {
+const fetchZipFromUrl = async (url: string): Promise<File> => {
   const res = await fetch(url, {
     headers: {
       Accept: "application/zip",

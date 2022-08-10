@@ -6,7 +6,7 @@ import { decryptFileChaCha20Poly1305 } from "src/utils/decryptFileChaCha20Poly13
  * @param key used to decrypt data
  * @returns Unencrypted file (.zip)
  */
-const decryptData = async (encryptedFile: File, key: any) => {
+const decryptData = async (encryptedFile: File, key: any): Promise<File> => {
   const decrypted = await decryptFileChaCha20Poly1305(encryptedFile, key);
 
   if (!decrypted) {
