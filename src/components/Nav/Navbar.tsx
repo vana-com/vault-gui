@@ -1,17 +1,17 @@
-import { useAtom } from "jotai";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import { Text, UserAccountNav, VanaLogo } from "src/components";
-import { userAtom } from "src/state";
+
+import { useUserContext } from "../UserAccess/UserContext";
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const Navbar = ({ children }: Props) => {
-  const [user] = useAtom(userAtom);
+  const { user } = useUserContext();
 
   return (
     <div tw="px-inset flex justify-between items-center h-navH">
