@@ -9,6 +9,7 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
+  DialogVariant,
   styledMotionDiv,
 } from "src/components";
 
@@ -17,9 +18,10 @@ import * as styles from "./Dialog.css";
 interface Props {
   buttonNode: React.ReactNode;
   children: React.ReactNode;
+  variant?: DialogVariant;
 }
 
-const DialogModal = ({ buttonNode, children }: Props) => {
+const DialogModal = ({ buttonNode, children, variant = "full" }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -48,7 +50,10 @@ const DialogModal = ({ buttonNode, children }: Props) => {
                 transition={{ duration: 0.25 }}
                 css={styledMotionDiv}
               >
-                <DialogContent forceMount css={styles.styledDialogContent}>
+                <DialogContent
+                  forceMount
+                  css={styles.styledDialogContent({ variant })}
+                >
                   {children}
                 </DialogContent>
               </motion.div>
