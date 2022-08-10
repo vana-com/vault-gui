@@ -1,7 +1,6 @@
 /* APP COMPOUND & LAYOUT COMPONENTS */
 export * from "./AppHook";
 export * from "./Boxes";
-export * from "./Buttons";
 export * from "./Card";
 export * from "./ColorMode";
 export * from "./Dialogs";
