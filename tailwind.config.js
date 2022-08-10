@@ -2,6 +2,7 @@
 // https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 
 // const theme = require('tailwindcss/defaultTheme')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const colors = require('tailwindcss/colors')
 
 const sans = ['ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','sans-serif'];
