@@ -6,7 +6,7 @@ import { Group, Link, Stack, styledMotionDiv, Text } from "src/components";
 import { CarbonCheckmarkOutline, CarbonError } from "src/components/Icons";
 import { SendUpdateStatus } from "src/components/VaultShare";
 import config from "src/config";
-import * as dataPipelineWorker from "src/types/DataPipelineWorker";
+import * as DataPipeline from "src/types/DataPipeline";
 
 import { FocusStack } from "./Subelement";
 
@@ -15,8 +15,8 @@ import { FocusStack } from "./Subelement";
  */
 
 interface Props {
-  status: dataPipelineWorker.Status;
-  stage: dataPipelineWorker.Stage;
+  status: DataPipeline.Status;
+  stage: DataPipeline.Stage;
 }
 
 const SendStatus = ({ status, stage }: Props) => {
@@ -26,8 +26,8 @@ const SendStatus = ({ status, stage }: Props) => {
   return (
     <FocusStack tw="min-h-[268px] justify-center relative">
       {/* IDLE OR PENDING */}
-      {(status === dataPipelineWorker.Status.IDLE ||
-        status === dataPipelineWorker.Status.PENDING) && (
+      {(status === DataPipeline.Status.IDLE ||
+        status === DataPipeline.Status.PENDING) && (
         <AnimatePresence>
           <motion.div
             initial={{ x: 540 }}
@@ -46,7 +46,7 @@ const SendStatus = ({ status, stage }: Props) => {
       )}
 
       {/* REJECTED */}
-      {status === dataPipelineWorker.Status.REJECTED && (
+      {status === DataPipeline.Status.REJECTED && (
         <AnimatePresence>
           <motion.div
             initial={{ y: 20 }}
@@ -82,7 +82,7 @@ const SendStatus = ({ status, stage }: Props) => {
       )}
 
       {/* RESOLVED */}
-      {status === dataPipelineWorker.Status.RESOLVED && (
+      {status === DataPipeline.Status.RESOLVED && (
         <AnimatePresence>
           <motion.div
             initial={{ y: 20 }}

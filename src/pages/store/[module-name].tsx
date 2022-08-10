@@ -27,7 +27,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-  const { user, walletProvider } = useUserContext();
+  const { user, walletProvider, isLoading: isUserLoading } = useUserContext();
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -62,9 +62,10 @@ const VaultStoragePage: NextPage = () => {
     if (router.isReady && !module && !isDataLoading) {
       router.push("/");
     }
-  }, [router]);
+  }, [router, isDataLoading]);
 
-  if (isDataLoading) {
+  // If we're awaiting user or data, show loading
+  if (isUserLoading || isDataLoading) {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[0]]} />;
   }
 
