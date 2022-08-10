@@ -240,7 +240,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(null);
       setUserWalletAddress(null);
       saveHasuraToken(null);
-      router.push("/");
+      setTimeout(() => router.push("/"), 250);
     }
   };
 
