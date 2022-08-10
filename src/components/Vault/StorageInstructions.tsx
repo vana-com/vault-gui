@@ -15,7 +15,7 @@ const StorageInstructions = ({ moduleName }: Props) => (
   <Stack tw="gap-0">
     <Stack css={[tw`gap-1 p-inset bg-neutral`, ptBreadcrumbs]}>
       <Text variant="title1" tw="pb-1">
-        Get your {moduleName} data in 5 minutes
+        Request your {moduleName} data in 5 minutes
       </Text>
       <MarkdownWrapper isNote tw="text-labelSecondary">
         <Markdown>{INSTRUCTIONS_INFORMATION}</Markdown>
