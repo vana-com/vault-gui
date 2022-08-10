@@ -1,17 +1,17 @@
-import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { LayoutShell, Login, NavAside, Navbar } from "src/components";
-import { userAtom } from "src/state";
+import { LayoutShell, LoginLayout, NavAside, Navbar } from "src/components";
+
+import { useUserContext } from "../UserAccess/UserContext";
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const LayoutApp = ({ children }: Props) => {
-  const [user] = useAtom(userAtom);
+  const { user } = useUserContext();
 
   // only render UI when the page is mounted on the client
   const [mounted, setMounted] = useState(false);
@@ -49,10 +49,7 @@ const LayoutApp = ({ children }: Props) => {
 
           {/* CONTENT */}
           <LayoutShell.Body>
-            {/* TECH DEBT: we'll refactor useEffect vs Markup in Login soon */}
-            <Login withLayout />
-
-            {user && children}
+            {user ? children : <LoginLayout />}
           </LayoutShell.Body>
         </LayoutShell>
       </div>
