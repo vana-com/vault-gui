@@ -61,15 +61,15 @@ const VaultStoragePage: NextPage = () => {
     }
   }, [router, isDataLoading]);
 
-  if (user && module && !isDataLoading && !isUserLoading) {
-    return (
-      <AuthenticatedPage>
-        <TitleAndMetaTags
-          color="black"
-          title={`Store ${moduleName} Data | Vana`}
-        />
+  return (
+    <AuthenticatedPage>
+      <TitleAndMetaTags
+        color="black"
+        title={`Store ${moduleName} Data | Vana`}
+      />
 
-        <PageVault showBackLink>
+      <PageVault showBackLink>
+        {user && module && !isDataLoading && !isUserLoading ? (
           <div tw="w-full">
             <Stack tw="gap-5 w-full">
               <CardHeaderVaultModule moduleName={moduleName}>
@@ -90,17 +90,11 @@ const VaultStoragePage: NextPage = () => {
               />
             </div>
           </div>
-        </PageVault>
-      </AuthenticatedPage>
-    );
-  }
-
-  return (
-    <AuthenticatedPage>
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-        </Flex>
+        ) : (
+          <Flex tw="w-full items-center justify-center">
+            <Spinner />
+          </Flex>
+        )}
       </PageVault>
     </AuthenticatedPage>
   );

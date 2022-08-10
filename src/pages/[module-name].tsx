@@ -71,12 +71,12 @@ const VaultModulePage: NextPage = () => {
     }
   };
 
-  if (userModulesData !== undefined && !isDataLoading && !isUserLoading) {
-    return (
-      <AuthenticatedPage>
-        <TitleAndMetaTags color="black" title="Your Vault | Vana" />
+  return (
+    <AuthenticatedPage>
+      <TitleAndMetaTags color="black" title="Your Vault | Vana" />
 
-        <PageVault showBackLink>
+      <PageVault showBackLink>
+        {userModulesData !== undefined && !isDataLoading && !isUserLoading ? (
           <div tw="flex flex-col gap-8 w-full">
             <CardHeaderVaultModule moduleName={moduleName}>
               Vana encrypts your data before storing.
@@ -92,17 +92,11 @@ const VaultModulePage: NextPage = () => {
               </div>
             </div>
           </div>
-        </PageVault>
-      </AuthenticatedPage>
-    );
-  }
-
-  return (
-    <AuthenticatedPage>
-      <PageVault>
-        <Flex tw="w-full items-center justify-center">
-          <Spinner />
-        </Flex>
+        ) : (
+          <Flex tw="w-full items-center justify-center">
+            <Spinner />
+          </Flex>
+        )}
       </PageVault>
     </AuthenticatedPage>
   );
