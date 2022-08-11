@@ -1,9 +1,11 @@
 import { Icon } from "@iconify/react";
+import type { NextPage } from "next";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
   Center,
+  LayoutApp,
   LayoutCanvas,
   LayoutCanvasPattern,
   LoginButton,
@@ -12,12 +14,8 @@ import {
   WithIcon,
 } from "src/components";
 
-import { useUserContext } from "./UserContext";
-
-const LoginLayout = () => {
-  const { loginUser, loginError, isLoading } = useUserContext();
-
-  return (
+const LoginPage: NextPage = () => (
+  <LayoutApp>
     <LayoutCanvas>
       <LayoutCanvasPattern />
       <Center tw="min-h-[300px] relative">
@@ -35,15 +33,11 @@ const LoginLayout = () => {
               </WithIcon>
             </Text>
           </Stack>
-          <LoginButton
-            logIn={loginUser}
-            loginError={loginError}
-            isLoading={isLoading}
-          />
+          <LoginButton />
         </Stack>
       </Center>
     </LayoutCanvas>
-  );
-};
+  </LayoutApp>
+);
 
-export { LoginLayout };
+export default LoginPage;
