@@ -1,63 +1,37 @@
+import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import {
-  Button,
-  DialogClose,
-  DialogModal,
-  Group,
-  Stack,
-  Text,
-} from "src/components";
-import { CarbonSecurity } from "src/components/Icons";
+import { Spinner, Text, WithIcon } from "src/components";
+import { navLinkStyle } from "src/components/Nav/Nav.css";
 
-interface Props {
-  logOut?: () => void;
-  isLoading: boolean;
-}
+import { useUserContext } from "./UserContext";
 
-/* TODO: not being used, ready to delete */
-const LogoutButton = ({ logOut, isLoading }: Props) => (
-  <DialogModal
-    buttonNode={
-      <Button
-        type="button"
-        variant="outline"
-        size="md"
-        disabled={isLoading}
-        prefix={<CarbonSecurity />}
+/* TODO: Callum will replace LoginButton within this component after `development` merge */
+const LogoutButton = () => {
+  const { logoutUser, isLoading } = useUserContext();
+
+  return (
+    <Text
+      as="button"
+      variant="base"
+      weight="medium"
+      css={[navLinkStyle, tw`px-3 text-label`]}
+      onClick={logoutUser}
+    >
+      <WithIcon
+        prefix={
+          isLoading ? (
+            <Spinner />
+          ) : (
+            <Icon icon="heroicons-solid:logout" height="0.85em" />
+          )
+        }
       >
-        Log Out
-      </Button>
-    }
-  >
-    <Stack tw="gap-1 justify-center">
-      <Text color="label" variant="title2" tw="text-center">
-        Are you sure?
-      </Text>
-      <Text color="labelSecondary" tw="text-center">
-        Confirm your secure logout
-      </Text>
-
-      <Group tw="gap-4 pt-7 justify-center">
-        <Button
-          variant="solid"
-          size="lg"
-          prefix={<CarbonSecurity />}
-          isLoading={isLoading}
-          // type="button"
-          onClick={logOut}
-        >
-          Log Out
-        </Button>
-        <DialogClose asChild>
-          <Button variant="outline" size="lg">
-            Not yet
-          </Button>
-        </DialogClose>
-      </Group>
-    </Stack>
-  </DialogModal>
-);
+        Log out
+      </WithIcon>
+    </Text>
+  );
+};
 
 export { LogoutButton };

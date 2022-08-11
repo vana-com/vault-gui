@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
-import { Group, Logout, Stack, Text, WithIcon } from "src/components";
+import { Group, LogoutButton, Stack, Text, WithIcon } from "src/components";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,10 +28,6 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
           aria-label="Your account"
           type="button"
         >
-          {/* TODO: get initials from user name */}
-          {/* <Text as="a" variant="base" weight="bold">
-            C
-          </Text> */}
           <Icon icon="carbon:user-avatar-filled-alt" height="1.75em" />
         </button>
       </DropdownMenuTrigger>
@@ -40,9 +36,6 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
         <Stack tw="gap-2 min-w-[300px]">
           <Group tw="px-3 py-4 gap-3 items-center">
             <div css={[accountAvatarStyle, tw`h-[55px] w-[55px]`]}>
-              {/* <Text variant="large" weight="bold">
-                C
-              </Text> */}
               <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
             </div>
             <Stack tw="gap-0.5">
@@ -74,7 +67,7 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
                 Log out
               </WithIcon>
             </Text> */}
-            <Logout />
+            <LogoutButton />
             <Text
               as="button"
               variant="base"
