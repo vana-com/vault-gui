@@ -11,6 +11,11 @@ import { IWalletProvider } from "./walletProvider";
  * @returns
  */
 const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
+  /**
+   * Returns the user's wallet address.
+   * Note, the address could be returned in different cases (ex: 0xab12.. vs 0xAB12..) depending on whether the checksum was applied
+   * @returns
+   */
   const getWalletAddress = async (): Promise<string> => {
     try {
       const web3 = new Web3(provider as any);
