@@ -24,7 +24,7 @@ export const Markdown = ({ children }: { children: string }) => {
     },
     li: (li: { children?: boolean }) => (
       <li tw="flex items-start">
-        <div tw="rounded mr-2 bg-current h-px w-5 transform translate-y-[0.7em]" />
+        <div tw="rounded mr-3 bg-current h-[6px] w-[6px] transform translate-y-[0.55em]" />
         {/* ReactMarkdown will always render a p tag at li.children */}
         <div tw="flex-1">{li.children}</div>
       </li>
