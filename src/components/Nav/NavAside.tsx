@@ -131,7 +131,7 @@ const NavAside = ({ children }: Props) => {
             <PopoverHelp />
           </div>
           <Link
-            href="https://www.google.com/search?q=something"
+            href={config.vanaPrivacyURL}
             target="_blank"
             rel="noopener noreferrer"
             underline={false}

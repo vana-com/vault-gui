@@ -22,6 +22,7 @@ const generalConfig = {
   vanaManifestsURL: `${vanaVaultURL}/manifesto`,
   vanaSupportEmail: "support@vanahelp.zendesk.com",
   vanaBetaFeedback: "https://4eyuszgyknu.typeform.com/vanarocks",
+  vanaPrivacyURL: "https://www.vana.xyz/privacy-policy",
 
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
