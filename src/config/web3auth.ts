@@ -15,7 +15,7 @@ const WEB_3_AUTH_NETWORK = process.env
 const web3AuthOptions: Web3AuthOptions = {
   uiConfig: {
     appLogo: "https://vault.vana.xyz/vana.svg",
-    theme: "dark",
+    theme: "light",
   },
   clientId: WEB_3_AUTH_CLIENT_ID,
   chainConfig: {
