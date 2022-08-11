@@ -1,7 +1,4 @@
-interface SQLiteQueryResult {
-  queryString: string;
-  queryResult: string[];
-}
+import type { Database, QueryResult } from "@corsali/userdata-extractor";
 
 /**
  * Runs a query on a sqlite database
@@ -10,15 +7,14 @@ interface SQLiteQueryResult {
  * @returns matching rows
  */
 const queryData = async (
-  db: any,
+  db: Database,
   query: string,
-): Promise<SQLiteQueryResult[]> => {
+): Promise<QueryResult[]> => {
   if (!query) throw new Error("No query provided");
 
-  const queryResults: SQLiteQueryResult[] = await db.runQuery(query);
+  const queryResults = await db.runQuery(query);
 
   return queryResults;
 };
 
 export { queryData };
-export type { SQLiteQueryResult };
