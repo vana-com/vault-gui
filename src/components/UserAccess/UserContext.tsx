@@ -184,7 +184,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         const web3AuthInstance = new Web3Auth(config.web3AuthOptions);
         let web3AuthAdapter;
 
-        if (window.location.origin.endsWith("vana.vercel.app")) {
+        if (window.location.origin.endsWith(config.vercelDomain)) {
           // Attempt to whitelist origin in Web3Auth manually for Vercel preview builds
           const res = await fetch(`/api/auth/sign-origin`, { method: "POST" }); // Use POST to send Origin header automatically
           const { origin, signature } = await res.json();

@@ -3,8 +3,9 @@ import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import config from "src/config/";
+import serverConfig from "src/config/server";
 
-const ALLOWED_ORIGINS = [/https:\/\/vault-[0-9A-Za-z]{9}-vana\.vercel\.app/];
+const ALLOWED_ORIGINS = [serverConfig.vercelPreviewUrlRegex];
 
 /**
  * Creates a signature for any of the whitelisted origins above for Web3Auth

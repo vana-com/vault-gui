@@ -6,6 +6,8 @@ const generalConfig = {
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
 
+  vercelDomain: "vana.vercel.app",
+
   /**
    * Encryption
    */
