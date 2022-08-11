@@ -3,7 +3,6 @@ import tw, { css } from "twin.macro";
 
 export const dialogVariants = {
   // rounded-[40px] matches the roundness of p-inset
-  // max-w-2xl pt-navH top-[40%]
   full: [
     tw`w-[90vw] h-auto min-h-[30vh] max-h-[85vh] rounded-[40px]`,
     css`
@@ -16,10 +15,7 @@ export const dialogVariants = {
 export type DialogVariant = keyof typeof dialogVariants;
 
 // https://emotion.sh/docs/keyframes
-// const contentShow = keyframes({
-//   "0%": { opacity: 0, transform: "translate(-50%, -48%) scale(.96)" },
-//   "100%": { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
-// });
+// translateY to 0% in order to use `top-navH`
 const contentShow = keyframes({
   "0%": { opacity: 0, transform: "translate(-50%, -48%) scale(.96)" },
   "100%": { opacity: 1, transform: "translate(-50%, 0%) scale(1)" },
