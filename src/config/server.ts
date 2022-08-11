@@ -15,6 +15,9 @@ const userDataBucket = googleStorage.bucket(
   process.env.GCP_USER_DATA_BUCKET_NAME || "",
 );
 
+const vercelPreviewUrlRegex =
+  /https:\/\/vault-[0-9A-Za-z]{9}-vana\.vercel\.app/;
+
 export default {
   /**
    * GCP
@@ -22,4 +25,5 @@ export default {
   googleCredentials,
   googleStorage,
   userDataBucket,
+  vercelPreviewUrlRegex,
 };
