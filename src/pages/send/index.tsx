@@ -1,3 +1,4 @@
+import type { QueryResult } from "@corsali/userdata-extractor";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -25,7 +26,6 @@ import {
   fetchZipFromUrl,
   PipelineParams,
   queryData,
-  SQLiteQueryResult,
 } from "src/utils/pipeline";
 
 // Sharing API Page to be opened in 3rd-party website as a popup
@@ -108,7 +108,7 @@ const SendPage: NextPage = () => {
   ]);
   console.log("uiStatus", uiStatus);
 
-  const sendPipelinePayload = (payload: SQLiteQueryResult[]) => {
+  const sendPipelinePayload = (payload: QueryResult[]) => {
     // UI: Resolved/Finish state
     setShareStatus(DataPipeline.Status.RESOLVED);
 
