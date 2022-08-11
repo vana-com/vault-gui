@@ -21,3 +21,8 @@ declare module "react" {
     css?: CSSInterpolation;
   }
 }
+
+// A helper type for setting the css prop on Radix components.
+// Was not able to google any method for this, but this works
+// and it uses the correct twin.macro import.
+export type TwCss = TwStyle | TwStyle[];

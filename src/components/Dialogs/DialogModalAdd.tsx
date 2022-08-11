@@ -12,6 +12,7 @@ import {
   DialogVariant,
   styledMotionDiv,
 } from "src/components";
+import { TwCss } from "src/types";
 
 import * as styles from "./Dialog.css";
 
@@ -52,7 +53,7 @@ const DialogModalAdd = ({ buttonNode, children, variant = "full" }: Props) => {
               >
                 <DialogContent
                   forceMount
-                  css={styles.styledDialogContent({ variant })}
+                  css={styles.styledDialogContent({ variant }) as TwCss}
                 >
                   {children}
                 </DialogContent>
