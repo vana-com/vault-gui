@@ -39,7 +39,7 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
   >
     <Stack tw="gap-4">
       <Stack tw="gap-0.5 -mt-1">
-        <Text variant="title1" tw="text-primaryShade">
+        <Text variant="title1" tw="text-label">
           Add data
         </Text>
         <Group tw="items-center justify-between">

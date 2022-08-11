@@ -10,4 +10,4 @@ export const navLinkHoverStyle = [
 ];
 export const navLinkStyle = [navLinkBoxStyle, navLinkHoverStyle];
 // bg-gray-400 bg-opacity-10
-export const navLinkActiveStyle = [tw`text-primaryShade`];
+export const navLinkActiveStyle = [tw`text-label`];
