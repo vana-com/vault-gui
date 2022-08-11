@@ -5,6 +5,7 @@ import tw from "twin.macro";
 
 import {
   AddData,
+  AuthenticatedLayout,
   Center,
   DataCardButton,
   LayoutApp,
@@ -28,7 +29,7 @@ import {
 } from "src/graphql/generated";
 
 const HomePage: NextPage = () => {
-  const { user, isLoading: isUserLoading } = useUserContext();
+  const { user } = useUserContext();
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -50,11 +51,18 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // data state: hasura is loading
-  const isHasuraLoading =
-    isUserLoading || isModulesLoading || isUserModulesDataLoading;
+  // if (user && userModulesData !== undefined) {
+  // Data state: hasura data is loading
+  const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
 
-  // data state: has no modules
+  if (isHasuraLoading)
+    return (
+      <AuthenticatedLayout>
+        <LayoutLoading />
+      </AuthenticatedLayout>
+    );
+
+  // Data state: has no modules
   const hasNoModules = storedUsersModules.length === 0;
 
   // TESTS
@@ -62,80 +70,65 @@ const HomePage: NextPage = () => {
   console.log("hasNoModules", hasNoModules);
   console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
 
-  if (user && userModulesData !== undefined) {
-    return (
-      <>
-        <TitleAndMetaTags color="black" title="Vault | Vana" />
-        <LayoutApp>
-          {/* BREADCRUMB */}
-          <NavBreadcrumb
-            crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
-          >
-            {!hasNoModules && (
-              <AddData modules={notStoredModules}>Add data</AddData>
-            )}
-          </NavBreadcrumb>
+  return (
+    <AuthenticatedLayout>
+      <TitleAndMetaTags color="black" title="Vault | Vana" />
+      <LayoutApp>
+        {/* BREADCRUMB */}
+        <NavBreadcrumb
+          crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
+        >
+          {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
+            <AddData modules={notStoredModules}>Add data</AddData>
+          )}
+        </NavBreadcrumb>
 
-          {/* HEADER */}
-          {hasNoModules ? (
-            <NavHeader heading="What data do you want to add?" />
-          ) : (
-            <NavHeaderRule />
+        {/* HEADER */}
+        {hasNoModules ? (
+          <NavHeader heading="What data do you want to add?" />
+        ) : (
+          <NavHeaderRule />
+        )}
+
+        {/* CANVAS */}
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          {/* NO STORED MODULES: ADD A MODULE */}
+          {hasNoModules && (
+            <Center tw="min-h-[300px] relative">
+              <Stack tw="gap-5 items-center">
+                <AddData buttonIsLarge modules={notStoredModules}>
+                  Start adding data
+                </AddData>
+                <Text
+                  variant="note"
+                  tw="text-labelSecondary flex items-center gap-1"
+                >
+                  <WithIcon prefix={<Icon icon="carbon:idea" />}>
+                    Add a tip here to incentivize users to add data
+                  </WithIcon>
+                </Text>
+              </Stack>
+            </Center>
           )}
 
-          {/* CANVAS */}
-          <LayoutCanvas>
-            <LayoutCanvasPattern />
-            {/* NO STORED MODULES: ADD A MODULE */}
-            {hasNoModules && (
-              <Center tw="min-h-[300px] relative">
-                <Stack tw="gap-5 items-center">
-                  <AddData buttonIsLarge modules={notStoredModules}>
-                    Start adding data
-                  </AddData>
-                  <Text
-                    variant="note"
-                    tw="text-labelSecondary flex items-center gap-1"
-                  >
-                    <WithIcon prefix={<Icon icon="carbon:idea" />}>
-                      Add a tip here to incentivize users to add data
-                    </WithIcon>
-                  </Text>
-                </Stack>
-              </Center>
-            )}
-
-            {/* STORED MODULES */}
-            {!hasNoModules && (
-              <LayoutCanvasGrid>
-                {storedUsersModules.map((module) => (
-                  <DataCardButton
-                    key={module.module.name?.toLowerCase()}
-                    module={module.module}
-                    isStored
-                    showActionHover
-                  />
-                ))}
-              </LayoutCanvasGrid>
-            )}
-          </LayoutCanvas>
-        </LayoutApp>
-      </>
-    );
-  }
-
-  // Login state: prior to authenticated store user
-  if (!user && !isHasuraLoading) {
-    return (
-      <>
-        <TitleAndMetaTags color="black" title="Login to Vault" />
-        <LayoutApp />
-      </>
-    );
-  }
-
-  // State for loading Hasura but not store user
-  return <LayoutLoading />;
+          {/* STORED MODULES */}
+          {!hasNoModules && (
+            <LayoutCanvasGrid>
+              {storedUsersModules.map((module) => (
+                <DataCardButton
+                  key={module.module.name?.toLowerCase()}
+                  module={module.module}
+                  isStored
+                  showActionHover
+                />
+              ))}
+            </LayoutCanvasGrid>
+          )}
+        </LayoutCanvas>
+      </LayoutApp>
+    </AuthenticatedLayout>
+  );
 };
 
 export default HomePage;
