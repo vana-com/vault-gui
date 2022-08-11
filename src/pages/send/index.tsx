@@ -148,14 +148,14 @@ const SendPage: NextPage = () => {
     try {
       const { file, encryptedPassword } = await fetchZipFromUrl(params.dataUrl);
       setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
-      const decryptionKey = await walletProvider?.decryptMessage(
+      const plainTextPassword = await walletProvider?.decryptMessage(
         encryptedPassword,
       );
-      if (!decryptionKey) {
+      if (!plainTextPassword) {
         throw new Error("Unable to decrypt encryptedPassword for file.");
       }
 
-      const decrypted = await decryptData(file, decryptionKey);
+      const decrypted = await decryptData(file, plainTextPassword);
       setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
 
       const extracted = await extractData(decrypted, params.serviceName);

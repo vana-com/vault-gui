@@ -23,15 +23,15 @@ const encryptAndUploadUserDataFiles = async (
 ) => {
   // Multiple files should be processed uploaded in parallel so we create arrays and use Promise.all
 
-  const passwords = files.map(() => Math.random().toString(36));
+  const plainTextPasswords = files.map(() => Math.random().toString(36));
   const encryptedPasswords = await Promise.all(
-    passwords.map(
+    plainTextPasswords.map(
       async (p) => (await walletProvider?.encryptMessage(p)) as string,
     ),
   );
 
   const encryptionFilePromises = files.map((file, i) =>
-    encryptFileChaCha20Poly1305(file, passwords[i]),
+    encryptFileChaCha20Poly1305(file, plainTextPasswords[i]),
   );
 
   const encryptedFilesToUpload = await Promise.all(encryptionFilePromises);

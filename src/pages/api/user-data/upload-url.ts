@@ -13,7 +13,7 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { fileName, moduleName, externalId, encryptedPassword } = req.query;
+  const { fileName, moduleName, externalId, encryptedPassword } = req.body;
 
   try {
     if (fileName && moduleName && externalId && encryptedPassword) {
@@ -39,7 +39,7 @@ export default async (
 
     return res.status(400).json({
       success: false,
-      message: "Missing required query param",
+      message: "Missing required body param",
     });
   } catch (error) {
     log.error(error);

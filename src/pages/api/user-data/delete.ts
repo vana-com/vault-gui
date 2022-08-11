@@ -74,13 +74,22 @@ export default async (
       if (urlParts.length === 2) {
         const fileName = urlParts[1];
         const file = serverConfig.userDataBucket.file(fileName);
-        // TODO: any non 200 response throws an error. Catch them and delete the corresponding userModule
-        // eslint-disable-next-line no-await-in-loop
-        const [response] = await file.delete();
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const [response] = await file.delete();
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
-          usersModulesIdsToSoftDelete.push(usersModules[i].id);
-          filesDeleted.push(fileName);
+          if (response.statusCode >= 200 && response.statusCode < 300) {
+            usersModulesIdsToSoftDelete.push(usersModules[i].id);
+            filesDeleted.push(fileName);
+          }
+        } catch (e: any) {
+          if (e.code === 404) {
+            console.warn(`File not found on GCS: ${fileName}`);
+            usersModulesIdsToSoftDelete.push(usersModules[i].id);
+            filesDeleted.push(fileName);
+          } else {
+            console.error("Error deleting file", e);
+          }
         }
       }
     }
