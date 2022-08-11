@@ -182,9 +182,22 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const { Web3Auth } = await import("@web3auth/web3auth");
         const web3AuthInstance = new Web3Auth(config.web3AuthOptions);
-        const web3AuthAdapter = new OpenloginAdapter(
-          config.openLoginAdapterConfig,
-        );
+        let web3AuthAdapter;
+
+        if (window.location.origin.endsWith(config.vercelDomain)) {
+          // Attempt to whitelist origin in Web3Auth manually for Vercel preview builds
+          const res = await fetch(`/api/auth/sign-origin`, { method: "POST" }); // Use POST to send Origin header automatically
+          const { origin, signature } = await res.json();
+          web3AuthAdapter = new OpenloginAdapter(
+            config.openLoginAdapterConfig({ [origin]: signature }),
+          );
+        } else {
+          // Otherwise, all other origins are whitelisted in Web3Auth console
+          web3AuthAdapter = new OpenloginAdapter(
+            config.openLoginAdapterConfig(),
+          );
+        }
+
         web3AuthInstance.configureAdapter(web3AuthAdapter);
         setWeb3Auth(web3AuthInstance);
         subscribeAuthEvents(web3AuthInstance);
