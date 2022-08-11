@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import tw from "twin.macro";
 
 import {
+  AuthenticatedLayout,
   LayoutApp,
   LayoutCanvas,
   LayoutCanvasPattern,
@@ -15,9 +16,8 @@ import {
   StorageInstructionsModal,
   StorageUpload,
   TitleAndMetaTags,
+  useUserContext,
 } from "src/components";
-import { AuthenticatedPage } from "src/components/AuthenticatedPage";
-import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
 import {
   useCreateUserModuleMutation,
@@ -70,7 +70,7 @@ const VaultStoragePage: NextPage = () => {
   }
 
   return (
-    <AuthenticatedPage>
+    <AuthenticatedLayout>
       <TitleAndMetaTags
         color="black"
         title={`Store ${moduleName} Data | Vana`}
@@ -96,7 +96,7 @@ const VaultStoragePage: NextPage = () => {
           />
         </LayoutCanvas>
       </LayoutApp>
-    </AuthenticatedPage>
+    </AuthenticatedLayout>
   );
 };
 

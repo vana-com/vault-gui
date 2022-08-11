@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import tw from "twin.macro";
 
 import {
+  AuthenticatedLayout,
   DataModule,
   DeleteData,
   LayoutApp,
@@ -19,9 +20,8 @@ import {
   Text,
   TitleAndMetaTags,
   ToastDefault,
+  useUserContext,
 } from "src/components";
-import { AuthenticatedPage } from "src/components/AuthenticatedPage";
-import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { formatModuleNameFromQueryString } from "src/utils";
@@ -103,7 +103,7 @@ const VaultModulePage: NextPage = () => {
   }
 
   return (
-    <AuthenticatedPage>
+    <AuthenticatedLayout>
       <TitleAndMetaTags color="black" title="Your Vault | Vana" />
       <LayoutApp>
         <NavBreadcrumb crumbs={[navigationBreadcrumbs[1]]} />
@@ -161,7 +161,7 @@ const VaultModulePage: NextPage = () => {
           content="Please reload the page and try again"
         />
       </LayoutApp>
-    </AuthenticatedPage>
+    </AuthenticatedLayout>
   );
 };
 

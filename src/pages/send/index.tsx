@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { PageVault, Spinner } from "src/components";
-import { AuthenticatedPage } from "src/components/AuthenticatedPage";
-import { useUserContext } from "src/components/UserAccess/UserContext";
+import {
+  AuthenticatedLayout,
+  PageVault,
+  Spinner,
+  useUserContext,
+} from "src/components";
 import {
   FocusStack,
   NoModuleMessage,
@@ -229,7 +232,7 @@ const SendPage: NextPage = () => {
   const closePopup = (self: Window) => self.close();
 
   return (
-    <AuthenticatedPage>
+    <AuthenticatedLayout>
       {/* TODO: Remove PageVault during `/login` page redirect refactor */}
       <PageVault>
         {/* These 2 component take uiStatus and handle their own internal UI */}
@@ -270,7 +273,7 @@ const SendPage: NextPage = () => {
           )}
         </VaultSharePageWithStatus>
       </PageVault>
-    </AuthenticatedPage>
+    </AuthenticatedLayout>
   );
 };
 
