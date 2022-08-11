@@ -1,9 +1,7 @@
-import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
-  Button,
   CardHeadingModule,
   DataCard,
   DataModuleDetail,
@@ -29,7 +27,7 @@ const DataModule = ({ module, moduleName, children }: Props) => (
         heading={`${moduleName} data block`}
         variant="title1"
       />
-      <DataModuleDetail label="Module ID" alignByWidth={false}>
+      <DataModuleDetail label="Data Block ID" alignByWidth={false}>
         {module.id}
       </DataModuleDetail>
     </Stack>
@@ -37,21 +35,7 @@ const DataModule = ({ module, moduleName, children }: Props) => (
       <Stack tw="gap-2">
         {/* TODO: pass module details when avalable */}
         <DataModuleDetail label="File name">
-          <Group tw="gap-1 items-center">
-            {testModules[0].fileName}
-            {/* TODO: provide safe download link */}
-            <div tw="relative">
-              <Button
-                // as="a"
-                // target="_blank"
-                // href={module.urlToData}
-                variant="icon"
-                tw="text-label absolute top-1/2 transform -translate-y-1/2"
-              >
-                <Icon icon="carbon:download" />
-              </Button>
-            </div>
-          </Group>
+          <Group tw="gap-1 items-center">{testModules[0].fileName}</Group>
         </DataModuleDetail>
         <DataModuleDetail label="Size">
           {testModules[0].fileSize}
