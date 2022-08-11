@@ -22,8 +22,7 @@ type PageVaultProps = {
 };
 
 const PageVault = ({ children, showBackLink }: PageVaultProps) => {
-  const { user, loginUser, logoutUser, loginError, isLoading } =
-    useUserContext();
+  const { user } = useUserContext();
 
   return (
     <div tw="relative">
@@ -42,18 +41,9 @@ const PageVault = ({ children, showBackLink }: PageVaultProps) => {
           </NextLink>
         </div>
       )}
-      {user && (
-        <div tw="fixed top-8 right-8 z-10 hidden">
-          {user && <LogoutButton logOut={logoutUser} isLoading={isLoading} />}
-          {!user && (
-            <LoginButton
-              logIn={loginUser}
-              loginError={loginError}
-              isLoading={isLoading}
-            />
-          )}
-        </div>
-      )}
+      <div tw="fixed top-8 right-8 z-10 hidden">
+        {user ? <LogoutButton /> : <LoginButton />}
+      </div>
 
       <Container
         tw="relative"

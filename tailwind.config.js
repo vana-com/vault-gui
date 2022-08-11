@@ -112,7 +112,7 @@ module.exports = {
         '4xl': ['40px', { lineHeight: '1.0' }],
         '5xl': ['52px', { lineHeight: '1.0' }],
         '6xl': ['72px', { lineHeight: '1.0' }],
-        '7xl': ['110px', { lineHeight: '1.0' }],
+        '7xl': ['90px', { lineHeight: '1.0' }],
       },
       // clamp()
       // https://codesandbox.io/s/clamp-linear-intepolation-based-on-viewport-width-builder-forked-c37i3

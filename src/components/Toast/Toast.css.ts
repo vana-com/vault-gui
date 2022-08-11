@@ -29,8 +29,8 @@ export const viewport = [
 
 export const rootVariants = {
   error: tw`bg-background text-label [> h3]:text-error`,
-  success: tw`bg-background text-labelTertiary [> h3]:text-primary`,
-  alert: tw`bg-background text-labelTertiary [> h3]:text-yellow-500`,
+  success: tw`bg-background text-labelSecondary [> h3]:text-primary`,
+  alert: tw`bg-background text-labelSecondary [> h3]:text-yellow-500`,
 } as const;
 
 export type ToastVariant = keyof typeof rootVariants;
