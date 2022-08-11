@@ -146,10 +146,16 @@ const SendPage: NextPage = () => {
     setShareStatus(DataPipeline.Status.PENDING);
 
     try {
-      const file = await fetchZipFromUrl(params.dataUrl);
+      const { file, encryptedPassword } = await fetchZipFromUrl(params.dataUrl);
       setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
+      const plainTextPassword = await walletProvider?.decryptMessage(
+        encryptedPassword,
+      );
+      if (!plainTextPassword) {
+        throw new Error("Unable to decrypt encryptedPassword for file.");
+      }
 
-      const decrypted = await decryptData(file, params.decryptionKey);
+      const decrypted = await decryptData(file, plainTextPassword);
       setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
 
       const extracted = await extractData(decrypted, params.serviceName);
@@ -200,20 +206,14 @@ const SendPage: NextPage = () => {
     const userModuleId = selectedModule[0].id;
     const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
 
-    // TODO: fix race condition where dangerouslyGetPrivateKey is not available
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    const dangerousPrivateKey =
-      await walletProvider?.dangerouslyGetPrivateKey();
-
     // Check all attributes are present
-    if (!userModuleId || !signedUrl || !dangerousPrivateKey) {
+    if (!userModuleId || !signedUrl) {
       throw new Error("Missing attributes");
     }
 
     const dataPipelineParams: PipelineParams = {
       query: cleanQueryString,
       dataUrl: signedUrl,
-      decryptionKey: dangerousPrivateKey,
       serviceName: normalizedServiceName,
     };
 

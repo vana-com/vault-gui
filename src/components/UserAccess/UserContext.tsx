@@ -4,8 +4,10 @@ import {
   CONNECTED_EVENT_DATA,
   WALLET_ADAPTERS,
 } from "@web3auth/base";
+import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
+import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -117,7 +119,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         const ethProvider = getWalletProvider(web3AuthInstance.provider!);
         setWalletProvider(ethProvider);
 
-        const walletAddress = (await ethProvider.getAccounts())[0];
+        const walletAddress = await ethProvider.getWalletAddress();
         if (walletAddress) {
           setUserWalletAddress(walletAddress);
         } else {
@@ -182,23 +184,32 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const { Web3Auth } = await import("@web3auth/web3auth");
         const web3AuthInstance = new Web3Auth(config.web3AuthOptions);
-        let web3AuthAdapter;
 
+        // OpenLogin adapter
+        let openLoginAdapter;
         if (window.location.origin.endsWith(config.vercelDomain)) {
           // Attempt to whitelist origin in Web3Auth manually for Vercel preview builds
           const res = await fetch(`/api/auth/sign-origin`, { method: "POST" }); // Use POST to send Origin header automatically
           const { origin, signature } = await res.json();
-          web3AuthAdapter = new OpenloginAdapter(
+          openLoginAdapter = new OpenloginAdapter(
             config.openLoginAdapterConfig({ [origin]: signature }),
           );
         } else {
           // Otherwise, all other origins are whitelisted in Web3Auth console
-          web3AuthAdapter = new OpenloginAdapter(
+          openLoginAdapter = new OpenloginAdapter(
             config.openLoginAdapterConfig(),
           );
         }
+        web3AuthInstance.configureAdapter(openLoginAdapter);
 
-        web3AuthInstance.configureAdapter(web3AuthAdapter);
+        // Metamask Adapter
+        const metamaskAdapter = new MetamaskAdapter();
+        web3AuthInstance.configureAdapter(metamaskAdapter);
+
+        // WalletConnect Adapter
+        const walletConnectAdapter = new WalletConnectV1Adapter();
+        web3AuthInstance.configureAdapter(walletConnectAdapter);
+
         setWeb3Auth(web3AuthInstance);
         subscribeAuthEvents(web3AuthInstance);
         await web3AuthInstance.initModal({

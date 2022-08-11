@@ -13,13 +13,13 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { fileName, moduleName, appPubKey, encryptedPassword } = req.query;
+  const { fileName, moduleName, externalId, encryptedPassword } = req.body;
 
   try {
-    if (fileName && moduleName && appPubKey) {
+    if (fileName && moduleName && externalId && encryptedPassword) {
       const fullFileName = generateUserDataObjectName(
         fileName as string,
-        appPubKey as string,
+        externalId as string,
         moduleName as string,
       );
       const file = serverConfig.userDataBucket.file(fullFileName);
@@ -29,9 +29,7 @@ export default async (
         fields: {
           // Save module name as metadata, so we can identify which module this file belongs to
           "x-goog-meta-module-name": moduleName,
-          ...(encryptedPassword && {
-            "x-goog-meta-encrypted-password": encryptedPassword,
-          }),
+          "x-goog-meta-encrypted-password": encryptedPassword,
         },
       } as GenerateSignedPostPolicyV4Options;
 
@@ -41,7 +39,7 @@ export default async (
 
     return res.status(400).json({
       success: false,
-      message: "Missing required query param",
+      message: "Missing required body param",
     });
   } catch (error) {
     log.error(error);

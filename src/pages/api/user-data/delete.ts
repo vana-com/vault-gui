@@ -34,7 +34,7 @@ export default async (
       });
     }
 
-    const appPubKey =
+    const externalId =
       hasuraTokenPayload["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
 
     const graphQLClient = new GraphQLClient(
@@ -49,7 +49,7 @@ export default async (
     const sdk = getSdk(graphQLClient);
 
     const { users } = await sdk.getUserUUIDFromExternalId({
-      externalId: appPubKey,
+      externalId,
     });
 
     const { id: userId } = users && users[0];
@@ -74,12 +74,22 @@ export default async (
       if (urlParts.length === 2) {
         const fileName = urlParts[1];
         const file = serverConfig.userDataBucket.file(fileName);
-        // eslint-disable-next-line no-await-in-loop
-        const [response] = await file.delete();
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const [response] = await file.delete();
 
-        if (response.statusCode >= 200 && response.statusCode < 300) {
-          usersModulesIdsToSoftDelete.push(usersModules[i].id);
-          filesDeleted.push(fileName);
+          if (response.statusCode >= 200 && response.statusCode < 300) {
+            usersModulesIdsToSoftDelete.push(usersModules[i].id);
+            filesDeleted.push(fileName);
+          }
+        } catch (e: any) {
+          if (e.code === 404) {
+            console.warn(`File not found on GCS: ${fileName}`);
+            usersModulesIdsToSoftDelete.push(usersModules[i].id);
+            filesDeleted.push(fileName);
+          } else {
+            console.error("Error deleting file", e);
+          }
         }
       }
     }
