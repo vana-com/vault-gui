@@ -10,6 +10,7 @@ import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 
+import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
 import {
@@ -258,6 +259,22 @@ const UserProvider = ({ children }: UserProviderProps) => {
       }}
     >
       {children}
+
+      {/* TOAST for any login errors */}
+      <ToastDefault
+        open={loginError}
+        onOpenChange={setLoginError}
+        duration={12000}
+        variant="error"
+        title="Something went wrong"
+        content={
+          <>
+            Please{" "}
+            <Link href={`mailto:${config.vanaSupportEmail}`}>email us</Link>{" "}
+            with details of your login attempt.
+          </>
+        }
+      />
     </UserContext.Provider>
   );
 };

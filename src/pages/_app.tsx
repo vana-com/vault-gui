@@ -10,8 +10,7 @@ import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { AppHook } from "src/components";
-import { UserProvider } from "src/components/UserAccess/UserContext";
+import { AppHook, UserProvider } from "src/components";
 
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
@@ -24,15 +23,15 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
       <CacheProvider value={cache}>
         <ThemeProvider attribute="class">
           <GlobalStyles />
-          <UserProvider>
-            <Toast.Provider swipeDirection="right">
-              <Tooltip.Provider delayDuration={300}>
+          <Toast.Provider swipeDirection="right">
+            <Tooltip.Provider delayDuration={300}>
+              <UserProvider>
                 <AppHook>
                   <Component {...pageProps} />
                 </AppHook>
-              </Tooltip.Provider>
-            </Toast.Provider>
-          </UserProvider>
+              </UserProvider>
+            </Tooltip.Provider>
+          </Toast.Provider>
         </ThemeProvider>
       </CacheProvider>
     </ApolloProvider>
