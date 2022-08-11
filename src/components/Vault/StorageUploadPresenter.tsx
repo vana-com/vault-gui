@@ -117,9 +117,13 @@ const StorageUploadPresenter = ({
           ))}
           <Text
             variant="note"
-            tw="text-success font-medium flex items-center gap-1"
+            tw="text-primary font-medium flex items-center gap-1"
           >
-            <WithIcon prefix={<Icon icon="carbon:checkmark" height="1.25em" />}>
+            <WithIcon
+              prefix={
+                <Icon icon="carbon:checkmark" height="1.25em" tw="mt-px" />
+              }
+            >
               Looks good
             </WithIcon>
           </Text>
