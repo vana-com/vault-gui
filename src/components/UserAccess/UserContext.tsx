@@ -281,7 +281,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       <ToastDefault
         open={loginSuccess}
         onOpenChange={setLoginSuccess}
-        duration={5000}
+        duration={3000}
         variant="success"
         title="Logged in"
         content={<>All smooth, you&apos;re in.</>}
