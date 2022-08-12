@@ -5,6 +5,7 @@ import { ModalConfig, Web3AuthOptions } from "@web3auth/web3auth";
 
 const WEB_3_AUTH_CLIENT_ID = process.env
   .NEXT_PUBLIC_WEB_3_AUTH_CLIENT_ID as string;
+const WEB_3_AUTH_CLIENT_SECRET = process.env.WEB_3_AUTH_CLIENT_SECRET as string;
 const WEB_3_AUTH_RPC_TARGET = process.env
   .NEXT_PUBLIC_WEB_3_AUTH_RPC_TARGET as string;
 const WEB_3_AUTH_ETHEREUM_CHAIN_ID = process.env
@@ -21,12 +22,19 @@ const web3AuthOptions: Web3AuthOptions = {
   },
 };
 
-const openLoginAdapterConfig: OpenloginAdapterOptions = {
+declare type OriginData = {
+  [P in string]: string;
+};
+
+const openLoginAdapterConfig = (
+  originData: OriginData = {},
+): OpenloginAdapterOptions => ({
   adapterSettings: {
+    originData,
     network: WEB_3_AUTH_NETWORK,
     clientId: WEB_3_AUTH_CLIENT_ID,
   },
-};
+});
 
 const SSO_OPTIONS_TO_HIDE = [
   "facebook",
@@ -53,6 +61,8 @@ const openLoginModalConfig: ModalConfig = {
 };
 
 export default {
+  WEB_3_AUTH_CLIENT_ID,
+  WEB_3_AUTH_CLIENT_SECRET,
   web3AuthOptions,
   openLoginAdapterConfig,
   openLoginModalConfig,

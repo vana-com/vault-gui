@@ -4,7 +4,6 @@ import tw from "twin.macro";
 import { Button, Link } from "src/components";
 import { CarbonArrowRight } from "src/components/Icons";
 import { FocusStack } from "src/components/VaultShare";
-import config from "src/config";
 
 interface Props {
   handleClick: () => void;
@@ -15,7 +14,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
   <FocusStack tw="rounded-lg overflow-hidden gap-0 border bg-gray-40 border-separator items-center min-h-[268px] items-center justify-center">
     <Link
       underline={false}
-      href={config.vanaVaultURL}
+      href="/"
       target="_blank"
       rel="external noopener noreferrer"
       tw="p-8"

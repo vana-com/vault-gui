@@ -6,7 +6,7 @@ import { getSdk } from "src/graphql/generated";
 import { createHasuraJWT, getIdTokenPayload } from "src/utils";
 
 /**
- * Gets the user associated with appPubKey in Hasura after authenticating the user.
+ * Gets the user associated with externalId in Hasura after authenticating the user.
  * If the user doesn't exist, create one
  */
 export default async (
@@ -21,12 +21,12 @@ export default async (
       });
     }
 
-    let externalId;
+    const externalId = walletAddress.toLowerCase();
     let emailAddress;
     let name;
     let hasuraJwt;
     if (idToken) {
-      // SSO Login
+      // Social Login
       const idTokenPayload = (await getIdTokenPayload(idToken)) as any;
       if (!idTokenPayload) {
         return res.status(401).json({
@@ -34,13 +34,11 @@ export default async (
         });
       }
 
-      externalId = idTokenPayload.wallets[0]?.public_key;
       emailAddress = idTokenPayload.email;
       name = idTokenPayload.name;
       hasuraJwt = await createHasuraJWT(idTokenPayload, externalId);
     } else {
       // External Wallet Login
-      externalId = walletAddress;
       emailAddress = `${new Date().getTime()}@dummy-email.com`;
       name = `Wallet User`;
       hasuraJwt = await createHasuraJWT(undefined, externalId);

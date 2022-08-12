@@ -1,38 +1,50 @@
 import { encryptFileChaCha20Poly1305, uploadFile } from "src/utils";
 
+import { IWalletProvider } from "./identity/walletProvider";
+
 /**
  * This the only method that encrypts and uploads user data zip files from email integrations
  *
  * @param files - The user data files to encrypt and upload
  * @param password - The password used to symmetrically encrypt
  * @param moduleName - Name of the email integration the file is for
- * @param appPubKey - Public key of the user
+ * @param externalId - Hasura external ID of the user
  * @param handleUploadProgress - callback to show user progress of upload
  * @param createUserModule - callback to create a row in users_modules table in hasura
  *
  */
 const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
-  password: string,
   moduleName: string,
-  appPubKey: string,
+  externalId: string,
+  walletProvider: IWalletProvider | null,
   handleUploadProgress: (event: any) => void,
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>,
 ) => {
   // Multiple files should be processed uploaded in parallel so we create arrays and use Promise.all
 
-  // use the same password for each password
-  const passwords = files.map(() => password);
+  const plainTextPasswords = files.map(() => Math.random().toString(36));
+  const encryptedPasswords = await Promise.all(
+    plainTextPasswords.map(
+      async (p) => (await walletProvider?.encryptMessage(p)) as string,
+    ),
+  );
 
   const encryptionFilePromises = files.map((file, i) =>
-    encryptFileChaCha20Poly1305(file, passwords[i]),
+    encryptFileChaCha20Poly1305(file, plainTextPasswords[i]),
   );
 
   const encryptedFilesToUpload = await Promise.all(encryptionFilePromises);
 
   // Upload files to object store (S3 or GCS)
-  const uploadPromises = encryptedFilesToUpload.map((file) =>
-    uploadFile(file, moduleName, appPubKey, handleUploadProgress),
+  const uploadPromises = encryptedFilesToUpload.map((file, i) =>
+    uploadFile(
+      file,
+      moduleName,
+      externalId,
+      encryptedPasswords[i],
+      handleUploadProgress,
+    ),
   );
 
   const uploadResults = await Promise.all(uploadPromises);

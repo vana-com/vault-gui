@@ -7,23 +7,33 @@ type ProgressHandler = (progressEvent: ProgressEvent) => void;
  * Uploads a file to GCS or S3 for a particular module (ex. A user's Google data stored in a zip file)
  * @param file file(s)
  * @param moduleName module that the data will be attached to
- * @param appPubKey uuid of the user uploading data
+ * @param externalId Wallet address of the user uploading data
  * @param progressHandler function to get upload progress events
  * @returns uploadSuccessful @bool uploadURL: @string
  */
 const uploadFile = async (
   file: File,
   moduleName: string,
-  appPubKey: string,
+  externalId: string,
+  encryptedPassword: string,
   progressHandler: ProgressHandler,
 ) => {
-  const filename = encodeURIComponent(file.name);
+  const fileName = encodeURIComponent(file.name);
 
   try {
-    // get the pre-signed URL for S3 or GCS
-    const res = await fetch(
-      `/api/user-data/upload-url?fileName=${filename}&moduleName=${moduleName}&appPubKey=${appPubKey}`,
-    );
+    // Get the pre-signed upload URL for GCS
+    const res = await fetch(`/api/user-data/upload-url`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fileName,
+        moduleName,
+        externalId,
+        encryptedPassword,
+      }),
+    });
     const { fullFileName, url, fields } = await res.json();
     const formData = new FormData();
 
