@@ -54,9 +54,9 @@ export const buttonStyle = ({
   tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-current)`,
   // default hover: variant !== "" &&
   tw`overflow-hidden before:(absolute inset-0) hover:before:(bg-hover)`,
-  // variants: rounded first so we can override in variant
+  isDisabled && tw`cursor-not-allowed opacity-80`,
+  // variants: rounded above variant & size so we can override
   round ? tw`rounded-full` : tw`rounded`,
   variant && buttonVariants[variant],
   size && buttonSizes[size],
-  isDisabled && tw`cursor-not-allowed opacity-80`,
 ];

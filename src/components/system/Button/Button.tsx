@@ -57,6 +57,7 @@ export const Button = React.forwardRef(
       as={boxProps.as ?? "button"}
       {...boxProps}
       css={[styles.buttonStyle({ size, variant, round, isDisabled }), css]}
+      disabled={isDisabled}
       id={id}
     >
       {isLoading ? (
