@@ -4,6 +4,7 @@ import tw, { styled } from "twin.macro";
 import {
   Flex,
   LayoutApp,
+  LayoutAppNoAside,
   LayoutCanvas,
   LayoutCanvasPattern,
   NavBreadcrumb,
@@ -15,13 +16,13 @@ import { NavCrumb } from "src/types";
 
 interface Props {
   crumbs?: NavCrumb[];
+  showAside?: boolean;
 }
 
-const LayoutLoading = ({ crumbs }: Props) => {
-  console.log("hi");
-  return (
-    <>
-      <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
+const LayoutLoading = ({ crumbs, showAside = true }: Props) => (
+  <>
+    <TitleAndMetaTags color="black" title="Loading Vault… | Vana" />
+    {showAside ? (
       <LayoutApp>
         <NavBreadcrumb crumbs={crumbs} />
         <NavHeaderRule />
@@ -32,8 +33,17 @@ const LayoutLoading = ({ crumbs }: Props) => {
           </Flex>
         </LayoutCanvas>
       </LayoutApp>
-    </>
-  );
-};
+    ) : (
+      <LayoutAppNoAside>
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          <Flex tw="px-inset pt-inset min-h-[260px] w-full items-center justify-center">
+            <Spinner />
+          </Flex>
+        </LayoutCanvas>
+      </LayoutAppNoAside>
+    )}
+  </>
+);
 
 export { LayoutLoading };
