@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import tw from "twin.macro";
 
 import { LayoutLoading, useUserContext } from "src/components";
+import { setLoginPath } from "src/utils";
 
 interface Props {
   children?: React.ReactNode;
@@ -10,18 +11,14 @@ interface Props {
 
 const AuthenticatedLayout = ({ children }: Props) => {
   const router = useRouter();
-  const { user, isLoading } = useUserContext();
+  console.log("router", router);
+  const { isAuthenticated, isLoading } = useUserContext();
 
-  if (isLoading) return <LayoutLoading />;
+  if (isLoading) return <LayoutLoading showAside={false} />;
 
-  const addOrigin = router.asPath !== "/";
-
-  const loginPath = addOrigin
-    ? `/login/?origin=${encodeURIComponent(router.asPath)}`
-    : "/login";
-
-  if (!user) {
-    router.push(loginPath);
+  if (router.pathname !== "/login" && !isAuthenticated) {
+    router.push(setLoginPath());
+    return <LayoutLoading showAside={false} />;
   }
 
   // must be wrapped in a React.Fragment

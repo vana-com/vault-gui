@@ -13,6 +13,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
+import { setLoginPath } from "src/utils";
 import {
   getWalletProvider,
   IWalletProvider,
@@ -241,7 +242,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(null);
       setUserWalletAddress(null);
       saveHasuraToken(null);
-      setTimeout(() => router.push("/"), 250);
+      setTimeout(() => router.push(setLoginPath()), 250);
     }
   };
 
