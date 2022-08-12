@@ -12,7 +12,11 @@ interface Props {
 const AuthenticatedLayout = ({ children }: Props) => {
   const router = useRouter();
   const { isAuthenticated, isLoading } = useUserContext();
-  console.log("AuthenticatedLayout", isAuthenticated, isLoading);
+  console.log(
+    "AuthenticatedLayout",
+    `isAuthenticated: ${isAuthenticated}`,
+    `isLoading: ${isLoading}`,
+  );
 
   if (isLoading) return <LayoutLoadingNoUser />;
 
