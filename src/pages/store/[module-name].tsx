@@ -26,7 +26,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-  const { user, walletProvider, isLoading: isUserLoading } = useUserContext();
+  const { user, walletProvider } = useUserContext();
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -63,8 +63,8 @@ const VaultStoragePage: NextPage = () => {
     }
   }, [router, isDataLoading]);
 
-  // If we're awaiting user or data, show loading
-  if (isUserLoading || isDataLoading) {
+  // If we're awaiting Hasura data, show loading
+  if (isDataLoading) {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[0]]} />;
   }
 
