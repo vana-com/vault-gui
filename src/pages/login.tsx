@@ -21,8 +21,10 @@ import {
 const LoginPage: NextPage = () => {
   const router = useRouter();
   const { isAuthenticated } = useUserContext();
+  console.log("router query", router.query?.origin);
+  console.log("isAuthenticated", isAuthenticated);
 
-  // After logging in, useEffect to redirect the newly logged-in user.
+  // After logging in, useEffect to redirect the newly logged-in user
   useEffect(() => {
     // If isAuthenticated and there's an origin param, redirect to that origin
     if (router.query?.origin && isAuthenticated) {
@@ -38,7 +40,7 @@ const LoginPage: NextPage = () => {
     if (router.asPath === "/login" && isAuthenticated) {
       router.push("/");
     }
-  }, [router, isAuthenticated]);
+  }, [isAuthenticated]);
 
   return (
     <>
