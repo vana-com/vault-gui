@@ -33,7 +33,6 @@ const DeleteData = ({
         size="lg"
         tw="text-error ring-error font-semibold bg-red-500 bg-opacity-10"
         prefix={<Icon icon="carbon:close-filled" />}
-        isLoading={isDeleting}
       >
         {buttonLabel}
       </Button>
@@ -50,7 +49,6 @@ const DeleteData = ({
             it&apos;s gone.
           </Text>
         </Stack>
-        {/* <hr /> */}
 
         <Group tw="pt-1 gap-4 justify-center">
           <DialogClose asChild>
@@ -59,6 +57,7 @@ const DeleteData = ({
               size="lg"
               // prefix={<Icon icon="carbon:pause-filled" />}
               tw="min-w-[220px]"
+              isDisabled={isDeleting}
             >
               Not yet
             </Button>

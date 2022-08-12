@@ -17,7 +17,7 @@ interface Props {
   module: ModuleObj;
 }
 
-/* DataCard is very similar to DataCardButton with same card styles */
+/* DataCard is very similar to DataCardButton, uses the same card styles */
 
 const DataCard = ({ module }: Props) => (
   <div css={[cardStyle, cardHoverStyle, cardHoverIconStyle]}>
@@ -30,12 +30,9 @@ const DataCard = ({ module }: Props) => (
 
     {/* content stack */}
     <Stack tw="h-full justify-between">
-      <CardHeader
-        name={module.module.name}
-        heading={<>…{module.id.slice(-8)}</>}
-      />
+      <CardHeader name={module.module.name} />
 
-      {/* TODO: pass module details when avalable */}
+      {/* TODO: pass real module details when avalable */}
       <DataCardDetails />
     </Stack>
   </div>

@@ -1,12 +1,14 @@
 import { Icon } from "@iconify/react";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
   AddData,
   Center,
-  DataCardButton,
+  DataModule,
   LayoutApp,
   LayoutCanvas,
   LayoutCanvasGrid,
@@ -18,6 +20,7 @@ import {
   Stack,
   Text,
   TitleAndMetaTags,
+  ToastDefault,
   WithIcon,
 } from "src/components";
 import { useUserContext } from "src/components/UserAccess/UserContext";
@@ -26,9 +29,14 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
+import { formatModuleNameFromQueryString } from "src/utils";
 
 const HomePage: NextPage = () => {
-  const { user } = useUserContext();
+  const router = useRouter();
+  const { user, hasuraToken } = useUserContext();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
+  const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -50,8 +58,39 @@ const HomePage: NextPage = () => {
       ),
   );
 
+  // Set the module name from query string
+  const { "module-name": moduleNameFromQuery } = router.query;
+  const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
+
+  // Delete a user's data module
+  const deleteModule = async (moduleId: string) => {
+    setIsDeleting(true);
+
+    console.log("moduleId", moduleId);
+
+    const { deleteSuccessful } = await (
+      await fetch(`/api/user-data/delete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usersModulesIds: [moduleId],
+          hasuraToken,
+        }),
+      })
+    ).json();
+
+    if (deleteSuccessful) {
+      setShowDeleteSuccessToast(true);
+      setTimeout(() => router.push("/"), 250);
+    } else {
+      setIsDeleting(false);
+      setShowDeleteFailureToast(true);
+    }
+  };
+
   // Data state: hasura data is loading
-  // TODO: is userModulesData !== undefined a possible state?
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
 
   if (isHasuraLoading) return <LayoutLoading />;
@@ -110,17 +149,34 @@ const HomePage: NextPage = () => {
           {!hasNoModules && (
             <LayoutCanvasGrid>
               {storedUsersModules.map((module) => (
-                <DataCardButton
-                  key={module.module.name?.toLowerCase()}
-                  module={module.module}
-                  isStored
-                  showActionHover
+                <DataModule
+                  key={module.id}
+                  module={module}
+                  handleDeleteModule={() => deleteModule(module.id)}
+                  isDeleting={isDeleting}
                 />
               ))}
             </LayoutCanvasGrid>
           )}
         </LayoutCanvas>
       </LayoutApp>
+
+      {/* MODULE DELETION STATUS TOASTS */}
+      <ToastDefault
+        open={showDeleteSuccessToast}
+        onOpenChange={setShowDeleteSuccessToast}
+        variant="success"
+        title="Success"
+        content={`Your ${moduleName} data has been securely deleted`}
+      />
+      <ToastDefault
+        open={showDeleteFailureToast}
+        onOpenChange={setShowDeleteFailureToast}
+        duration={12000}
+        variant="error"
+        title="Error!"
+        content="Please reload the page and try again"
+      />
     </>
   );
 };

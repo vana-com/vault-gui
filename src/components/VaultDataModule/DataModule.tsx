@@ -5,6 +5,7 @@ import {
   CardHeadingModule,
   DataCard,
   DataModuleDetail,
+  DeleteData,
   DialogDrawer,
   Group,
   Stack,
@@ -15,16 +16,16 @@ import { ModuleObj } from "src/types";
 
 interface Props {
   module: ModuleObj;
-  moduleName: string;
-  children?: React.ReactNode;
+  handleDeleteModule: () => void;
+  isDeleting: boolean;
 }
 
-const DataModule = ({ module, moduleName, children }: Props) => (
+const DataModule = ({ module, handleDeleteModule, isDeleting }: Props) => (
   <DialogDrawer buttonNode={<DataCard module={module} />}>
     <Stack css={[tw`gap-2 px-inset pb-insetAlmost bg-neutral`, ptBreadcrumbs]}>
       <CardHeadingModule
-        name={moduleName}
-        heading={`${moduleName} data block`}
+        name={module.module.name}
+        heading={`${module.module.name} data block`}
         variant="title1"
       />
       <DataModuleDetail label="Data Block ID" alignByWidth={false}>
@@ -46,8 +47,13 @@ const DataModule = ({ module, moduleName, children }: Props) => (
       </Stack>
       <hr />
 
-      {/* Delete button */}
-      {children}
+      {/* Delete */}
+      <DeleteData
+        onDelete={handleDeleteModule}
+        isDeleting={isDeleting}
+        deletionName="this data block"
+        buttonLabel="Delete this data block"
+      />
     </Stack>
   </DialogDrawer>
 );
