@@ -91,13 +91,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
       }
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
-      setLoginSuccess(true);
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
     } finally {
       setIsUserLoading(false);
       setIsWeb3AuthLoading(false);
+      setLoginSuccess(true);
     }
   };
 
@@ -253,11 +253,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
         walletProvider,
         loginUser,
         logoutUser,
-        isAuthenticated: !!user,
         user,
         userWalletAddress,
         hasuraToken,
         isLoading: isWeb3AuthLoading,
+        isAuthenticated: !!user,
       }}
     >
       {children}
