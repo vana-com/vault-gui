@@ -16,7 +16,7 @@ const AuthenticatedLayout = ({ children }: Props) => {
 
   if (isLoading) return <LayoutLoadingNoUser />;
 
-  if (router.pathname !== "/login" && !isAuthenticated) {
+  if (router.pathname !== "/login" && !isLoading && !isAuthenticated) {
     setTimeout(() => router.push(setLoginPath(router.asPath)), 250);
     return <LayoutLoadingNoUser />;
   }
