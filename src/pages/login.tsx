@@ -24,7 +24,7 @@ const LoginPage: NextPage = () => {
 
   // After logging in, useEffect to redirect the newly logged-in user.
   useEffect(() => {
-    // If there's an origin param, redirect the user back to that origin
+    // If isAuthenticated and there's an origin param, redirect to that origin
     if (router.query?.origin && isAuthenticated) {
       router.push(
         decodeURIComponent(router.query.origin.toString()),
@@ -34,17 +34,11 @@ const LoginPage: NextPage = () => {
         },
       );
     }
-    // If there's no origin param, redirect the user home
-    if (!router.query && isAuthenticated) {
+    // For all other situations where the user isAuthenticated, redirect home
+    if (router.asPath === "/login" && isAuthenticated) {
       router.push("/");
     }
   }, [router, isAuthenticated]);
-
-  // If an already logged-in user accesses this page, redirect them home.
-  // This is not rendered based on any side-effect, so don't useEffect() here.
-  if (router.isReady && isAuthenticated) {
-    router.push("/");
-  }
 
   return (
     <>

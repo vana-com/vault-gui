@@ -95,19 +95,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  useEffect(() => {
-    // Redirect the user to where they were before they logged in
-    if (router.query?.origin && user) {
-      router.push(
-        decodeURIComponent(router.query.origin.toString()),
-        undefined,
-        {
-          shallow: true,
-        },
-      );
-    }
-  }, [router.isReady, user]);
-
   /**
    * Listen to events from a Web3Auth instance
    * @param web3AuthInstance
@@ -282,7 +269,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       <ToastDefault
         open={loginSuccess}
         onOpenChange={setLoginSuccess}
-        duration={12000}
+        duration={5000}
         variant="success"
         title="Logged in"
         content={<>All smooth, you&apos;re in.</>}
