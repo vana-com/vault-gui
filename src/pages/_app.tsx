@@ -26,11 +26,11 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
           <Toast.Provider swipeDirection="right">
             <Tooltip.Provider delayDuration={300}>
               <UserProvider>
-                <AppHook>
-                  <AuthenticatedLayout>
+                <AuthenticatedLayout>
+                  <AppHook>
                     <Component {...pageProps} />
-                  </AuthenticatedLayout>
-                </AppHook>
+                  </AppHook>
+                </AuthenticatedLayout>
               </UserProvider>
             </Tooltip.Provider>
           </Toast.Provider>
