@@ -1,10 +1,13 @@
+import { Icon } from "@iconify/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
+  Button,
+  DialogDrawerControlled,
   LayoutApp,
   LayoutCanvas,
   LayoutCanvasPattern,
@@ -12,7 +15,7 @@ import {
   NavBreadcrumb,
   NavHeader,
   PopoverModuleLang,
-  StorageInstructionsModal,
+  StorageInstructions,
   StorageUpload,
   TitleAndMetaTags,
   useUserContext,
@@ -27,6 +30,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
   const { user, walletProvider } = useUserContext();
+  const [isOpen, setIsOpen] = useState(false);
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -68,6 +72,11 @@ const VaultStoragePage: NextPage = () => {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[0]]} />;
   }
 
+  // run setIsOpenOnMount once only on initial page load
+  useEffect(() => {
+    setTimeout(() => setIsOpen(true), 500);
+  }, []);
+
   return (
     <>
       <TitleAndMetaTags
@@ -81,8 +90,23 @@ const VaultStoragePage: NextPage = () => {
           heading={`Add my ${moduleName} data`}
           headingNode={<PopoverModuleLang />}
         >
-          <StorageInstructionsModal moduleName={moduleName as any} />
-          {/* <StorageInstructionsModalOpen moduleName={moduleName as any} /> */}
+          <DialogDrawerControlled
+            onOpenChange={setIsOpen}
+            open={isOpen}
+            buttonNode={
+              <Button
+                size="md"
+                variant="ghost"
+                tw="font-normal text-labelSecondary"
+                prefix={<Icon icon="carbon:list-checked" height="1em" />}
+                onClick={() => setIsOpen(true)}
+              >
+                Request your {moduleName} data
+              </Button>
+            }
+          >
+            <StorageInstructions moduleName={moduleName as any} />
+          </DialogDrawerControlled>
         </NavHeader>
 
         <LayoutCanvas>
