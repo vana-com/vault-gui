@@ -25,7 +25,7 @@ interface UserContextProps {
   loginUser: () => Promise<void>;
   logoutUser: () => Promise<void>;
   isLoading: boolean;
-  loginError: boolean;
+  isAuthenticated: boolean;
   userWalletAddress: string | null;
   hasuraToken: string | null;
 }
@@ -36,7 +36,7 @@ const UserContext = createContext<UserContextProps>({
   loginUser: async () => {},
   logoutUser: async () => {},
   isLoading: false,
-  loginError: false,
+  isAuthenticated: false,
   userWalletAddress: null,
   hasuraToken: null,
 });
@@ -60,6 +60,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   /**
    * Web3Auth connected, get the User from Hasura
@@ -84,6 +85,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       }
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
+      setLoginSuccess(true);
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
@@ -94,7 +96,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   useEffect(() => {
-    // Redirect the user to where they were before logging in
+    // Redirect the user to where they were before they logged in
     if (router.query?.origin && user) {
       router.push(
         decodeURIComponent(router.query.origin.toString()),
@@ -242,7 +244,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(null);
       setUserWalletAddress(null);
       saveHasuraToken(null);
-      setTimeout(() => router.push(setLoginPath()), 250);
+      setTimeout(() => router.push(setLoginPath(router.asPath)), 250);
     }
   };
 
@@ -252,11 +254,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
         walletProvider,
         loginUser,
         logoutUser,
+        isAuthenticated: !!user,
         user,
         userWalletAddress,
         hasuraToken,
         isLoading: isWeb3AuthLoading,
-        loginError,
       }}
     >
       {children}
@@ -275,6 +277,15 @@ const UserProvider = ({ children }: UserProviderProps) => {
             with details of your login attempt.
           </>
         }
+      />
+      {/* TOAST for successful login */}
+      <ToastDefault
+        open={loginSuccess}
+        onOpenChange={setLoginSuccess}
+        duration={12000}
+        variant="success"
+        title="Logged in"
+        content={<>All smooth, you&apos;re in.</>}
       />
     </UserContext.Provider>
   );
