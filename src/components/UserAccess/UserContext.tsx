@@ -61,7 +61,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const { resolvedTheme } = useTheme();
 
   // Due to clashes between useTheme and web3Auth.uiConfig types,
@@ -97,7 +96,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
     } finally {
       setIsUserLoading(false);
       setIsWeb3AuthLoading(false);
-      setLoginSuccess(true);
     }
   };
 
@@ -276,15 +274,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
             with details of your login attempt.
           </>
         }
-      />
-      {/* TOAST for successful login */}
-      <ToastDefault
-        open={loginSuccess}
-        onOpenChange={setLoginSuccess}
-        duration={3000}
-        variant="success"
-        title="Logged in"
-        content={<>All smooth, you&apos;re in.</>}
       />
     </UserContext.Provider>
   );
