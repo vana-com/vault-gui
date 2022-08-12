@@ -17,45 +17,42 @@ interface Props {
   accountLoginService: string;
 }
 
-const UserAccountNav = ({ user, accountLoginService }: Props) => {
-  console.log("user", user);
+const UserAccountNav = ({ user, accountLoginService }: Props) => (
+  <DropdownMenu tw="z-20">
+    <DropdownMenuTrigger asChild>
+      <button
+        css={[accountAvatarStyle, tw`h-[40px] w-[40px]`]}
+        aria-label="Your account"
+        type="button"
+      >
+        <Icon icon="carbon:user-avatar-filled-alt" height="1.75em" />
+      </button>
+    </DropdownMenuTrigger>
 
-  return (
-    <DropdownMenu tw="z-20">
-      <DropdownMenuTrigger asChild>
-        <button
-          css={[accountAvatarStyle, tw`h-[40px] w-[40px]`]}
-          aria-label="Your account"
-          type="button"
-        >
-          <Icon icon="carbon:user-avatar-filled-alt" height="1.75em" />
-        </button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent sideOffset={9} align="end">
-        <Stack tw="gap-2 min-w-[300px]">
-          <Group tw="px-3 py-4 gap-3 items-center">
-            <div css={[accountAvatarStyle, tw`h-[55px] w-[55px]`]}>
-              <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
-            </div>
-            <Stack tw="gap-0.5">
-              <Text variant="note" weight="medium" tw="flex">
-                Login:
-                <Text variant="note" weight="semibold" tw="pl-1">
-                  {accountLoginService}
-                </Text>
+    <DropdownMenuContent sideOffset={9} align="end">
+      <Stack tw="gap-2 min-w-[300px]">
+        <Group tw="px-3 py-4 gap-3 items-center">
+          <div css={[accountAvatarStyle, tw`h-[55px] w-[55px]`]}>
+            <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
+          </div>
+          <Stack tw="gap-0.5">
+            <Text variant="note" weight="medium" tw="flex">
+              Login:
+              <Text variant="note" weight="semibold" tw="pl-1">
+                {accountLoginService}
               </Text>
-              <Text variant="footnote" weight="medium" tw="text-labelTertiary">
-                ID ends in{" "}
-                <Text as="span" tw="font-mono">
-                  {user.id.slice(-8)}
-                </Text>
+            </Text>
+            <Text variant="footnote" weight="medium" tw="text-labelTertiary">
+              ID ends in{" "}
+              <Text as="span" tw="font-mono">
+                {user.id.slice(-8)}
               </Text>
-            </Stack>
-          </Group>
-          <hr tw="border-separatorLight" />
-          <Stack tw="gap-[2px]">
-            {/* <Text
+            </Text>
+          </Stack>
+        </Group>
+        <hr tw="border-separatorLight" />
+        <Stack tw="gap-[2px]">
+          {/* <Text
               as="button"
               variant="base"
               weight="medium"
@@ -67,23 +64,22 @@ const UserAccountNav = ({ user, accountLoginService }: Props) => {
                 Log out
               </WithIcon>
             </Text> */}
-            <LogoutButton />
-            <Text
-              as="button"
-              variant="base"
-              weight="medium"
-              css={[navLinkStyle, tw`px-3`]}
-              tw="text-labelTertiary"
-            >
-              <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>
-                Delete Vault
-              </WithIcon>
-            </Text>
-          </Stack>
+          <LogoutButton />
+          <Text
+            as="button"
+            variant="base"
+            weight="medium"
+            css={[navLinkStyle, tw`px-3`]}
+            tw="text-labelTertiary"
+          >
+            <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>
+              Delete Vault
+            </WithIcon>
+          </Text>
         </Stack>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
+      </Stack>
+    </DropdownMenuContent>
+  </DropdownMenu>
+);
 
 export { UserAccountNav };
