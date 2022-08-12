@@ -10,6 +10,7 @@ interface Props {
 
 /* General app layout for a logged in user */
 const LayoutApp = ({ children }: Props) => {
+  // await our color mode theme!
   // only render UI when the page is mounted on the client
   const [mounted, setMounted] = useState(false);
 
