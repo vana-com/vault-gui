@@ -278,7 +278,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         user,
         userWalletAddress,
         hasuraToken,
-        isLoading: isWeb3AuthLoading,
+        isLoading: isWeb3AuthLoading || isUserLoading,
         isAuthenticated: !!user,
       }}
     >
