@@ -11,13 +11,12 @@ interface Props {
 
 const AuthenticatedLayout = ({ children }: Props) => {
   const router = useRouter();
-  console.log("router", router);
   const { isAuthenticated, isLoading } = useUserContext();
 
   if (isLoading) return <LayoutLoading showAside={false} />;
 
   if (router.pathname !== "/login" && !isAuthenticated) {
-    router.push(setLoginPath());
+    setTimeout(() => router.push(setLoginPath(router.asPath)), 250);
     return <LayoutLoading showAside={false} />;
   }
 
