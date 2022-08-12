@@ -3,7 +3,6 @@ export * from "./DeleteData";
 export * from "./StorageInstructions";
 export * from "./StorageInstructionsCollapsible";
 export * from "./StorageInstructionsModal";
-export * from "./StorageInstructionsModalOpen";
 export * from "./StoragePassword";
 export * from "./StoragePasswordLabel";
 export * from "./StorageProgress";
