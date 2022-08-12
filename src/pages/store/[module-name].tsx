@@ -72,7 +72,7 @@ const VaultStoragePage: NextPage = () => {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[0]]} />;
   }
 
-  // run setIsOpenOnMount once only on initial page load
+  // Programmtically setIsOpen once only on initial page load
   useEffect(() => {
     setTimeout(() => setIsOpen(true), 500);
   }, []);
