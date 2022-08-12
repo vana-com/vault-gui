@@ -8,6 +8,7 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { Link, ToastDefault } from "src/components";
@@ -61,6 +62,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  // Due to clashes between useTheme and web3Auth.uiConfig types,
+  // definitively set the theme to either light or dark
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
 
   /**
    * Web3Auth connected, get the User from Hasura
@@ -172,7 +178,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // The Web3Auth import at the top of the page is to get types working during compile time
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const { Web3Auth } = await import("@web3auth/web3auth");
-        const web3AuthInstance = new Web3Auth(config.web3AuthOptions);
+        const web3AuthInstance = new Web3Auth({
+          uiConfig: {
+            appLogo: "https://vault.vana.xyz/vana.svg",
+            theme,
+          },
+          ...config.web3AuthOptions,
+        });
         const web3AuthAdapter = new OpenloginAdapter(
           config.openLoginAdapterConfig,
         );

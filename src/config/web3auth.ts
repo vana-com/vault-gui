@@ -13,10 +13,6 @@ const WEB_3_AUTH_NETWORK = process.env
   .NEXT_PUBLIC_WEB_3_AUTH_NETWORK as OPENLOGIN_NETWORK_TYPE;
 
 const web3AuthOptions: Web3AuthOptions = {
-  uiConfig: {
-    appLogo: "https://vault.vana.xyz/vana.svg",
-    theme: "light",
-  },
   clientId: WEB_3_AUTH_CLIENT_ID,
   chainConfig: {
     chainNamespace: CHAIN_NAMESPACES.EIP155,
