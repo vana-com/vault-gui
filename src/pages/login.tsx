@@ -7,9 +7,9 @@ import tw from "twin.macro";
 
 import {
   Center,
-  LayoutAppNoAside,
   LayoutCanvas,
   LayoutCanvasPattern,
+  LayoutPage,
   LoginButton,
   Stack,
   Text,
@@ -43,7 +43,7 @@ const LoginPage: NextPage = () => {
   return (
     <>
       <TitleAndMetaTags color="black" title="Log in to your Vault | Vana" />
-      <LayoutAppNoAside>
+      <LayoutPage showAsAuthenticated={false}>
         <LayoutCanvas>
           <LayoutCanvasPattern />
           <Center tw="min-h-[300px] relative">
@@ -65,7 +65,7 @@ const LoginPage: NextPage = () => {
             </Stack>
           </Center>
         </LayoutCanvas>
-      </LayoutAppNoAside>
+      </LayoutPage>
     </>
   );
 };

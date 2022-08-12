@@ -29,22 +29,12 @@ interface Props {
 
 // zinc-900 bg-fillSecondary
 const outerStyle = [
-  tw`relative flex flex-col h-full border-r border-opacity-20 border-separator`,
+  tw`relative flex flex-col h-full`,
   // tw`before:(content-[' '] absolute top-px right-0 bottom-0 w-8 h-full bg-gradient-to-l from-gray-10)`,
 ];
 
 const NavAside = ({ children }: Props) => (
   <div css={outerStyle}>
-    {/* <div tw="px-inset">
-        <div tw="flex items-center gap-2.5 h-navH">
-          <VanaLogo boxSize="1.3em" tw="bg-label text-background" />
-          <Text variant="footnoteMeta" weight="bold" tw="text-label">
-            Vault
-          </Text>
-        </div>
-      </div>
-      <hr /> */}
-
     {/* MENU */}
     <Stack tw="pt-insetHalf gap-[2px]">
       <NextLink passHref href="/">

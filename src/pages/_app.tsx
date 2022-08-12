@@ -10,7 +10,12 @@ import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { AppHook, AuthenticatedLayout, UserProvider } from "src/components";
+import {
+  AppHook,
+  AuthenticatedLayout,
+  LayoutApp,
+  UserProvider,
+} from "src/components";
 
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
@@ -28,7 +33,9 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
               <UserProvider>
                 <AuthenticatedLayout>
                   <AppHook>
-                    <Component {...pageProps} />
+                    <LayoutApp>
+                      <Component {...pageProps} />
+                    </LayoutApp>
                   </AppHook>
                 </AuthenticatedLayout>
               </UserProvider>

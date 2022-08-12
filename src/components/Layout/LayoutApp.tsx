@@ -1,50 +1,32 @@
-import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { LayoutShell, NavAside, Navbar } from "src/components";
+import { Navbar } from "src/components";
 
 interface Props {
   children?: React.ReactNode;
 }
 
-/* General app layout for a logged in user */
-const LayoutApp = ({ children }: Props) => {
-  // await our color mode theme!
-  // only render UI when the page is mounted on the client
-  const [mounted, setMounted] = useState(false);
+/* 
+  General app layout for a logged in user.
+  NB! The Child component must *always* be LayoutPage.
+ */
 
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <>
-      {/* NAVBAR */}
-      <div tw="bg-background z-[1] fixed left-0 right-0">
-        <div tw="max-w-[1280px] mx-auto">
-          <Navbar />
-        </div>
-        <hr />
+const LayoutApp = ({ children }: Props) => (
+  <>
+    {/* NAVBAR */}
+    <div tw="fixed top-0 left-0 right-0 bg-background">
+      <div tw="max-w-[1280px] mx-auto">
+        <Navbar />
       </div>
+      <hr />
+    </div>
 
-      {/* ASIDE NAV & CONTENT */}
-      <div tw="max-w-[1280px] mx-auto pt-navH">
-        <LayoutShell>
-          <LayoutShell.Sidebar>
-            <NavAside />
-          </LayoutShell.Sidebar>
-
-          <LayoutShell.Body>{children}</LayoutShell.Body>
-        </LayoutShell>
-      </div>
-    </>
-  );
-};
+    {/* CONTENT */}
+    <div tw="max-w-[1280px] mx-auto pt-navHPlusPx flex flex-col">
+      {children}
+    </div>
+  </>
+);
 
 export { LayoutApp };

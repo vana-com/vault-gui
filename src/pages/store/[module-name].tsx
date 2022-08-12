@@ -8,10 +8,10 @@ import tw from "twin.macro";
 import {
   Button,
   DialogDrawerControlled,
-  LayoutApp,
   LayoutCanvas,
   LayoutCanvasPattern,
   LayoutLoading,
+  LayoutPage,
   NavBreadcrumb,
   NavHeader,
   PopoverModuleLang,
@@ -84,7 +84,7 @@ const VaultStoragePage: NextPage = () => {
         title={`Store ${moduleName} Data | Vana`}
       />
 
-      <LayoutApp>
+      <LayoutPage>
         <NavBreadcrumb crumbs={[navigationBreadcrumbs[0]]} />
         <NavHeader
           heading={`Add my ${moduleName} data`}
@@ -118,7 +118,7 @@ const VaultStoragePage: NextPage = () => {
             web3AuthWalletProvider={walletProvider}
           />
         </LayoutCanvas>
-      </LayoutApp>
+      </LayoutPage>
     </>
   );
 };

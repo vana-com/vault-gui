@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { LayoutLoading, useUserContext } from "src/components";
+import { LayoutLoadingNoUser, useUserContext } from "src/components";
 import { setLoginPath } from "src/utils";
 
 interface Props {
@@ -12,15 +12,15 @@ interface Props {
 const AuthenticatedLayout = ({ children }: Props) => {
   const router = useRouter();
   const { isAuthenticated, isLoading } = useUserContext();
+  console.log("AuthenticatedLayout", isAuthenticated, isLoading);
 
-  if (isLoading) return <LayoutLoading showAside={false} />;
+  if (isLoading) return <LayoutLoadingNoUser />;
 
   if (router.pathname !== "/login" && !isAuthenticated) {
     setTimeout(() => router.push(setLoginPath(router.asPath)), 250);
-    return <LayoutLoading showAside={false} />;
+    return <LayoutLoadingNoUser />;
   }
 
-  // must be wrapped in a React.Fragment
   return <>{children}</>;
 };
 

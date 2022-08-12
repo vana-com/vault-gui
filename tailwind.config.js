@@ -122,6 +122,7 @@ module.exports = {
         // navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 4.5rem)",
         // navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 3.5rem)",
         navH: "56px",
+        navHPlusPx: "57px",
         navLinkH: "42px",
         asideW: "200px",
         insetHalf: "clamp(0.75rem, 0.9988rem + 0.9370vw, 1.125rem)",

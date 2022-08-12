@@ -9,11 +9,11 @@ import {
   AddData,
   Center,
   DataModule,
-  LayoutApp,
   LayoutCanvas,
   LayoutCanvasGrid,
   LayoutCanvasPattern,
   LayoutLoading,
+  LayoutPage,
   NavBreadcrumb,
   NavHeader,
   NavHeaderRule,
@@ -106,7 +106,8 @@ const HomePage: NextPage = () => {
   return (
     <>
       <TitleAndMetaTags color="black" title="Vault | Vana" />
-      <LayoutApp>
+
+      <LayoutPage>
         {/* BREADCRUMB */}
         <NavBreadcrumb
           crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
@@ -159,24 +160,24 @@ const HomePage: NextPage = () => {
             </LayoutCanvasGrid>
           )}
         </LayoutCanvas>
-      </LayoutApp>
 
-      {/* MODULE DELETION STATUS TOASTS */}
-      <ToastDefault
-        open={showDeleteSuccessToast}
-        onOpenChange={setShowDeleteSuccessToast}
-        variant="success"
-        title="Success"
-        content={`Your ${moduleName} data has been securely deleted`}
-      />
-      <ToastDefault
-        open={showDeleteFailureToast}
-        onOpenChange={setShowDeleteFailureToast}
-        duration={12000}
-        variant="error"
-        title="Error!"
-        content="Please reload the page and try again"
-      />
+        {/* MODULE DELETION STATUS TOASTS */}
+        <ToastDefault
+          open={showDeleteSuccessToast}
+          onOpenChange={setShowDeleteSuccessToast}
+          variant="success"
+          title="Success"
+          content={`Your ${moduleName} data has been securely deleted`}
+        />
+        <ToastDefault
+          open={showDeleteFailureToast}
+          onOpenChange={setShowDeleteFailureToast}
+          duration={12000}
+          variant="error"
+          title="Error!"
+          content="Please reload the page and try again"
+        />
+      </LayoutPage>
     </>
   );
 };
