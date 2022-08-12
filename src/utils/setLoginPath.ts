@@ -1,10 +1,5 @@
-import { useRouter } from "next/router";
+export const setLoginPath = (asPath: string) => {
+  const addOrigin = asPath !== "/";
 
-export const setLoginPath = () => {
-  const router = useRouter();
-  const addOrigin = router.asPath !== "/";
-
-  return addOrigin
-    ? `/login/?origin=${encodeURIComponent(router.asPath)}`
-    : "/login";
+  return addOrigin ? `/login/?origin=${encodeURIComponent(asPath)}` : "/login";
 };
