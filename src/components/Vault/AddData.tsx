@@ -7,11 +7,9 @@ import {
   DataCardButton,
   DialogModalAdd,
   Group,
-  Link,
   Stack,
   Text,
 } from "src/components";
-import config from "src/config";
 import { Module } from "src/types";
 
 interface Props {
@@ -46,10 +44,11 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
           <Text variant="base" color="labelSecondary">
             To get started, choose an app
           </Text>
-          <Text variant="note" color="labelTertiary">
+          {/* LEAVE FOR NOW: Lauren wasnts to reintroduce this soon */}
+          {/* <Text variant="note" color="labelTertiary">
             Don&apos;t see the app you want?{" "}
             <Link href={`mailto:${config.vanaSupportEmail}`}>Get in touch</Link>
-          </Text>
+          </Text> */}
         </Group>
       </Stack>
       <hr />
