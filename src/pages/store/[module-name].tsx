@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import tw from "twin.macro";
 
 import {
-  AuthenticatedLayout,
   LayoutApp,
   LayoutCanvas,
   LayoutCanvasPattern,
@@ -70,7 +69,7 @@ const VaultStoragePage: NextPage = () => {
   }
 
   return (
-    <AuthenticatedLayout>
+    <>
       <TitleAndMetaTags
         color="black"
         title={`Store ${moduleName} Data | Vana`}
@@ -96,7 +95,7 @@ const VaultStoragePage: NextPage = () => {
           />
         </LayoutCanvas>
       </LayoutApp>
-    </AuthenticatedLayout>
+    </>
   );
 };
 

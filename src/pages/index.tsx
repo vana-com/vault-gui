@@ -5,7 +5,6 @@ import tw from "twin.macro";
 
 import {
   AddData,
-  AuthenticatedLayout,
   Center,
   DataCardButton,
   LayoutApp,
@@ -51,16 +50,11 @@ const HomePage: NextPage = () => {
       ),
   );
 
-  // if (user && userModulesData !== undefined) {
   // Data state: hasura data is loading
+  // TODO: is userModulesData !== undefined a possible state?
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
 
-  if (isHasuraLoading)
-    return (
-      <AuthenticatedLayout>
-        <LayoutLoading />
-      </AuthenticatedLayout>
-    );
+  if (isHasuraLoading) return <LayoutLoading />;
 
   // Data state: has no modules
   const hasNoModules = storedUsersModules.length === 0;
@@ -71,7 +65,7 @@ const HomePage: NextPage = () => {
   console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
 
   return (
-    <AuthenticatedLayout>
+    <>
       <TitleAndMetaTags color="black" title="Vault | Vana" />
       <LayoutApp>
         {/* BREADCRUMB */}
@@ -127,7 +121,7 @@ const HomePage: NextPage = () => {
           )}
         </LayoutCanvas>
       </LayoutApp>
-    </AuthenticatedLayout>
+    </>
   );
 };
 

@@ -10,7 +10,7 @@ import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { AppHook, UserProvider } from "src/components";
+import { AppHook, AuthenticatedLayout, UserProvider } from "src/components";
 
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
@@ -27,7 +27,9 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
             <Tooltip.Provider delayDuration={300}>
               <UserProvider>
                 <AppHook>
-                  <Component {...pageProps} />
+                  <AuthenticatedLayout>
+                    <Component {...pageProps} />
+                  </AuthenticatedLayout>
                 </AppHook>
               </UserProvider>
             </Tooltip.Provider>
