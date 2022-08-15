@@ -20,9 +20,13 @@ import {
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
-  const { isAuthenticated } = useUserContext();
+  const { isAuthenticated, isLoading } = useUserContext();
   console.log("router query", router.query?.origin);
-  console.log("isAuthenticated", isAuthenticated);
+  console.log(
+    "Login Page",
+    `isAuthenticated: ${isAuthenticated}`,
+    `isLoading: ${isLoading}`,
+  );
 
   // After logging in, useEffect to redirect the newly logged-in user
   useEffect(() => {
