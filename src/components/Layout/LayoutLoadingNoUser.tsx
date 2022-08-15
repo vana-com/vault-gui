@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
+  Center,
   Flex,
   LayoutApp,
   LayoutCanvas,
@@ -10,6 +12,7 @@ import {
   Spinner,
   TitleAndMetaTags,
 } from "src/components";
+// import { FocusStack } from "src/components/VaultShare";
 
 /* 
   A one-off: we only show this when authenticating a user. 
@@ -17,20 +20,32 @@ import {
   Thus separating LayoutPage from LayoutApp.
  */
 
-const LayoutLoadingNoUser = () => (
-  <>
-    <TitleAndMetaTags color="black" title="Loading | Vana" />
-    <LayoutApp>
-      <LayoutPage showAsAuthenticated={false}>
-        <LayoutCanvas>
-          <LayoutCanvasPattern />
-          <Flex tw="px-inset pt-inset min-h-[260px] w-full items-center justify-center">
-            <Spinner />
-          </Flex>
-        </LayoutCanvas>
-      </LayoutPage>
-    </LayoutApp>
-  </>
-);
+const LayoutLoadingNoUser = () => {
+  const router = useRouter();
+  const sendPath = router.pathname === "/send";
+  console.log("LayoutLoadingNoUser", `sendPath: ${sendPath}`);
+
+  return (
+    <>
+      <TitleAndMetaTags color="black" title="Loading | Vana" />
+      {sendPath ? (
+        <Center tw="h-screen">
+          <Spinner />
+        </Center>
+      ) : (
+        <LayoutApp>
+          <LayoutPage showAsAuthenticated={false}>
+            <LayoutCanvas>
+              <LayoutCanvasPattern />
+              <Flex tw="px-inset pt-inset min-h-[260px] w-full items-center justify-center">
+                <Spinner />
+              </Flex>
+            </LayoutCanvas>
+          </LayoutPage>
+        </LayoutApp>
+      )}
+    </>
+  );
+};
 
 export { LayoutLoadingNoUser };
