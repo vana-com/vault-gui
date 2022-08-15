@@ -66,8 +66,6 @@ const HomePage: NextPage = () => {
   const deleteModule = async (moduleId: string) => {
     setIsDeleting(true);
 
-    console.log("moduleId", moduleId);
-
     const { deleteSuccessful } = await (
       await fetch(`/api/user-data/delete`, {
         method: "POST",
@@ -99,9 +97,9 @@ const HomePage: NextPage = () => {
   const hasNoModules = storedUsersModules.length === 0;
 
   // TESTS
-  console.log("storedUsersModules", storedUsersModules);
-  console.log("hasNoModules", hasNoModules);
-  console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
+  // console.log("storedUsersModules", storedUsersModules);
+  // console.log("hasNoModules", hasNoModules);
+  // console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
 
   return (
     <>
