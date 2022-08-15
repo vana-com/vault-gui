@@ -5,8 +5,8 @@ import tw, { css, GlobalStyles as BaseStyles, theme } from "twin.macro";
 const stylesBase = css`
   :root {
     --white10: #262d31;
-    --whiteHover: rgba(245, 248, 255, 0.06);
-    --white20: rgba(245, 248, 255, 0.12);
+    --whiteHover: rgba(245, 248, 255, 0.05);
+    --white20: rgba(245, 248, 255, 0.08);
     --white30: rgba(245, 248, 255, 0.16);
     --white40: rgba(245, 248, 255, 0.2);
     --white50: rgba(245, 248, 255, 0.28);
@@ -16,7 +16,7 @@ const stylesBase = css`
     --white90: rgba(247, 250, 255, 0.92);
     --white100: white;
 
-    --gray10: #f0f1f5;
+    --gray10: #fafafa;
     --gray15: #f4f4f5;
     --grayHover: rgba(9, 17, 31, 0.03);
     --gray20: rgba(9, 17, 31, 0.06);

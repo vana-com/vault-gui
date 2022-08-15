@@ -29,11 +29,11 @@ const PermissionContract = ({
 
     {/* CONFIRM */}
     <Group tw="justify-end gap-3">
-      <Button variant="solid" size="xl" onClick={onAccept}>
-        Allow
-      </Button>
       <Button variant="outline" size="xl" onClick={onDeny}>
         Cancel
+      </Button>
+      <Button variant="solid" size="xl" onClick={onAccept}>
+        Allow
       </Button>
     </Group>
   </>
