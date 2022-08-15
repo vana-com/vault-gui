@@ -1,9 +1,7 @@
 const INSTRUCTIONS_INFORMATION = `
-To download your data from this provider, follow the instructions below.
+To request a download of your data from this provider, follow the instructions below. 
 
-Please note: while the data provider may say it takes anywhere from 48 hours to 2 weeks to email you a data download link, it may take as little as 5 minutes.
-
-Any issues? Email [support@vanahelp.zendesk.com](mailto:support@vanahelp.zendesk.com).
+We've found the time that Google takes to provide this file can be anywhere from 8 seconds to a few days.
 `;
 
 export { INSTRUCTIONS_INFORMATION };
