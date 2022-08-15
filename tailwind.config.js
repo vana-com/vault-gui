@@ -129,6 +129,8 @@ module.exports = {
         insetAlmost: "clamp(1.25rem, 0.9988rem + 1.3370vw, 1.75rem)",
         inset: "clamp(1.5rem, 0.9988rem + 1.9370vw, 2.25rem)",
         insetDouble: "clamp(3rem, 1.9976rem + 3.8741vw, 4.5rem)",
+      },
+      maxWidth: {
         canvasWidth: "1280px",
       }
     },

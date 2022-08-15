@@ -22,7 +22,7 @@ const LayoutApp = ({ children }: Props) => {
       {/* NAVBAR */}
       {!sendPath && (
         <div tw="fixed top-0 left-0 right-0 bg-background">
-          <div tw="max-w-[1280px] mx-auto">
+          <div tw="mx-auto max-w-canvasWidth">
             <Navbar />
           </div>
           <hr />
@@ -32,7 +32,7 @@ const LayoutApp = ({ children }: Props) => {
       {/* CONTENT */}
       <div
         css={[
-          tw`max-w-[1280px] mx-auto flex flex-col`,
+          tw`flex flex-col mx-auto max-w-canvasWidth`,
           !sendPath && tw`pt-navHPlusPx`,
         ]}
       >

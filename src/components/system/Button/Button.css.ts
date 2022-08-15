@@ -17,7 +17,7 @@ export type ButtonVariant = keyof typeof buttonVariants;
 export const buttonSizes = {
   initial: tw``,
   sm: tw`h-[21px] gap-1 px-2 text-xs`,
-  md: tw`h-[28px] gap-1 px-2 text-sm`,
+  md: tw`h-[28px] gap-1.5 px-2 text-sm`,
   // set a min-width so it looks good when the loading spinner is active
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
   lg: tw`h-[36px] gap-1.5 px-4 text-sm w-full md:w-auto min-w-[130px]`,

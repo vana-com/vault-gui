@@ -37,6 +37,9 @@ const bodyStyle = [
   tw`flex flex-col`,
   css`
     grid-area: body;
+    @media only screen and (max-width: 1350px) {
+      border-right: none;
+    }
   `,
 ];
 
