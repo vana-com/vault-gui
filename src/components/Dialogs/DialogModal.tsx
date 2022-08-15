@@ -9,22 +9,25 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
+  DialogVariant,
   styledMotionDiv,
 } from "src/components";
+import { TwCss } from "src/types";
 
 import * as styles from "./Dialog.css";
 
 interface Props {
-  buttonSlot: React.ReactNode;
+  buttonNode: React.ReactNode;
   children: React.ReactNode;
+  variant?: DialogVariant;
 }
 
-const DialogModal = ({ buttonSlot, children }: Props) => {
+const DialogModal = ({ buttonNode, children, variant = "full" }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogTrigger asChild>{buttonSlot}</DialogTrigger>
+      <DialogTrigger asChild>{buttonNode}</DialogTrigger>
       <DialogPortal forceMount>
         <AnimatePresence>
           {isOpen ? (
@@ -48,7 +51,10 @@ const DialogModal = ({ buttonSlot, children }: Props) => {
                 transition={{ duration: 0.25 }}
                 css={styledMotionDiv}
               >
-                <DialogContent forceMount css={styles.styledDialogContent}>
+                <DialogContent
+                  forceMount
+                  css={styles.styledDialogContent({ variant }) as TwCss}
+                >
                   {children}
                 </DialogContent>
               </motion.div>

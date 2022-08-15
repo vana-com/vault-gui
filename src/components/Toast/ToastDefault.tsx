@@ -1,8 +1,8 @@
+import { Icon } from "@iconify/react";
 import * as ToastPrimitive from "@radix-ui/react-toast";
 import React from "react";
 
 import { Text } from "src/components";
-import { CarbonCloseFilled } from "src/components/Icons";
 
 import * as styles from "./Toast.css";
 
@@ -39,7 +39,7 @@ const ToastDefault = ({
       {/* use ToastPrimitive.Action here if you need */}
       {children}
       <ToastClose aria-label="Close">
-        <CarbonCloseFilled />
+        <Icon icon="carbon:close-filled" />
       </ToastClose>
     </Toast>
     <ToastViewport css={styles.viewport} />

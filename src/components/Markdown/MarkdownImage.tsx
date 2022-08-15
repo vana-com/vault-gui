@@ -26,19 +26,21 @@ export const MarkdownImage = ({ image }: MarkdownImageProps) => {
   const caption = metastring?.match(/{caption: (.*?)}/)?.pop();
 
   return (
-    <div tw="pt-1.5">
-      <Image
-        src={image.properties.src}
-        width={width}
-        height={height}
-        alt={alt}
-        priority={isPriority}
-      />
-      {hasCaption ? (
-        <div tw="pt-1" aria-label={caption}>
-          {caption}
-        </div>
-      ) : null}
+    <div tw="pt-2 pb-2 text-[0]">
+      <div tw="border border-separatorLight">
+        <Image
+          src={image.properties.src}
+          width={width}
+          height={height}
+          alt={alt}
+          priority={isPriority}
+        />
+        {hasCaption ? (
+          <div tw="pt-1" aria-label={caption}>
+            {caption}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

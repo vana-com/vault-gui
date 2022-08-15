@@ -15,7 +15,7 @@ const useExpireJWTs = () => {
       const expireDate = new Date(hasuraTokenPayload.exp * 1000);
       if (now > expireDate) {
         await logoutUser();
-        router.push("/");
+        router.push("/login");
       }
     }
   };

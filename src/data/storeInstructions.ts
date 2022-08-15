@@ -43,5 +43,5 @@ export const instagramStoreInstructions = `
 
 3. Submit your request
 
-4. Wait for an email from Instagram with a download link. Says 48 hours but usually arrives in a few minnutes.
+4. Wait for an email from Instagram with a download link. Says 48 hours but usually arrives in a few minutes.
 `;

@@ -4,13 +4,18 @@ import { ApolloProvider } from "@apollo/client";
 import { cache } from "@emotion/css";
 import { CacheProvider } from "@emotion/react";
 import * as Toast from "@radix-ui/react-toast";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { AppHook } from "src/components";
-import { UserProvider } from "src/components/UserAccess/UserContext";
+import {
+  AppHook,
+  AuthenticatedLayout,
+  LayoutApp,
+  UserProvider,
+} from "src/components";
 
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
@@ -21,20 +26,21 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ApolloProvider client={client}>
       <CacheProvider value={cache}>
-        <ThemeProvider attribute="class" defaultTheme="dark">
+        <ThemeProvider attribute="class">
           <GlobalStyles />
-          {/* <div tw="relative">
-              <div tw="fixed top-8 right-8 z-10">
-                <ColorModeToggle />
-              </div>
-            </div> */}
-          <UserProvider>
-            <Toast.Provider swipeDirection="right">
-              <AppHook>
-                <Component {...pageProps} />
-              </AppHook>
-            </Toast.Provider>
-          </UserProvider>
+          <Toast.Provider swipeDirection="right">
+            <Tooltip.Provider delayDuration={300}>
+              <UserProvider>
+                <AuthenticatedLayout>
+                  <AppHook>
+                    <LayoutApp>
+                      <Component {...pageProps} />
+                    </LayoutApp>
+                  </AppHook>
+                </AuthenticatedLayout>
+              </UserProvider>
+            </Tooltip.Provider>
+          </Toast.Provider>
         </ThemeProvider>
       </CacheProvider>
     </ApolloProvider>

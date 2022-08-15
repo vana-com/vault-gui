@@ -1,49 +1,26 @@
+import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, CarbonSecurity, Link } from "src/components";
-import { ToastDefault } from "src/components/Toast";
+import { Button, useUserContext } from "src/components";
 
-interface Props {
-  logIn?: () => void;
-  loginError: boolean;
-  isLoading: boolean;
-  setLoginError?: () => void;
-}
+const LoginButton = () => {
+  const { loginUser, isLoading } = useUserContext();
 
-const LoginButton = ({
-  logIn,
-  isLoading,
-  loginError,
-  setLoginError,
-}: Props) => (
-  <>
-    <Button
-      variant="solid"
-      size="md"
-      disabled={isLoading}
-      prefix={<CarbonSecurity />}
-      onClick={logIn}
-    >
-      Log In
-    </Button>
-
-    {/* TOAST for any errors */}
-    <ToastDefault
-      open={loginError}
-      onOpenChange={setLoginError}
-      duration={12000}
-      variant="error"
-      title="Something went wrong"
-      content={
-        <>
-          Please{" "}
-          <Link href="mailto:support@vanahelp.zendesk.com">email us</Link> with
-          details of your login attempt.
-        </>
-      }
-    />
-  </>
-);
+  return (
+    <>
+      <Button
+        variant="solid"
+        size="xl"
+        prefix={<Icon icon="carbon:locked" height="1.125em" />}
+        css={tw`min-w-[280px] max-w-[220px] font-semibold`}
+        disabled={isLoading}
+        onClick={loginUser}
+      >
+        Log In
+      </Button>
+    </>
+  );
+};
 
 export { LoginButton };

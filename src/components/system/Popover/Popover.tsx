@@ -16,6 +16,8 @@ export const PopoverContent = forwardRef<
     tw="p-4 rounded-md shadow-lg max-w-[420px] min-w-[200px] break-words focus:outline-none"
     side="bottom"
     sideOffset={10}
+    align="start"
+    alignOffset={0}
     {...props}
     ref={forwardedRef}
   >

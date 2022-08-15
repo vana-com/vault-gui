@@ -1,21 +1,26 @@
+import { Icon } from "@iconify/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
-  CardHeaderVaultModule,
-  Flex,
-  PageVault,
-  Spinner,
-  Stack,
+  Button,
+  DialogDrawerControlled,
+  LayoutCanvas,
+  LayoutCanvasPattern,
+  LayoutLoading,
+  LayoutPage,
+  NavBreadcrumb,
+  NavHeader,
+  PopoverModuleLang,
   StorageInstructions,
   StorageUpload,
   TitleAndMetaTags,
+  useUserContext,
 } from "src/components";
-import { AuthenticatedPage } from "src/components/AuthenticatedPage";
-import { useUserContext } from "src/components/UserAccess/UserContext";
+import { navigationBreadcrumbs } from "src/data";
 import {
   useCreateUserModuleMutation,
   useGetModuleQuery,
@@ -24,7 +29,8 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-  const { user, walletProvider, isLoading: isUserLoading } = useUserContext();
+  const { user, walletProvider } = useUserContext();
+  const [isOpen, setIsOpen] = useState(false);
 
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
@@ -61,42 +67,59 @@ const VaultStoragePage: NextPage = () => {
     }
   }, [router, isDataLoading]);
 
+  // If we're awaiting Hasura data, show loading
+  if (isDataLoading) {
+    return <LayoutLoading crumbs={[navigationBreadcrumbs[0]]} />;
+  }
+
+  // Programmtically setIsOpen once only on initial page load
+  useEffect(() => {
+    setTimeout(() => setIsOpen(true), 500);
+  }, []);
+
   return (
-    <AuthenticatedPage>
+    <>
       <TitleAndMetaTags
         color="black"
         title={`Store ${moduleName} Data | Vana`}
       />
 
-      <PageVault showBackLink>
-        {user && module && !isDataLoading && !isUserLoading ? (
-          <div tw="w-full">
-            <Stack tw="gap-5 w-full">
-              <CardHeaderVaultModule moduleName={moduleName}>
-                Your data is only accessible by you.
-              </CardHeaderVaultModule>
-              <hr />
-            </Stack>
-            <Stack tw="gap-0">
-              <StorageInstructions moduleName={moduleName as any} />
-              <hr />
-            </Stack>
-            <div tw="pt-5">
-              <StorageUpload
-                moduleName={moduleName}
-                createUserModule={createUserModuleCallback}
-                externalId={user?.externalId ?? ""}
-                web3AuthWalletProvider={walletProvider}
-              />
-            </div>
-          </div>
-        ) : (
-          <Flex tw="w-full items-center justify-center">
-            <Spinner />
-          </Flex>
-        )}
-      </PageVault>
-    </AuthenticatedPage>
+      <LayoutPage>
+        <NavBreadcrumb crumbs={[navigationBreadcrumbs[0]]} />
+        <NavHeader
+          heading={`Add my ${moduleName} data`}
+          headingNode={<PopoverModuleLang />}
+        >
+          <DialogDrawerControlled
+            onOpenChange={setIsOpen}
+            open={isOpen}
+            buttonNode={
+              <Button
+                size="md"
+                variant="ghost"
+                tw="font-normal text-labelSecondary"
+                prefix={<Icon icon="carbon:list-checked" height="1em" />}
+                onClick={() => setIsOpen(true)}
+              >
+                Request your {moduleName} data
+              </Button>
+            }
+          >
+            <StorageInstructions moduleName={moduleName as any} />
+          </DialogDrawerControlled>
+        </NavHeader>
+
+        <LayoutCanvas>
+          <LayoutCanvasPattern />
+          <StorageUpload
+            moduleName={moduleName}
+            createUserModule={createUserModuleCallback}
+            externalId={user?.externalId ?? ""}
+            web3AuthWalletProvider={walletProvider}
+          />
+        </LayoutCanvas>
+      </LayoutPage>
+    </>
   );
 };
 

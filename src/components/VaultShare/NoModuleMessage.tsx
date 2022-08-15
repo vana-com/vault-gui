@@ -16,7 +16,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
       underline={false}
       href="/"
       target="_blank"
-      rel="noopener noreferrer"
+      rel="external noopener noreferrer"
       tw="p-8"
     >
       <Button

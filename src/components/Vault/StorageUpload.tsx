@@ -1,11 +1,11 @@
 import { stripZipFiles } from "@corsali/userdata-extractor";
+import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import { Button, Stack, ToastDefault } from "src/components";
-import { CarbonArrowRight } from "src/components/Icons";
 import config from "src/config";
 import { encryptAndUploadUserDataFiles, heapTrack } from "src/utils";
 import { IWalletProvider } from "src/utils/identity/walletProvider";
@@ -154,7 +154,8 @@ const StorageUpload = ({
   return (
     <>
       <Stack tw="rounded-sm">
-        <Stack tw="w-full gap-1 lg:gap-4">
+        {/* gap-1 lg:gap-4 */}
+        <Stack tw="w-full relative flex items-center justify-center w-full text-black rounded-2xl p-insetHalf bg-neutral gap-2 lg:gap-4">
           {/* UPLOADER */}
           <StorageUploadPresenter
             onDropFile={onDropFile}
@@ -172,8 +173,9 @@ const StorageUpload = ({
             onClick={encryptAndUploadFiles}
             variant="solid"
             size="xl"
-            tw="w-full"
-            suffix={<CarbonArrowRight />}
+            tw="md:w-full font-semibold"
+            suffix={<Icon icon="carbon:arrow-right" height="1.2em" />}
+            isLoading={isDataUploading}
             isDisabled={!filesToUpload.length}
             // TODO: check what analytics depend on this before updating
             id="connect-upload-button"

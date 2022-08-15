@@ -11,7 +11,11 @@ interface Props {
   size?: Size;
 }
 
+const rootStyle = tw`w-full mx-auto px-inset`;
+
 export const Container = styled.div(({ size = "sm" }: Props) => [
-  tw`w-full px-4 mx-auto`,
+  rootStyle,
   containerSize[size],
 ]);
+
+export const ContainerFull = styled.div(rootStyle);

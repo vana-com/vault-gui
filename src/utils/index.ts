@@ -11,5 +11,6 @@ export * from "./identity/getHasuraTokenPayload";
 export * from "./identity/getIdTokenPayload";
 export * from "./identity/getJwtPayload";
 export * from "./renderModuleStoreInstructions";
+export * from "./setLoginPath";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";

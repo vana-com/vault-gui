@@ -26,12 +26,17 @@ export const CheckboxIndicator = CheckboxPrimitive.Indicator;
 
 interface Props {
   label: string;
+  handleCheckChanged: (checked: boolean) => void;
 }
 
-export const CheckboxDefault = ({ label }: Props) => (
+export const CheckboxDefault = ({ label, handleCheckChanged }: Props) => (
   <form>
     <Group tw="items-center gap-2.5">
-      <Checkbox defaultChecked id="c1" css={checkboxStyle}>
+      <Checkbox
+        id="c1"
+        css={checkboxStyle}
+        onCheckedChange={handleCheckChanged}
+      >
         <CheckboxIndicator tw="text-accent">
           <CheckIcon />
         </CheckboxIndicator>

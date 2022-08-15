@@ -1,4 +1,4 @@
-import { SVGBoxProps } from "src/components";
+import { SVGIconProps } from "src/components";
 
 import {
   CarbonLogoFacebook,
@@ -6,7 +6,7 @@ import {
   CarbonLogoInstagram,
 } from "../Icons";
 
-const VaultDataLogo = ({ name, ...props }: { name: string } & SVGBoxProps) => {
+const VaultDataLogo = ({ name, ...props }: { name: string } & SVGIconProps) => {
   if (name === "Facebook") return <CarbonLogoFacebook {...props} />;
   if (name === "Google") return <CarbonLogoGoogle {...props} />;
   if (name === "Instagram") return <CarbonLogoInstagram {...props} />;

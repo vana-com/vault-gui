@@ -10,10 +10,13 @@ import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { Web3Auth } from "@web3auth/web3auth/dist/types/modalManager";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 import { createContext, useContext, useEffect, useState } from "react";
 
+import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
+import { setLoginPath } from "src/utils";
 import {
   getWalletProvider,
   IWalletProvider,
@@ -25,7 +28,7 @@ interface UserContextProps {
   loginUser: () => Promise<void>;
   logoutUser: () => Promise<void>;
   isLoading: boolean;
-  loginError: boolean;
+  isAuthenticated: boolean;
   userWalletAddress: string | null;
   hasuraToken: string | null;
 }
@@ -36,7 +39,7 @@ const UserContext = createContext<UserContextProps>({
   loginUser: async () => {},
   logoutUser: async () => {},
   isLoading: false,
-  loginError: false,
+  isAuthenticated: false,
   userWalletAddress: null,
   hasuraToken: null,
 });
@@ -60,6 +63,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  // Due to clashes between useTheme and web3Auth.uiConfig types,
+  // definitively set the theme to either light or dark
+  const theme = resolvedTheme === "dark" ? "dark" : "light";
 
   /**
    * Web3Auth connected, get the User from Hasura
@@ -92,19 +100,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setIsWeb3AuthLoading(false);
     }
   };
-
-  useEffect(() => {
-    // Redirect the user to where they were before logging in
-    if (router.query?.origin && user) {
-      router.push(
-        decodeURIComponent(router.query.origin.toString()),
-        undefined,
-        {
-          shallow: true,
-        },
-      );
-    }
-  }, [router.isReady, user]);
 
   /**
    * Listen to events from a Web3Auth instance
@@ -183,7 +178,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // The Web3Auth import at the top of the page is to get types working during compile time
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const { Web3Auth } = await import("@web3auth/web3auth");
-        const web3AuthInstance = new Web3Auth(config.web3AuthOptions);
+        const web3AuthInstance = new Web3Auth({
+          uiConfig: {
+            appLogo: "https://vault.vana.xyz/vana.svg",
+            theme,
+          },
+          ...config.web3AuthOptions,
+        });
 
         // OpenLogin adapter
         let openLoginAdapter;
@@ -264,7 +265,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(null);
       setUserWalletAddress(null);
       saveHasuraToken(null);
-      setTimeout(() => router.push("/"), 250);
+      setTimeout(() => router.push(setLoginPath(router.asPath)), 250);
     }
   };
 
@@ -277,11 +278,27 @@ const UserProvider = ({ children }: UserProviderProps) => {
         user,
         userWalletAddress,
         hasuraToken,
-        isLoading: isWeb3AuthLoading,
-        loginError,
+        isLoading: isWeb3AuthLoading || isUserLoading,
+        isAuthenticated: !!user,
       }}
     >
       {children}
+
+      {/* TOAST for any login errors */}
+      <ToastDefault
+        open={loginError}
+        onOpenChange={setLoginError}
+        duration={12000}
+        variant="error"
+        title="Something went wrong"
+        content={
+          <>
+            Please{" "}
+            <Link href={`mailto:${config.vanaSupportEmail}`}>email us</Link>{" "}
+            with details of your login attempt.
+          </>
+        }
+      />
     </UserContext.Provider>
   );
 };

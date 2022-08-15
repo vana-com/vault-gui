@@ -4,32 +4,31 @@ import { useState } from "react";
 import tw from "twin.macro";
 
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
+  DialogVariant,
   styledMotionDiv,
 } from "src/components";
-import { CarbonAddFilled } from "src/components/Icons";
+import { TwCss } from "src/types";
+
+import * as styles from "./Dialog.css";
 
 interface Props {
-  buttonLabel: string;
+  buttonNode: React.ReactNode;
   children: React.ReactNode;
+  variant?: DialogVariant;
 }
 
-const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
+const DialogModalAdd = ({ buttonNode, children, variant = "full" }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogTrigger asChild>
-        <Button size="full" variant="outline" prefix={<CarbonAddFilled />}>
-          {buttonLabel}
-        </Button>
-      </DialogTrigger>
-      <DialogPortal>
+      <DialogTrigger asChild>{buttonNode}</DialogTrigger>
+      <DialogPortal forceMount>
         <AnimatePresence>
           {isOpen ? (
             <>
@@ -46,16 +45,15 @@ const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
                 />
               </motion.div>
               <motion.div
-                initial={{ x: 540 }}
-                exit={{ x: -540 }}
-                animate={{ x: 0 }}
+                initial={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.25 }}
                 css={styledMotionDiv}
               >
-                {/* css={styledContent} */}
                 <DialogContent
                   forceMount
-                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-backgroundElevated p-9 h-full overflow-auto pt-[6vh] min-w-[580px]"
+                  css={styles.styledDialogContent({ variant }) as TwCss}
                 >
                   {children}
                 </DialogContent>
@@ -68,4 +66,4 @@ const DialogDrawerMenu = ({ buttonLabel = "Add", children }: Props) => {
   );
 };
 
-export { DialogDrawerMenu };
+export { DialogModalAdd };
