@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -12,21 +13,33 @@ interface Props {
   NB! The Child component must *always* be LayoutPage.
  */
 
-const LayoutApp = ({ children }: Props) => (
-  <>
-    {/* NAVBAR */}
-    <div tw="fixed top-0 left-0 right-0 bg-background">
-      <div tw="max-w-[1280px] mx-auto">
-        <Navbar />
-      </div>
-      <hr />
-    </div>
+const LayoutApp = ({ children }: Props) => {
+  const router = useRouter();
+  const sendPath = router.pathname === "/send";
 
-    {/* CONTENT */}
-    <div tw="max-w-[1280px] mx-auto pt-navHPlusPx flex flex-col">
-      {children}
-    </div>
-  </>
-);
+  return (
+    <>
+      {/* NAVBAR */}
+      {!sendPath && (
+        <div tw="fixed top-0 left-0 right-0 bg-background">
+          <div tw="max-w-[1280px] mx-auto">
+            <Navbar />
+          </div>
+          <hr />
+        </div>
+      )}
+
+      {/* CONTENT */}
+      <div
+        css={[
+          tw`max-w-[1280px] mx-auto flex flex-col`,
+          !sendPath && tw`pt-navHPlusPx`,
+        ]}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
 
 export { LayoutApp };
