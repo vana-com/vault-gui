@@ -33,7 +33,7 @@ const LayoutLoadingNoUser = () => {
           <Spinner />
         </Center>
       ) : (
-        <LayoutApp>
+        <LayoutApp renderNavMobile={false}>
           <LayoutPage showAsAuthenticated={false}>
             <LayoutCanvas>
               <LayoutCanvasPattern />
