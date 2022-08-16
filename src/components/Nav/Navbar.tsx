@@ -1,10 +1,10 @@
+import { Icon } from "@iconify/react";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { css } from "twin.macro";
 
-import { Text, UserAccountNav, VanaLogo } from "src/components";
-
-import { useUserContext } from "../UserAccess/UserContext";
+import { Text, UserAccount, useUserContext, VanaLogo } from "src/components";
+import { DropdownDefault } from "src/components/system/DropdownMenu";
 
 interface Props {
   children?: React.ReactNode;
@@ -28,7 +28,18 @@ const Navbar = ({ children }: Props) => {
       </NextLink>
 
       {/* USER AVATAR */}
-      {user && <UserAccountNav user={user} accountLoginService="MetaMask" />}
+      {user && (
+        <DropdownDefault
+          variant="full"
+          align="end"
+          alignOffset={0}
+          sideOffset={9}
+          ariaLabel="Your account"
+          icon={<Icon icon="carbon:user-avatar-filled-alt" height="1.75em" />}
+        >
+          <UserAccount user={user} accountLoginService="MetaMask" />
+        </DropdownDefault>
+      )}
 
       {children}
     </div>
