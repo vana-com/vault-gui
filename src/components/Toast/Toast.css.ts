@@ -46,8 +46,8 @@ export const root = ({ variant }: ToastProps) => [
   css`
     grid-template-areas: "title action" "description action";
     grid-template-columns: auto max-content;
-    box-shadow:
-      hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+      hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
     &[data-state="open"] {
       animation: ${slideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -58,7 +58,7 @@ export const root = ({ variant }: ToastProps) => [
       transform: translateX(var(--radix-toast-swipe-move-x));
     }
     &[data-swipe="cancel"] {
-      transform: translateX(0),
+      transform: translateX(0);
       transition: transform 200ms ease-out;
     }
     &[data-swipe="end"] {
