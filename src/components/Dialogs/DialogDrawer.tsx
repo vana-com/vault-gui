@@ -42,7 +42,7 @@ const DialogDrawer = ({ buttonNode, children }: Props) => {
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.125 }}
-                css={styledMotionDiv}
+                // css={styledMotionDiv}
               >
                 <DialogOverlay
                   forceMount
@@ -59,7 +59,7 @@ const DialogDrawer = ({ buttonNode, children }: Props) => {
                 {/* css={styledContent} */}
                 <DialogContent
                   forceMount
-                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-background h-full overflow-auto w-full max-w-[620px]"
+                  tw="fixed top-0 bottom-0 right-0 z-20 outline-none bg-background h-full overflow-auto w-full lg:max-w-[620px]"
                 >
                   {children}
                 </DialogContent>
