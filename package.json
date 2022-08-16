@@ -18,7 +18,7 @@
     "e2e": "start-server-and-test start:ci http://localhost:5000 cypress",
     "e2e:headless": "start-server-and-test start:ci http://localhost:5000 cypress:headless",
     "test": "jest --ci",
-    "prepare": "husky install && doppler setup --project vault-gui --config lcl"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
