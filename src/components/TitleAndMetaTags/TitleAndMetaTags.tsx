@@ -13,7 +13,7 @@ type TitleAndMetaTagsProps = {
 
 export function TitleAndMetaTags({
   color = "white",
-  description = "Data towards a more prosperous world",
+  description = "Shifting the flow of data for a more prosperous world",
   image,
   pathname,
   title = "Vana",
