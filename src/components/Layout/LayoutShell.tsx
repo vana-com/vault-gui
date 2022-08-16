@@ -21,7 +21,7 @@ const ShellRoot = ({ children }: Props) => (
 // hidden on mobile
 const sidebarStyle = [
   tw`relative w-asideW`,
-  tw`hidden sm:block`,
+  tw`hidden md:block`,
   css`
     grid-area: sidebar;
   `,
@@ -33,7 +33,7 @@ const Sidebar = ({ children }: Props) => (
 
 // body is always rendered, so set L & R borders here
 const bodyStyle = [
-  tw`relative border-l border-r bg-background border-separator`,
+  tw`relative border-r md:border-l bg-background border-separator`,
   tw`flex flex-col`,
   css`
     grid-area: body;

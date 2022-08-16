@@ -51,7 +51,7 @@ export const buttonStyle = ({
   // transition
   tw`transition-transform duration-100 ease-in-out`,
   // states
-  tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-current)`,
+  tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-hover)`,
   // default hover: variant !== "" &&
   tw`overflow-hidden before:(absolute inset-0) hover:before:(bg-hover)`,
   isDisabled && tw`cursor-not-allowed opacity-80`,

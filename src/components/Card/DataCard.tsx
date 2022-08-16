@@ -21,7 +21,7 @@ interface Props {
 
 const DataCard = ({ module }: Props) => (
   <div css={[cardStyle, cardHoverStyle, cardHoverIconStyle]}>
-    {/* appears on hover based on `cardHoverIconStyle`  */}
+    {/* Icon appears on hover based on `cardHoverIconStyle` */}
     <Icon
       icon="carbon:maximize"
       height="1.125em"
@@ -32,7 +32,7 @@ const DataCard = ({ module }: Props) => (
     <Stack tw="h-full justify-between">
       <CardHeader name={module.module.name} />
 
-      {/* TODO: pass real module details when avalable */}
+      {/* TODO: pass real module details when available */}
       <DataCardDetails />
     </Stack>
   </div>
