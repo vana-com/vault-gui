@@ -16,7 +16,7 @@ const slideOutRight = keyframes({
 
 // `animation-fill-mode: forwards` is required for smooth animations in React 18
 const styledDrawerContent = [
-  tw`fixed top-0 bottom-0 right-0 outline-none bg-background h-full overflow-auto w-full lg:max-w-[620px]`,
+  tw`fixed top-0 bottom-0 right-0 outline-none bg-background h-full overflow-auto w-11/12 lg:max-w-[620px]`,
   css`
     will-change: transform;
     &[data-state="open"] {
