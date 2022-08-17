@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   TooltipDefault,
+  useUserContext,
   WithIcon,
 } from "src/components";
 import config from "src/config";
@@ -23,101 +24,107 @@ import {
   styledNavLinkWithIcon,
 } from "./Nav.css";
 
-const NavAsideContent = () => (
-  <>
-    {/* MENU */}
-    <Stack tw="pt-insetHalf gap-[2px]">
-      <NextLink passHref href="/">
-        <Text
-          as="a"
-          variant="base"
-          weight="medium"
-          css={[styledNavLink, styledNavLinkActive]}
-        >
-          <WithIcon
-            prefix={<Icon icon="heroicons-solid:folder" height="0.85em" />}
-          >
-            My data
-          </WithIcon>
-        </Text>
-      </NextLink>
-      <div css={styledNavLinkBox}>
-        <TooltipDefault label="Coming soon">
-          <Text
-            variant="base"
-            weight="medium"
-            tw="text-labelTertiary cursor-default"
-            css={styledNavLinkWithIcon}
-          >
-            <WithIcon
-              prefix={<Icon icon="heroicons-solid:clock" height="0.85em" />}
-            >
-              Access log
-            </WithIcon>
-          </Text>
-        </TooltipDefault>
-      </div>
-      <div />
-    </Stack>
+const NavAsideContent = () => {
+  const { isAuthenticated } = useUserContext();
 
-    {/* BETA */}
-    <div tw="mt-auto pb-inset md:pb-insetDouble">
-      <hr tw="border-separatorLight" />
-      <Link
-        href={config.vanaBetaFeedback}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Flex css={styledNavLinkHover} tw="items-center justify-end relative">
-          {/* <img src="/images/vana-ring.png" alt="Vana Ring" /> */}
-          <Image
-            src="/images/vana-keys-beta.png"
-            layout="intrinsic"
-            width="100"
-            height="100"
-            alt="Vana is in Beta. We'd love your feedback."
-            priority
-          />
-          <Flex tw="absolute top-0 h-full items-center left-inset">
-            <Stack tw="gap-1">
-              <Text variant="headingMeta" weight="bold">
-                Beta
-              </Text>
+  return (
+    <>
+      {/* MENU */}
+      {isAuthenticated && (
+        <Stack tw="pt-insetHalf gap-[2px]">
+          <NextLink passHref href="/">
+            <Text
+              as="a"
+              variant="base"
+              weight="medium"
+              css={[styledNavLink, styledNavLinkActive]}
+            >
+              <WithIcon
+                prefix={<Icon icon="heroicons-solid:folder" height="0.85em" />}
+              >
+                My data
+              </WithIcon>
+            </Text>
+          </NextLink>
+          <div css={styledNavLinkBox}>
+            <TooltipDefault label="Coming soon">
               <Text
-                variant="note"
+                variant="base"
                 weight="medium"
-                tw="flex items-center gap-1 "
+                tw="text-labelTertiary cursor-default"
+                css={styledNavLinkWithIcon}
               >
                 <WithIcon
-                  suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}
+                  prefix={<Icon icon="heroicons-solid:clock" height="0.85em" />}
                 >
-                  Give feedback
+                  Access log
                 </WithIcon>
               </Text>
-            </Stack>
-          </Flex>
-        </Flex>
-      </Link>
-      <hr tw="border-separatorLight" />
+            </TooltipDefault>
+          </div>
+          <div />
+        </Stack>
+      )}
 
-      {/* SUPPORT */}
-      <Stack tw="pt-3 md:pt-5">
-        <div css={styledNavLink}>
-          <PopoverHelp />
-        </div>
+      {/* BETA */}
+      <div tw="mt-auto pb-inset md:pb-insetDouble">
+        <hr tw="border-separatorLight" />
         <Link
-          href={config.vanaPrivacyURL}
+          href={config.vanaBetaFeedback}
           target="_blank"
           rel="noopener noreferrer"
-          underline={false}
         >
-          <Text variant="note" weight="medium" css={styledNavLink}>
-            Security &amp; privacy
-          </Text>
+          <Flex css={styledNavLinkHover} tw="items-center justify-end relative">
+            {/* <img src="/images/vana-ring.png" alt="Vana Ring" /> */}
+            <Image
+              src="/images/vana-keys-beta.png"
+              layout="intrinsic"
+              width="100"
+              height="100"
+              alt="Vana is in Beta. We'd love your feedback."
+              priority
+            />
+            <Flex tw="absolute top-0 h-full items-center left-inset">
+              <Stack tw="gap-1">
+                <Text variant="headingMeta" weight="bold">
+                  Beta
+                </Text>
+                <Text
+                  variant="note"
+                  weight="medium"
+                  tw="flex items-center gap-1 "
+                >
+                  <WithIcon
+                    suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}
+                  >
+                    Give feedback
+                  </WithIcon>
+                </Text>
+              </Stack>
+            </Flex>
+          </Flex>
         </Link>
-      </Stack>
-    </div>
-  </>
-);
+        <hr tw="border-separatorLight" />
+
+        {/* SUPPORT */}
+        <Stack tw="pt-3 md:pt-5">
+          <div css={styledNavLink}>
+            <PopoverHelp />
+          </div>
+          <Link
+            href={config.vanaPrivacyURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            underline={false}
+          >
+            <Text variant="note" weight="medium" css={styledNavLink}>
+              Security &amp; privacy
+            </Text>
+          </Link>
+        </Stack>
+      </div>
+    </>
+  );
+};
 
 export { NavAsideContent };
