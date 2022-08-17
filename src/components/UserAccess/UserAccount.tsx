@@ -1,11 +1,15 @@
 import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
-import { Group, LogoutButton, Stack, Text, WithIcon } from "src/components";
-
-import { navLinkStyle } from "../Nav/Nav.css";
-
-const accountAvatarStyle = tw`flex items-center justify-center rounded-full text-label bg-background hover:bg-fillSecondary`;
+import {
+  Group,
+  LogoutButton,
+  navButtonStyle,
+  navLinkStyle,
+  Stack,
+  Text,
+  WithIcon,
+} from "src/components";
 
 interface Props {
   user: any;
@@ -15,7 +19,7 @@ interface Props {
 const UserAccount = ({ user, accountLoginService }: Props) => (
   <Stack tw="gap-2 md:min-w-[300px]">
     <Group tw="px-3 py-4 gap-3 items-center">
-      <div css={[accountAvatarStyle, tw`h-[55px] w-[55px]`]}>
+      <div css={[navButtonStyle, tw`h-[55px] w-[55px]`]}>
         <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
       </div>
       <Stack tw="gap-0.5">

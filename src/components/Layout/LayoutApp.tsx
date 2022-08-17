@@ -1,12 +1,10 @@
-import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { NavAsideContent, Navbar, Stack } from "src/components";
-import { DropdownDefault } from "src/components/system/DropdownMenu";
+import { NavAsideContent, Navbar, NavMobile, Stack } from "src/components";
 
 interface Props {
   children?: React.ReactNode;
@@ -20,7 +18,7 @@ interface Props {
 
 const LayoutApp = ({ children, renderNavMobile }: Props) => {
   const router = useRouter();
-  const sendPath = router.pathname === "/send";
+  const isSendPath = router.pathname === "/send";
 
   const [ref, { width }] = useMeasure();
   const [isMobile, setIsMobile] = useState(false);
@@ -38,7 +36,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
   return (
     <>
       {/* NAVBAR */}
-      {!sendPath && (
+      {!isSendPath && (
         <div ref={ref} tw="fixed top-0 left-0 right-0 bg-background">
           <div tw="mx-auto max-w-canvasWidth">
             <Navbar />
@@ -51,29 +49,21 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
       <div
         css={[
           tw`flex flex-col mx-auto max-w-canvasWidth`,
-          !sendPath && tw`pt-navHPlusPx`,
+          !isSendPath && tw`pt-navHPlusPx`,
         ]}
       >
         {children}
       </div>
 
       {/* MOBILE NAV */}
-      {renderNavMobile && !sendPath && isMobile && (
+      {renderNavMobile && !isSendPath && isMobile && (
         <div tw="fixed bottom-inset right-0">
           <div tw="px-inset h-navH">
-            <DropdownDefault
-              variant="minor"
-              side="top"
-              align="end"
-              alignOffset={0}
-              sideOffset={9}
-              ariaLabel="Main menu"
-              icon={<Icon icon="radix-icons:hamburger-menu" height="1.5em" />}
-            >
+            <NavMobile align="end" alignOffset={0} side="top" sideOffset={9}>
               <Stack tw="gap-7">
                 <NavAsideContent />
               </Stack>
-            </DropdownDefault>
+            </NavMobile>
           </div>
         </div>
       )}

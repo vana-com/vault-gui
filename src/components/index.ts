@@ -24,6 +24,7 @@ export * from "./system/Button";
 export * from "./system/Checkbox";
 export * from "./system/Collapsible";
 export * from "./system/Dialog";
+export * from "./system/DropdownMenu";
 export * from "./system/Input";
 export * from "./system/Link";
 export * from "./system/Popover";
