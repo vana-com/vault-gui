@@ -27,10 +27,12 @@ const styledDropdownContent = ({ variant = "full" }: DropdownContentProps) => [
   // state
   tw`cursor-pointer select-none`,
   // custom Emotion css (tw doesn't own this)
+  // fill-mode: forwards is required for smooth animations in React 18
   // TODO: add @media (prefers-reduced-motion: no-preference) rule
   css`
     animation-duration: 400ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: forwards;
     will-change: transform, opacity;
     &[data-state="open"] {
       &[data-side="top"] { animation-name: ${slideDownAndFade} };
