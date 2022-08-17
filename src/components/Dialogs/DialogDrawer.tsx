@@ -17,6 +17,10 @@ interface Props {
   children: React.ReactNode;
 }
 
+/* 
+  This component is currently unused but CF says retain for a hot minute as an example of Dialog use with Framer Motion. 
+ */
+
 const DialogDrawer = ({ buttonNode, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
