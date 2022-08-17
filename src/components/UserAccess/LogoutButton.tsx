@@ -10,7 +10,6 @@ import {
   WithIcon,
 } from "src/components";
 
-/* TODO: Callum will replace LoginButton within this component after `development` merge */
 const LogoutButton = () => {
   const { logoutUser, isLoading } = useUserContext();
 
@@ -19,7 +18,7 @@ const LogoutButton = () => {
       as="button"
       variant="base"
       weight="medium"
-      css={[styledNavLink, tw`px-3 text-label`]}
+      css={[styledNavLink, tw`w-full px-3 text-label`]}
       onClick={logoutUser}
     >
       <WithIcon
