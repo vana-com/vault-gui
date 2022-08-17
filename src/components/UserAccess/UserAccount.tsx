@@ -4,9 +4,9 @@ import tw from "twin.macro";
 import {
   Group,
   LogoutButton,
-  navButtonStyle,
-  navLinkStyle,
   Stack,
+  styledNavButton,
+  styledNavLink,
   Text,
   WithIcon,
 } from "src/components";
@@ -19,7 +19,7 @@ interface Props {
 const UserAccount = ({ user, accountLoginService }: Props) => (
   <Stack tw="gap-2 md:min-w-[300px]">
     <Group tw="px-3 py-4 gap-3 items-center">
-      <div css={[navButtonStyle, tw`h-[55px] w-[55px]`]}>
+      <div css={[styledNavButton, tw`h-[55px] w-[55px]`]}>
         <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
       </div>
       <Stack tw="gap-0.5">
@@ -44,7 +44,7 @@ const UserAccount = ({ user, accountLoginService }: Props) => (
         as="button"
         variant="base"
         weight="medium"
-        css={[navLinkStyle, tw`px-3`]}
+        css={[styledNavLink, tw`px-3`]}
         tw="text-labelTertiary"
       >
         <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>

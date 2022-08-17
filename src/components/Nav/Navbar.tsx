@@ -7,7 +7,7 @@ import tw from "twin.macro";
 
 import {
   DropdownMenuControlled,
-  navButtonStyle,
+  styledNavButton,
   styledTrigger,
   Text,
   UserAccount,
@@ -52,7 +52,7 @@ const Navbar = ({ children }: Props) => {
           buttonNode={
             <button
               css={[
-                navButtonStyle,
+                styledNavButton,
                 tw`h-[40px] w-[40px] rounded-full`,
                 styledTrigger,
               ]}

@@ -2,10 +2,13 @@ import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Spinner, Text, WithIcon } from "src/components";
-import { navLinkStyle } from "src/components/Nav/Nav.css";
-
-import { useUserContext } from "./UserContext";
+import {
+  Spinner,
+  styledNavLink,
+  Text,
+  useUserContext,
+  WithIcon,
+} from "src/components";
 
 /* TODO: Callum will replace LoginButton within this component after `development` merge */
 const LogoutButton = () => {
@@ -16,7 +19,7 @@ const LogoutButton = () => {
       as="button"
       variant="base"
       weight="medium"
-      css={[navLinkStyle, tw`px-3 text-label`]}
+      css={[styledNavLink, tw`px-3 text-label`]}
       onClick={logoutUser}
     >
       <WithIcon

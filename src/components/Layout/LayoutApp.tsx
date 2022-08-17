@@ -9,8 +9,8 @@ import {
   DropdownMenuControlled,
   NavAsideContent,
   Navbar,
-  navButtonStyle,
   Stack,
+  styledNavButton,
   styledTrigger,
 } from "src/components";
 
@@ -83,7 +83,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
               buttonNode={
                 <button
                   css={[
-                    navButtonStyle,
+                    styledNavButton,
                     tw`h-[40px] w-[40px] rounded-full shadow-xl`,
                     styledTrigger,
                   ]}

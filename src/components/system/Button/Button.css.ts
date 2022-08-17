@@ -1,7 +1,7 @@
 import tw from "twin.macro";
 
 // TODO: add hover & focus states when we know the design…
-export const buttonVariants = {
+const buttonVariants = {
   info: tw`bg-gray-500`,
   contrast: tw`bg-fillElevated text-label`,
   solid: tw`bg-primary text-background`,
@@ -12,9 +12,9 @@ export const buttonVariants = {
   icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
 } as const;
 
-export type ButtonVariant = keyof typeof buttonVariants;
+type ButtonVariant = keyof typeof buttonVariants;
 
-export const buttonSizes = {
+const buttonSizes = {
   initial: tw``,
   sm: tw`h-[21px] gap-1 px-2 text-xs`,
   md: tw`h-[28px] gap-1.5 px-2 text-sm`,
@@ -25,16 +25,16 @@ export const buttonSizes = {
   full: tw`flex-1 h-full gap-2 px-6 text-md rounded-2xl`,
 } as const;
 
-export type ButtonSize = keyof typeof buttonSizes;
+type ButtonSize = keyof typeof buttonSizes;
 
-export interface ButtonStyleProps {
+interface ButtonStyleProps {
   round?: boolean;
   isDisabled?: boolean;
   variant?: ButtonVariant;
   size?: ButtonSize;
 }
 
-export const buttonStyle = ({
+const styledButton = ({
   size,
   variant,
   round,
@@ -60,3 +60,7 @@ export const buttonStyle = ({
   variant && buttonVariants[variant],
   size && buttonSizes[size],
 ];
+
+export { styledButton };
+
+export type { ButtonSize, ButtonStyleProps, ButtonVariant };

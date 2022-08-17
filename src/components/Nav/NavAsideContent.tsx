@@ -16,11 +16,11 @@ import {
 import config from "src/config";
 
 import {
-  navLinkActiveStyle,
-  navLinkBoxStyle,
-  navLinkHoverStyle,
-  navLinkStyle,
-  navLinkWithIconStyle,
+  styledNavLink,
+  styledNavLinkActive,
+  styledNavLinkBox,
+  styledNavLinkHover,
+  styledNavLinkWithIcon,
 } from "./Nav.css";
 
 const NavAsideContent = () => (
@@ -32,7 +32,7 @@ const NavAsideContent = () => (
           as="a"
           variant="base"
           weight="medium"
-          css={[navLinkStyle, navLinkActiveStyle]}
+          css={[styledNavLink, styledNavLinkActive]}
         >
           <WithIcon
             prefix={<Icon icon="heroicons-solid:folder" height="0.85em" />}
@@ -41,13 +41,13 @@ const NavAsideContent = () => (
           </WithIcon>
         </Text>
       </NextLink>
-      <div css={navLinkBoxStyle}>
+      <div css={styledNavLinkBox}>
         <TooltipDefault label="Coming soon">
           <Text
             variant="base"
             weight="medium"
             tw="text-labelTertiary cursor-default"
-            css={navLinkWithIconStyle}
+            css={styledNavLinkWithIcon}
           >
             <WithIcon
               prefix={<Icon icon="heroicons-solid:clock" height="0.85em" />}
@@ -68,7 +68,7 @@ const NavAsideContent = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Flex css={navLinkHoverStyle} tw="items-center justify-end relative">
+        <Flex css={styledNavLinkHover} tw="items-center justify-end relative">
           {/* <img src="/images/vana-ring.png" alt="Vana Ring" /> */}
           <Image
             src="/images/vana-keys-beta.png"
@@ -102,7 +102,7 @@ const NavAsideContent = () => (
 
       {/* SUPPORT */}
       <Stack tw="pt-3 md:pt-5">
-        <div css={navLinkStyle}>
+        <div css={styledNavLink}>
           <PopoverHelp />
         </div>
         <Link
@@ -111,7 +111,7 @@ const NavAsideContent = () => (
           rel="noopener noreferrer"
           underline={false}
         >
-          <Text variant="note" weight="medium" css={navLinkStyle}>
+          <Text variant="note" weight="medium" css={styledNavLink}>
             Security &amp; privacy
           </Text>
         </Link>
