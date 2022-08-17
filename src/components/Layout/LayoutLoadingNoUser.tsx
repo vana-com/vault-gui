@@ -23,7 +23,6 @@ import {
 const LayoutLoadingNoUser = () => {
   const router = useRouter();
   const isSendPath = router.pathname === "/send";
-  console.log("LayoutLoadingNoUser", `isSendPath: ${isSendPath}`);
 
   return (
     <>
