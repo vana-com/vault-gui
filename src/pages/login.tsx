@@ -63,7 +63,7 @@ const LoginPage: NextPage = () => {
                   tw="text-labelSecondary flex items-center gap-1"
                 >
                   <WithIcon prefix={<Icon icon="carbon:idea" />}>
-                    If you have an account, use the same login method
+                    If you already have an account, use the same login method
                   </WithIcon>
                 </Text>
               </Stack>
