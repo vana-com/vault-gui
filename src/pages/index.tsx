@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -18,10 +17,8 @@ import {
   NavHeader,
   NavHeaderRule,
   Stack,
-  Text,
   TitleAndMetaTags,
   ToastDefault,
-  WithIcon,
 } from "src/components";
 import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
@@ -125,6 +122,7 @@ const HomePage: NextPage = () => {
         {/* CANVAS */}
         <LayoutCanvas>
           <LayoutCanvasPattern />
+
           {/* NO STORED MODULES: ADD A MODULE */}
           {hasNoModules && (
             <Center tw="min-h-[300px] relative">
@@ -132,14 +130,15 @@ const HomePage: NextPage = () => {
                 <AddData buttonIsLarge modules={notStoredModules}>
                   Start adding data
                 </AddData>
-                <Text
+                {/* TODO: add incentive copy as part of onboarding */}
+                {/* <Text
                   variant="note"
                   tw="text-labelSecondary flex items-center gap-1"
                 >
                   <WithIcon prefix={<Icon icon="carbon:idea" />}>
                     Add a tip here to incentivize users to add data
                   </WithIcon>
-                </Text>
+                </Text> */}
               </Stack>
             </Center>
           )}
