@@ -1,9 +1,9 @@
+import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import { Group, Link, Stack, styledMotionDiv, Text } from "src/components";
-import { CarbonCheckmarkOutline, CarbonError } from "src/components/Icons";
 import { SendUpdateStatus } from "src/components/VaultShare";
 import config from "src/config";
 import * as DataPipeline from "src/types/DataPipeline";
@@ -24,7 +24,7 @@ const SendStatus = ({ status, stage }: Props) => {
   console.log("stage", stage);
 
   return (
-    <FocusStack tw="min-h-[268px] justify-center relative">
+    <FocusStack withMinHeight isCentered tw="relative">
       {/* IDLE OR PENDING */}
       {(status === DataPipeline.Status.IDLE ||
         status === DataPipeline.Status.PENDING) && (
@@ -58,7 +58,7 @@ const SendStatus = ({ status, stage }: Props) => {
             <Stack tw="h-full items-center justify-center">
               <Stack tw="gap-1.5 items-center text-error -mt-3">
                 <Group tw="gap-1.5 text-error items-center">
-                  <CarbonError boxSize="21px" />
+                  <Icon icon="carbon:error" height="21px" />
                   <Text
                     variant="body"
                     color="error"
@@ -94,7 +94,7 @@ const SendStatus = ({ status, stage }: Props) => {
             <Stack tw="h-full items-center justify-center">
               <Stack tw="gap-1.5 items-center text-primary -mt-3">
                 <div tw="text-3xl">
-                  <CarbonCheckmarkOutline />
+                  <Icon icon="carbon:checkmark-outline" />
                 </div>
                 <Text variant="body" weight="medium" tw="text-center">
                   Done

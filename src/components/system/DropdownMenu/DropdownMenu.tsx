@@ -2,18 +2,22 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import React from "react";
 import tw, { css, styled } from "twin.macro";
 
-import * as styles from "./DropdownMenu.css";
+import {
+  DropdownContentVariant,
+  styledDropdownContent,
+} from "./DropdownMenu.css";
 
 interface ContentProps {
   children: React.ReactNode;
   [key: string]: any;
+  variant: DropdownContentVariant;
 }
 
-function Content({ children, ...props }: ContentProps) {
+function Content({ children, variant = "full", ...props }: ContentProps) {
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
-        css={styles.styledDropdownContent}
+        css={styledDropdownContent({ variant })}
         {...props}
       >
         {children}
@@ -70,10 +74,12 @@ const StyledItemIndicator = styled(DropdownMenuPrimitive.ItemIndicator)([
   tw`absolute left-0 inline-flex items-center justify-center w-[25px]`,
 ]);
 
-// Exports
+// Exports: currently only using these…
 export const DropdownMenu = DropdownMenuPrimitive.Root;
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 export const DropdownMenuContent = Content;
+
+// These are not yet in use…
 export const DropdownMenuItem = StyledItem;
 export const DropdownMenuCheckboxItem = StyledCheckboxItem;
 export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;

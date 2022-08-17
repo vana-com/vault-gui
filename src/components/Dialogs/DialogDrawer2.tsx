@@ -16,22 +16,12 @@ import {
 interface Props {
   buttonNode: React.ReactNode;
   children: React.ReactNode;
-  open: boolean;
-  onOpenChange: (isOpen: boolean) => void;
 }
 
-/* 
-  Exactly the same as DialogDrawer but passing open and onOpenChnage for manipulation on the parent 
- */
-
-const DialogDrawerControlled = ({
-  buttonNode,
-  children,
-  open,
-  onOpenChange,
-}: Props) => (
-  <Dialog onOpenChange={onOpenChange} open={open}>
-    <DialogTrigger asChild css={styledTrigger}>
+const DialogDrawer2 = ({ buttonNode, children }: Props) => (
+  <Dialog>
+    {/* do NOT pass trigger functions via asChild */}
+    <DialogTrigger css={[styledTrigger, tw`rounded-2xl`]}>
       {buttonNode}
     </DialogTrigger>
     <DialogPortal>
@@ -44,4 +34,4 @@ const DialogDrawerControlled = ({
   </Dialog>
 );
 
-export { DialogDrawerControlled };
+export { DialogDrawer2 };

@@ -1,10 +1,19 @@
+import { Icon } from "@iconify/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Text, UserAccountNav, VanaLogo } from "src/components";
-
-import { useUserContext } from "../UserAccess/UserContext";
+import {
+  DropdownMenuControlled,
+  styledNavButton,
+  styledTrigger,
+  Text,
+  UserAccount,
+  useUserContext,
+  VanaLogo,
+} from "src/components";
 
 interface Props {
   children?: React.ReactNode;
@@ -12,6 +21,11 @@ interface Props {
 
 const Navbar = ({ children }: Props) => {
   const { user } = useUserContext();
+  const { asPath } = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Reset DropdownMenuControlled on route change
+  useEffect(() => setIsOpen(false), [asPath]);
 
   return (
     <div tw="px-inset flex justify-between items-center h-navH">
@@ -28,7 +42,31 @@ const Navbar = ({ children }: Props) => {
       </NextLink>
 
       {/* USER AVATAR */}
-      {user && <UserAccountNav user={user} accountLoginService="MetaMask" />}
+      {user && (
+        <DropdownMenuControlled
+          onOpenChange={setIsOpen}
+          open={isOpen}
+          align="end"
+          alignOffset={0}
+          sideOffset={9}
+          buttonNode={
+            <button
+              css={[
+                styledNavButton,
+                tw`h-[40px] w-[40px] rounded-full`,
+                styledTrigger,
+              ]}
+              aria-label="Your account"
+              type="button"
+              onClick={() => setIsOpen(true)}
+            >
+              <Icon icon="carbon:user-avatar-filled-alt" height="1.75em" />
+            </button>
+          }
+        >
+          <UserAccount user={user} accountLoginService="MetaMask" />
+        </DropdownMenuControlled>
+      )}
 
       {children}
     </div>

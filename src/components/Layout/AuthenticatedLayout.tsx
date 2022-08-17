@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import tw from "twin.macro";
 
 import { LayoutLoadingNoUser, useUserContext } from "src/components";
+import { Children } from "src/types";
 import { setLoginPath } from "src/utils";
 
-interface Props {
-  children?: React.ReactNode;
-}
+/* 
+  A component that only renders children if the user isAuthenticated and is not the Login page 
+ */
 
-const AuthenticatedLayout = ({ children }: Props) => {
+const AuthenticatedLayout = ({ children }: Children) => {
   const router = useRouter();
   const { isAuthenticated, isLoading } = useUserContext();
   console.log(
@@ -20,7 +21,12 @@ const AuthenticatedLayout = ({ children }: Props) => {
 
   if (isLoading) return <LayoutLoadingNoUser />;
 
-  if (router.pathname !== "/login" && !isLoading && !isAuthenticated) {
+  if (
+    router.isReady &&
+    router.pathname !== "/login" &&
+    !isLoading &&
+    !isAuthenticated
+  ) {
     setTimeout(() => router.push(setLoginPath(router.asPath)), 250);
     return <LayoutLoadingNoUser />;
   }

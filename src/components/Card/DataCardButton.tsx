@@ -6,13 +6,13 @@ import tw from "twin.macro";
 
 import {
   CardHeader,
-  cardHoverIconStyle,
-  cardHoverStyle,
-  cardStyle,
   DataCardDetails,
   Flex,
   Spinner,
   Stack,
+  styledCard,
+  styledCardHover,
+  styledCardHoverIcon,
   Text,
   WithIcon,
 } from "src/components";
@@ -36,10 +36,10 @@ const DataCardButton = ({ module, isStored, showActionHover }: Props) => {
     <NextLink passHref href={link}>
       <button
         type="button"
-        css={[cardStyle, cardHoverStyle, cardHoverIconStyle]}
+        css={[styledCard, styledCardHover, styledCardHoverIcon]}
         onClick={() => setIsLoading(true)}
       >
-        {/* appears on hover based on `cardHoverIconStyle`  */}
+        {/* appears on hover based on `styledCardHoverIcon`  */}
         {showActionHover && (
           <Icon
             icon="carbon:arrow-right"
