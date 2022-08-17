@@ -8,10 +8,10 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
+  styledDialogOverlay,
+  styledDrawerContent,
+  styledTrigger,
 } from "src/components";
-
-import { styledDialogOverlay, styledDialogTrigger } from "./Dialog.css";
-import { styledDrawerContent } from "./Drawer.css";
 
 interface Props {
   buttonNode: React.ReactNode;
@@ -31,7 +31,7 @@ const DialogDrawerControlled = ({
   onOpenChange,
 }: Props) => (
   <Dialog onOpenChange={onOpenChange} open={open}>
-    <DialogTrigger asChild css={styledDialogTrigger({ isRounded2xl: false })}>
+    <DialogTrigger asChild css={styledTrigger}>
       {buttonNode}
     </DialogTrigger>
     <DialogPortal>

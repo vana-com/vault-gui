@@ -11,7 +11,7 @@ import {
   Navbar,
   navButtonStyle,
   Stack,
-  styledDialogTrigger,
+  styledTrigger,
 } from "src/components";
 
 interface Props {
@@ -84,8 +84,8 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
                 <button
                   css={[
                     navButtonStyle,
-                    tw`h-[40px] w-[40px] shadow-xl`,
-                    styledDialogTrigger({ isRounded2xl: true }),
+                    tw`h-[40px] w-[40px] rounded-full shadow-xl`,
+                    styledTrigger,
                   ]}
                   aria-label="Main menu"
                   type="button"

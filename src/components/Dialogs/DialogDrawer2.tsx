@@ -8,10 +8,10 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
+  styledDialogOverlay,
+  styledDrawerContent,
+  styledTrigger,
 } from "src/components";
-
-import { styledDialogOverlay, styledDialogTrigger } from "./Dialog.css";
-import { styledDrawerContent } from "./Drawer.css";
 
 interface Props {
   buttonNode: React.ReactNode;
@@ -21,7 +21,7 @@ interface Props {
 const DialogDrawer2 = ({ buttonNode, children }: Props) => (
   <Dialog>
     {/* do NOT pass trigger functions via asChild */}
-    <DialogTrigger css={styledDialogTrigger({ isRounded2xl: true })}>
+    <DialogTrigger css={[styledTrigger, tw`rounded-2xl`]}>
       {buttonNode}
     </DialogTrigger>
     <DialogPortal>

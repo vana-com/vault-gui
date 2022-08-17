@@ -8,7 +8,7 @@ import tw from "twin.macro";
 import {
   DropdownMenuControlled,
   navButtonStyle,
-  styledDialogTrigger,
+  styledTrigger,
   Text,
   UserAccount,
   useUserContext,
@@ -53,8 +53,8 @@ const Navbar = ({ children }: Props) => {
             <button
               css={[
                 navButtonStyle,
-                tw`h-[40px] w-[40px]`,
-                styledDialogTrigger({ isRounded2xl: true }),
+                tw`h-[40px] w-[40px] rounded-full`,
+                styledTrigger,
               ]}
               aria-label="Your account"
               type="button"

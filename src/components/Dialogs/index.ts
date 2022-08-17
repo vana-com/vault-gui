@@ -6,3 +6,4 @@ export * from "./DialogDrawerControlled";
 export * from "./DialogModal";
 export * from "./DialogModalAdd";
 export * from "./Drawer.css";
+export * from "./Trigger.css";

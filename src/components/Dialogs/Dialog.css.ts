@@ -4,19 +4,6 @@ import tw, { css } from "twin.macro";
 // importing from outside does NOT work, requires a fix…
 // import { fadeIn, fadeOut } from "src/components";
 
-interface TriggerProps {
-  isRounded2xl: boolean;
-}
-
-// These styles appear when Dialogtrigger is NOT `asChild`
-const styledDialogTrigger = ({ isRounded2xl = true }: TriggerProps) => [
-  tw`transform translate-y-0 border border-transparent`,
-  tw`focus:(translate-y-px border-current ring-1 ring-separatorLight ring-offset-4 ring-offset-separatorLight)`,
-  // this doesn't work…
-  // tw`[data-state="open"]:(outline)`,
-  isRounded2xl ? tw`rounded-2xl` : tw`rounded`,
-];
-
 const fadeIn = keyframes({
   from: { opacity: "0" },
   to: { opacity: "1" },
@@ -88,6 +75,6 @@ const styledDialogContent = ({ variant = "full" }: DialogContentProps) => [
   dialogVariants[variant],
 ];
 
-export { styledDialogContent, styledDialogOverlay, styledDialogTrigger };
+export { styledDialogContent, styledDialogOverlay };
 
 export type { DialogContentProps, DialogVariant };
