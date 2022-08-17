@@ -64,7 +64,7 @@ const Navbar = ({ children }: Props) => {
             </button>
           }
         >
-          <UserAccount user={user} accountLoginService="MetaMask" />
+          <UserAccount user={user} />
         </DropdownMenuControlled>
       )}
 

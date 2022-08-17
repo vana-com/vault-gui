@@ -11,7 +11,7 @@ import {
 
 interface Props {
   user: any;
-  accountLoginService: string;
+  accountLoginService?: string;
 }
 
 const UserAccount = ({ user, accountLoginService }: Props) => (
@@ -21,12 +21,14 @@ const UserAccount = ({ user, accountLoginService }: Props) => (
         <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
       </div>
       <Stack tw="gap-0.5">
-        <Text variant="note" weight="medium" tw="flex">
-          Login:
-          <Text variant="note" weight="semibold" tw="pl-1">
-            {accountLoginService}
+        {accountLoginService && (
+          <Text variant="note" weight="medium" tw="flex">
+            Login:
+            <Text variant="note" weight="semibold" tw="pl-1">
+              {accountLoginService}
+            </Text>
           </Text>
-        </Text>
+        )}
         <Text variant="footnote" weight="medium" tw="text-labelTertiary">
           ID ends in{" "}
           <Text as="span" tw="font-mono">
