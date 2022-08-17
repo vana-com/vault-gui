@@ -18,7 +18,7 @@ const VaultSharePageWithStatus = ({
     ? `Do you want to give ${appName} access to your Vault?`
     : "";
   if (uiStatus === ShareUiStatus.USER_IS_NOT_LOGGED_IN)
-    lede = "You need to Login to give Vault access";
+    lede = "You need to log in to give Vault access";
   if (uiStatus === ShareUiStatus.HASURA_IS_LOADING)
     lede = `Do you want to give ${appName} access to your Vault?`;
   if (uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA)
