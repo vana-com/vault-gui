@@ -6,7 +6,7 @@ import tw from "twin.macro";
  */
 
 const styledTrigger = [
-  tw`transform translate-y-0 border border-transparent`,
+  tw`transform translate-y-0 border-2 border-transparent`,
   tw`focus:(translate-y-px border-primary ring-1 ring-separatorLight ring-offset-4 ring-offset-separatorLight)`,
 ];
 
