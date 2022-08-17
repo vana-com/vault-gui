@@ -56,7 +56,7 @@ export const Button = React.forwardRef(
       ref={ref}
       as={boxProps.as ?? "button"}
       {...boxProps}
-      css={[styles.buttonStyle({ size, variant, round, isDisabled }), css]}
+      css={[styles.styledButton({ size, variant, round, isDisabled }), css]}
       disabled={isDisabled}
       id={id}
     >

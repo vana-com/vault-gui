@@ -18,7 +18,7 @@ const swipeOut = keyframes({
   to: { transform: `translateX(calc(100% + ${VIEWPORT_PADDING}px))` },
 });
 
-export const viewport = [
+const styledToastViewport = [
   tw`fixed top-0 right-0`,
   tw`flex flex-col items-center justify-center gap-3`,
   tw`w-[390px] max-w-full m-0 outline-none z-[999]`,
@@ -27,27 +27,27 @@ export const viewport = [
   `,
 ];
 
-export const rootVariants = {
+const rootVariants = {
   error: tw`bg-background text-label [> h3]:text-error`,
   success: tw`bg-background text-labelSecondary [> h3]:text-primary`,
   alert: tw`bg-background text-labelSecondary [> h3]:text-yellow-500`,
 } as const;
 
-export type ToastVariant = keyof typeof rootVariants;
+type ToastVariant = keyof typeof rootVariants;
 
-export interface ToastProps {
+interface ToastProps {
   variant?: ToastVariant;
 }
 
-export const root = ({ variant }: ToastProps) => [
+const styledToastRoot = ({ variant }: ToastProps) => [
   tw`w-full px-4 py-3 rounded-md`,
   tw`grid items-center gap-0.5`,
   variant && rootVariants[variant],
   css`
     grid-template-areas: "title action" "description action";
     grid-template-columns: auto max-content;
-    box-shadow:
-      hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+      hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
     &[data-state="open"] {
       animation: ${slideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -58,7 +58,7 @@ export const root = ({ variant }: ToastProps) => [
       transform: translateX(var(--radix-toast-swipe-move-x));
     }
     &[data-swipe="cancel"] {
-      transform: translateX(0),
+      transform: translateX(0);
       transition: transform 200ms ease-out;
     }
     &[data-swipe="end"] {
@@ -67,22 +67,32 @@ export const root = ({ variant }: ToastProps) => [
   `,
 ];
 
-export const title = [
+const styledToastTitle = [
   tw`text-base font-semibold`,
   css`
     grid-area: title;
   `,
 ];
 
-export const description = [
+const styledToastDescription = [
   tw`text-sm`,
   css`
     grid-area: description;
   `,
 ];
 
-export const action = [
+const styledToastAction = [
   css`
     grid-area: action;
   `,
 ];
+
+export {
+  styledToastAction,
+  styledToastDescription,
+  styledToastRoot,
+  styledToastTitle,
+  styledToastViewport,
+};
+
+export type { ToastProps, ToastVariant };

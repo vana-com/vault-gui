@@ -5,12 +5,7 @@ import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import {
-  AuthenticatedLayout,
-  PageVault,
-  Spinner,
-  useUserContext,
-} from "src/components";
+import { Spinner, useUserContext } from "src/components";
 import {
   FocusStack,
   NoModuleMessage,
@@ -232,48 +227,43 @@ const SendPage: NextPage = () => {
   const closePopup = (self: Window) => self.close();
 
   return (
-    <AuthenticatedLayout>
-      {/* TODO: Replace with new Layout UI designs */}
-      <PageVault>
-        {/* These 2 component take uiStatus and handle their own internal UI */}
-        <VaultSharePageTitle uiStatus={uiStatus} />
-        <VaultSharePageWithStatus
-          // accessingDomain={accessingDomain}
-          appName={prettyAppName}
-          uiStatus={uiStatus}
-        >
-          {/* SERVER DATA IS LOADING */}
-          {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
-            <FocusStack tw="min-h-[268px] items-center justify-center">
-              <Spinner />
-            </FocusStack>
-          )}
+    <>
+      {/* These 2 component take uiStatus and handle their own internal UI */}
+      <VaultSharePageTitle uiStatus={uiStatus} />
 
-          {/* NO USER MODULE DATA */}
-          {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
-            <NoModuleMessage
-              serviceName={serviceName as string}
-              handleClick={() => closePopup(window)}
-            />
-          )}
+      {/* TODO: provide the accessing domain */}
+      <VaultSharePageWithStatus appName={prettyAppName} uiStatus={uiStatus}>
+        {/* SERVER DATA IS LOADING */}
+        {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
+          <FocusStack isCentered withMinHeight>
+            <Spinner />
+          </FocusStack>
+        )}
 
-          {/* READY TO ACCEPT */}
-          {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
-            <PermissionContract
-              onAccept={onDataRequestApproval}
-              onDeny={() => closePopup(window)}
-            >
-              <PermissionList query={cleanQueryString} />
-            </PermissionContract>
-          )}
+        {/* NO USER MODULE DATA */}
+        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
+          <NoModuleMessage
+            serviceName={serviceName as string}
+            handleClick={() => closePopup(window)}
+          />
+        )}
 
-          {/* ACCEPTED, RUN QUERY */}
-          {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
-            <SendStatus status={shareStatus} stage={updateStatus} />
-          )}
-        </VaultSharePageWithStatus>
-      </PageVault>
-    </AuthenticatedLayout>
+        {/* READY TO ACCEPT */}
+        {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
+          <PermissionContract
+            onAccept={onDataRequestApproval}
+            onDeny={() => closePopup(window)}
+          >
+            <PermissionList query={cleanQueryString} />
+          </PermissionContract>
+        )}
+
+        {/* ACCEPTED, RUN QUERY */}
+        {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
+          <SendStatus status={shareStatus} stage={updateStatus} />
+        )}
+      </VaultSharePageWithStatus>
+    </>
   );
 };
 

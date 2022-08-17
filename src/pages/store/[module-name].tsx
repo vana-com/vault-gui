@@ -87,7 +87,7 @@ const VaultStoragePage: NextPage = () => {
       <LayoutPage>
         <NavBreadcrumb crumbs={[navigationBreadcrumbs[0]]} />
         <NavHeader
-          heading={`Add my ${moduleName} data`}
+          heading={`Add ${moduleName} data`}
           headingNode={<PopoverModuleLang />}
         >
           <DialogDrawerControlled
@@ -97,11 +97,12 @@ const VaultStoragePage: NextPage = () => {
               <Button
                 size="md"
                 variant="ghost"
-                tw="font-normal text-labelSecondary"
+                tw="gap-2 font-normal text-labelSecondary focus:text-label"
                 prefix={<Icon icon="carbon:list-checked" height="1em" />}
                 onClick={() => setIsOpen(true)}
               >
-                Request your {moduleName} data
+                Request <span tw="hidden lg:inline">your {moduleName}</span>{" "}
+                data
               </Button>
             }
           >

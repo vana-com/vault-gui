@@ -11,7 +11,7 @@ const LayoutCanvas = ({ children }: Children) => (
 
 /* The grid space for any canvas layout that requires it */
 export const layoutCanvasGridStyle = [
-  tw`grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3`,
+  tw`relative grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3`,
 ];
 
 /* …is also supplied as a component for fleible use. A choice betwene which will be made soon… */

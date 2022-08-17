@@ -28,21 +28,23 @@ const ToastDefault = ({
   ...props
 }: Props) => (
   <>
-    <Toast css={styles.root({ variant })} {...props}>
+    <Toast css={styles.styledToastRoot({ variant })} {...props}>
       {title && (
-        <ToastTitle asChild css={styles.title}>
+        <ToastTitle asChild css={styles.styledToastTitle}>
           {/* use `asChild` so we can target h3 with root styles */}
           <Text as="h3">{title}</Text>
         </ToastTitle>
       )}
-      <ToastDescription css={styles.description}>{content}</ToastDescription>
+      <ToastDescription css={styles.styledToastDescription}>
+        {content}
+      </ToastDescription>
       {/* use ToastPrimitive.Action here if you need */}
       {children}
       <ToastClose aria-label="Close">
         <Icon icon="carbon:close-filled" />
       </ToastClose>
     </Toast>
-    <ToastViewport css={styles.viewport} />
+    <ToastViewport css={styles.styledToastViewport} />
   </>
 );
 

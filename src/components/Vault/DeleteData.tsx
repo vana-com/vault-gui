@@ -56,7 +56,7 @@ const DeleteData = ({
               variant="outline"
               size="lg"
               // prefix={<Icon icon="carbon:pause-filled" />}
-              tw="min-w-[220px]"
+              tw="md:min-w-[220px]"
               isDisabled={isDeleting}
             >
               Not yet
@@ -66,7 +66,7 @@ const DeleteData = ({
             variant="solid"
             size="lg"
             prefix={<Icon icon="carbon:close-filled" />}
-            tw="min-w-[220px] bg-error"
+            tw="md:min-w-[220px] bg-error"
             isLoading={isDeleting}
             onClick={onDelete}
           >

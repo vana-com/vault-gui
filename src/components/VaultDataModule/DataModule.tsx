@@ -6,7 +6,7 @@ import {
   DataCard,
   DataModuleDetail,
   DeleteData,
-  DialogDrawer,
+  DialogDrawer2,
   Group,
   Stack,
 } from "src/components";
@@ -21,8 +21,13 @@ interface Props {
 }
 
 const DataModule = ({ module, handleDeleteModule, isDeleting }: Props) => (
-  <DialogDrawer buttonNode={<DataCard module={module} />}>
-    <Stack css={[tw`gap-2 px-inset pb-insetAlmost bg-neutral`, ptBreadcrumbs]}>
+  <DialogDrawer2 buttonNode={<DataCard module={module} />}>
+    <Stack
+      css={[
+        tw`gap-2 px-inset pb-insetAlmost bg-neutral dark:bg-fillSecondary`,
+        ptBreadcrumbs,
+      ]}
+    >
       <CardHeadingModule
         name={module.module.name}
         heading={`${module.module.name} data block`}
@@ -55,7 +60,7 @@ const DataModule = ({ module, handleDeleteModule, isDeleting }: Props) => (
         buttonLabel="Delete this data block"
       />
     </Stack>
-  </DialogDrawer>
+  </DialogDrawer2>
 );
 
 export { DataModule };
