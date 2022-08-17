@@ -1,5 +1,4 @@
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
-// import { root } from "./Collapsible.css";
 import { forwardRef } from "react";
 
 export const Collapsible = CollapsiblePrimitive.Root;

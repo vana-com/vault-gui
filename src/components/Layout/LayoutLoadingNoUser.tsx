@@ -22,18 +22,17 @@ import {
 
 const LayoutLoadingNoUser = () => {
   const router = useRouter();
-  const sendPath = router.pathname === "/send";
-  console.log("LayoutLoadingNoUser", `sendPath: ${sendPath}`);
+  const isSendPath = router.pathname === "/send";
 
   return (
     <>
       <TitleAndMetaTags color="black" title="Loading | Vana" />
-      {sendPath ? (
+      {isSendPath ? (
         <Center tw="h-screen">
           <Spinner />
         </Center>
       ) : (
-        <LayoutApp>
+        <LayoutApp renderNavMobile={false}>
           <LayoutPage showAsAuthenticated={false}>
             <LayoutCanvas>
               <LayoutCanvasPattern />

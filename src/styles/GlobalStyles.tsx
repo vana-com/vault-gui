@@ -135,7 +135,7 @@ const stylesBase = css`
     --backgroundTertiary: var(--gray50);
     --backgroundScrim: rgba(0, 0, 0, 0.7);
 
-    --neutral: var(--neutral80);
+    --neutral: #363c42;
     --neutralDark: var(--neutral90);
     --separator: var(--white20);
     --separatorLight: var(--white10);

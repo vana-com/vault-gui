@@ -1,7 +1,7 @@
 import tw from "twin.macro";
 
 // TODO: add hover & focus states when we know the design…
-export const buttonVariants = {
+const buttonVariants = {
   info: tw`bg-gray-500`,
   contrast: tw`bg-fillElevated text-label`,
   solid: tw`bg-primary text-background`,
@@ -12,12 +12,12 @@ export const buttonVariants = {
   icon: tw`items-center justify-center text-background h-[25px] w-[25px]`,
 } as const;
 
-export type ButtonVariant = keyof typeof buttonVariants;
+type ButtonVariant = keyof typeof buttonVariants;
 
-export const buttonSizes = {
+const buttonSizes = {
   initial: tw``,
   sm: tw`h-[21px] gap-1 px-2 text-xs`,
-  md: tw`h-[28px] gap-1 px-2 text-sm`,
+  md: tw`h-[28px] gap-1.5 px-2 text-sm`,
   // set a min-width so it looks good when the loading spinner is active
   // renderMinWidth(variant, size) && tw`min-w-[130px]`,
   lg: tw`h-[36px] gap-1.5 px-4 text-sm w-full md:w-auto min-w-[130px]`,
@@ -25,16 +25,16 @@ export const buttonSizes = {
   full: tw`flex-1 h-full gap-2 px-6 text-md rounded-2xl`,
 } as const;
 
-export type ButtonSize = keyof typeof buttonSizes;
+type ButtonSize = keyof typeof buttonSizes;
 
-export interface ButtonStyleProps {
+interface ButtonStyleProps {
   round?: boolean;
   isDisabled?: boolean;
   variant?: ButtonVariant;
   size?: ButtonSize;
 }
 
-export const buttonStyle = ({
+const styledButton = ({
   size,
   variant,
   round,
@@ -51,7 +51,7 @@ export const buttonStyle = ({
   // transition
   tw`transition-transform duration-100 ease-in-out`,
   // states
-  tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-current)`,
+  tw`cursor-pointer will-change-transform focus:(outline outline-2 outline-offset-0 outline-hover)`,
   // default hover: variant !== "" &&
   tw`overflow-hidden before:(absolute inset-0) hover:before:(bg-hover)`,
   isDisabled && tw`cursor-not-allowed opacity-80`,
@@ -60,3 +60,7 @@ export const buttonStyle = ({
   variant && buttonVariants[variant],
   size && buttonSizes[size],
 ];
+
+export { styledButton };
+
+export type { ButtonSize, ButtonStyleProps, ButtonVariant };

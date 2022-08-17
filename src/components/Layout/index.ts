@@ -1,3 +1,4 @@
+export * from "./AuthenticatedComponent";
 export * from "./AuthenticatedLayout";
 export * from "./LayoutApp";
 export * from "./LayoutAppNoAside";

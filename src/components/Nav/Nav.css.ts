@@ -1,13 +1,27 @@
 import tw from "twin.macro";
 
-export const navLinkWithIconStyle = [tw`flex items-center gap-2`];
-export const navLinkBoxStyle = [
-  navLinkWithIconStyle,
+const styledNavLinkWithIcon = [tw`flex items-center gap-2`];
+
+const styledNavLinkBox = [
+  styledNavLinkWithIcon,
   tw`relative h-navLinkH px-inset text-labelSecondary`,
 ];
-export const navLinkHoverStyle = [
+
+const styledNavLinkHover = [
   tw`relative overflow-hidden before:(absolute inset-[3px] rounded-md) hover:before:(bg-hover)`,
 ];
-export const navLinkStyle = [navLinkBoxStyle, navLinkHoverStyle];
-// bg-gray-400 bg-opacity-10
-export const navLinkActiveStyle = [tw`text-label`];
+
+const styledNavLink = [styledNavLinkBox, styledNavLinkHover];
+
+const styledNavLinkActive = [tw`text-label`];
+
+const styledNavButton = tw`flex items-center justify-center rounded-full text-label bg-background hover:bg-fillSecondary`;
+
+export {
+  styledNavButton,
+  styledNavLink,
+  styledNavLinkActive,
+  styledNavLinkBox,
+  styledNavLinkHover,
+  styledNavLinkWithIcon,
+};

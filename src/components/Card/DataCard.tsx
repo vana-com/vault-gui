@@ -4,10 +4,10 @@ import tw from "twin.macro";
 
 import {
   CardHeader,
-  cardHoverIconStyle,
-  cardHoverStyle,
-  cardStyle,
   Stack,
+  styledCard,
+  styledCardHover,
+  styledCardHoverIcon,
 } from "src/components";
 import { ModuleObj } from "src/types";
 
@@ -20,8 +20,8 @@ interface Props {
 /* DataCard is very similar to DataCardButton, uses the same card styles */
 
 const DataCard = ({ module }: Props) => (
-  <div css={[cardStyle, cardHoverStyle, cardHoverIconStyle]}>
-    {/* appears on hover based on `cardHoverIconStyle`  */}
+  <div css={[styledCard, styledCardHover, styledCardHoverIcon]}>
+    {/* Icon appears on hover based on `styledCardHoverIcon` */}
     <Icon
       icon="carbon:maximize"
       height="1.125em"
@@ -32,7 +32,7 @@ const DataCard = ({ module }: Props) => (
     <Stack tw="h-full justify-between">
       <CardHeader name={module.module.name} />
 
-      {/* TODO: pass real module details when avalable */}
+      {/* TODO: pass real module details when available */}
       <DataCardDetails />
     </Stack>
   </div>
