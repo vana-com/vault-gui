@@ -40,7 +40,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
     } else {
       setIsMobile(false);
     }
-  }, [process.env.NODE_ENV === "development" ? width : null]);
+  }, [width]);
 
   // Reset DropdownMenuControlled on route change
   const [isOpen, setIsOpen] = useState(false);
