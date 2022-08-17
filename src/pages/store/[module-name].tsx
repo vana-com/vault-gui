@@ -67,15 +67,17 @@ const VaultStoragePage: NextPage = () => {
     }
   }, [router, isDataLoading]);
 
+  // Programmtically setIsOpen once only on initial page load
+  useEffect(() => {
+    if (!isDataLoading) {
+      setTimeout(() => setIsOpen(true), 500);
+    }
+  }, [isDataLoading]);
+
   // If we're awaiting Hasura data, show loading
   if (isDataLoading) {
     return <LayoutLoading crumbs={[navigationBreadcrumbs[0]]} />;
   }
-
-  // Programmtically setIsOpen once only on initial page load
-  useEffect(() => {
-    setTimeout(() => setIsOpen(true), 500);
-  }, []);
 
   return (
     <>
