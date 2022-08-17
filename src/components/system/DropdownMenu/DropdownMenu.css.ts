@@ -33,10 +33,10 @@ const styledDropdownContent = ({ variant = "full" }: DropdownContentProps) => [
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, opacity;
     &[data-state="open"] {
-      &[data-side="top"]: { animation-name: ${slideDownAndFade} };
-      &[data-side="right"]: { animation-name: ${slideLeftAndFade} };
-      &[data-side="bottom"]: { animation-name: ${slideUpAndFade} };
-      &[data-side="left"]: { animation-name: ${slideRightAndFade} };
+      &[data-side="top"] { animation-name: ${slideDownAndFade} };
+      &[data-side="right"] { animation-name: ${slideLeftAndFade} };
+      &[data-side="bottom"] { animation-name: ${slideUpAndFade} };
+      &[data-side="left"] { animation-name: ${slideRightAndFade} };
     },
   `,
   contentVariants[variant],
