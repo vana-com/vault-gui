@@ -1,10 +1,18 @@
+import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { NavAsideContent, Navbar, NavMobile, Stack } from "src/components";
+import {
+  DropdownMenuControlled,
+  NavAsideContent,
+  Navbar,
+  navButtonStyle,
+  Stack,
+  styledDialogTrigger,
+} from "src/components";
 
 interface Props {
   children?: React.ReactNode;
@@ -20,18 +28,23 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
   const router = useRouter();
   const isSendPath = router.pathname === "/send";
 
+  // Determine if viewport isMobile
   const [ref, { width }] = useMeasure();
   const [isMobile, setIsMobile] = useState(false);
-  console.log("LayoutApp isMobile", isMobile);
 
-  // setIsMobile once only on initial page load
+  // `setIsMobile` once only on initial page load in production mode
+  // …but we add width to deps for local development
   useEffect(() => {
     if (width < 640) {
       setIsMobile(true);
     } else {
       setIsMobile(false);
     }
-  }, [width]);
+  }, [process.env.NODE_ENV === "development" ? width : null]);
+
+  // Reset DropdownMenuControlled on route change
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => setIsOpen(false), [router.asPath]);
 
   return (
     <>
@@ -59,11 +72,32 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
       {renderNavMobile && !isSendPath && isMobile && (
         <div tw="fixed bottom-inset right-0">
           <div tw="px-inset h-navH">
-            <NavMobile align="end" alignOffset={0} side="top" sideOffset={9}>
+            <DropdownMenuControlled
+              onOpenChange={setIsOpen}
+              open={isOpen}
+              align="end"
+              alignOffset={0}
+              side="top"
+              sideOffset={9}
+              variant="minor"
+              buttonNode={
+                <button
+                  css={[
+                    navButtonStyle,
+                    tw`h-[40px] w-[40px] shadow-xl`,
+                    styledDialogTrigger({ isRounded2xl: true }),
+                  ]}
+                  aria-label="Main menu"
+                  type="button"
+                >
+                  <Icon icon="radix-icons:hamburger-menu" height="1.5em" />
+                </button>
+              }
+            >
               <Stack tw="gap-7">
                 <NavAsideContent />
               </Stack>
-            </NavMobile>
+            </DropdownMenuControlled>
           </div>
         </div>
       )}

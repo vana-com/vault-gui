@@ -7,5 +7,3 @@ export * from "./NavBreadcrumb";
 export * from "./NavHeader";
 export * from "./NavHeaderRule";
 export * from "./NavLink";
-export * from "./NavMobile";
-export * from "./NavUser";
