@@ -1,4 +1,3 @@
-import { useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -19,23 +18,20 @@ interface Props {
   children: React.ReactNode;
 }
 
-const DialogDrawer2 = ({ buttonNode, children }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogTrigger css={styledDialogTrigger({ isRounded2xl: true })}>
-        {buttonNode}
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay forceMount css={styledDialogOverlay} />
-        <DialogContent forceMount css={styledDrawerContent}>
-          {children}
-          <DialogCloseButton />
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
-  );
-};
+const DialogDrawer2 = ({ buttonNode, children }: Props) => (
+  <Dialog>
+    {/* do NOT pass trigger functions via asChild */}
+    <DialogTrigger css={styledDialogTrigger({ isRounded2xl: true })}>
+      {buttonNode}
+    </DialogTrigger>
+    <DialogPortal>
+      <DialogOverlay forceMount css={styledDialogOverlay} />
+      <DialogContent forceMount css={styledDrawerContent}>
+        {children}
+        <DialogCloseButton />
+      </DialogContent>
+    </DialogPortal>
+  </Dialog>
+);
 
 export { DialogDrawer2 };
