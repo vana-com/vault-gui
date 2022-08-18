@@ -16,7 +16,7 @@ interface Props {
 
 const UserAccount = ({ user, accountLoginService }: Props) => (
   <Stack tw="gap-2 md:min-w-[300px] pb-2 md:pb-0">
-    <Group tw="px-3 py-4 gap-3 items-center">
+    <Group tw="px-3 py-4 gap-3 items-center cursor-auto">
       <div css={[styledNavButton, tw`h-[55px] w-[55px]`]}>
         <Icon icon="carbon:user-avatar-filled-alt" height="3em" />
       </div>
