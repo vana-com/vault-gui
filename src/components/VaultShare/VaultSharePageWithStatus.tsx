@@ -3,18 +3,22 @@ import { ShareUiStatus } from "src/types";
 
 interface Props {
   children: React.ReactNode;
-  // TODO: add back in when we have the data
-  // accessingDomain: string;
+  accessingDomain?: string;
   appName: string;
   uiStatus: ShareUiStatus;
 }
 
-const VaultSharePageWithStatus = ({ uiStatus, appName, children }: Props) => {
+const VaultSharePageWithStatus = ({
+  uiStatus,
+  appName,
+  accessingDomain,
+  children,
+}: Props) => {
   let lede = appName
     ? `Do you want to give ${appName} access to your Vault?`
     : "";
   if (uiStatus === ShareUiStatus.USER_IS_NOT_LOGGED_IN)
-    lede = "You need to Login to give Vault access";
+    lede = "You need to log in to give Vault access";
   if (uiStatus === ShareUiStatus.HASURA_IS_LOADING)
     lede = `Do you want to give ${appName} access to your Vault?`;
   if (uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA)
@@ -24,7 +28,7 @@ const VaultSharePageWithStatus = ({ uiStatus, appName, children }: Props) => {
 
   return (
     <VaultSharePage
-      // accessDomain={accessingDomain}
+      accessDomain={accessingDomain}
       heading={
         uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA
           ? "No Vault data"

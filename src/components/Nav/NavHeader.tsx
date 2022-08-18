@@ -20,7 +20,7 @@ const NavHeader = ({
 }: Props) => (
   <header tw="pt-0 bg-background">
     <ContainerFull>
-      <Group tw="gap-3 pt-2 pb-5 items-center justify-between">
+      <Group tw="gap-3 pt-2 pb-3 lg:pb-5 items-center justify-between">
         <Group tw="gap-2 items-center">
           {/* TODO: isDataModule is currently unused */}
           {isDataModule ? (

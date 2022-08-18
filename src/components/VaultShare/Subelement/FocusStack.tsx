@@ -1,16 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { styled } from "twin.macro";
 
-// import { Stack } from "src/components";
+interface Props {
+  withMinHeight?: boolean;
+  isCentered?: boolean;
+}
 
-/* 
-  A FocusStack is a stack with styles to focus user attention.
-  
-  NB! PLEASE DO NOT DELETE THE COMMENTED COMPONENT. The initial pattern worked ysterday but not today. It shoudl work as it is a valid, recommended pattern from twin.macro 
- */
-
-// const FocusStack = tw(Stack)`rounded-lg overflow-hidden gap-0 border bg-gray-55 border-separator`;
-
-const FocusStack = tw.div`flex flex-col gap-0 overflow-hidden border rounded-lg bg-gray-55 border-separator`;
+const FocusStack = styled.div(({ withMinHeight, isCentered }: Props) => [
+  tw`flex flex-col gap-0 overflow-hidden border rounded-lg bg-fillSecondary border-separator`,
+  withMinHeight && tw`min-h-[268px]`,
+  isCentered && tw`items-center justify-center`,
+]);
 
 export { FocusStack };

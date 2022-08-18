@@ -35,7 +35,7 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
       </Button>
     }
   >
-    <Stack tw="gap-4">
+    <Stack tw="gap-w4">
       <Stack tw="gap-0.5 -mt-1">
         <Text variant="title1" tw="text-label">
           Add data
@@ -44,7 +44,7 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
           <Text variant="base" color="labelSecondary">
             To get started, choose an app
           </Text>
-          {/* LEAVE FOR NOW: Lauren wasnts to reintroduce this soon */}
+          {/* TODO: LEAVE FOR NOW, will reintroduce again next cycle */}
           {/* <Text variant="note" color="labelTertiary">
             Don&apos;t see the app you want?{" "}
             <Link href={`mailto:${config.vanaSupportEmail}`}>Get in touch</Link>

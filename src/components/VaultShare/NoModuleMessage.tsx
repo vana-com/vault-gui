@@ -1,8 +1,8 @@
+import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import { Button, Link } from "src/components";
-import { CarbonArrowRight } from "src/components/Icons";
 import { FocusStack } from "src/components/VaultShare";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
-  <FocusStack tw="rounded-lg overflow-hidden gap-0 border bg-gray-40 border-separator items-center min-h-[268px] items-center justify-center">
+  <FocusStack isCentered withMinHeight>
     <Link
       underline={false}
       href="/"
@@ -22,7 +22,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
       <Button
         variant="solid"
         size="xl"
-        suffix={<CarbonArrowRight />}
+        suffix={<Icon icon="carbon:arrow-right" />}
         tw="min-w-[220px]"
         onClick={handleClick}
       >

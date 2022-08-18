@@ -33,7 +33,7 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
               <UserProvider>
                 <AuthenticatedLayout>
                   <AppHook>
-                    <LayoutApp>
+                    <LayoutApp renderNavMobile>
                       <Component {...pageProps} />
                     </LayoutApp>
                   </AppHook>
