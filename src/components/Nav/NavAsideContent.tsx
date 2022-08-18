@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react";
-import Image from "next/image";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -7,12 +6,12 @@ import tw from "twin.macro";
 import {
   Flex,
   Link,
+  NavAsideBetaTypeform,
   PopoverHelp,
   Stack,
   styledNavLink,
   styledNavLinkActive,
   styledNavLinkBox,
-  styledNavLinkHover,
   styledNavLinkWithIcon,
   Text,
   TooltipDefault,
@@ -66,41 +65,7 @@ const NavAsideContent = () => {
       {/* BETA */}
       <div tw="mt-auto pb-inset md:pb-insetDouble">
         <hr tw="border-separatorLight" />
-        <Link
-          href={config.vanaBetaFeedback}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Flex css={styledNavLinkHover} tw="items-center justify-end relative">
-            {/* <img src="/images/vana-ring.png" alt="Vana Ring" /> */}
-            <Image
-              src="/images/vana-keys-beta.png"
-              layout="intrinsic"
-              width="100"
-              height="100"
-              alt="Vana is in Beta. We'd love your feedback."
-              priority
-            />
-            <Flex tw="absolute top-0 h-full items-center left-inset">
-              <Stack tw="gap-1">
-                <Text variant="headingMeta" weight="bold">
-                  Beta
-                </Text>
-                <Text
-                  variant="note"
-                  weight="medium"
-                  tw="flex items-center gap-1 "
-                >
-                  <WithIcon
-                    suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}
-                  >
-                    Give feedback
-                  </WithIcon>
-                </Text>
-              </Stack>
-            </Flex>
-          </Flex>
-        </Link>
+        <NavAsideBetaTypeform />
         <hr tw="border-separatorLight" />
 
         {/* SUPPORT */}
