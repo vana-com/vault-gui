@@ -12,7 +12,7 @@ const getIdTokenPayload = async (
 ): Promise<jose.JWTPayload | null> => {
   try {
     const jwks = jose.createRemoteJWKSet(
-      new URL("https://api.openlogin.com/jwks"),
+      new URL("https://auth-js-backend.tor.us/jwks"),
     );
     const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
       algorithms: ["ES256"],

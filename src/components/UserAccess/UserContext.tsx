@@ -117,18 +117,24 @@ const UserProvider = ({ children }: UserProviderProps) => {
         const walletAddress = await ethProvider.getWalletAddress();
         if (walletAddress) {
           setUserWalletAddress(walletAddress);
+          if (data.adapter === WALLET_ADAPTERS.OPENLOGIN) {
+            // Signed in with a social network
+            web3AuthInstance.getUserInfo().then(async (userInfo: any) => {
+              await loginVanaUser(userInfo.idToken, walletAddress);
+            });
+          } else {
+            // Signed in with a wallet
+            try {
+              const idTokenDetails = await web3AuthInstance.authenticateUser();
+              await loginVanaUser(idTokenDetails.idToken, walletAddress);
+            } catch (error) {
+              setLoginError(true);
+              console.error("Unable to authenticate wallet user", error);
+            }
+          }
         } else {
+          setLoginError(true);
           console.error("Unable to get user wallet address");
-        }
-
-        if (data.adapter === WALLET_ADAPTERS.OPENLOGIN) {
-          // Signed in with a social network
-          web3AuthInstance.getUserInfo().then(async (userInfo: any) => {
-            await loginVanaUser(userInfo.idToken, walletAddress);
-          });
-        } else {
-          // Signed in with a wallet
-          await loginVanaUser("", walletAddress);
         }
       },
     );
