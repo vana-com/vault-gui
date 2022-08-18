@@ -3,14 +3,13 @@
 ## Guide to Running Locally
 
 1. Install Docker Desktop
-2. Setup `development-stack`, `hasura-console`, `cloud-functions`, and
-   `strapi-cms` repos locally
+2. Setup `development-stack` and `hasura-console` repos locally
 3. Setup Doppler using the
    [doppler setup document](https://vana.slab.com/posts/doppler-setup-71xn4xeu)
-4. Install Husky with `yarn run prepare`
-4. Run the reset script to setup all local Docker infra: `./scripts/reset-vault-gui-completely-including-data`
-5. Run the container with `./scripts/dc-start-vault-gui`
-6. Visit localhost:5000
+4. Run `yarn install`
+5. Run the reset script to setup all local Docker infra: `./scripts/reset-vault-gui-completely-including-data`
+   OR run the container with `./scripts/dc-start-vault-gui`
+7. Visit localhost:5000
 
 ## Linting
 
