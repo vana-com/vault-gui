@@ -32,8 +32,8 @@ const PopoverModuleLang = () => (
     >
       <PopoverArrow tw="fill-white ml-3" />
       <Text variant="note">
-        For the time being, we only service English language accounts. We will
-        offer multiple languages in future.
+        In beta, we support data from English language accounts. We will support
+        more account languages in the future.
       </Text>
     </PopoverContent>
   </Popover>
