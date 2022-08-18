@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react";
-import Image from "next/image";
 import NextLink from "next/link";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -7,22 +6,19 @@ import tw from "twin.macro";
 import {
   Flex,
   Link,
+  NavAsideBetaTypeform,
   PopoverHelp,
   Stack,
+  styledNavLink,
+  styledNavLinkActive,
+  styledNavLinkBox,
+  styledNavLinkWithIcon,
   Text,
   TooltipDefault,
   useUserContext,
   WithIcon,
 } from "src/components";
 import config from "src/config";
-
-import {
-  styledNavLink,
-  styledNavLinkActive,
-  styledNavLinkBox,
-  styledNavLinkHover,
-  styledNavLinkWithIcon,
-} from "./Nav.css";
 
 const NavAsideContent = () => {
   const { isAuthenticated } = useUserContext();
@@ -69,49 +65,22 @@ const NavAsideContent = () => {
       {/* BETA */}
       <div tw="mt-auto pb-inset md:pb-insetDouble">
         <hr tw="border-separatorLight" />
-        <Link
-          href={config.vanaBetaFeedback}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Flex css={styledNavLinkHover} tw="items-center justify-end relative">
-            {/* <img src="/images/vana-ring.png" alt="Vana Ring" /> */}
-            <Image
-              src="/images/vana-keys-beta.png"
-              layout="intrinsic"
-              width="100"
-              height="100"
-              alt="Vana is in Beta. We'd love your feedback."
-              priority
-            />
-            <Flex tw="absolute top-0 h-full items-center left-inset">
-              <Stack tw="gap-1">
-                <Text variant="headingMeta" weight="bold">
-                  Beta
-                </Text>
-                <Text
-                  variant="note"
-                  weight="medium"
-                  tw="flex items-center gap-1 "
-                >
-                  <WithIcon
-                    suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}
-                  >
-                    Give feedback
-                  </WithIcon>
-                </Text>
-              </Stack>
-            </Flex>
-          </Flex>
-        </Link>
+        <NavAsideBetaTypeform />
         <hr tw="border-separatorLight" />
 
         {/* SUPPORT */}
         <Stack tw="pt-3 md:pt-5">
-          <div css={styledNavLink}>
+          <span tw="hidden md:inline">
             <PopoverHelp />
-          </div>
-          <Link
+          </span>
+          <Flex tw="h-navLinkH px-inset items-center md:hidden">
+            <Text variant="note" weight="medium" tw="text-labelSecondary">
+              Need help?{" "}
+              <Link href={`mailto:${config.vanaSupportEmail}`}>Email us.</Link>
+            </Text>
+          </Flex>
+          {/* TODO: add after new security website page ready */}
+          {/* <Link
             href={config.vanaPrivacyURL}
             target="_blank"
             rel="noopener noreferrer"
@@ -120,7 +89,17 @@ const NavAsideContent = () => {
             <Text variant="note" weight="medium" css={styledNavLink}>
               Security &amp; privacy
             </Text>
-          </Link>
+          </Link> */}
+          <Text
+            variant="note"
+            weight="medium"
+            tw="relative h-navLinkH px-inset pt-1 text-labelSecondary"
+          >
+            Security &amp; privacy{" "}
+            <Text as="span" variant="footnote" tw="text-labelTertiary">
+              Coming soon
+            </Text>
+          </Text>
         </Stack>
       </div>
     </>

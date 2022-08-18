@@ -2138,17 +2138,6 @@
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-primitive" "1.0.0"
 
-"@radix-ui/react-avatar@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@radix-ui/react-avatar/-/react-avatar-1.0.0.tgz#74ff3c0b39a74e07a5b2f1a1718ee480f6ed4e2b"
-  integrity sha512-pCN+bXAjhuGt7xkDh8MgdB2wN09XhLKpzPMJR9aVVS0tz0oTCy8wkbFOAmLotjBwZBHMJ9acpsVh7/JIuDSCtw==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@radix-ui/react-context" "1.0.0"
-    "@radix-ui/react-primitive" "1.0.0"
-    "@radix-ui/react-use-callback-ref" "1.0.0"
-    "@radix-ui/react-use-layout-effect" "1.0.0"
-
 "@radix-ui/react-checkbox@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@radix-ui/react-checkbox/-/react-checkbox-1.0.0.tgz#8985facb0cfeb740c4751091b8ee42d5c3f7e5e1"
@@ -2998,6 +2987,19 @@
   version "1.0.3"
   resolved "https://registry.npmjs.org/@toruslabs/tweetnacl-js/-/tweetnacl-js-1.0.3.tgz#52abbcd2a6b77959ef6a98afedce77764d87226d"
   integrity sha512-WQJYMTR/bkqvpk3DWOqRt5e24RhwJp9PXUoSj4zSthd3+fDhKYCI56YVMPNDKah1fCffOe9F3m8iZ5SgDZ+Csw==
+
+"@typeform/embed-react@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.npmjs.org/@typeform/embed-react/-/embed-react-1.19.0.tgz#e67eefd10681d8a04672cacbf3395e862f93c470"
+  integrity sha512-mzcJrHOIgNh3Kr8HuOlG6IptoaDcFZ7QYy3ZI8KRMKEf8VlZyiMn6v0sRbgjpJV+V0v3gzKfhxBBu5KBZP1OMw==
+  dependencies:
+    "@typeform/embed" "1.37.0"
+    fast-deep-equal "^3.1.3"
+
+"@typeform/embed@1.37.0":
+  version "1.37.0"
+  resolved "https://registry.npmjs.org/@typeform/embed/-/embed-1.37.0.tgz#33ea95e30456568269735062c704597a9b443b03"
+  integrity sha512-8GcABMWz/hrMLojoumjnvZxPcANwvZqvXPKAinH6KGEKZw3RFni9zHdPNxl1cJoexuq09rBDIfRgNmvSU8EsUQ==
 
 "@types/aria-query@^4.2.0":
   version "4.2.2"

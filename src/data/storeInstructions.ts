@@ -15,7 +15,7 @@ export const googleStoreInstructions = `
 
 5. Submit your request
 
-6. Wait for an email from Google with a download link. Says 48 hours but usually arrives in a few minutes.
+6. Wait for an email from Google with a download link. It usually arrives in a few minutes.
 `;
 
 export const facebookStoreInstructions = `
@@ -31,7 +31,7 @@ export const facebookStoreInstructions = `
 
 4. Submit your request
 
-5. Wait for an email from Facebook with a download link. Says 48 hours but usually arrives in a few minutes.
+5. Wait for an email from Facebook with a download link. It usually arrives in a few minutes.
 `;
 
 export const instagramStoreInstructions = `
@@ -43,5 +43,5 @@ export const instagramStoreInstructions = `
 
 3. Submit your request
 
-4. Wait for an email from Instagram with a download link. Says 48 hours but usually arrives in a few minutes.
+4. Wait for an email from Instagram with a download link. It usually arrives in a few minutes.
 `;

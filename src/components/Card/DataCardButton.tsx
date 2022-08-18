@@ -6,7 +6,6 @@ import tw from "twin.macro";
 
 import {
   CardHeader,
-  DataCardDetails,
   Flex,
   Spinner,
   Stack,
@@ -20,17 +19,14 @@ import { Module } from "src/types";
 
 interface Props {
   module: Module;
-  isStored?: boolean;
   showActionHover?: boolean;
 }
 
 /* DataCardButton is very similar to DataCard with same card styles */
 
-const DataCardButton = ({ module, isStored, showActionHover }: Props) => {
+const DataCardButton = ({ module, showActionHover }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const link = isStored
-    ? `/${module.name.toLowerCase()}`
-    : `/store/${module.name.toLowerCase()}`;
+  const link = `/store/${module.name.toLowerCase()}`;
 
   return (
     <NextLink passHref href={link}>
@@ -57,32 +53,25 @@ const DataCardButton = ({ module, isStored, showActionHover }: Props) => {
               <Spinner />
             </Flex>
           ) : (
-            <>
-              {isStored ? (
-                /* TODO: pass module details when available */
-                <DataCardDetails />
-              ) : (
-                <Stack tw="gap-0.5">
-                  <Text
-                    variant="base"
-                    weight="semibold"
-                    tw="text-labelSecondary flex justify-end items-center gap-1"
-                  >
-                    <WithIcon
-                      // icon="carbon:arrow-up-right"
-                      suffix={
-                        <Icon
-                          icon="heroicons-solid:chevron-right"
-                          height="1.125em"
-                        />
-                      }
-                    >
-                      Add
-                    </WithIcon>
-                  </Text>
-                </Stack>
-              )}
-            </>
+            <Stack tw="gap-0.5">
+              <Text
+                variant="base"
+                weight="semibold"
+                tw="text-labelSecondary flex justify-end items-center gap-1"
+              >
+                <WithIcon
+                  // icon="carbon:arrow-up-right"
+                  suffix={
+                    <Icon
+                      icon="heroicons-solid:chevron-right"
+                      height="1.125em"
+                    />
+                  }
+                >
+                  Add
+                </WithIcon>
+              </Text>
+            </Stack>
           )}
         </Stack>
       </button>
