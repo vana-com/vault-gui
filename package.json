@@ -30,7 +30,6 @@
     "@emotion/styled": "^11.9.3",
     "@google-cloud/storage": "^6.2.3",
     "@iconify/react": "^3.2.2",
-    "@radix-ui/react-avatar": "^1.0.0",
     "@metamask/eth-sig-util": "^4.0.1",
     "@radix-ui/react-checkbox": "^1.0.0",
     "@radix-ui/react-collapsible": "^0.1.6",
