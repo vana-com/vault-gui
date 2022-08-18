@@ -9,20 +9,17 @@ import {
   Link,
   PopoverHelp,
   Stack,
+  styledNavLink,
+  styledNavLinkActive,
+  styledNavLinkBox,
+  styledNavLinkHover,
+  styledNavLinkWithIcon,
   Text,
   TooltipDefault,
   useUserContext,
   WithIcon,
 } from "src/components";
 import config from "src/config";
-
-import {
-  styledNavLink,
-  styledNavLinkActive,
-  styledNavLinkBox,
-  styledNavLinkHover,
-  styledNavLinkWithIcon,
-} from "./Nav.css";
 
 const NavAsideContent = () => {
   const { isAuthenticated } = useUserContext();
@@ -108,10 +105,17 @@ const NavAsideContent = () => {
 
         {/* SUPPORT */}
         <Stack tw="pt-3 md:pt-5">
-          <div css={styledNavLink}>
+          <span tw="hidden md:inline">
             <PopoverHelp />
-          </div>
-          <Link
+          </span>
+          <Flex tw="h-navLinkH px-inset items-center md:hidden">
+            <Text variant="note" weight="medium" tw="text-labelSecondary">
+              Need help?{" "}
+              <Link href={`mailto:${config.vanaSupportEmail}`}>Email us.</Link>
+            </Text>
+          </Flex>
+          {/* TODO: add after new security website page ready */}
+          {/* <Link
             href={config.vanaPrivacyURL}
             target="_blank"
             rel="noopener noreferrer"
@@ -120,7 +124,17 @@ const NavAsideContent = () => {
             <Text variant="note" weight="medium" css={styledNavLink}>
               Security &amp; privacy
             </Text>
-          </Link>
+          </Link> */}
+          <Text
+            variant="note"
+            weight="medium"
+            tw="relative h-navLinkH px-inset pt-1 text-labelSecondary"
+          >
+            Security &amp; privacy{" "}
+            <Text as="span" variant="footnote" tw="text-labelTertiary">
+              Coming soon
+            </Text>
+          </Text>
         </Stack>
       </div>
     </>

@@ -8,6 +8,7 @@ import {
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
+  styledNavLink,
   Text,
 } from "src/components";
 import { HELP_INFORMATION } from "src/data";
@@ -18,7 +19,7 @@ interface Props {
 
 const PopoverHelp = ({ css }: Props) => (
   <Popover>
-    <PopoverTrigger asChild>
+    <PopoverTrigger css={[styledNavLink, tw`w-full`]}>
       {/* <Button size="sm" variant="ghostSecondary" tw="text-labelTertiary">
         Need help?
       </Button> */}
@@ -31,7 +32,7 @@ const PopoverHelp = ({ css }: Props) => (
         Need help?
       </Text>
     </PopoverTrigger>
-    <PopoverContent tw="text-background bg-label">
+    <PopoverContent tw="text-background bg-label" side="top" alignOffset={12}>
       <PopoverArrow tw="fill-label ml-3" />
       <MarkdownWrapper isNote tw="text-background">
         <Markdown>{HELP_INFORMATION}</Markdown>
