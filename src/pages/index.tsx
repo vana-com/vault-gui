@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -18,10 +17,8 @@ import {
   NavHeader,
   NavHeaderRule,
   Stack,
-  Text,
   TitleAndMetaTags,
   ToastDefault,
-  WithIcon,
 } from "src/components";
 import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
@@ -134,14 +131,14 @@ const HomePage: NextPage = () => {
                   Start adding data
                 </AddData>
                 {/* TODO: add incentive copy as part of onboarding */}
-                <Text
+                {/* <Text
                   variant="note"
                   tw="text-labelSecondary flex items-center gap-1"
                 >
                   <WithIcon prefix={<Icon icon="carbon:idea" />}>
                     Add a tip here to incentivize users to add data
                   </WithIcon>
-                </Text>
+                </Text> */}
               </Stack>
             </Center>
           )}
