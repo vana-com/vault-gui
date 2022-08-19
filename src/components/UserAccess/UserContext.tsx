@@ -72,9 +72,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
   /**
    * Web3Auth connected, get the User from Hasura
    * @param idToken
-   * @param walletAddress
    */
-  const loginVanaUser = async (idToken: string, walletAddress: string) => {
+  const loginVanaUser = async (idToken: string) => {
     try {
       setIsUserLoading(true);
       const loginResponse = await fetch(`/api/auth/login`, {
@@ -82,7 +81,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToken, walletAddress }),
+        body: JSON.stringify({ idToken }),
       });
       const { user: userFromResponse, hasuraToken: hasuraTokenFromResponse } =
         await loginResponse.json();
@@ -110,7 +109,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     web3AuthInstance.on(
       ADAPTER_EVENTS.CONNECTED,
       async (data: CONNECTED_EVENT_DATA) => {
-        console.log("Web3Auth adapter connected");
+        console.log("Web3Auth adapter connected", data);
         const ethProvider = getWalletProvider(web3AuthInstance.provider!);
         setWalletProvider(ethProvider);
 
@@ -120,16 +119,19 @@ const UserProvider = ({ children }: UserProviderProps) => {
           if (data.adapter === WALLET_ADAPTERS.OPENLOGIN) {
             // Signed in with a social network
             web3AuthInstance.getUserInfo().then(async (userInfo: any) => {
-              await loginVanaUser(userInfo.idToken, walletAddress);
+              await loginVanaUser(userInfo.idToken);
             });
           } else {
             // Signed in with a wallet
             try {
+              setIsUserLoading(true);
               const idTokenDetails = await web3AuthInstance.authenticateUser();
-              await loginVanaUser(idTokenDetails.idToken, walletAddress);
+              await loginVanaUser(idTokenDetails.idToken);
             } catch (error) {
               setLoginError(true);
               console.error("Unable to authenticate wallet user", error);
+            } finally {
+              setIsUserLoading(false);
             }
           }
         } else {
