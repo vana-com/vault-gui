@@ -171,7 +171,7 @@ const HomePage: NextPage = () => {
           onOpenChange={setShowDeleteFailureToast}
           duration={12000}
           variant="error"
-          title="Error!"
+          title="Error"
           content="Please reload the page and try again"
         />
       </LayoutPage>

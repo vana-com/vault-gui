@@ -198,7 +198,7 @@ const StorageUpload = ({
         onOpenChange={setShowStoreErrorToast}
         duration={12000}
         variant="error"
-        title="Error!"
+        title="Error"
         content="Please reload the page and try again"
       />
       <ToastDefault
@@ -206,7 +206,7 @@ const StorageUpload = ({
         onOpenChange={setShowInvalidFileToast}
         duration={12000}
         variant="error"
-        title="Invalid file!"
+        title="Invalid file"
         content="Please select a zip file"
       />
     </>

@@ -1,27 +1,26 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Group, Stack, Text } from "src/components";
-import { testModules } from "src/data";
-// import { Module } from "src/types";
+import { Stack, Text } from "src/components";
+import { ModuleObj } from "src/types";
 
-// interface Props {
-//   module?: Module;
-//   id: string;
-//   isStored?: boolean;
-// }
+interface Props {
+  module: ModuleObj;
+}
 
-// TODO: supply further module details…
+/* TODO: https://app.clickup.com/t/2tkbzz1 */
+
 // const { fileName, fileSize, lastUpdated } = module;
-const DataCardDetails = () => (
+const DataCardDetails = ({ module }: Props) => (
   <Stack tw="gap-0.5">
     <Text variant="note" weight="semibold" tw="text-label text-left">
-      {testModules[0].fileName}
+      {/* TODO: use module.module.fileName when available, create the filename manually for now */}
+      {module.urlToData.split("/").pop()}
     </Text>
     {/* <Text variant="note" weight="semibold" tw="text-label text-left">
       {id.slice(-8)}
     </Text> */}
-    <Group tw="gap-1.5">
+    {/* <Group tw="gap-1.5">
       <Text
         variant="footnote"
         weight="normal"
@@ -44,7 +43,7 @@ const DataCardDetails = () => (
       >
         {testModules[0].lastUpdated}
       </Text>
-    </Group>
+    </Group> */}
   </Stack>
 );
 
