@@ -1,13 +1,16 @@
+import { Icon } from "@iconify/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
   AddData,
+  Button,
   Center,
   DataModule,
+  DialogModalControlled,
   LayoutCanvas,
   LayoutCanvasGrid,
   LayoutCanvasPattern,
@@ -30,10 +33,16 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
+
   const { user, hasuraToken } = useUserContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
+
+  // show onboarding modal if this is the first login
+  console.log("router query", router.query?.origin);
+  const isFirstLogin = router.query?.firstLogin;
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -85,6 +94,14 @@ const HomePage: NextPage = () => {
     }
   };
 
+  // if isFirstLogin, setShowOnboarding on initial page load
+  //
+  useEffect(() => {
+    if (isFirstLogin) {
+      setTimeout(() => setShowOnboarding(true), 500);
+    }
+  }, [isFirstLogin]);
+
   // Data state: hasura data is loading
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
 
@@ -114,7 +131,27 @@ const HomePage: NextPage = () => {
 
         {/* HEADER */}
         {hasNoModules ? (
-          <NavHeader heading="What data do you want to add?" />
+          <NavHeader heading="What data do you want to add?">
+            <DialogModalControlled
+              onOpenChange={setShowOnboarding}
+              open={showOnboarding}
+              variant="confirm"
+              buttonNode={
+                <Button
+                  size="md"
+                  variant="ghost"
+                  tw="gap-2 font-normal text-labelSecondary focus:text-label"
+                  prefix={<Icon icon="carbon:information" height="1em" />}
+                  onClick={() => setShowOnboarding(true)}
+                >
+                  How does this work?
+                </Button>
+              }
+            >
+              {/* <StorageInstructions moduleName={moduleName as any} /> */}
+              HEY HEY HEY!
+            </DialogModalControlled>
+          </NavHeader>
         ) : (
           <NavHeaderRule />
         )}
