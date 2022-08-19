@@ -295,7 +295,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
           <>
             Please{" "}
             <Link href={`mailto:${config.vanaSupportEmail}`}>email us</Link>{" "}
-            with details of your login attempt.
+            with details of your log in attempt.
           </>
         }
       />
