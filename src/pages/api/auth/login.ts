@@ -1,4 +1,3 @@
-import publicKeyToAddress from "ethereum-public-key-to-address";
 import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -6,6 +5,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getSdk } from "src/graphql/generated";
 import { Sdk } from "src/graphql/generated/sdk";
 import { createHasuraJWT, getIdTokenPayload } from "src/utils";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const publicKeyToAddress = require("ethereum-public-key-to-address");
 
 /**
  * Gets the user associated with externalId in Hasura after authenticating the user.
