@@ -32,9 +32,9 @@ const SendUpdateStatus = ({ stage, status }: Props) => {
     lede = "Structuring your data…";
   }
 
-  // Ready
+  // Completed
   if (stage === DataPipeline.Stage.QUERY_DATA) {
-    heading = "Ready";
+    heading = "Shared";
     lede = "Your data has been securely shared.";
   }
 
