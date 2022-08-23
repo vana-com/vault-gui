@@ -16,7 +16,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
-import { setLoginPath } from "src/utils";
+import { getJwtPayload, setLoginPath } from "src/utils";
 import {
   getWalletProvider,
   IWalletProvider,
@@ -24,6 +24,7 @@ import {
 
 interface UserContextProps {
   user: Users | null;
+  loginType: string | null;
   walletProvider: IWalletProvider | null;
   loginUser: () => Promise<void>;
   logoutUser: () => Promise<void>;
@@ -35,6 +36,7 @@ interface UserContextProps {
 
 const UserContext = createContext<UserContextProps>({
   user: null,
+  loginType: null,
   walletProvider: null,
   loginUser: async () => {},
   logoutUser: async () => {},
@@ -59,6 +61,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [userWalletAddress, setUserWalletAddress] = useState<string | null>(
     null,
   );
+  const [loginType, setLoginType] = useState<string | null>(null);
   const [hasuraToken, setHasuraToken] = useState<string | null>(null);
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
@@ -119,6 +122,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
           if (data.adapter === WALLET_ADAPTERS.OPENLOGIN) {
             // Signed in with a social network
             web3AuthInstance.getUserInfo().then(async (userInfo: any) => {
+              setLoginType(userInfo.typeOfLogin);
               await loginVanaUser(userInfo.idToken);
             });
           } else {
@@ -126,6 +130,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
             try {
               setIsUserLoading(true);
               const idTokenDetails = await web3AuthInstance.authenticateUser();
+              const idTokenPayload = getJwtPayload(idTokenDetails.idToken);
+              setLoginType(idTokenPayload.issuer);
               await loginVanaUser(idTokenDetails.idToken);
             } catch (error) {
               setLoginError(true);
@@ -281,6 +287,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     <UserContext.Provider
       value={{
         walletProvider,
+        loginType,
         loginUser,
         logoutUser,
         user,
