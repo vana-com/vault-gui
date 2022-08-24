@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -64,7 +65,7 @@ const HomePage: NextPage = () => {
     setIsDeleting(true);
 
     const { deleteSuccessful } = await (
-      await fetch(`/api/user-data/delete`, {
+      await fetch(`/api/user-data/delete-module`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,12 +99,28 @@ const HomePage: NextPage = () => {
   // console.log("hasNoModules", hasNoModules);
   // console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
 
+  const deleteMe = async () => {
+    const res = await fetch(`/api/user-data/delete-me`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hasuraToken,
+      }),
+    });
+    const json = await res.json();
+    console.log(json);
+  }
+
+
   return (
     <>
       <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <LayoutPage>
         {/* BREADCRUMB */}
+        <button onClick={(_event) => deleteMe()}>DELTE ME</button>
         <NavBreadcrumb
           crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
         >
