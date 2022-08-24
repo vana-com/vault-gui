@@ -1,5 +1,7 @@
 import * as jose from "jose";
 
+import config from "src/config";
+
 import { getJwtPayload } from "./getJwtPayload";
 
 /**
@@ -16,9 +18,9 @@ const getIdTokenPayload = async (
     const idTokenPayload = getJwtPayload(idToken);
     const issuer = idTokenPayload.iss || idTokenPayload.issuer;
     const jwksUrl =
-      issuer === "https://api.openlogin.com"
-        ? "https://api.openlogin.com/jwks"
-        : "https://auth-js-backend.tor.us/jwks";
+      issuer === config.ISSUER_OPENLOGIN
+        ? config.JWKS_OPENLOGIN
+        : config.JWKS_WALLET;
     const jwks = jose.createRemoteJWKSet(new URL(jwksUrl));
     const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
       algorithms: ["ES256"],

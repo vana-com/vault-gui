@@ -2,6 +2,7 @@ import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import config from "src/config";
 import { getSdk } from "src/graphql/generated";
 import { Sdk } from "src/graphql/generated/sdk";
 import { createHasuraJWT, getIdTokenPayload } from "src/utils";
@@ -38,7 +39,7 @@ export default async (
       let name;
       let walletAddress;
 
-      if (issuer === "https://api.openlogin.com") {
+      if (issuer === config.ISSUER_OPENLOGIN) {
         // Social Login
         walletAddress = publicKeyToAddress(
           idTokenPayload.wallets[0].public_key,
