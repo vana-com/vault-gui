@@ -19,11 +19,12 @@ import {
   NavBreadcrumb,
   NavHeader,
   NavHeaderRule,
+  Onboard,
   Stack,
   TitleAndMetaTags,
   ToastDefault,
+  useUserContext,
 } from "src/components";
-import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
 import {
   useGetModulesQuery,
@@ -135,7 +136,9 @@ const HomePage: NextPage = () => {
             <DialogModalControlled
               onOpenChange={setShowOnboarding}
               open={showOnboarding}
-              variant="confirm"
+              isOnboardStyle
+              variant="onboard"
+              animationVariant="center"
               buttonNode={
                 <Button
                   size="md"
@@ -148,8 +151,16 @@ const HomePage: NextPage = () => {
                 </Button>
               }
             >
-              {/* <StorageInstructions moduleName={moduleName as any} /> */}
-              HEY HEY HEY!
+              <Onboard>
+                <Button
+                  variant="solid"
+                  size="lg"
+                  onClick={() => setShowOnboarding(false)}
+                  suffix={<Icon icon="carbon:arrow-right" height="1em" />}
+                >
+                  Add data
+                </Button>
+              </Onboard>
             </DialogModalControlled>
           </NavHeader>
         ) : (

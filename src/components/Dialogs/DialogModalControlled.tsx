@@ -3,6 +3,7 @@ import tw from "twin.macro";
 
 import {
   Dialog,
+  DialogAnimationVariant,
   DialogCloseButton,
   DialogContent,
   DialogOverlay,
@@ -10,14 +11,17 @@ import {
   DialogTrigger,
   DialogVariant,
   styledDialogContent,
+  styledDialogContentOnboard,
   styledDialogOverlay,
   styledTrigger,
 } from "src/components";
 import { TwCss } from "src/types";
 
 interface Props {
+  animationVariant?: DialogAnimationVariant;
   buttonNode: React.ReactNode;
   children: React.ReactNode;
+  isOnboardStyle?: boolean;
   open: boolean;
   onOpenChange: (isOpen: boolean) => void;
   variant?: DialogVariant;
@@ -28,8 +32,10 @@ interface Props {
  */
 
 const DialogModalControlled = ({
+  animationVariant,
   buttonNode,
   children,
+  isOnboardStyle,
   open,
   onOpenChange,
   variant,
@@ -40,7 +46,20 @@ const DialogModalControlled = ({
     </DialogTrigger>
     <DialogPortal>
       <DialogOverlay forceMount css={styledDialogOverlay} />
-      <DialogContent forceMount css={styledDialogContent({ variant }) as TwCss}>
+      <DialogContent
+        forceMount
+        css={
+          isOnboardStyle
+            ? styledDialogContentOnboard({
+                variant,
+                animationVariant,
+              })
+            : (styledDialogContent({
+                variant,
+                animationVariant,
+              }) as TwCss)
+        }
+      >
         {children}
         <DialogCloseButton />
       </DialogContent>
