@@ -2,7 +2,15 @@ import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw, { css } from "twin.macro";
 
-import { Button, Center, Flex, Stack, Text } from "src/components";
+import {
+  Button,
+  Center,
+  Flex,
+  Markdown,
+  MarkdownWrapper,
+  Stack,
+  Text,
+} from "src/components";
 
 /* Describe this component */
 
@@ -30,13 +38,18 @@ const OnboardCard = ({ card, onClick, isLastCard, children }: Props) => (
       </Center>
     </Flex>
 
-    <Stack tw="gap-1 px-inset">
+    <Stack tw="gap-1.5 px-inset">
       <Text variant="title3" tw="text-label">
         {card.heading}
       </Text>
-      <Text variant="base" tw="text-labelSecondary">
+      {/* <Text variant="base" tw="text-labelSecondary">
         {card.description}
-      </Text>
+      </Text> */}
+      {card.description && (
+        <MarkdownWrapper tw="text-labelSecondary">
+          <Markdown>{card.description}</Markdown>
+        </MarkdownWrapper>
+      )}
       <div tw="pt-3">
         {isLastCard ? (
           children

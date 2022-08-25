@@ -1,28 +1,32 @@
-// import
+const DESCRIPTION_OWNERSHIP = `Reclaim your data from applications you’ve been using for years, and bring it home. You own it.
+
+Now you can use your data in ways you didn’t think you could.`;
+
+const DESCRIPTION_SECURITY = `We lock it. Properly. Your Vault is cryptographically secured.
+
+Only you can unlock it. We don’t have access to read your data.`;
+
+const DESCRIPTION_AGENCY = `Share your data where and when you want to, with confidence.
+
+When you do, apps are given only the data you’ve selected. The sharing connection is generated then destroyed on-the-fly.`;
 
 export const onboardingCards = [
   {
     icon: "carbon:cloud-upload",
-    heading: "Upload data to a secured Vault",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus quis enim maecenas a in sit nascetur.",
+    kind: "ownership",
+    heading: "Add data",
+    description: DESCRIPTION_OWNERSHIP,
   },
   {
     icon: "carbon:security",
-    heading: "It's stored encrypted",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus quis enim maecenas a in sit nascetur.",
+    kind: "security",
+    heading: "It's encrypted and stored securely",
+    description: DESCRIPTION_SECURITY,
   },
   {
     icon: "carbon:data-share",
-    heading: "Share your data where needed",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus quis enim maecenas a in sit nascetur.",
-  },
-  {
-    icon: "carbon:checkmark-outline",
-    heading: "Ready to begin?",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus quis enim maecenas a in sit nascetur.",
+    kind: "agency",
+    heading: "Share data",
+    description: DESCRIPTION_AGENCY,
   },
 ];
