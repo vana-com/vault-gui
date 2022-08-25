@@ -64,7 +64,7 @@ const Onboard = ({ children }: Children) => {
       <div
         ref={ref}
         css={[
-          tw`h-[400px] w-[90vw] max-w-lg overflow-hidden relative`,
+          tw`h-[380px] w-[90vw] max-w-lg overflow-hidden relative`,
           tw`bg-gradient-to-b from-neutralDark`,
           // add a blue blur over the top of the background gradient
           tw`before:(content-[""] absolute z-[1] inset-0 w-full h-1/4 rounded-[75%] blur-3xl opacity-[0.24] bg-[rgb(0, 143, 253)])`,

@@ -23,21 +23,21 @@ const OnboardCard = ({ card, onClick, isLastCard, children }: Props) => (
   <Flex tw="flex-col h-full">
     <Flex tw="items-center flex-1 w-full px-inset">
       <Center
-        tw="rounded-full w-[80px] h-[80px] ml-2"
-        css={[isLastCard ? tw`bg-primary` : tw`bg-label`]}
+        tw="rounded-full w-[80px] h-[80px] ml-2 bg-label"
+        // css={[isLastCard ? tw`bg-primary` : tw`bg-label`]}
       >
         <Icon icon={card.icon} tw="text-background" height="1.75em" />
       </Center>
     </Flex>
 
     <Stack tw="gap-1 px-inset">
-      <Text variant="title2" tw="text-label">
+      <Text variant="title3" tw="text-label">
         {card.heading}
       </Text>
       <Text variant="base" tw="text-labelSecondary">
         {card.description}
       </Text>
-      <div tw="pt-2">
+      <div tw="pt-3">
         {isLastCard ? (
           children
         ) : (
