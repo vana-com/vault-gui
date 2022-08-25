@@ -28,12 +28,12 @@ const variants = {
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.5 },
+    transition: { duration: 0.4 },
   },
   exit: ({ direction, width }: Props) => ({
     x: direction * -width,
     opacity: 0,
-    transition: { duration: 0.2 },
+    transition: { duration: 0.15 },
   }),
 };
 
