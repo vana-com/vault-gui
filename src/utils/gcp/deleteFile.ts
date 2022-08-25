@@ -22,12 +22,11 @@ const deleteFile = async (fileName: string, bucketName?: string, options?: Delet
 
     const withOptions = options ?? {}
 
-    const result = await serverConfig.googleStorage
+    const [result] = await serverConfig.googleStorage
       .bucket(bucketToDeleteFrom)
       .file(fileToDelete)
       .delete(withOptions)
 
-    console.log(result)
     return result
   } catch (err: any) {
     console.log('deleteFile(): Error --', err)

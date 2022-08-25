@@ -78,7 +78,7 @@ export default async (
      * (1) Delete file blobs from GCS (or other places in the future)
      */
 
-    const {usersModules: modules} = await sdk.getUserModulesAll({ userId })
+    const { usersModules: modules } = await sdk.getUserModulesAll({ userId })
     const moduleLocations = modules.map((mod) => mod.urlToData);
 
     const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`
@@ -91,14 +91,10 @@ export default async (
     const passedFiles = results.filter((p) => p.status === 'fulfilled');
     const failedFiles = results.filter((p) => p.status === 'rejected');
 
-    // TODO: What to do when file deletion failed on the first run???
+    // TODO: What to do when file deletion (partially) failed on the first run???
     if (failedFiles.length) {
-      console.log('some files failed')
+      console.log(`${failedFiles.length}/${results} deletions from gcp failed :(`)
     }
-
-    passedFiles.forEach((f) => {
-      console.log('passed:', f)
-    })
 
     /**
      * (2) Delete SQL data from hasura
@@ -106,22 +102,22 @@ export default async (
 
     // (a) Delete records from user_modules
     const { deleteManyUsersModules: deleteUserModulesRows } = await sdk.deleteUserModules({ userId })
-    console.log('user_modules', deleteUserModulesRows?.affected_rows)
 
     // (b) Delete records from users
     const { deleteOneUser: deleteUserRow } = await sdk.deleteVaultUser({ userId })
-    console.log('delete user', deleteUserRow)
 
     // 🎉 All done 🎉
-
     return res.status(200).json({
       success: true,
+      deletedUploadFiles: passedFiles?.length,
+      deletedUserModulesVana: deleteUserModulesRows?.affected_rows,
+      deleteUserIdVana: deleteUserRow?.id
     });
   } catch (error: any) {
     log.error(error);
     return res.status(500).json({
-      deleteSuccessful: false,
-      message: "Error while deleting user data",
+      success: false,
+      error,
     });
   }
 };
