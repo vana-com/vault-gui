@@ -34,15 +34,10 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
-
-  const { user, hasuraToken } = useUserContext();
+  const { user, hasuraToken, initialAccountLogin } = useUserContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
-
-  // show onboarding modal if this is the first login
-  console.log("router query", router.query?.origin);
-  const isFirstLogin = router.query?.firstLogin;
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
@@ -95,13 +90,12 @@ const HomePage: NextPage = () => {
     }
   };
 
-  // if isFirstLogin, setShowOnboarding on initial page load
-  //
+  // Programmtically setShowOnboarding based on initialAccountLogin
   useEffect(() => {
-    if (isFirstLogin) {
+    if (initialAccountLogin) {
       setTimeout(() => setShowOnboarding(true), 500);
     }
-  }, [isFirstLogin]);
+  }, [initialAccountLogin]);
 
   // Data state: hasura data is loading
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
@@ -136,15 +130,14 @@ const HomePage: NextPage = () => {
             <DialogModalControlled
               onOpenChange={setShowOnboarding}
               open={showOnboarding}
-              isOnboardStyle
               variant="onboard"
-              animationVariant="center"
+              placement="center"
               buttonNode={
                 <Button
                   size="md"
                   variant="ghost"
                   tw="gap-2 font-normal text-labelSecondary focus:text-label"
-                  prefix={<Icon icon="carbon:information" height="1em" />}
+                  prefix={<Icon icon="carbon:information" />}
                   onClick={() => setShowOnboarding(true)}
                 >
                   How does this work?
@@ -152,13 +145,14 @@ const HomePage: NextPage = () => {
               }
             >
               <Onboard>
+                {/* When the Onboard carousel is at the last card, Onboard children shows (ie. this button). We use children to change the button function at this point, so it closes the Onboard Dialog and leads the user to add data. */}
                 <Button
                   variant="solid"
                   size="lg"
                   onClick={() => setShowOnboarding(false)}
-                  suffix={<Icon icon="carbon:arrow-right" height="1em" />}
+                  suffix={<Icon icon="carbon:arrow-right" />}
                 >
-                  Add data
+                  Let&apos;s get started
                 </Button>
               </Onboard>
             </DialogModalControlled>
