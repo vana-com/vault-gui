@@ -3,41 +3,35 @@ import tw from "twin.macro";
 
 import {
   Dialog,
-  DialogAnimationVariant,
   DialogCloseButton,
   DialogContent,
+  DialogContentProps,
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
-  DialogVariant,
   styledDialogContent,
-  styledDialogContentOnboard,
   styledDialogOverlay,
   styledTrigger,
 } from "src/components";
 import { TwCss } from "src/types";
 
-interface Props {
-  animationVariant?: DialogAnimationVariant;
+interface Props extends DialogContentProps {
   buttonNode: React.ReactNode;
   children: React.ReactNode;
-  isOnboardStyle?: boolean;
   open: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  variant?: DialogVariant;
 }
 
 /* 
-  Exactly the same as DialogDrawer but passing open and onOpenChnage for manipulation on the parent 
+  Exactly the same as DialogDrawer but passing open and onOpenChange for manipulation on the parent 
  */
 
 const DialogModalControlled = ({
-  animationVariant,
   buttonNode,
   children,
-  isOnboardStyle,
   open,
   onOpenChange,
+  placement,
   variant,
 }: Props) => (
   <Dialog onOpenChange={onOpenChange} open={open}>
@@ -45,19 +39,14 @@ const DialogModalControlled = ({
       {buttonNode}
     </DialogTrigger>
     <DialogPortal>
-      <DialogOverlay forceMount css={styledDialogOverlay} />
+      <DialogOverlay forceMount css={styledDialogOverlay({ variant })} />
       <DialogContent
         forceMount
         css={
-          isOnboardStyle
-            ? styledDialogContentOnboard({
-                variant,
-                animationVariant,
-              })
-            : (styledDialogContent({
-                variant,
-                animationVariant,
-              }) as TwCss)
+          styledDialogContent({
+            variant,
+            placement,
+          }) as TwCss
         }
       >
         {children}
