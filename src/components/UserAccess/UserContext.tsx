@@ -31,6 +31,7 @@ interface UserContextProps {
   isAuthenticated: boolean;
   userWalletAddress: string | null;
   hasuraToken: string | null;
+  showOnboarding: boolean;
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -42,6 +43,7 @@ const UserContext = createContext<UserContextProps>({
   isAuthenticated: false,
   userWalletAddress: null,
   hasuraToken: null,
+  showOnboarding: false,
 });
 const useUserContext = () => useContext(UserContext);
 
@@ -63,6 +65,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const { resolvedTheme } = useTheme();
 
   // Due to clashes between useTheme and web3Auth.uiConfig types,
@@ -92,6 +95,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
       }
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
+
+      // setShowOnboarding
+      const hasSeenOnboarding = saveOnboardingStatus();
+      setShowOnboarding(!hasSeenOnboarding);
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
@@ -99,6 +106,18 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setIsUserLoading(false);
       setIsWeb3AuthLoading(false);
     }
+  };
+
+  /* save isInitialLogin for use with onboarding status for a new user */
+  const saveOnboardingStatus = () => {
+    const hasSeenOnboarding =
+      localStorage.getItem("has-seen-onboarding") !== null;
+
+    if (!hasSeenOnboarding) {
+      localStorage.setItem("has-seen-onboarding", "true");
+    }
+
+    return hasSeenOnboarding;
   };
 
   /**
@@ -280,6 +299,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         hasuraToken,
         isLoading: isWeb3AuthLoading || isUserLoading,
         isAuthenticated: !!user,
+        showOnboarding,
       }}
     >
       {children}
