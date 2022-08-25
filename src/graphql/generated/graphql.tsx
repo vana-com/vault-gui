@@ -391,6 +391,14 @@ export enum CashOutRequests_Update_Column {
   WorkerId = 'workerId'
 }
 
+export type CashOutRequests_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<CashOutRequests_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CashOutRequests_Set_Input>;
+  where: CashOutRequests_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type CashOutRequests_Var_Pop_Fields = {
   __typename?: 'CashOutRequests_var_pop_fields';
@@ -536,6 +544,12 @@ export enum CollectionTypes_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type CollectionTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CollectionTypes_Set_Input>;
+  where: CollectionTypes_Bool_Exp;
+};
 
 /** columns and relationships of "customers" */
 export type Customers = {
@@ -774,6 +788,12 @@ export enum Customers_Update_Column {
   UserId = 'userId'
 }
 
+export type Customers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Customers_Set_Input>;
+  where: Customers_Bool_Exp;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
@@ -991,6 +1011,12 @@ export enum EtxTaskSessions_Update_Column {
   UserId = 'userId'
 }
 
+export type EtxTaskSessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<EtxTaskSessions_Set_Input>;
+  where: EtxTaskSessions_Bool_Exp;
+};
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']>;
   caption?: InputMaybe<Scalars['String']>;
@@ -1175,6 +1201,12 @@ export enum FireboaCashOutCryptoRequests_Update_Column {
   WalletId = 'walletId'
 }
 
+export type FireboaCashOutCryptoRequests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutCryptoRequests_Set_Input>;
+  where: FireboaCashOutCryptoRequests_Bool_Exp;
+};
+
 /** columns and relationships of "fireboa_cash_out_gift_card_requests" */
 export type FireboaCashOutGiftCardRequests = {
   __typename?: 'FireboaCashOutGiftCardRequests';
@@ -1334,6 +1366,12 @@ export enum FireboaCashOutGiftCardRequests_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type FireboaCashOutGiftCardRequests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutGiftCardRequests_Set_Input>;
+  where: FireboaCashOutGiftCardRequests_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_preferred_methods" */
 export type FireboaCashOutPreferredMethods = {
@@ -1522,6 +1560,12 @@ export enum FireboaCashOutPreferredMethods_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type FireboaCashOutPreferredMethods_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutPreferredMethods_Set_Input>;
+  where: FireboaCashOutPreferredMethods_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_requests" */
 export type FireboaCashOutRequests = {
@@ -1839,6 +1883,14 @@ export enum FireboaCashOutRequests_Update_Column {
   WorkerId = 'workerId'
 }
 
+export type FireboaCashOutRequests_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<FireboaCashOutRequests_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutRequests_Set_Input>;
+  where: FireboaCashOutRequests_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type FireboaCashOutRequests_Var_Pop_Fields = {
   __typename?: 'FireboaCashOutRequests_var_pop_fields';
@@ -2027,6 +2079,12 @@ export enum FireboaModules_Update_Column {
   /** column name */
   Reusable = 'reusable'
 }
+
+export type FireboaModules_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaModules_Set_Input>;
+  where: FireboaModules_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_projects" */
 export type FireboaProjects = {
@@ -2390,6 +2448,22 @@ export enum FireboaProjectsModulesUsers_Update_Column {
   UserId = 'userId'
 }
 
+export type FireboaProjectsModulesUsers_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<FireboaProjectsModulesUsers_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<FireboaProjectsModulesUsers_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<FireboaProjectsModulesUsers_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<FireboaProjectsModulesUsers_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<FireboaProjectsModulesUsers_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsModulesUsers_Set_Input>;
+  where: FireboaProjectsModulesUsers_Bool_Exp;
+};
+
 /** aggregated selection of "fireboa_projects_modules" */
 export type FireboaProjectsModules_Aggregate = {
   __typename?: 'FireboaProjectsModules_aggregate';
@@ -2701,6 +2775,24 @@ export enum FireboaProjectsModules_Update_Column {
   ModuleId = 'moduleId'
 }
 
+export type FireboaProjectsModules_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<FireboaProjectsModules_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<FireboaProjectsModules_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<FireboaProjectsModules_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<FireboaProjectsModules_Delete_Key_Input>;
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<FireboaProjectsModules_Inc_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<FireboaProjectsModules_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsModules_Set_Input>;
+  where: FireboaProjectsModules_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type FireboaProjectsModules_Var_Pop_Fields = {
   __typename?: 'FireboaProjectsModules_var_pop_fields';
@@ -2796,7 +2888,7 @@ export type FireboaProjectsUsers_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_users" */
 export enum FireboaProjectsUsers_Constraint {
-  /** unique or primary key constraint on columns "fireboa_project_id", "user_id" */
+  /** unique or primary key constraint on columns "user_id", "fireboa_project_id" */
   FireboaProjectUserPkey = 'fireboa_project_user_pkey'
 }
 
@@ -2892,6 +2984,12 @@ export enum FireboaProjectsUsers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type FireboaProjectsUsers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsUsers_Set_Input>;
+  where: FireboaProjectsUsers_Bool_Exp;
+};
 
 /** aggregated selection of "fireboa_projects" */
 export type FireboaProjects_Aggregate = {
@@ -3056,6 +3154,12 @@ export enum FireboaProjects_Update_Column {
   SerializedStateChart = 'serializedStateChart'
 }
 
+export type FireboaProjects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjects_Set_Input>;
+  where: FireboaProjects_Bool_Exp;
+};
+
 export type FloatFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
@@ -3191,6 +3295,12 @@ export enum FraudStatusEnum_Update_Column {
   /** column name */
   FraudStatus = 'fraudStatus'
 }
+
+export type FraudStatusEnum_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FraudStatusEnum_Set_Input>;
+  where: FraudStatusEnum_Bool_Exp;
+};
 
 export type GenericMorph = I18NLocale | StrapiModule | StrapiProject | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | VanaConnectFaq;
 
@@ -3391,6 +3501,12 @@ export enum IdentitiesLegalIdTypeEnums_Update_Column {
   Value = 'value'
 }
 
+export type IdentitiesLegalIdTypeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<IdentitiesLegalIdTypeEnums_Set_Input>;
+  where: IdentitiesLegalIdTypeEnums_Bool_Exp;
+};
+
 /** columns and relationships of "images" */
 export type Images = {
   __typename?: 'Images';
@@ -3564,6 +3680,12 @@ export enum Images_Update_Column {
   /** column name */
   Url = 'url'
 }
+
+export type Images_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Images_Set_Input>;
+  where: Images_Bool_Exp;
+};
 
 export type IntFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
@@ -3780,6 +3902,12 @@ export enum ModuleInstructions_Update_Column {
   /** column name */
   ModuleId = 'moduleId'
 }
+
+export type ModuleInstructions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ModuleInstructions_Set_Input>;
+  where: ModuleInstructions_Bool_Exp;
+};
 
 /** columns and relationships of "modules" */
 export type Modules = {
@@ -4036,6 +4164,12 @@ export enum Modules_Update_Column {
   UrlToDownloadData = 'urlToDownloadData'
 }
 
+export type Modules_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Modules_Set_Input>;
+  where: Modules_Bool_Exp;
+};
+
 export type Pagination = {
   __typename?: 'Pagination';
   page: Scalars['Int'];
@@ -4178,6 +4312,12 @@ export enum ProjectStatuses_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type ProjectStatuses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ProjectStatuses_Set_Input>;
+  where: ProjectStatuses_Bool_Exp;
+};
 
 export enum PublicationState {
   Live = 'LIVE',
@@ -4423,6 +4563,12 @@ export enum Sessions_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type Sessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Sessions_Set_Input>;
+  where: Sessions_Bool_Exp;
+};
 
 export type StrapiModule = {
   __typename?: 'StrapiModule';
@@ -4796,6 +4942,12 @@ export enum StripeIdentitySessionErrorCodeEnums_Update_Column {
   Value = 'value'
 }
 
+export type StripeIdentitySessionErrorCodeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Set_Input>;
+  where: StripeIdentitySessionErrorCodeEnums_Bool_Exp;
+};
+
 /** status of the initiated Stripe Identity verification session */
 export type StripeIdentitySessionStatusEnums = {
   __typename?: 'StripeIdentitySessionStatusEnums';
@@ -4942,6 +5094,12 @@ export enum StripeIdentitySessionStatusEnums_Update_Column {
   Value = 'value'
 }
 
+export type StripeIdentitySessionStatusEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionStatusEnums_Set_Input>;
+  where: StripeIdentitySessionStatusEnums_Bool_Exp;
+};
+
 /** type of verification session initiated */
 export type StripeIdentitySessionTypeEnums = {
   __typename?: 'StripeIdentitySessionTypeEnums';
@@ -5077,6 +5235,12 @@ export enum StripeIdentitySessionTypeEnums_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type StripeIdentitySessionTypeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionTypeEnums_Set_Input>;
+  where: StripeIdentitySessionTypeEnums_Bool_Exp;
+};
 
 /** All stripe identity verification sessions and statuses  */
 export type StripeVerificationSessions = {
@@ -5390,6 +5554,12 @@ export enum StripeVerificationSessions_Update_Column {
   UserId = 'userId'
 }
 
+export type StripeVerificationSessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeVerificationSessions_Set_Input>;
+  where: StripeVerificationSessions_Bool_Exp;
+};
+
 /** columns and relationships of "survey_responses" */
 export type SurveyResponses = {
   __typename?: 'SurveyResponses';
@@ -5603,6 +5773,12 @@ export enum SurveyResponses_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type SurveyResponses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<SurveyResponses_Set_Input>;
+  where: SurveyResponses_Bool_Exp;
+};
 
 /** columns and relationships of "surveys" */
 export type Surveys = {
@@ -5849,6 +6025,12 @@ export enum Surveys_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Surveys_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Surveys_Set_Input>;
+  where: Surveys_Bool_Exp;
+};
+
 export type UploadFile = {
   __typename?: 'UploadFile';
   alternativeText?: Maybe<Scalars['String']>;
@@ -6020,7 +6202,7 @@ export type UserIdentities_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_identities" */
 export enum UserIdentities_Constraint {
-  /** unique or primary key constraint on columns "legal_id_type", "legal_id_number", "legal_id_country" */
+  /** unique or primary key constraint on columns "legal_id_country", "legal_id_number", "legal_id_type" */
   UserIdentitiesLegalIdNumberLegalIdTypeLegalIdCounKey = 'user_identities_legal_id_number_legal_id_type_legal_id_coun_key',
   /** unique or primary key constraint on columns "id" */
   UserIdentitiesPkey = 'user_identities_pkey'
@@ -6276,6 +6458,12 @@ export enum UserIdentities_Update_Column {
   UserId = 'userID'
 }
 
+export type UserIdentities_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserIdentities_Set_Input>;
+  where: UserIdentities_Bool_Exp;
+};
+
 /** columns and relationships of "user_module_progress_enum" */
 export type UserModuleStatus = {
   __typename?: 'UserModuleStatus';
@@ -6388,6 +6576,12 @@ export enum UserModuleStatus_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type UserModuleStatus_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserModuleStatus_Set_Input>;
+  where: UserModuleStatus_Bool_Exp;
+};
 
 /** columns and relationships of "user_referrals" */
 export type UserReferrals = {
@@ -6594,6 +6788,12 @@ export enum UserReferrals_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type UserReferrals_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserReferrals_Set_Input>;
+  where: UserReferrals_Bool_Exp;
+};
 
 /** columns and relationships of "users" */
 export type Users = {
@@ -7043,6 +7243,12 @@ export enum UsersImages_Update_Column {
   UserId = 'userId'
 }
 
+export type UsersImages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UsersImages_Set_Input>;
+  where: UsersImages_Bool_Exp;
+};
+
 /** columns and relationships of "users_modules" */
 export type UsersModules = {
   __typename?: 'UsersModules';
@@ -7363,6 +7569,14 @@ export enum UsersModules_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type UsersModules_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<UsersModules_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UsersModules_Set_Input>;
+  where: UsersModules_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type UsersModules_Var_Pop_Fields = {
@@ -7909,6 +8123,14 @@ export enum Users_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Users_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Users_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Users_Var_Pop_Fields = {
   __typename?: 'Users_var_pop_fields';
@@ -8198,6 +8420,12 @@ export enum VisualJudgementModuleResponses_Update_Column {
   VisualJudgementModuleImageId = 'visualJudgementModuleImageId'
 }
 
+export type VisualJudgementModuleResponses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModuleResponses_Set_Input>;
+  where: VisualJudgementModuleResponses_Bool_Exp;
+};
+
 /** columns and relationships of "wallets" */
 export type Wallets = {
   __typename?: 'Wallets';
@@ -8445,6 +8673,12 @@ export enum Wallets_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type Wallets_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Wallets_Set_Input>;
+  where: Wallets_Bool_Exp;
+};
 
 /** columns and relationships of "workers" */
 export type Workers = {
@@ -8906,6 +9140,14 @@ export enum Workers_Update_Column {
   UserId = 'userId'
 }
 
+export type Workers_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Workers_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Workers_Set_Input>;
+  where: Workers_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Workers_Var_Pop_Fields = {
   __typename?: 'Workers_var_pop_fields';
@@ -9074,6 +9316,12 @@ export enum CashOutMethods_Update_Column {
   Name = 'name'
 }
 
+export type CashOutMethods_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CashOutMethods_Set_Input>;
+  where: CashOutMethods_Bool_Exp;
+};
+
 /** columns and relationships of "data_types" */
 export type DatatTypes = {
   __typename?: 'datatTypes';
@@ -9187,6 +9435,12 @@ export enum DatatTypes_Update_Column {
   Name = 'name'
 }
 
+export type DatatTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<DatatTypes_Set_Input>;
+  where: DatatTypes_Bool_Exp;
+};
+
 /** columns and relationships of "feature_types" */
 export type FeatureTypes = {
   __typename?: 'featureTypes';
@@ -9299,6 +9553,12 @@ export enum FeatureTypes_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type FeatureTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FeatureTypes_Set_Input>;
+  where: FeatureTypes_Bool_Exp;
+};
 
 /** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
 export type Float8_Comparison_Exp = {
@@ -9426,6 +9686,12 @@ export enum Gender_Update_Column {
   Value = 'value'
 }
 
+export type Gender_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Gender_Set_Input>;
+  where: Gender_Bool_Exp;
+};
+
 /** columns and relationships of "have_labeled_data_types" */
 export type HaveLabeledDataTypesEnum = {
   __typename?: 'haveLabeledDataTypesEnum';
@@ -9539,6 +9805,12 @@ export enum HaveLabeledDataTypesEnum_Update_Column {
   Value = 'value'
 }
 
+export type HaveLabeledDataTypesEnum_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<HaveLabeledDataTypesEnum_Set_Input>;
+  where: HaveLabeledDataTypesEnum_Bool_Exp;
+};
+
 /** columns and relationships of "industry_types" */
 export type Industry_Types = {
   __typename?: 'industry_types';
@@ -9651,6 +9923,12 @@ export enum Industry_Types_Update_Column {
   /** column name */
   Name = 'name'
 }
+
+export type Industry_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Industry_Types_Set_Input>;
+  where: Industry_Types_Bool_Exp;
+};
 
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
@@ -9792,6 +10070,12 @@ export enum LabellingPlatforms_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type LabellingPlatforms_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<LabellingPlatforms_Set_Input>;
+  where: LabellingPlatforms_Bool_Exp;
+};
 
 /** columns and relationships of "managers" */
 export type Managers = {
@@ -9957,6 +10241,12 @@ export enum Managers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Managers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Managers_Set_Input>;
+  where: Managers_Bool_Exp;
+};
 
 /** Projects for the Vana Marketplace */
 export type Marketplace_Projects = {
@@ -10135,6 +10425,12 @@ export enum Marketplace_Projects_Update_Column {
   UrlSlug = 'urlSlug'
 }
 
+export type Marketplace_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Marketplace_Projects_Set_Input>;
+  where: Marketplace_Projects_Bool_Exp;
+};
+
 /** Many-to-Many relationship between modules and marketplace projects. (moduleA, projectB) means moduleA is required to complete projectB */
 export type Modules_Marketplace_Projects = {
   __typename?: 'modules_marketplace_projects';
@@ -10284,6 +10580,12 @@ export enum Modules_Marketplace_Projects_Update_Column {
   /** column name */
   ProjectId = 'projectId'
 }
+
+export type Modules_Marketplace_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Modules_Marketplace_Projects_Set_Input>;
+  where: Modules_Marketplace_Projects_Bool_Exp;
+};
 
 /** mutation root */
 export type Mutation_Root = {
@@ -10964,26 +11266,136 @@ export type Mutation_Root = {
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   updateVanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
+  /** update multiples rows of table: "cash_out_requests" */
+  update_CashOutRequests_many?: Maybe<Array<Maybe<CashOutRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "collection_type" */
+  update_CollectionTypes_many?: Maybe<Array<Maybe<CollectionTypes_Mutation_Response>>>;
+  /** update multiples rows of table: "customers" */
+  update_Customers_many?: Maybe<Array<Maybe<Customers_Mutation_Response>>>;
+  /** update multiples rows of table: "etx_task_sessions" */
+  update_EtxTaskSessions_many?: Maybe<Array<Maybe<EtxTaskSessions_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_crypto_requests" */
+  update_FireboaCashOutCryptoRequests_many?: Maybe<Array<Maybe<FireboaCashOutCryptoRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_gift_card_requests" */
+  update_FireboaCashOutGiftCardRequests_many?: Maybe<Array<Maybe<FireboaCashOutGiftCardRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_preferred_methods" */
+  update_FireboaCashOutPreferredMethods_many?: Maybe<Array<Maybe<FireboaCashOutPreferredMethods_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_requests" */
+  update_FireboaCashOutRequests_many?: Maybe<Array<Maybe<FireboaCashOutRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_modules" */
+  update_FireboaModules_many?: Maybe<Array<Maybe<FireboaModules_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_modules_users" */
+  update_FireboaProjectsModulesUsers_many?: Maybe<Array<Maybe<FireboaProjectsModulesUsers_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_modules" */
+  update_FireboaProjectsModules_many?: Maybe<Array<Maybe<FireboaProjectsModules_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_users" */
+  update_FireboaProjectsUsers_many?: Maybe<Array<Maybe<FireboaProjectsUsers_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects" */
+  update_FireboaProjects_many?: Maybe<Array<Maybe<FireboaProjects_Mutation_Response>>>;
+  /** update multiples rows of table: "fraud_status_enum" */
+  update_FraudStatusEnum_many?: Maybe<Array<Maybe<FraudStatusEnum_Mutation_Response>>>;
+  /** update multiples rows of table: "identities_legal_id_type_enum" */
+  update_IdentitiesLegalIdTypeEnums_many?: Maybe<Array<Maybe<IdentitiesLegalIdTypeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "images" */
+  update_Images_many?: Maybe<Array<Maybe<Images_Mutation_Response>>>;
+  /** update multiples rows of table: "module_instructions" */
+  update_ModuleInstructions_many?: Maybe<Array<Maybe<ModuleInstructions_Mutation_Response>>>;
+  /** update multiples rows of table: "modules" */
+  update_Modules_many?: Maybe<Array<Maybe<Modules_Mutation_Response>>>;
+  /** update multiples rows of table: "project_statuses" */
+  update_ProjectStatuses_many?: Maybe<Array<Maybe<ProjectStatuses_Mutation_Response>>>;
+  /** update multiples rows of table: "sessions" */
+  update_Sessions_many?: Maybe<Array<Maybe<Sessions_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_error_code_enum" */
+  update_StripeIdentitySessionErrorCodeEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionErrorCodeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_status_enum" */
+  update_StripeIdentitySessionStatusEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionStatusEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_type_enum" */
+  update_StripeIdentitySessionTypeEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionTypeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_verification_sessions" */
+  update_StripeVerificationSessions_many?: Maybe<Array<Maybe<StripeVerificationSessions_Mutation_Response>>>;
+  /** update multiples rows of table: "survey_responses" */
+  update_SurveyResponses_many?: Maybe<Array<Maybe<SurveyResponses_Mutation_Response>>>;
+  /** update multiples rows of table: "surveys" */
+  update_Surveys_many?: Maybe<Array<Maybe<Surveys_Mutation_Response>>>;
+  /** update multiples rows of table: "user_identities" */
+  update_UserIdentities_many?: Maybe<Array<Maybe<UserIdentities_Mutation_Response>>>;
+  /** update multiples rows of table: "user_module_progress_enum" */
+  update_UserModuleStatus_many?: Maybe<Array<Maybe<UserModuleStatus_Mutation_Response>>>;
+  /** update multiples rows of table: "user_referrals" */
+  update_UserReferrals_many?: Maybe<Array<Maybe<UserReferrals_Mutation_Response>>>;
+  /** update multiples rows of table: "users_images" */
+  update_UsersImages_many?: Maybe<Array<Maybe<UsersImages_Mutation_Response>>>;
+  /** update multiples rows of table: "users_modules" */
+  update_UsersModules_many?: Maybe<Array<Maybe<UsersModules_Mutation_Response>>>;
+  /** update multiples rows of table: "users" */
+  update_Users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_module_responses" */
+  update_VisualJudgementModuleResponses_many?: Maybe<Array<Maybe<VisualJudgementModuleResponses_Mutation_Response>>>;
+  /** update multiples rows of table: "wallets" */
+  update_Wallets_many?: Maybe<Array<Maybe<Wallets_Mutation_Response>>>;
+  /** update multiples rows of table: "workers" */
+  update_Workers_many?: Maybe<Array<Maybe<Workers_Mutation_Response>>>;
+  /** update multiples rows of table: "cash_out_methods" */
+  update_cashOutMethods_many?: Maybe<Array<Maybe<CashOutMethods_Mutation_Response>>>;
+  /** update multiples rows of table: "data_types" */
+  update_datatTypes_many?: Maybe<Array<Maybe<DatatTypes_Mutation_Response>>>;
+  /** update multiples rows of table: "feature_types" */
+  update_featureTypes_many?: Maybe<Array<Maybe<FeatureTypes_Mutation_Response>>>;
   /** update data of the table: "gender" */
   update_gender?: Maybe<Gender_Mutation_Response>;
   /** update single row of the table: "gender" */
   update_gender_by_pk?: Maybe<Gender>;
+  /** update multiples rows of table: "gender" */
+  update_gender_many?: Maybe<Array<Maybe<Gender_Mutation_Response>>>;
+  /** update multiples rows of table: "have_labeled_data_types" */
+  update_haveLabeledDataTypesEnum_many?: Maybe<Array<Maybe<HaveLabeledDataTypesEnum_Mutation_Response>>>;
   /** update data of the table: "industry_types" */
   update_industry_types?: Maybe<Industry_Types_Mutation_Response>;
   /** update single row of the table: "industry_types" */
   update_industry_types_by_pk?: Maybe<Industry_Types>;
+  /** update multiples rows of table: "industry_types" */
+  update_industry_types_many?: Maybe<Array<Maybe<Industry_Types_Mutation_Response>>>;
+  /** update multiples rows of table: "labelling_platforms" */
+  update_labellingPlatforms_many?: Maybe<Array<Maybe<LabellingPlatforms_Mutation_Response>>>;
   /** update data of the table: "managers" */
   update_managers?: Maybe<Managers_Mutation_Response>;
   /** update single row of the table: "managers" */
   update_managers_by_pk?: Maybe<Managers>;
+  /** update multiples rows of table: "managers" */
+  update_managers_many?: Maybe<Array<Maybe<Managers_Mutation_Response>>>;
+  /** update multiples rows of table: "marketplace_projects" */
+  update_marketplace_projects_many?: Maybe<Array<Maybe<Marketplace_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "modules_marketplace_projects" */
+  update_modules_marketplace_projects_many?: Maybe<Array<Maybe<Modules_Marketplace_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "organizations_customers" */
+  update_organizationsCustomers_many?: Maybe<Array<Maybe<OrganizationsCustomers_Mutation_Response>>>;
+  /** update multiples rows of table: "organizations" */
+  update_organizations_many?: Maybe<Array<Maybe<Organizations_Mutation_Response>>>;
+  /** update multiples rows of table: "pricing_plans" */
+  update_pricingPlans_many?: Maybe<Array<Maybe<PricingPlans_Mutation_Response>>>;
+  /** update multiples rows of table: "spotify_state_types" */
+  update_spotifyStateTypes_many?: Maybe<Array<Maybe<SpotifyStateTypes_Mutation_Response>>>;
   /** update data of the table: "strapi" */
   update_strapi?: Maybe<Strapi_Mutation_Response>;
   /** update single row of the table: "strapi" */
   update_strapi_by_pk?: Maybe<Strapi>;
+  /** update multiples rows of table: "strapi" */
+  update_strapi_many?: Maybe<Array<Maybe<Strapi_Mutation_Response>>>;
   /** update data of the table: "user_ip_addresses" */
   update_user_ip_addresses?: Maybe<User_Ip_Addresses_Mutation_Response>;
   /** update single row of the table: "user_ip_addresses" */
   update_user_ip_addresses_by_pk?: Maybe<User_Ip_Addresses>;
+  /** update multiples rows of table: "user_ip_addresses" */
+  update_user_ip_addresses_many?: Maybe<Array<Maybe<User_Ip_Addresses_Mutation_Response>>>;
+  /** update multiples rows of table: "users_projects" */
+  update_users_projects_many?: Maybe<Array<Maybe<Users_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_module_images" */
+  update_visualJudgementModuleImages_many?: Maybe<Array<Maybe<VisualJudgementModuleImages_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_modules" */
+  update_visualJudgementModules_many?: Maybe<Array<Maybe<VisualJudgementModules_Mutation_Response>>>;
+  /** update multiples rows of table: "workers_spotify" */
+  update_workersSpotify_many?: Maybe<Array<Maybe<WorkersSpotify_Mutation_Response>>>;
   upload: UploadFileEntityResponse;
 };
 
@@ -13346,6 +13758,234 @@ export type Mutation_RootUpdateVanaConnectFaqArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_CashOutRequests_ManyArgs = {
+  updates: Array<CashOutRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CollectionTypes_ManyArgs = {
+  updates: Array<CollectionTypes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Customers_ManyArgs = {
+  updates: Array<Customers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_EtxTaskSessions_ManyArgs = {
+  updates: Array<EtxTaskSessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutCryptoRequests_ManyArgs = {
+  updates: Array<FireboaCashOutCryptoRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutGiftCardRequests_ManyArgs = {
+  updates: Array<FireboaCashOutGiftCardRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutPreferredMethods_ManyArgs = {
+  updates: Array<FireboaCashOutPreferredMethods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutRequests_ManyArgs = {
+  updates: Array<FireboaCashOutRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaModules_ManyArgs = {
+  updates: Array<FireboaModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsModulesUsers_ManyArgs = {
+  updates: Array<FireboaProjectsModulesUsers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsModules_ManyArgs = {
+  updates: Array<FireboaProjectsModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsUsers_ManyArgs = {
+  updates: Array<FireboaProjectsUsers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjects_ManyArgs = {
+  updates: Array<FireboaProjects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FraudStatusEnum_ManyArgs = {
+  updates: Array<FraudStatusEnum_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_IdentitiesLegalIdTypeEnums_ManyArgs = {
+  updates: Array<IdentitiesLegalIdTypeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Images_ManyArgs = {
+  updates: Array<Images_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ModuleInstructions_ManyArgs = {
+  updates: Array<ModuleInstructions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Modules_ManyArgs = {
+  updates: Array<Modules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ProjectStatuses_ManyArgs = {
+  updates: Array<ProjectStatuses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sessions_ManyArgs = {
+  updates: Array<Sessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionErrorCodeEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionErrorCodeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionStatusEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionStatusEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionTypeEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionTypeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeVerificationSessions_ManyArgs = {
+  updates: Array<StripeVerificationSessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SurveyResponses_ManyArgs = {
+  updates: Array<SurveyResponses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Surveys_ManyArgs = {
+  updates: Array<Surveys_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserIdentities_ManyArgs = {
+  updates: Array<UserIdentities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserModuleStatus_ManyArgs = {
+  updates: Array<UserModuleStatus_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserReferrals_ManyArgs = {
+  updates: Array<UserReferrals_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersImages_ManyArgs = {
+  updates: Array<UsersImages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersModules_ManyArgs = {
+  updates: Array<UsersModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_ManyArgs = {
+  updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModuleResponses_ManyArgs = {
+  updates: Array<VisualJudgementModuleResponses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Wallets_ManyArgs = {
+  updates: Array<Wallets_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Workers_ManyArgs = {
+  updates: Array<Workers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CashOutMethods_ManyArgs = {
+  updates: Array<CashOutMethods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_DatatTypes_ManyArgs = {
+  updates: Array<DatatTypes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FeatureTypes_ManyArgs = {
+  updates: Array<FeatureTypes_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_GenderArgs = {
   _set?: InputMaybe<Gender_Set_Input>;
   where: Gender_Bool_Exp;
@@ -13356,6 +13996,18 @@ export type Mutation_RootUpdate_GenderArgs = {
 export type Mutation_RootUpdate_Gender_By_PkArgs = {
   _set?: InputMaybe<Gender_Set_Input>;
   pk_columns: Gender_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gender_ManyArgs = {
+  updates: Array<Gender_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_HaveLabeledDataTypesEnum_ManyArgs = {
+  updates: Array<HaveLabeledDataTypesEnum_Updates>;
 };
 
 
@@ -13374,6 +14026,18 @@ export type Mutation_RootUpdate_Industry_Types_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Industry_Types_ManyArgs = {
+  updates: Array<Industry_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_LabellingPlatforms_ManyArgs = {
+  updates: Array<LabellingPlatforms_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ManagersArgs = {
   _set?: InputMaybe<Managers_Set_Input>;
   where: Managers_Bool_Exp;
@@ -13384,6 +14048,48 @@ export type Mutation_RootUpdate_ManagersArgs = {
 export type Mutation_RootUpdate_Managers_By_PkArgs = {
   _set?: InputMaybe<Managers_Set_Input>;
   pk_columns: Managers_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Managers_ManyArgs = {
+  updates: Array<Managers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Marketplace_Projects_ManyArgs = {
+  updates: Array<Marketplace_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Modules_Marketplace_Projects_ManyArgs = {
+  updates: Array<Modules_Marketplace_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_OrganizationsCustomers_ManyArgs = {
+  updates: Array<OrganizationsCustomers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organizations_ManyArgs = {
+  updates: Array<Organizations_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PricingPlans_ManyArgs = {
+  updates: Array<PricingPlans_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SpotifyStateTypes_ManyArgs = {
+  updates: Array<SpotifyStateTypes_Updates>;
 };
 
 
@@ -13402,6 +14108,12 @@ export type Mutation_RootUpdate_Strapi_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Strapi_ManyArgs = {
+  updates: Array<Strapi_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_User_Ip_AddressesArgs = {
   _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
   where: User_Ip_Addresses_Bool_Exp;
@@ -13412,6 +14124,36 @@ export type Mutation_RootUpdate_User_Ip_AddressesArgs = {
 export type Mutation_RootUpdate_User_Ip_Addresses_By_PkArgs = {
   _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
   pk_columns: User_Ip_Addresses_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Ip_Addresses_ManyArgs = {
+  updates: Array<User_Ip_Addresses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_Projects_ManyArgs = {
+  updates: Array<Users_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModuleImages_ManyArgs = {
+  updates: Array<VisualJudgementModuleImages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModules_ManyArgs = {
+  updates: Array<VisualJudgementModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_WorkersSpotify_ManyArgs = {
+  updates: Array<WorkersSpotify_Updates>;
 };
 
 
@@ -13542,7 +14284,7 @@ export type OrganizationsCustomers_Bool_Exp = {
 
 /** unique or primary key constraints on table "organizations_customers" */
 export enum OrganizationsCustomers_Constraint {
-  /** unique or primary key constraint on columns "customer_id", "organization_id" */
+  /** unique or primary key constraint on columns "organization_id", "customer_id" */
   OrganizationsCustomersPkey = 'organizations_customers_pkey'
 }
 
@@ -13644,6 +14386,12 @@ export enum OrganizationsCustomers_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type OrganizationsCustomers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<OrganizationsCustomers_Set_Input>;
+  where: OrganizationsCustomers_Bool_Exp;
+};
 
 /** aggregated selection of "organizations" */
 export type Organizations_Aggregate = {
@@ -13837,6 +14585,12 @@ export enum Organizations_Update_Column {
   /** column name */
   TechnicalContactId = 'technicalContactId'
 }
+
+export type Organizations_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Organizations_Set_Input>;
+  where: Organizations_Bool_Exp;
+};
 
 /** columns and relationships of "pricing_plans" */
 export type PricingPlans = {
@@ -14060,6 +14814,14 @@ export enum PricingPlans_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type PricingPlans_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<PricingPlans_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<PricingPlans_Set_Input>;
+  where: PricingPlans_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type PricingPlans_Var_Pop_Fields = {
@@ -15924,6 +16686,12 @@ export enum SpotifyStateTypes_Update_Column {
   Name = 'name'
 }
 
+export type SpotifyStateTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<SpotifyStateTypes_Set_Input>;
+  where: SpotifyStateTypes_Bool_Exp;
+};
+
 /** columns and relationships of "strapi" */
 export type Strapi = {
   __typename?: 'strapi';
@@ -16035,6 +16803,12 @@ export enum Strapi_Update_Column {
   /** column name */
   Id = 'id'
 }
+
+export type Strapi_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Strapi_Set_Input>;
+  where: Strapi_Bool_Exp;
+};
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
@@ -17701,7 +18475,7 @@ export type User_Ip_Addresses_Bool_Exp = {
 export enum User_Ip_Addresses_Constraint {
   /** unique or primary key constraint on columns "id" */
   UserIpAddressesPkey = 'user_ip_addresses_pkey',
-  /** unique or primary key constraint on columns "ip_address", "user_id" */
+  /** unique or primary key constraint on columns "user_id", "ip_address" */
   UserIpAddressesUserIdIpAddressKey = 'user_ip_addresses_user_id_ip_address_key'
 }
 
@@ -17800,6 +18574,12 @@ export enum User_Ip_Addresses_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+export type User_Ip_Addresses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
+  where: User_Ip_Addresses_Bool_Exp;
+};
 
 /** columns and relationships of "users_projects" */
 export type Users_Projects = {
@@ -17963,6 +18743,12 @@ export enum Users_Projects_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Users_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Projects_Set_Input>;
+  where: Users_Projects_Bool_Exp;
+};
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -18224,6 +19010,22 @@ export enum VisualJudgementModuleImages_Update_Column {
   VisualJudgementModuleId = 'visualJudgementModuleId'
 }
 
+export type VisualJudgementModuleImages_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<VisualJudgementModuleImages_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<VisualJudgementModuleImages_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<VisualJudgementModuleImages_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<VisualJudgementModuleImages_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<VisualJudgementModuleImages_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModuleImages_Set_Input>;
+  where: VisualJudgementModuleImages_Bool_Exp;
+};
+
 /** columns and relationships of "visual_judgement_modules" */
 export type VisualJudgementModules = {
   __typename?: 'visualJudgementModules';
@@ -18455,6 +19257,22 @@ export enum VisualJudgementModules_Update_Column {
   Instruction = 'instruction'
 }
 
+export type VisualJudgementModules_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<VisualJudgementModules_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<VisualJudgementModules_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<VisualJudgementModules_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<VisualJudgementModules_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<VisualJudgementModules_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModules_Set_Input>;
+  where: VisualJudgementModules_Bool_Exp;
+};
+
 /** columns and relationships of "workers_spotify" */
 export type WorkersSpotify = {
   __typename?: 'workersSpotify';
@@ -18635,6 +19453,12 @@ export enum WorkersSpotify_Update_Column {
   WorkerId = 'workerId'
 }
 
+export type WorkersSpotify_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<WorkersSpotify_Set_Input>;
+  where: WorkersSpotify_Bool_Exp;
+};
+
 export type UserWithCustomerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, createdAt: any, updatedAt: any, customer?: { __typename?: 'Customers', id: any, createdAt: any, updatedAt: any, organization?: { __typename?: 'organizations', id: any, name: string, stripeCustomerId?: string | null } | null } | null, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null } | null };
 
 export type UserWithWorkerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> };
@@ -18665,6 +19489,20 @@ export type CreateUserProjectMutationVariables = Exact<{
 
 
 export type CreateUserProjectMutation = { __typename?: 'mutation_root', createOneUserProject?: { __typename?: 'users_projects', status: string } | null };
+
+export type DeleteUserModulesMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type DeleteUserModulesMutation = { __typename?: 'mutation_root', deleteManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
+
+export type DeleteVaultUserMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type DeleteVaultUserMutation = { __typename?: 'mutation_root', deleteOneUser?: { __typename?: 'Users', id: any } | null };
 
 export type SoftDeleteUserModulesMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -18723,6 +19561,13 @@ export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
 
 
 export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string }> };
+
+export type GetUserModulesAllQueryVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type GetUserModulesAllQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -18913,6 +19758,72 @@ export function useCreateUserProjectMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateUserProjectMutationHookResult = ReturnType<typeof useCreateUserProjectMutation>;
 export type CreateUserProjectMutationResult = Apollo.MutationResult<CreateUserProjectMutation>;
 export type CreateUserProjectMutationOptions = Apollo.BaseMutationOptions<CreateUserProjectMutation, CreateUserProjectMutationVariables>;
+export const DeleteUserModulesDocument = gql`
+    mutation deleteUserModules($userId: uuid!) {
+  deleteManyUsersModules(where: {userId: {_eq: $userId}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteUserModulesMutationFn = Apollo.MutationFunction<DeleteUserModulesMutation, DeleteUserModulesMutationVariables>;
+
+/**
+ * __useDeleteUserModulesMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserModulesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserModulesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserModulesMutation, { data, loading, error }] = useDeleteUserModulesMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useDeleteUserModulesMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserModulesMutation, DeleteUserModulesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserModulesMutation, DeleteUserModulesMutationVariables>(DeleteUserModulesDocument, options);
+      }
+export type DeleteUserModulesMutationHookResult = ReturnType<typeof useDeleteUserModulesMutation>;
+export type DeleteUserModulesMutationResult = Apollo.MutationResult<DeleteUserModulesMutation>;
+export type DeleteUserModulesMutationOptions = Apollo.BaseMutationOptions<DeleteUserModulesMutation, DeleteUserModulesMutationVariables>;
+export const DeleteVaultUserDocument = gql`
+    mutation deleteVaultUser($userId: uuid!) {
+  deleteOneUser(id: $userId) {
+    id
+  }
+}
+    `;
+export type DeleteVaultUserMutationFn = Apollo.MutationFunction<DeleteVaultUserMutation, DeleteVaultUserMutationVariables>;
+
+/**
+ * __useDeleteVaultUserMutation__
+ *
+ * To run a mutation, you first call `useDeleteVaultUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteVaultUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteVaultUserMutation, { data, loading, error }] = useDeleteVaultUserMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useDeleteVaultUserMutation(baseOptions?: Apollo.MutationHookOptions<DeleteVaultUserMutation, DeleteVaultUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteVaultUserMutation, DeleteVaultUserMutationVariables>(DeleteVaultUserDocument, options);
+      }
+export type DeleteVaultUserMutationHookResult = ReturnType<typeof useDeleteVaultUserMutation>;
+export type DeleteVaultUserMutationResult = Apollo.MutationResult<DeleteVaultUserMutation>;
+export type DeleteVaultUserMutationOptions = Apollo.BaseMutationOptions<DeleteVaultUserMutation, DeleteVaultUserMutationVariables>;
 export const SoftDeleteUserModulesDocument = gql`
     mutation softDeleteUserModules($userId: uuid!, $usersModulesIds: [uuid!]) {
   updateManyUsersModules(
@@ -19220,6 +20131,46 @@ export function useGetUserFromExternalIdOrEmailLazyQuery(baseOptions?: Apollo.La
 export type GetUserFromExternalIdOrEmailQueryHookResult = ReturnType<typeof useGetUserFromExternalIdOrEmailQuery>;
 export type GetUserFromExternalIdOrEmailLazyQueryHookResult = ReturnType<typeof useGetUserFromExternalIdOrEmailLazyQuery>;
 export type GetUserFromExternalIdOrEmailQueryResult = Apollo.QueryResult<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>;
+export const GetUserModulesAllDocument = gql`
+    query getUserModulesAll($userId: uuid!) {
+  usersModules(where: {userId: {_eq: $userId}}) {
+    id
+    module {
+      name
+    }
+    moduleId
+    urlToData
+  }
+}
+    `;
+
+/**
+ * __useGetUserModulesAllQuery__
+ *
+ * To run a query within a React component, call `useGetUserModulesAllQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserModulesAllQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserModulesAllQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserModulesAllQuery(baseOptions: Apollo.QueryHookOptions<GetUserModulesAllQuery, GetUserModulesAllQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserModulesAllQuery, GetUserModulesAllQueryVariables>(GetUserModulesAllDocument, options);
+      }
+export function useGetUserModulesAllLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserModulesAllQuery, GetUserModulesAllQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserModulesAllQuery, GetUserModulesAllQueryVariables>(GetUserModulesAllDocument, options);
+        }
+export type GetUserModulesAllQueryHookResult = ReturnType<typeof useGetUserModulesAllQuery>;
+export type GetUserModulesAllLazyQueryHookResult = ReturnType<typeof useGetUserModulesAllLazyQuery>;
+export type GetUserModulesAllQueryResult = Apollo.QueryResult<GetUserModulesAllQuery, GetUserModulesAllQueryVariables>;
 export const GetUserUuidFromExternalIdDocument = gql`
     query getUserUUIDFromExternalId($externalId: String!) {
   users(limit: 1, where: {externalId: {_eq: $externalId}}) {

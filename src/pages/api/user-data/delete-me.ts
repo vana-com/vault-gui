@@ -68,8 +68,6 @@ export default async (
         .json({ error: "Invalid user", deleteSuccessful: false });
     }
 
-    console.log('ur user is', userId);
-
     /**
      * Here we actually start the "hard" deletion process. This includes:
      *  - (1) Data stored / uploaded
@@ -80,32 +78,45 @@ export default async (
      * (1) Delete file blobs from GCS (or other places in the future)
      */
 
-    // const modules = await sdk.getUserModules({ userId });
-    // const moduleLocations = modules.map((m) => m.urlToData));
-    // console.log(modules);
+    const {usersModules: modules} = await sdk.getUserModulesAll({ userId })
+    const moduleLocations = modules.map((mod) => mod.urlToData);
 
-    const files = ['/027fdca260cf006008997a606057b7fcf728b80ef313b4cab45942d4793d958dff/instagram/1659566833-843-joe.in.nyc_20220802.zip.enc'];
-    // const filePromises = files.map((file: string) => deleteFile(file))
-    console.log(files)
+    const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`
 
-    // const results = await Promise.all(filePromises);
-    // console.log(results)
+    // Make paths relative
+    const files = moduleLocations.map((fullPath: string) => fullPath?.replace(urlPrefix, ''))
+    const filePromises = files.map((file: string) => deleteFile(file))
+
+    const results = await Promise.allSettled(filePromises);
+    const passedFiles = results.filter((p) => p.status === 'fulfilled');
+    const failedFiles = results.filter((p) => p.status === 'rejected');
+
+    // TODO: What to do when file deletion failed on the first run???
+    if (failedFiles.length) {
+      console.log('some files failed')
+    }
+
+    passedFiles.forEach((f) => {
+      console.log('passed:', f)
+    })
 
     /**
-     * (2) Delete centralised SQL data in hasura
+     * (2) Delete SQL data from hasura
      */
 
     // (a) Delete records from user_modules
-    // - call sdk.deleteUserModules.graphql
-    // - confirm affected_rows count???
+    const { deleteManyUsersModules: deleteUserModulesRows } = await sdk.deleteUserModules({ userId })
+    console.log('user_modules', deleteUserModulesRows?.affected_rows)
 
     // (b) Delete records from users
-    // - call sdk.deleteVaultUser.graphql
-    // - confirm uuids match?
+    const { deleteOneUser: deleteUserRow } = await sdk.deleteVaultUser({ userId })
+    console.log('delete user', deleteUserRow)
 
     // 🎉 All done 🎉
 
-    return res.status(200).json({});
+    return res.status(200).json({
+      success: true,
+    });
   } catch (error: any) {
     log.error(error);
     return res.status(500).json({

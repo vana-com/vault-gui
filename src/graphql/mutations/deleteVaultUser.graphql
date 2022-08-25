@@ -1,5 +1,5 @@
-mutation deleteVaultUser($id: uuid = "") {
-  deleteOneUser(id: $id) {
+mutation deleteVaultUser($userId: uuid!) {
+  deleteOneUser(id: $userId) {
     id
   }
 }

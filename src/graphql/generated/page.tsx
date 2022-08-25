@@ -12,6 +12,8 @@ import { getApolloClient } from '../../utils/apolloClient';
 
 
 
+
+
 export async function getServerPageGetModule
     (options: Omit<Apollo.QueryOptions<Types.GetModuleQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
@@ -221,6 +223,41 @@ export const ssrGetUserFromExternalIdOrEmail = {
       getServerPage: getServerPageGetUserFromExternalIdOrEmail,
       withPage: withPageGetUserFromExternalIdOrEmail,
       usePage: useGetUserFromExternalIdOrEmail,
+    }
+export async function getServerPageGetUserModulesAll
+    (options: Omit<Apollo.QueryOptions<Types.GetUserModulesAllQueryVariables>, 'query'>, ctx?: any ){
+        const apolloClient = getApolloClient(ctx);
+        
+        const data = await apolloClient.query<Types.GetUserModulesAllQuery>({ ...options, query: Operations.GetUserModulesAllDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState: apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }
+export const useGetUserModulesAll = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserModulesAllQuery, Types.GetUserModulesAllQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.GetUserModulesAllDocument, options);
+};
+export type PageGetUserModulesAllComp = React.FC<{data?: Types.GetUserModulesAllQuery, error?: Apollo.ApolloError}>;
+export const withPageGetUserModulesAll = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserModulesAllQuery, Types.GetUserModulesAllQueryVariables>) => (WrappedComponent:PageGetUserModulesAllComp) : NextPage  => (props) => {
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.GetUserModulesAllDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; 
+export const ssrGetUserModulesAll = {
+      getServerPage: getServerPageGetUserModulesAll,
+      withPage: withPageGetUserModulesAll,
+      usePage: useGetUserModulesAll,
     }
 export async function getServerPageGetUserUuidFromExternalId
     (options: Omit<Apollo.QueryOptions<Types.GetUserUuidFromExternalIdQueryVariables>, 'query'>, ctx?: any ){

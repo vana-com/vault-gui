@@ -1,6 +1,6 @@
 query getUserModulesAll($userId: uuid!) {
   usersModules(
-    where: { userId: { _eq: $userId }, progress: { _eq: "COMPLETE" } }
+    where: { userId: { _eq: $userId } }
   ) {
     id
     module {
