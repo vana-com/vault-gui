@@ -9,7 +9,8 @@ import { onboardingCards } from "src/data";
 import { Children } from "src/types";
 
 /* 
-  Describe this component 
+  Onboard is a carousel of primary Vault features.
+  Makes use of this repo to create a carousel with Framer Motion: 
   https://github.com/samselikoff/2022-06-02-animated-carousel
  */
 
@@ -32,6 +33,7 @@ const variants = {
   exit: ({ direction, width }: Props) => ({
     x: direction * -width,
     opacity: 0,
+    transition: { duration: 0.2 },
   }),
 };
 
@@ -49,22 +51,22 @@ const Onboard = ({ children }: Children) => {
   const previous = usePrevious(count);
   const [ref, { width }] = useMeasure();
   const direction = count > previous ? 1 : -1;
-
   const cardIndex = count % onboardingCards.length;
 
   // TESTS
-  console.log("count", count);
-  console.log("width", width);
-  console.log("previous", previous);
+  // console.log("count", count);
+  // console.log("width", width);
+  // console.log("previous", previous);
 
   return (
     <>
       {/* 512px matches the modal's min-width */}
       <div
         ref={ref}
-        tw="h-[400px] w-[90vw] max-w-lg overflow-hidden relative"
         css={[
+          tw`h-[400px] w-[90vw] max-w-lg overflow-hidden relative`,
           tw`bg-gradient-to-b from-neutralDark`,
+          // add a blue blur over the top of the background gradient
           tw`before:(content-[""] absolute z-[1] inset-0 w-full h-1/4 rounded-[75%] blur-3xl opacity-[0.24] bg-[rgb(0, 143, 253)])`,
           css`
             ::before {
@@ -83,8 +85,6 @@ const Onboard = ({ children }: Children) => {
             exit="exit"
             custom={{ direction, width }}
             // transition={{ type: "spring", bounce: 0.3 }}
-            // transition={{ type: "inertia", velocity: 50 }}
-            // transition={{ duration: 1, type: "tween" }}
             tw="absolute h-full w-full"
           >
             <OnboardCard
