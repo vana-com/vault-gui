@@ -1,4 +1,5 @@
 import { DeleteOptions } from "@google-cloud/storage/build/src/nodejs-common/service-object";
+import log from "loglevel";
 
 import serverConfig from "src/config/server";
 
@@ -29,7 +30,7 @@ const deleteFile = async (fileName: string, bucketName?: string, options?: Delet
 
     return result
   } catch (err: any) {
-    console.log('deleteFile(): Error --', err)
+    log.error('deleteFile(): Error --', err)
     throw err;
   }
 };

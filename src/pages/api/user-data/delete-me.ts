@@ -1,4 +1,3 @@
-import { m } from "framer-motion";
 import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -6,7 +5,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
 import { getHasuraTokenPayload } from "src/utils";
-
 import { deleteFile } from "src/utils/gcp/deleteFile";
 
 /**
@@ -72,6 +70,7 @@ export default async (
      * Here we actually start the "hard" deletion process. This includes:
      *  - (1) Data stored / uploaded
      *  - (2) Generated account information 
+     *  - (?) Delete web3auth wallet / account ????
      */
 
     /**
@@ -93,7 +92,7 @@ export default async (
 
     // TODO: What to do when file deletion (partially) failed on the first run???
     if (failedFiles.length) {
-      console.log(`${failedFiles.length}/${results} deletions from gcp failed :(`)
+      log.error(`${failedFiles.length}/${results} deletions from gcp failed :(`)
     }
 
     /**
