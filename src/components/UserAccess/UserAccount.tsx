@@ -25,7 +25,8 @@ const UserAccount = ({ user, accountLoginService }: Props) => (
           <Text variant="note" weight="medium" tw="flex">
             Login:
             <Text variant="note" weight="semibold" tw="pl-1">
-              {accountLoginService}
+              {accountLoginService[0].toUpperCase() +
+                accountLoginService.slice(1)}
             </Text>
           </Text>
         )}

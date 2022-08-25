@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Navbar = ({ children }: Props) => {
-  const { user } = useUserContext();
+  const { user, loginType } = useUserContext();
   const { asPath } = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,7 +64,7 @@ const Navbar = ({ children }: Props) => {
             </button>
           }
         >
-          <UserAccount user={user} />
+          <UserAccount user={user} accountLoginService={loginType || ""} />
         </DropdownMenuControlled>
       )}
 
