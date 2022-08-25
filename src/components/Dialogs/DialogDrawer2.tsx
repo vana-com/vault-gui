@@ -5,6 +5,7 @@ import {
   Dialog,
   DialogCloseButton,
   DialogContent,
+  DialogContentProps,
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
@@ -13,19 +14,19 @@ import {
   styledTrigger,
 } from "src/components";
 
-interface Props {
+interface Props extends DialogContentProps {
   buttonNode: React.ReactNode;
   children: React.ReactNode;
 }
 
-const DialogDrawer2 = ({ buttonNode, children }: Props) => (
+const DialogDrawer2 = ({ buttonNode, children, variant }: Props) => (
   <Dialog>
     {/* do NOT pass trigger functions via asChild */}
     <DialogTrigger css={[styledTrigger, tw`rounded-2xl`]}>
       {buttonNode}
     </DialogTrigger>
     <DialogPortal>
-      <DialogOverlay forceMount css={styledDialogOverlay} />
+      <DialogOverlay forceMount css={styledDialogOverlay({ variant })} />
       <DialogContent forceMount css={styledDrawerContent}>
         {children}
         <DialogCloseButton />

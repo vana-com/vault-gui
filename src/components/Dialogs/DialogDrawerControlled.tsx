@@ -5,6 +5,7 @@ import {
   Dialog,
   DialogCloseButton,
   DialogContent,
+  DialogContentProps,
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
@@ -13,7 +14,7 @@ import {
   styledTrigger,
 } from "src/components";
 
-interface Props {
+interface Props extends DialogContentProps {
   buttonNode: React.ReactNode;
   children: React.ReactNode;
   open: boolean;
@@ -29,13 +30,14 @@ const DialogDrawerControlled = ({
   children,
   open,
   onOpenChange,
+  variant,
 }: Props) => (
   <Dialog onOpenChange={onOpenChange} open={open}>
     <DialogTrigger asChild css={styledTrigger}>
       {buttonNode}
     </DialogTrigger>
     <DialogPortal>
-      <DialogOverlay forceMount css={styledDialogOverlay} />
+      <DialogOverlay forceMount css={styledDialogOverlay({ variant })} />
       <DialogContent forceMount css={styledDrawerContent}>
         {children}
         <DialogCloseButton />
