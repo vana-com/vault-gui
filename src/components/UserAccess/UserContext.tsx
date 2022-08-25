@@ -31,7 +31,7 @@ interface UserContextProps {
   isAuthenticated: boolean;
   userWalletAddress: string | null;
   hasuraToken: string | null;
-  showOnboarding: boolean;
+  initialAccountLogin: boolean;
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -43,7 +43,7 @@ const UserContext = createContext<UserContextProps>({
   isAuthenticated: false,
   userWalletAddress: null,
   hasuraToken: null,
-  showOnboarding: false,
+  initialAccountLogin: false,
 });
 const useUserContext = () => useContext(UserContext);
 
@@ -65,7 +65,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [initialAccountLogin, setInitialAccountLogin] = useState(false);
   const { resolvedTheme } = useTheme();
 
   // Due to clashes between useTheme and web3Auth.uiConfig types,
@@ -96,9 +96,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
 
-      // setShowOnboarding
-      const hasSeenOnboarding = saveOnboardingStatus();
-      setShowOnboarding(!hasSeenOnboarding);
+      // setInitialAccountLogin
+      const hasPriorAccountLogin = savePriorAccountLoginStatus();
+      setInitialAccountLogin(!hasPriorAccountLogin);
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
@@ -108,16 +108,16 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  /* save isInitialLogin for use with onboarding status for a new user */
-  const saveOnboardingStatus = () => {
-    const hasSeenOnboarding =
-      localStorage.getItem("has-seen-onboarding") !== null;
+  /* save hasPriorAccountLogin for use with initial login UX for a new user, eg. onboarding status */
+  const savePriorAccountLoginStatus = () => {
+    const hasPriorAccountLogin =
+      localStorage.getItem("has-prior-account-login") !== null;
 
-    if (!hasSeenOnboarding) {
-      localStorage.setItem("has-seen-onboarding", "true");
+    if (!hasPriorAccountLogin) {
+      localStorage.setItem("has-prior-account-login", "true");
     }
 
-    return hasSeenOnboarding;
+    return hasPriorAccountLogin;
   };
 
   /**
@@ -299,7 +299,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         hasuraToken,
         isLoading: isWeb3AuthLoading || isUserLoading,
         isAuthenticated: !!user,
-        showOnboarding,
+        initialAccountLogin,
       }}
     >
       {children}
