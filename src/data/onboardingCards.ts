@@ -1,14 +1,8 @@
-const DESCRIPTION_OWNERSHIP = `Reclaim your data from applications you’ve been using for years, and bring it home. You own it.
+const DESCRIPTION_OWNERSHIP = `Reclaim your data from the apps you’ve been using for years, and bring it home. You own it.`;
 
-Now you can use your data in ways you didn’t think you could.`;
+const DESCRIPTION_SECURITY = `When you add data to your Vault, it's encrypted. This locks it, and only you can unlock it. We cannot read your data.`;
 
-const DESCRIPTION_SECURITY = `We lock it. Properly. Your Vault is cryptographically secured.
-
-Only you can unlock it. We cannot read your data.`;
-
-const DESCRIPTION_AGENCY = `Share your data where and when you want to.
-
-When you do, apps are given only the data you chose. The sharing connection is generated then destroyed on-the-fly.`;
+const DESCRIPTION_AGENCY = `Share your data where and how you want to. Pick and choose. It's all up to you.`;
 
 export const onboardingCards = [
   {
