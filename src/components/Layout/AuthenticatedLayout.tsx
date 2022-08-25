@@ -13,11 +13,6 @@ import { setLoginPath } from "src/utils";
 const AuthenticatedLayout = ({ children }: Children) => {
   const router = useRouter();
   const { isAuthenticated, isLoading } = useUserContext();
-  console.log(
-    "AuthenticatedLayout",
-    `isAuthenticated: ${isAuthenticated}`,
-    `isLoading: ${isLoading}`,
-  );
 
   if (isLoading) return <LayoutLoadingNoUser />;
 

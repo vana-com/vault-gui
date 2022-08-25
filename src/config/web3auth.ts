@@ -12,6 +12,9 @@ const WEB_3_AUTH_ETHEREUM_CHAIN_ID = process.env
   .NEXT_PUBLIC_WEB_3_AUTH_ETHEREUM_CHAIN_ID as string;
 const WEB_3_AUTH_NETWORK = process.env
   .NEXT_PUBLIC_WEB_3_AUTH_NETWORK as OPENLOGIN_NETWORK_TYPE;
+const ISSUER_OPENLOGIN = "https://api.openlogin.com";
+const JWKS_OPENLOGIN = "https://api.openlogin.com/jwks";
+const JWKS_WALLET = "https://auth-js-backend.tor.us/jwks";
 
 const web3AuthOptions: Web3AuthOptions = {
   clientId: WEB_3_AUTH_CLIENT_ID,
@@ -61,6 +64,9 @@ const openLoginModalConfig: ModalConfig = {
 };
 
 export default {
+  ISSUER_OPENLOGIN,
+  JWKS_OPENLOGIN,
+  JWKS_WALLET,
   WEB_3_AUTH_CLIENT_ID,
   WEB_3_AUTH_CLIENT_SECRET,
   web3AuthOptions,
