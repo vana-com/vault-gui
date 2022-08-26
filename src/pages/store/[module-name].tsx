@@ -100,7 +100,7 @@ const VaultStoragePage: NextPage = () => {
                 size="md"
                 variant="ghost"
                 tw="gap-2 font-normal text-labelSecondary focus:text-label"
-                prefix={<Icon icon="carbon:list-checked" height="1em" />}
+                prefix={<Icon icon="carbon:list-checked" />}
                 onClick={() => setIsOpen(true)}
               >
                 Request <span tw="hidden lg:inline">your {moduleName}</span>{" "}
