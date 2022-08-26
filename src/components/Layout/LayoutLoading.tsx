@@ -9,6 +9,7 @@ import {
   NavBreadcrumb,
   NavHeaderRule,
   Spinner,
+  TitleAndMetaTags,
 } from "src/components";
 import { NavCrumb } from "src/types";
 
@@ -18,6 +19,8 @@ interface Props {
 
 const LayoutLoading = ({ crumbs }: Props) => (
   <>
+    <TitleAndMetaTags color="black" title="Loading | Vana" />
+
     <LayoutPage showAsAuthenticated>
       <NavBreadcrumb crumbs={crumbs} />
       <NavHeaderRule />
