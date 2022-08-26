@@ -10,7 +10,6 @@ import {
   LayoutCanvasPattern,
   LayoutPage,
   Spinner,
-  TitleAndMetaTags,
 } from "src/components";
 // import { FocusStack } from "src/components/VaultShare";
 
@@ -26,7 +25,6 @@ const LayoutLoadingNoUser = () => {
 
   return (
     <>
-      <TitleAndMetaTags color="black" title="Loading | Vana" />
       {isSendPath ? (
         <Center tw="h-screen">
           <Spinner />
