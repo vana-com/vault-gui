@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,10 +6,9 @@ import tw from "twin.macro";
 
 import {
   AddData,
-  Button,
   Center,
   DataModule,
-  DialogModalControlled,
+  Group,
   LayoutCanvas,
   LayoutCanvasGrid,
   LayoutCanvasPattern,
@@ -19,7 +17,7 @@ import {
   NavBreadcrumb,
   NavHeader,
   NavHeaderRule,
-  Onboard,
+  OnboardInDialog,
   Stack,
   TitleAndMetaTags,
   ToastDefault,
@@ -93,7 +91,7 @@ const HomePage: NextPage = () => {
   // Programmtically setShowOnboarding based on isInitialAccountLogin
   useEffect(() => {
     if (isInitialAccountLogin) {
-      setTimeout(() => setShowOnboarding(true), 500);
+      setTimeout(() => setShowOnboarding(true), 750);
     }
   }, [isInitialAccountLogin]);
 
@@ -115,47 +113,30 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <LayoutPage>
-        {/* BREADCRUMB */}
+        {/* BREADCRUMB: show OnboardInDialog if !hasNoModules */}
         <NavBreadcrumb
           crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
         >
-          {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
-            <AddData modules={notStoredModules}>Add data</AddData>
-          )}
+          <Group tw="gap-3">
+            {!hasNoModules && (
+              <OnboardInDialog
+                showOnboarding={showOnboarding}
+                setShowOnboarding={setShowOnboarding}
+              />
+            )}
+            {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
+              <AddData modules={notStoredModules}>Add data</AddData>
+            )}
+          </Group>
         </NavBreadcrumb>
 
-        {/* HEADER */}
+        {/* HEADER: show OnboardInDialog if hasNoModules */}
         {hasNoModules ? (
           <NavHeader heading="What data do you want to add?">
-            <DialogModalControlled
-              onOpenChange={setShowOnboarding}
-              open={showOnboarding}
-              variant="onboard"
-              placement="center"
-              buttonNode={
-                <Button
-                  size="md"
-                  variant="ghost"
-                  tw="gap-2 font-normal text-labelSecondary focus:text-label"
-                  prefix={<Icon icon="carbon:information" />}
-                  onClick={() => setShowOnboarding(true)}
-                >
-                  How does this work?
-                </Button>
-              }
-            >
-              <Onboard>
-                {/* When the Onboard carousel is at the last card, Onboard children shows (ie. this button). We use children to change the button function at this point, so it closes the Onboard Dialog and leads the user to add data. */}
-                <Button
-                  variant="solid"
-                  size="lg"
-                  onClick={() => setShowOnboarding(false)}
-                  suffix={<Icon icon="carbon:arrow-right" />}
-                >
-                  Let&apos;s get started
-                </Button>
-              </Onboard>
-            </DialogModalControlled>
+            <OnboardInDialog
+              showOnboarding={showOnboarding}
+              setShowOnboarding={setShowOnboarding}
+            />
           </NavHeader>
         ) : (
           <NavHeaderRule />
