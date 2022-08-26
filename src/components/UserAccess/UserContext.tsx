@@ -110,7 +110,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  /* save hasPriorAccountLogin for use with initial login UX for a new user, eg. onboarding status */
+  /**
+   * Save hasPriorAccountLogin for use with initial login UX for a new user,
+   * eg. to show an onboarding status
+   * @returns boolean
+   */
   const savePriorAccountLoginStatus = () => {
     const hasPriorAccountLogin =
       localStorage.getItem("has-prior-account-login") !== null;
