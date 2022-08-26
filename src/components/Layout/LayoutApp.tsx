@@ -26,7 +26,7 @@ interface Props {
 
 const LayoutApp = ({ children, renderNavMobile }: Props) => {
   const router = useRouter();
-  const isSendPath = router.pathname === "/send";
+  const isSendPath = router.pathname === "/share";
 
   // Determine if viewport isMobile
   const [ref, { width }] = useMeasure();
