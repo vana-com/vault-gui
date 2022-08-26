@@ -34,7 +34,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
-  const { user, hasuraToken, initialAccountLogin } = useUserContext();
+  const { user, hasuraToken, isInitialAccountLogin } = useUserContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
@@ -90,12 +90,12 @@ const HomePage: NextPage = () => {
     }
   };
 
-  // Programmtically setShowOnboarding based on initialAccountLogin
+  // Programmtically setShowOnboarding based on isInitialAccountLogin
   useEffect(() => {
-    if (initialAccountLogin) {
+    if (isInitialAccountLogin) {
       setTimeout(() => setShowOnboarding(true), 500);
     }
-  }, [initialAccountLogin]);
+  }, [isInitialAccountLogin]);
 
   // Data state: hasura data is loading
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;

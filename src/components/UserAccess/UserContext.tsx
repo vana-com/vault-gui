@@ -32,7 +32,7 @@ interface UserContextProps {
   isAuthenticated: boolean;
   userWalletAddress: string | null;
   hasuraToken: string | null;
-  initialAccountLogin: boolean;
+  isInitialAccountLogin: boolean;
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -45,7 +45,7 @@ const UserContext = createContext<UserContextProps>({
   isAuthenticated: false,
   userWalletAddress: null,
   hasuraToken: null,
-  initialAccountLogin: false,
+  isInitialAccountLogin: false,
 });
 const useUserContext = () => useContext(UserContext);
 
@@ -68,7 +68,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [initialAccountLogin, setInitialAccountLogin] = useState(false);
+  const [isInitialAccountLogin, setIsInitialAccountLogin] = useState(false);
   const { resolvedTheme } = useTheme();
 
   // Due to clashes between useTheme and web3Auth.uiConfig types,
@@ -98,9 +98,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
 
-      // setInitialAccountLogin
+      // setIsInitialAccountLogin
       const hasPriorAccountLogin = savePriorAccountLoginStatus();
-      setInitialAccountLogin(!hasPriorAccountLogin);
+      setIsInitialAccountLogin(!hasPriorAccountLogin);
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
@@ -314,7 +314,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         hasuraToken,
         isLoading: isWeb3AuthLoading || isUserLoading,
         isAuthenticated: !!user,
-        initialAccountLogin,
+        isInitialAccountLogin,
       }}
     >
       {children}
