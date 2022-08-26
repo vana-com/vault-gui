@@ -1,5 +1,9 @@
 import * as jose from "jose";
 
+import config from "src/config";
+
+import { getJwtPayload } from "./getJwtPayload";
+
 /**
  * https://web3auth.io/docs/server-side-verification/social-login-users#verifying-jwt-token-idtoken
  * Retrieve the ID Token payload, issued by web3auth.
@@ -11,9 +15,13 @@ const getIdTokenPayload = async (
   idToken: string,
 ): Promise<jose.JWTPayload | null> => {
   try {
-    const jwks = jose.createRemoteJWKSet(
-      new URL("https://api.openlogin.com/jwks"),
-    );
+    const idTokenPayload = getJwtPayload(idToken);
+    const issuer = idTokenPayload.iss || idTokenPayload.issuer;
+    const jwksUrl =
+      issuer === config.ISSUER_OPENLOGIN
+        ? config.JWKS_OPENLOGIN
+        : config.JWKS_WALLET;
+    const jwks = jose.createRemoteJWKSet(new URL(jwksUrl));
     const jwtDecoded = await jose.jwtVerify(idToken, jwks, {
       algorithms: ["ES256"],
     });
