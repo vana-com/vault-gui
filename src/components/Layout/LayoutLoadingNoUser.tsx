@@ -22,7 +22,7 @@ import {
 
 const LayoutLoadingNoUser = () => {
   const router = useRouter();
-  const isSendPath = router.pathname === "/send";
+  const isSendPath = router.pathname === "/share";
 
   return (
     <>
