@@ -1,3 +1,4 @@
+import heapConfig from "./heap";
 import web3AuthConfig from "./web3auth";
 
 const generalConfig = {
@@ -34,4 +35,5 @@ const generalConfig = {
 export default {
   ...generalConfig,
   ...web3AuthConfig,
+  ...heapConfig,
 };

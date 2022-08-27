@@ -115,6 +115,7 @@ const VaultStoragePage: NextPage = () => {
         <LayoutCanvas>
           <LayoutCanvasPattern />
           <StorageUpload
+            userId={user?.id}
             moduleName={moduleName}
             createUserModule={createUserModuleCallback}
             externalId={user?.externalId ?? ""}

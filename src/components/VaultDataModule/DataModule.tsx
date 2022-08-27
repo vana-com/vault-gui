@@ -11,16 +11,26 @@ import {
   Stack,
 } from "src/components";
 import { ptBreadcrumbs } from "src/components/system/Styles";
+import config from "src/config";
 import { testModules } from "src/data";
 import { ModuleObj } from "src/types";
+import { heapTrackServerSide } from "src/utils";
+
+const { HEAP_EVENTS } = config;
 
 interface Props {
+  userId: string;
   module: ModuleObj;
   handleDeleteModule: () => void;
   isDeleting: boolean;
 }
 
-const DataModule = ({ module, handleDeleteModule, isDeleting }: Props) => (
+const DataModule = ({
+  userId,
+  module,
+  handleDeleteModule,
+  isDeleting,
+}: Props) => (
   <DialogDrawer2 buttonNode={<DataCard module={module} />}>
     <Stack
       css={[
@@ -54,7 +64,12 @@ const DataModule = ({ module, handleDeleteModule, isDeleting }: Props) => (
 
       {/* Delete */}
       <DeleteData
-        onDelete={handleDeleteModule}
+        onDelete={() => {
+          heapTrackServerSide(userId, HEAP_EVENTS.DATA_DELETED, {
+            module: module?.module?.name,
+          });
+          handleDeleteModule();
+        }}
         isDeleting={isDeleting}
         deletionName="this data block"
         buttonLabel="Delete this data block"

@@ -101,7 +101,7 @@ const HomePage: NextPage = () => {
   if (isHasuraLoading) return <LayoutLoading />;
 
   // Data state: has no modules
-  const hasNoModules = storedUsersModules.length === 0;
+  const hasNoStoredModules = storedUsersModules.length === 0;
 
   // TESTS
   // console.log("storedUsersModules", storedUsersModules);
@@ -115,23 +115,25 @@ const HomePage: NextPage = () => {
       <LayoutPage>
         {/* BREADCRUMB: show OnboardInDialog if !hasNoModules */}
         <NavBreadcrumb
-          crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
+          crumbs={hasNoStoredModules ? [navigationBreadcrumbs[0]] : undefined}
         >
           <Group tw="gap-3">
-            {!hasNoModules && (
+            {!hasNoStoredModules && (
               <OnboardInDialog
                 showOnboarding={showOnboarding}
                 setShowOnboarding={setShowOnboarding}
               />
             )}
             {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
-              <AddData modules={notStoredModules}>Add data</AddData>
+              <AddData userId={user?.id} modules={notStoredModules}>
+                Add data
+              </AddData>
             )}
           </Group>
         </NavBreadcrumb>
 
         {/* HEADER: show OnboardInDialog if hasNoModules */}
-        {hasNoModules ? (
+        {hasNoStoredModules ? (
           <NavHeader heading="What data do you want to add?">
             <OnboardInDialog
               showOnboarding={showOnboarding}
@@ -147,10 +149,14 @@ const HomePage: NextPage = () => {
           <LayoutCanvasPattern />
 
           {/* NO STORED MODULES: ADD A MODULE */}
-          {hasNoModules && (
+          {hasNoStoredModules && (
             <Center tw="min-h-[300px] relative">
               <Stack tw="gap-5 items-center">
-                <AddData buttonIsLarge modules={notStoredModules}>
+                <AddData
+                  userId={user?.id}
+                  buttonIsLarge
+                  modules={notStoredModules}
+                >
                   Start adding data
                 </AddData>
                 {/* TODO: add incentive copy as part of onboarding */}
@@ -167,13 +173,14 @@ const HomePage: NextPage = () => {
           )}
 
           {/* STORED MODULES */}
-          {!hasNoModules && (
+          {!hasNoStoredModules && (
             <LayoutCanvasGrid>
               {storedUsersModules.map((module) => (
                 <DataModule
+                  userId={user?.id}
                   key={module.id}
                   module={module}
-                  handleDeleteModule={() => deleteModule(module.id)}
+                  handleDeleteModule={async () => deleteModule(module.id)}
                   isDeleting={isDeleting}
                 />
               ))}
