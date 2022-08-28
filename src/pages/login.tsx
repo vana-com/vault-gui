@@ -10,6 +10,7 @@ import {
   LayoutCanvas,
   LayoutCanvasPattern,
   LayoutPage,
+  Link,
   LoginButton,
   Stack,
   Text,
@@ -17,6 +18,7 @@ import {
   useUserContext,
   WithIcon,
 } from "src/components";
+import config from "src/config";
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
@@ -63,7 +65,23 @@ const LoginPage: NextPage = () => {
                   tw="text-labelSecondary flex items-center gap-1"
                 >
                   <WithIcon prefix={<Icon icon="carbon:idea" />}>
-                    If you already have an account, use the same login method
+                    If you already have an account, use the same login method.
+                  </WithIcon>
+                </Text>
+                <Text
+                  variant="note"
+                  tw="text-labelSecondary flex items-center gap-1"
+                >
+                  <WithIcon prefix={<Icon icon="carbon:checkmark-outline" />}>
+                    If you don&apos;t have an account,{" "}
+                    <Link
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={config.vanaPublicURL}
+                    >
+                      Vana
+                    </Link>
+                    will create one for you.
                   </WithIcon>
                 </Text>
               </Stack>

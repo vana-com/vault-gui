@@ -21,11 +21,11 @@ import {
 
 const LayoutLoadingNoUser = () => {
   const router = useRouter();
-  const isSendPath = router.pathname === "/send";
+  const isSendPath = router.pathname === "/share";
 
   return (
     <>
-      <TitleAndMetaTags color="black" title="Loading | Vana" />
+      <TitleAndMetaTags color="black" title="Vault | Vana" />
       {isSendPath ? (
         <Center tw="h-screen">
           <Spinner />

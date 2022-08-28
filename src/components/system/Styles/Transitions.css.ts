@@ -44,9 +44,21 @@ const slideOutRight = keyframes({
   "100%": { transform: "translate3d(100%,0,0)" },
 });
 
+const slideDialogDownTop = keyframes({
+  "0%": { opacity: "0", transform: "translate(-50%, -48%) scale(.96)" },
+  "100%": { opacity: "1", transform: "translate(-50%, 0%) scale(1)" },
+});
+
+const slideDialogDown = keyframes({
+  "0%": { opacity: "0", transform: "translate(-50%, -48%) scale(.96)" },
+  "100%": { opacity: "1", transform: "translate(-50%, 50%) scale(1)" },
+});
+
 export {
   fadeIn,
   fadeOut,
+  slideDialogDown,
+  slideDialogDownTop,
   slideDownAndFade,
   slideInRight,
   slideLeftAndFade,
