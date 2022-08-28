@@ -36,4 +36,20 @@ const styledDrawerContent = [
   `,
 ];
 
-export { styledDrawerContent };
+const styledModalContent = [
+  tw`fixed top-0 bottom-0 right-0 outline-none bg-background h-full overflow-auto w-11/12 lg:max-w-[620px]`,
+  css`
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: forwards;
+    will-change: transform;
+    &[data-state="open"] {
+      animation-name: ${slideInRight};
+    }
+    &[data-state="closed"] {
+      animation-name: ${slideOutRight};
+    }
+  `,
+];
+
+export { styledDrawerContent, styledModalContent };

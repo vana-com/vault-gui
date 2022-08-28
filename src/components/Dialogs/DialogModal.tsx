@@ -6,23 +6,28 @@ import tw from "twin.macro";
 import {
   Dialog,
   DialogContent,
+  DialogContentProps,
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
-  DialogVariant,
+  styledDialogOverlay,
   styledMotionDiv,
 } from "src/components";
 import { TwCss } from "src/types";
 
 import * as styles from "./Dialog.css";
 
-interface Props {
+interface Props extends DialogContentProps {
   buttonNode: React.ReactNode;
   children: React.ReactNode;
-  variant?: DialogVariant;
 }
 
-const DialogModal = ({ buttonNode, children, variant = "full" }: Props) => {
+const DialogModal = ({
+  buttonNode,
+  children,
+  variant = "full",
+  placement = "top",
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,7 +46,7 @@ const DialogModal = ({ buttonNode, children, variant = "full" }: Props) => {
               >
                 <DialogOverlay
                   forceMount
-                  tw="fixed inset-0 bg-backgroundScrim backdrop-blur-sm"
+                  css={styledDialogOverlay({ variant })}
                 />
               </motion.div>
               <motion.div
@@ -53,7 +58,10 @@ const DialogModal = ({ buttonNode, children, variant = "full" }: Props) => {
               >
                 <DialogContent
                   forceMount
-                  css={styles.styledDialogContent({ variant }) as TwCss}
+                  css={[
+                    styles.styledDialogContent({ variant, placement }) as TwCss,
+                    tw`p-inset`,
+                  ]}
                 >
                   {children}
                 </DialogContent>

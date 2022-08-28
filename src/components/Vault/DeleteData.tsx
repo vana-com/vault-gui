@@ -6,7 +6,7 @@ import {
   Button,
   Center,
   DialogClose,
-  DialogModalAdd,
+  DialogModal,
   Group,
   Stack,
   Text,
@@ -25,7 +25,7 @@ const DeleteData = ({
   deletionName,
   onDelete,
 }: Props) => (
-  <DialogModalAdd
+  <DialogModal
     variant="confirm"
     buttonNode={
       <Button
@@ -75,7 +75,7 @@ const DeleteData = ({
         </Group>
       </Stack>
     </Center>
-  </DialogModalAdd>
+  </DialogModal>
 );
 
 export { DeleteData };

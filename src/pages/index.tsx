@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -8,6 +8,7 @@ import {
   AddData,
   Center,
   DataModule,
+  Group,
   LayoutCanvas,
   LayoutCanvasGrid,
   LayoutCanvasPattern,
@@ -16,11 +17,12 @@ import {
   NavBreadcrumb,
   NavHeader,
   NavHeaderRule,
+  OnboardInDialog,
   Stack,
   TitleAndMetaTags,
   ToastDefault,
+  useUserContext,
 } from "src/components";
-import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
 import {
   useGetModulesQuery,
@@ -30,10 +32,11 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
-  const { user, hasuraToken } = useUserContext();
+  const { user, hasuraToken, isInitialAccountLogin } = useUserContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -85,6 +88,13 @@ const HomePage: NextPage = () => {
     }
   };
 
+  // Programmtically setShowOnboarding based on isInitialAccountLogin
+  useEffect(() => {
+    if (isInitialAccountLogin) {
+      setTimeout(() => setShowOnboarding(true), 750);
+    }
+  }, [isInitialAccountLogin]);
+
   // Data state: hasura data is loading
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
 
@@ -103,18 +113,31 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <LayoutPage>
-        {/* BREADCRUMB */}
+        {/* BREADCRUMB: show OnboardInDialog if !hasNoModules */}
         <NavBreadcrumb
           crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
         >
-          {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
-            <AddData modules={notStoredModules}>Add data</AddData>
-          )}
+          <Group tw="gap-3">
+            {!hasNoModules && (
+              <OnboardInDialog
+                showOnboarding={showOnboarding}
+                setShowOnboarding={setShowOnboarding}
+              />
+            )}
+            {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
+              <AddData modules={notStoredModules}>Add data</AddData>
+            )}
+          </Group>
         </NavBreadcrumb>
 
-        {/* HEADER */}
+        {/* HEADER: show OnboardInDialog if hasNoModules */}
         {hasNoModules ? (
-          <NavHeader heading="What data do you want to add?" />
+          <NavHeader heading="What data do you want to add?">
+            <OnboardInDialog
+              showOnboarding={showOnboarding}
+              setShowOnboarding={setShowOnboarding}
+            />
+          </NavHeader>
         ) : (
           <NavHeaderRule />
         )}
