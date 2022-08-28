@@ -2,6 +2,7 @@
 export * from "./AppHook";
 export * from "./Boxes";
 export * from "./Card";
+export * from "./Carousel";
 export * from "./ColorMode";
 export * from "./Dialogs";
 export * from "./Icons";
@@ -15,6 +16,7 @@ export * from "./Toast";
 export * from "./UserAccess";
 export * from "./Vault";
 export * from "./VaultDataModule";
+export * from "./VaultOnboard";
 
 /* DESIGN SYSTEM PRIMITIVES */
 export * from "./system/Box";

@@ -5,7 +5,7 @@ import tw from "twin.macro";
 import {
   Button,
   DataCardButton,
-  DialogModalAdd,
+  DialogModal,
   Group,
   Link,
   Stack,
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const AddData = ({ modules, children, buttonIsLarge }: Props) => (
-  <DialogModalAdd
+  <DialogModal
     buttonNode={
       <Button
         type="button"
@@ -66,7 +66,7 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
         ))}
       </div>
     </Stack>
-  </DialogModalAdd>
+  </DialogModal>
 );
 
 export { AddData };

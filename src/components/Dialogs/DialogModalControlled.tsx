@@ -9,10 +9,11 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogTrigger,
+  styledDialogContent,
   styledDialogOverlay,
-  styledDrawerContent,
   styledTrigger,
 } from "src/components";
+import { TwCss } from "src/types";
 
 interface Props extends DialogContentProps {
   buttonNode: React.ReactNode;
@@ -22,14 +23,15 @@ interface Props extends DialogContentProps {
 }
 
 /* 
-  Exactly the same as DialogDrawer but passing open and onOpenChnage for manipulation on the parent 
+  Exactly the same as DialogDrawer but passing open and onOpenChange for manipulation on the parent 
  */
 
-const DialogDrawerControlled = ({
+const DialogModalControlled = ({
   buttonNode,
   children,
   open,
   onOpenChange,
+  placement,
   variant,
 }: Props) => (
   <Dialog onOpenChange={onOpenChange} open={open}>
@@ -38,7 +40,15 @@ const DialogDrawerControlled = ({
     </DialogTrigger>
     <DialogPortal>
       <DialogOverlay forceMount css={styledDialogOverlay({ variant })} />
-      <DialogContent forceMount css={styledDrawerContent}>
+      <DialogContent
+        forceMount
+        css={
+          styledDialogContent({
+            variant,
+            placement,
+          }) as TwCss
+        }
+      >
         {children}
         <DialogCloseButton />
       </DialogContent>
@@ -46,4 +56,4 @@ const DialogDrawerControlled = ({
   </Dialog>
 );
 
-export { DialogDrawerControlled };
+export { DialogModalControlled };

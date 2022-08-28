@@ -5,4 +5,3 @@ export * from "./CardHeadingModule";
 export * from "./DataCard";
 export * from "./DataCardButton";
 export * from "./DataCardDetails";
-// export * from "./CardResizable";
