@@ -48,13 +48,13 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
           </Text>
           {/* TODO: LEAVE FOR NOW, will reintroduce again next cycle */}
           <Text variant="note" color="labelTertiary">
-            Don&apos;t see the app you want?{" "}
+            Don&apos;t find what you&apos;re looking for?{" "}
             <Link
               target="_blank"
               rel="noopener noreferrer"
               href={config.vanaSupportedAppsFeedback}
             >
-              Tell us more
+              Request it.
             </Link>
           </Text>
         </Group>
