@@ -73,7 +73,7 @@ const heapTrackServerSide = async (
     userId,
     eventName,
     properties: properties || {},
-    isAddAccountProps: true,
+    isAddAccountProps: false,
   };
 
   axios.post("/api/d", body);
