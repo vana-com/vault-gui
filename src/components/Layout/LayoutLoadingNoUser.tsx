@@ -12,7 +12,6 @@ import {
   Spinner,
   TitleAndMetaTags,
 } from "src/components";
-// import { FocusStack } from "src/components/VaultShare";
 
 /* 
   A one-off: we only show this when authenticating a user. 

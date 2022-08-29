@@ -90,16 +90,13 @@ const NavAsideContent = () => {
               Security &amp; privacy
             </Text>
           </Link> */}
-          <Text
-            variant="note"
-            weight="medium"
-            tw="relative h-navLinkH px-inset pt-1 text-labelSecondary"
-          >
-            Security &amp; privacy{" "}
-            <Text as="span" variant="footnote" tw="text-labelTertiary">
-              Coming soon
-            </Text>
-          </Text>
+          <div css={styledNavLinkBox}>
+            <TooltipDefault label="Coming soon">
+              <Text variant="note" weight="medium" tw="hover:cursor-pointer">
+                Security &amp; privacy
+              </Text>
+            </TooltipDefault>
+          </div>
         </Stack>
       </div>
     </>
