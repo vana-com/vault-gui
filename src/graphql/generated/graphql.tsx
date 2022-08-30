@@ -19497,20 +19497,20 @@ export type DeleteUserModulesMutationVariables = Exact<{
 
 export type DeleteUserModulesMutation = { __typename?: 'mutation_root', deleteManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
 
+export type DeleteUserModulesByIdMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  modulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
+}>;
+
+
+export type DeleteUserModulesByIdMutation = { __typename?: 'mutation_root', deleteManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
+
 export type DeleteVaultUserMutationVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
 export type DeleteVaultUserMutation = { __typename?: 'mutation_root', deleteOneUser?: { __typename?: 'Users', id: any } | null };
-
-export type SoftDeleteUserModulesMutationVariables = Exact<{
-  userId: Scalars['uuid'];
-  usersModulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
-}>;
-
-
-export type SoftDeleteUserModulesMutation = { __typename?: 'mutation_root', updateManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
 
 export type UpdateUserExternalIdMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -19791,6 +19791,42 @@ export function useDeleteUserModulesMutation(baseOptions?: Apollo.MutationHookOp
 export type DeleteUserModulesMutationHookResult = ReturnType<typeof useDeleteUserModulesMutation>;
 export type DeleteUserModulesMutationResult = Apollo.MutationResult<DeleteUserModulesMutation>;
 export type DeleteUserModulesMutationOptions = Apollo.BaseMutationOptions<DeleteUserModulesMutation, DeleteUserModulesMutationVariables>;
+export const DeleteUserModulesByIdDocument = gql`
+    mutation deleteUserModulesById($userId: uuid!, $modulesIds: [uuid!]) {
+  deleteManyUsersModules(
+    where: {userId: {_eq: $userId}, moduleId: {_in: $modulesIds}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteUserModulesByIdMutationFn = Apollo.MutationFunction<DeleteUserModulesByIdMutation, DeleteUserModulesByIdMutationVariables>;
+
+/**
+ * __useDeleteUserModulesByIdMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserModulesByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserModulesByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserModulesByIdMutation, { data, loading, error }] = useDeleteUserModulesByIdMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      modulesIds: // value for 'modulesIds'
+ *   },
+ * });
+ */
+export function useDeleteUserModulesByIdMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserModulesByIdMutation, DeleteUserModulesByIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserModulesByIdMutation, DeleteUserModulesByIdMutationVariables>(DeleteUserModulesByIdDocument, options);
+      }
+export type DeleteUserModulesByIdMutationHookResult = ReturnType<typeof useDeleteUserModulesByIdMutation>;
+export type DeleteUserModulesByIdMutationResult = Apollo.MutationResult<DeleteUserModulesByIdMutation>;
+export type DeleteUserModulesByIdMutationOptions = Apollo.BaseMutationOptions<DeleteUserModulesByIdMutation, DeleteUserModulesByIdMutationVariables>;
 export const DeleteVaultUserDocument = gql`
     mutation deleteVaultUser($userId: uuid!) {
   deleteOneUser(id: $userId) {
@@ -19824,43 +19860,6 @@ export function useDeleteVaultUserMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteVaultUserMutationHookResult = ReturnType<typeof useDeleteVaultUserMutation>;
 export type DeleteVaultUserMutationResult = Apollo.MutationResult<DeleteVaultUserMutation>;
 export type DeleteVaultUserMutationOptions = Apollo.BaseMutationOptions<DeleteVaultUserMutation, DeleteVaultUserMutationVariables>;
-export const SoftDeleteUserModulesDocument = gql`
-    mutation softDeleteUserModules($userId: uuid!, $usersModulesIds: [uuid!]) {
-  updateManyUsersModules(
-    where: {id: {_in: $usersModulesIds}, userId: {_eq: $userId}}
-    _set: {progress: "DELETED"}
-  ) {
-    affected_rows
-  }
-}
-    `;
-export type SoftDeleteUserModulesMutationFn = Apollo.MutationFunction<SoftDeleteUserModulesMutation, SoftDeleteUserModulesMutationVariables>;
-
-/**
- * __useSoftDeleteUserModulesMutation__
- *
- * To run a mutation, you first call `useSoftDeleteUserModulesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSoftDeleteUserModulesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [softDeleteUserModulesMutation, { data, loading, error }] = useSoftDeleteUserModulesMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *      usersModulesIds: // value for 'usersModulesIds'
- *   },
- * });
- */
-export function useSoftDeleteUserModulesMutation(baseOptions?: Apollo.MutationHookOptions<SoftDeleteUserModulesMutation, SoftDeleteUserModulesMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SoftDeleteUserModulesMutation, SoftDeleteUserModulesMutationVariables>(SoftDeleteUserModulesDocument, options);
-      }
-export type SoftDeleteUserModulesMutationHookResult = ReturnType<typeof useSoftDeleteUserModulesMutation>;
-export type SoftDeleteUserModulesMutationResult = Apollo.MutationResult<SoftDeleteUserModulesMutation>;
-export type SoftDeleteUserModulesMutationOptions = Apollo.BaseMutationOptions<SoftDeleteUserModulesMutation, SoftDeleteUserModulesMutationVariables>;
 export const UpdateUserExternalIdDocument = gql`
     mutation updateUserExternalId($userId: uuid!, $externalId: String!) {
   updateOneUser(pk_columns: {id: $userId}, _set: {externalId: $externalId}) {

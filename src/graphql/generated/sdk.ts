@@ -19497,20 +19497,20 @@ export type DeleteUserModulesMutationVariables = Exact<{
 
 export type DeleteUserModulesMutation = { __typename?: 'mutation_root', deleteManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
 
+export type DeleteUserModulesByIdMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  modulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
+}>;
+
+
+export type DeleteUserModulesByIdMutation = { __typename?: 'mutation_root', deleteManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
+
 export type DeleteVaultUserMutationVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
 export type DeleteVaultUserMutation = { __typename?: 'mutation_root', deleteOneUser?: { __typename?: 'Users', id: any } | null };
-
-export type SoftDeleteUserModulesMutationVariables = Exact<{
-  userId: Scalars['uuid'];
-  usersModulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
-}>;
-
-
-export type SoftDeleteUserModulesMutation = { __typename?: 'mutation_root', updateManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
 
 export type UpdateUserExternalIdMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -19681,20 +19681,19 @@ export const DeleteUserModulesDocument = gql`
   }
 }
     `;
+export const DeleteUserModulesByIdDocument = gql`
+    mutation deleteUserModulesById($userId: uuid!, $modulesIds: [uuid!]) {
+  deleteManyUsersModules(
+    where: {userId: {_eq: $userId}, moduleId: {_in: $modulesIds}}
+  ) {
+    affected_rows
+  }
+}
+    `;
 export const DeleteVaultUserDocument = gql`
     mutation deleteVaultUser($userId: uuid!) {
   deleteOneUser(id: $userId) {
     id
-  }
-}
-    `;
-export const SoftDeleteUserModulesDocument = gql`
-    mutation softDeleteUserModules($userId: uuid!, $usersModulesIds: [uuid!]) {
-  updateManyUsersModules(
-    where: {id: {_in: $usersModulesIds}, userId: {_eq: $userId}}
-    _set: {progress: "DELETED"}
-  ) {
-    affected_rows
   }
 }
     `;
@@ -19873,11 +19872,11 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     deleteUserModules(variables: DeleteUserModulesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteUserModulesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserModulesMutation>(DeleteUserModulesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUserModules', 'mutation');
     },
+    deleteUserModulesById(variables: DeleteUserModulesByIdMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteUserModulesByIdMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteUserModulesByIdMutation>(DeleteUserModulesByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteUserModulesById', 'mutation');
+    },
     deleteVaultUser(variables: DeleteVaultUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteVaultUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteVaultUserMutation>(DeleteVaultUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteVaultUser', 'mutation');
-    },
-    softDeleteUserModules(variables: SoftDeleteUserModulesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SoftDeleteUserModulesMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SoftDeleteUserModulesMutation>(SoftDeleteUserModulesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'softDeleteUserModules', 'mutation');
     },
     updateUserExternalId(variables: UpdateUserExternalIdMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateUserExternalIdMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserExternalIdMutation>(UpdateUserExternalIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateUserExternalId', 'mutation');

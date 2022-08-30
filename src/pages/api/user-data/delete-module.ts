@@ -5,6 +5,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
 import { getHasuraTokenPayload } from "src/utils";
+import { deleteFile } from "src/utils/gcp/deleteFile";
 
 /**
  * Delete the file in objects store for a specific users_modules rows and set the
@@ -61,52 +62,53 @@ export default async (
         .json({ error: "Invalid user", deleteSuccessful: false });
     }
 
-    const { usersModules } = await sdk.getUsersModulesFromIds({
+    const { usersModules: modules } = await sdk.getUsersModulesFromIds({
       usersModulesIds,
       userId,
     });
 
-    const usersModulesIdsToSoftDelete = [];
-    const filesDeleted = [];
-    for (let i = 0; i < usersModules.length; i++) {
-      const { urlToData } = usersModules[i];
-      const urlParts = urlToData.split(`${serverConfig.userDataBucket.name}/`);
-      if (urlParts.length === 2) {
-        const fileName = urlParts[1];
-        const file = serverConfig.userDataBucket.file(fileName);
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          const [response] = await file.delete();
+    /**
+     * 1) Delete file blobs from GCS (or other places in the future)
+     */
 
-          if (response.statusCode >= 200 && response.statusCode < 300) {
-            usersModulesIdsToSoftDelete.push(usersModules[i].id);
-            filesDeleted.push(fileName);
-          }
-        } catch (e: any) {
-          if (e.code === 404) {
-            console.warn(`File not found on GCS: ${fileName}`);
-            usersModulesIdsToSoftDelete.push(usersModules[i].id);
-            filesDeleted.push(fileName);
-          } else {
-            console.error("Error deleting file", e);
-          }
-        }
-      }
+    const moduleLocations = modules.map((mod) => mod.urlToData);
+    const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`;
+
+    // Make paths relative
+    const files = moduleLocations.map((fullPath: string) =>
+      fullPath?.replace(urlPrefix, ""),
+    );
+    const filePromises = files.map((file: string) => deleteFile(file));
+
+    const results = await Promise.allSettled(filePromises);
+    const failedFiles = results.filter((p) => p.status === "rejected");
+
+    if (failedFiles.length) {
+      log.error(
+        `${failedFiles.length}/${results} deletions from gcp failed :(`,
+      );
+      throw new Error(`Could not delete ${failedFiles.length} files from gcp`);
     }
 
-    console.log("usersModulesIdsToSoftDelete", usersModulesIdsToSoftDelete);
+    /**
+     * 2) Delete user module rows
+     */
+    const { deleteManyUsersModules: deleteUserModulesRows } =
+      await sdk.deleteUserModulesById({ userId, modulesIds: usersModulesIds });
 
-    await sdk.softDeleteUserModules({
-      userId,
-      usersModulesIds: usersModulesIdsToSoftDelete,
-    });
+    if (deleteUserModulesRows?.affected_rows !== modules.length) {
+      throw new Error(
+        `Deleted hasura user module count did not match expected length -- affected_rows:${deleteUserModulesRows?.affected_rows} modules:${modules.length}`,
+      );
+    }
 
-    return res.status(200).json({ filesDeleted, deleteSuccessful: true });
+    return res.status(200).json({ deleteSuccessful: true });
   } catch (error: any) {
     log.error(error);
     return res.status(500).json({
       deleteSuccessful: false,
       message: "Error while deleting user data",
+      error,
     });
   }
 };

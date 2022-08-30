@@ -17,12 +17,11 @@ export default async (
 ): Promise<void> => {
   const { hasuraToken } = req.body;
   try {
-
     // Make sure they have passed in an auth token
     if (!hasuraToken) {
       return res.status(400).json({
-        deleteSuccessful: false,
-        message: "Missing required parameters: hasuraToken",
+        success: false,
+        error: "Missing required parameters: hasuraToken",
       });
     }
 
@@ -33,15 +32,14 @@ export default async (
     // Validate token & request "trusted" payload with needed identity information
     if (!hasuraTokenPayload) {
       return res.status(401).json({
-        deleteSuccessful: false,
-        message: "User does not have a valid Hasura token. Please login again.",
+        success: false,
+        error: "User does not have a valid Hasura token. Please login again.",
       });
     }
 
     const externalId =
       hasuraTokenPayload["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
 
-    
     const graphQLClient = new GraphQLClient(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
       {
@@ -61,15 +59,13 @@ export default async (
 
     if (!userId) {
       // No id can be found for the user
-      return res
-        .status(400)
-        .json({ error: "Invalid user", deleteSuccessful: false });
+      return res.status(400).json({ error: "Invalid user", sucess: false });
     }
 
     /**
      * Here we actually start the "hard" deletion process. This includes:
      *  - (1) Data stored / uploaded
-     *  - (2) Generated account information 
+     *  - (2) Generated account information
      *  - (?) Delete web3auth wallet / account ????
      */
 
@@ -77,22 +73,26 @@ export default async (
      * (1) Delete file blobs from GCS (or other places in the future)
      */
 
-    const { usersModules: modules } = await sdk.getUserModulesAll({ userId })
+    const { usersModules: modules } = await sdk.getUserModulesAll({ userId });
     const moduleLocations = modules.map((mod) => mod.urlToData);
 
-    const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`
+    const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`;
 
     // Make paths relative
-    const files = moduleLocations.map((fullPath: string) => fullPath?.replace(urlPrefix, ''))
-    const filePromises = files.map((file: string) => deleteFile(file))
+    const files = moduleLocations.map((fullPath: string) =>
+      fullPath?.replace(urlPrefix, ""),
+    );
+    const filePromises = files.map((file: string) => deleteFile(file));
 
     const results = await Promise.allSettled(filePromises);
-    const passedFiles = results.filter((p) => p.status === 'fulfilled');
-    const failedFiles = results.filter((p) => p.status === 'rejected');
+    const passedFiles = results.filter((p) => p.status === "fulfilled");
+    const failedFiles = results.filter((p) => p.status === "rejected");
 
-    // TODO: What to do when file deletion (partially) failed on the first run???
     if (failedFiles.length) {
-      log.error(`${failedFiles.length}/${results} deletions from gcp failed :(`)
+      log.error(
+        `${failedFiles.length}/${results} deletions from gcp failed :(`,
+      );
+      throw new Error(`Could not delete ${failedFiles.length} files from gcp`);
     }
 
     /**
@@ -100,17 +100,32 @@ export default async (
      */
 
     // (a) Delete records from user_modules
-    const { deleteManyUsersModules: deleteUserModulesRows } = await sdk.deleteUserModules({ userId })
+    const { deleteManyUsersModules: deleteUserModulesRows } =
+      await sdk.deleteUserModules({ userId });
+
+    if (deleteUserModulesRows?.affected_rows !== modules.length) {
+      throw new Error(
+        `Deleted hasura user module count did not match expected length -- affected_rows:${deleteUserModulesRows?.affected_rows} modules:${modules.length}`,
+      );
+    }
 
     // (b) Delete records from users
-    const { deleteOneUser: deleteUserRow } = await sdk.deleteVaultUser({ userId })
+    const { deleteOneUser: deleteUserRow } = await sdk.deleteVaultUser({
+      userId,
+    });
+
+    if (deleteUserRow?.id !== userId) {
+      throw new Error(
+        `Could not delete hasura user row -- found '${deleteUserRow?.id}' instead of '${userId}'`,
+      );
+    }
 
     // 🎉 All done 🎉
     return res.status(200).json({
       success: true,
       deletedUploadFiles: passedFiles?.length,
       deletedUserModulesVana: deleteUserModulesRows?.affected_rows,
-      deleteUserIdVana: deleteUserRow?.id
+      deleteUserIdVana: deleteUserRow?.id,
     });
   } catch (error: any) {
     log.error(error);
