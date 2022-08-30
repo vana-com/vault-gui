@@ -13,17 +13,24 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Module } from "src/types";
+import { heapTrackServerSide } from "src/utils";
+
+const { HEAP_EVENTS } = config;
 
 interface Props {
+  userId: string;
   modules: Module[] | undefined;
   children: React.ReactNode;
   buttonIsLarge?: boolean;
 }
 
-const AddData = ({ modules, children, buttonIsLarge }: Props) => (
+const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
   <DialogModal
     buttonNode={
       <Button
+        onClick={() => {
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA);
+        }}
         type="button"
         variant="solid"
         size={buttonIsLarge ? "xl" : "md"}
