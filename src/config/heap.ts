@@ -10,6 +10,6 @@ enum HEAP_EVENTS {
 
 export default {
   HEAP_EVENTS,
-  HEAP_API_URL: process.env.HEAP_API_URL as string,
-  HEAP_APP_ID: process.env.HEAP_APP_ID as string,
+  HEAP_API_URL: process.env.NEXT_PUBLIC_HEAP_API_URL as string,
+  HEAP_APP_ID: process.env.NEXT_PUBLIC_HEAP_APP_ID as string,
 };

@@ -18,6 +18,7 @@ import config from "src/config";
 import { Users } from "src/graphql/generated";
 import {
   getJwtPayload,
+  heapAddAccountPropsServerSide,
   heapIdentify,
   heapTrackServerSide,
   setLoginPath,
@@ -112,6 +113,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
       const hasPriorAccountLogin = savePriorAccountLoginStatus();
       setIsInitialAccountLogin(!hasPriorAccountLogin);
       heapTrackServerSide(userFromResponse?.id, HEAP_EVENTS.LOGIN, {
+        "Login Type": loginTypeLocallyScoped,
+      });
+      heapAddAccountPropsServerSide(userFromResponse?.id, {
         "Login Type": loginTypeLocallyScoped,
       });
       // Associates the Heap Tag running in the user's browser with the user

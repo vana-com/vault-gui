@@ -15,11 +15,12 @@ export default async (
 ): Promise<void> => {
   const { userId, eventName, isAddAccountProps, properties } = req.body;
 
-  const missingRequiredParams = !(
-    isAddAccountProps !== undefined &&
-    userId &&
-    eventName
-  );
+  const correctParamsForTypeOfEvent = isAddAccountProps
+    ? userId
+    : userId && eventName;
+
+  const missingRequiredParams =
+    isAddAccountProps === undefined || !correctParamsForTypeOfEvent;
 
   if (missingRequiredParams) {
     return res.status(400).json({
@@ -31,7 +32,7 @@ export default async (
     if (isAddAccountProps) {
       addAccountPropsToCallInServer(userId, properties);
     } else {
-      trackEventToCallInServer(userId, properties);
+      trackEventToCallInServer(userId, eventName, properties);
     }
 
     return res.status(200).json({
