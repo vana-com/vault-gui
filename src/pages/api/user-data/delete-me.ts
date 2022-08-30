@@ -8,8 +8,8 @@ import { getHasuraTokenPayload } from "src/utils";
 import { deleteFile } from "src/utils/gcp/deleteFile";
 
 /**
- * Delete the file in objects store for a specific users_modules rows and set the
- * status of the associated row in users_modules is set to DELETED.
+ * FULLY deletes a user account -- removes all uploaded from gcp, modules rows from hasura, and even the user account from hasura as well
+ * only supports "vault-only" accounts currently
  */
 export default async (
   req: NextApiRequest,
