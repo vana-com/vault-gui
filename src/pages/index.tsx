@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -8,6 +8,7 @@ import {
   AddData,
   Center,
   DataModule,
+  Group,
   LayoutCanvas,
   LayoutCanvasGrid,
   LayoutCanvasPattern,
@@ -16,11 +17,12 @@ import {
   NavBreadcrumb,
   NavHeader,
   NavHeaderRule,
+  OnboardInDialog,
   Stack,
   TitleAndMetaTags,
   ToastDefault,
+  useUserContext,
 } from "src/components";
-import { useUserContext } from "src/components/UserAccess/UserContext";
 import { navigationBreadcrumbs } from "src/data";
 import {
   useGetModulesQuery,
@@ -30,10 +32,11 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
-  const { user, hasuraToken } = useUserContext();
+  const { user, hasuraToken, isInitialAccountLogin } = useUserContext();
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -85,13 +88,20 @@ const HomePage: NextPage = () => {
     }
   };
 
+  // Programmtically setShowOnboarding based on isInitialAccountLogin
+  useEffect(() => {
+    if (isInitialAccountLogin) {
+      setTimeout(() => setShowOnboarding(true), 750);
+    }
+  }, [isInitialAccountLogin]);
+
   // Data state: hasura data is loading
   const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
 
   if (isHasuraLoading) return <LayoutLoading />;
 
   // Data state: has no modules
-  const hasNoModules = storedUsersModules.length === 0;
+  const hasNoStoredModules = storedUsersModules.length === 0;
 
   // TESTS
   // console.log("storedUsersModules", storedUsersModules);
@@ -103,18 +113,33 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <LayoutPage>
-        {/* BREADCRUMB */}
+        {/* BREADCRUMB: show OnboardInDialog if !hasNoModules */}
         <NavBreadcrumb
-          crumbs={hasNoModules ? [navigationBreadcrumbs[0]] : undefined}
+          crumbs={hasNoStoredModules ? [navigationBreadcrumbs[0]] : undefined}
         >
-          {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
-            <AddData modules={notStoredModules}>Add data</AddData>
-          )}
+          <Group tw="gap-3">
+            {!hasNoStoredModules && (
+              <OnboardInDialog
+                showOnboarding={showOnboarding}
+                setShowOnboarding={setShowOnboarding}
+              />
+            )}
+            {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
+              <AddData userId={user?.id} modules={notStoredModules}>
+                Add data
+              </AddData>
+            )}
+          </Group>
         </NavBreadcrumb>
 
-        {/* HEADER */}
-        {hasNoModules ? (
-          <NavHeader heading="What data do you want to add?" />
+        {/* HEADER: show OnboardInDialog if hasNoModules */}
+        {hasNoStoredModules ? (
+          <NavHeader heading="What data do you want to add?">
+            <OnboardInDialog
+              showOnboarding={showOnboarding}
+              setShowOnboarding={setShowOnboarding}
+            />
+          </NavHeader>
         ) : (
           <NavHeaderRule />
         )}
@@ -124,10 +149,14 @@ const HomePage: NextPage = () => {
           <LayoutCanvasPattern />
 
           {/* NO STORED MODULES: ADD A MODULE */}
-          {hasNoModules && (
+          {hasNoStoredModules && (
             <Center tw="min-h-[300px] relative">
               <Stack tw="gap-5 items-center">
-                <AddData buttonIsLarge modules={notStoredModules}>
+                <AddData
+                  userId={user?.id}
+                  buttonIsLarge
+                  modules={notStoredModules}
+                >
                   Start adding data
                 </AddData>
                 {/* TODO: add incentive copy as part of onboarding */}
@@ -144,13 +173,14 @@ const HomePage: NextPage = () => {
           )}
 
           {/* STORED MODULES */}
-          {!hasNoModules && (
+          {!hasNoStoredModules && (
             <LayoutCanvasGrid>
               {storedUsersModules.map((module) => (
                 <DataModule
+                  userId={user?.id}
                   key={module.id}
                   module={module}
-                  handleDeleteModule={() => deleteModule(module.id)}
+                  handleDeleteModule={async () => deleteModule(module.id)}
                   isDeleting={isDeleting}
                 />
               ))}

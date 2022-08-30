@@ -22,7 +22,7 @@ const VaultSharePageWithStatus = ({
   if (uiStatus === ShareUiStatus.HASURA_IS_LOADING)
     lede = `Do you want to give ${appName} access to your Vault?`;
   if (uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA)
-    lede = "You don't have any Vault data to share";
+    lede = "You do not have Vault data that the application is requesting";
   if (uiStatus === ShareUiStatus.USER_HAS_ACCEPTED)
     lede = `Sending Vault data to ${appName}`;
 

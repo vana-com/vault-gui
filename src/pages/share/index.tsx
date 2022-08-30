@@ -15,9 +15,11 @@ import {
   VaultSharePageTitle,
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
+import config from "src/config";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
+import { heapTrackServerSide } from "src/utils";
 import {
   decryptData,
   extractData,
@@ -25,6 +27,8 @@ import {
   PipelineParams,
   queryData,
 } from "src/utils/pipeline";
+
+const { HEAP_EVENTS } = config;
 
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
@@ -197,6 +201,7 @@ const SendPage: NextPage = () => {
   };
 
   const onDataRequestApproval = async () => {
+    heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_APPROVED);
     setUserHasAcceptedSharingRequest(true);
 
     console.log("Starting the sharing process...");
@@ -252,7 +257,10 @@ const SendPage: NextPage = () => {
         {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
           <PermissionContract
             onAccept={onDataRequestApproval}
-            onDeny={() => closePopup(window)}
+            onDeny={() => {
+              heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
+              closePopup(window);
+            }}
           >
             <PermissionList query={cleanQueryString} />
           </PermissionContract>

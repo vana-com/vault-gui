@@ -3,17 +3,17 @@ import useMeasure from "react-use-measure";
 import tw from "twin.macro";
 
 /**
- * Don't forget to wrap your markup with MotionConfig when using this component.
+ * This component must be wrapped with MotionConfig when used.
  * import { MotionConfig } from "framer-motion"
  * From: https://github.com/samselikoff/2022-06-09-resizable-panel
  */
 
-interface CardResizableProps {
+interface Props {
   children: React.ReactNode;
   boxProps?: any;
 }
 
-export function CardResizable({ children, boxProps }: CardResizableProps) {
+export function CardResizable({ children, boxProps }: Props) {
   const [ref, { height }] = useMeasure();
 
   return (
@@ -28,13 +28,16 @@ export function CardResizable({ children, boxProps }: CardResizableProps) {
           css={[height ? tw`absolute` : tw`relative`]}
           initial={{
             x: 384,
+            opacity: 0,
           }}
           animate={{
             x: 0,
+            opacity: 100,
             // transition: { duration: duration / 2, delay: duration / 2 },
           }}
           exit={{
             x: -384,
+            opacity: 0,
             // transition: { duration: duration / 2 },
           }}
         >
@@ -47,10 +50,10 @@ export function CardResizable({ children, boxProps }: CardResizableProps) {
   );
 }
 
-/**
- * Replacer function to JSON.stringify that ignores circular references and internal React properties.
+/*
+ Replacer function to JSON.stringify that ignores circular references and internal React properties.
 
- * https://github.com/facebook/react/issues/8669#issuecomment-531515508
+ https://github.com/facebook/react/issues/8669#issuecomment-531515508
 */
 const ignoreCircularReferences = () => {
   const seen = new WeakSet();

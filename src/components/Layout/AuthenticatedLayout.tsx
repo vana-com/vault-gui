@@ -14,6 +14,13 @@ const AuthenticatedLayout = ({ children }: Children) => {
   const router = useRouter();
   const { isAuthenticated, isLoading } = useUserContext();
 
+  // LOG TESTS: please leave for further evaluation
+  // console.log(
+  //   "AuthenticatedLayout",
+  //   `isAuthenticated: ${isAuthenticated}`,
+  //   `isLoading: ${isLoading}`,
+  // );
+
   if (isLoading) return <LayoutLoadingNoUser />;
 
   if (

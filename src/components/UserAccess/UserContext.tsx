@@ -16,11 +16,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
-import { getJwtPayload, setLoginPath } from "src/utils";
+import {
+  getJwtPayload,
+  heapAddAccountPropsServerSide,
+  heapIdentify,
+  heapTrackServerSide,
+  setLoginPath,
+} from "src/utils";
 import {
   getWalletProvider,
   IWalletProvider,
 } from "src/utils/identity/walletProvider";
+
+const { HEAP_EVENTS } = config;
 
 interface UserContextProps {
   user: Users | null;
@@ -32,6 +40,7 @@ interface UserContextProps {
   isAuthenticated: boolean;
   userWalletAddress: string | null;
   hasuraToken: string | null;
+  isInitialAccountLogin: boolean;
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -44,6 +53,7 @@ const UserContext = createContext<UserContextProps>({
   isAuthenticated: false,
   userWalletAddress: null,
   hasuraToken: null,
+  isInitialAccountLogin: false,
 });
 const useUserContext = () => useContext(UserContext);
 
@@ -66,6 +76,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [isInitialAccountLogin, setIsInitialAccountLogin] = useState(false);
   const { resolvedTheme } = useTheme();
 
   // Due to clashes between useTheme and web3Auth.uiConfig types,
@@ -76,7 +87,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
    * Web3Auth connected, get the User from Hasura
    * @param idToken
    */
-  const loginVanaUser = async (idToken: string) => {
+  const loginVanaUser = async (
+    idToken: string,
+    loginTypeLocallyScoped: string,
+  ) => {
     try {
       setIsUserLoading(true);
       const loginResponse = await fetch(`/api/auth/login`, {
@@ -94,6 +108,18 @@ const UserProvider = ({ children }: UserProviderProps) => {
       }
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
+
+      // setIsInitialAccountLogin
+      const hasPriorAccountLogin = savePriorAccountLoginStatus();
+      setIsInitialAccountLogin(!hasPriorAccountLogin);
+      heapTrackServerSide(userFromResponse?.id, HEAP_EVENTS.LOGIN, {
+        "Login Type": loginTypeLocallyScoped,
+      });
+      heapAddAccountPropsServerSide(userFromResponse?.id, {
+        "Login Type": loginTypeLocallyScoped,
+      });
+      // Associates the Heap Tag running in the user's browser with the user
+      heapIdentify(userFromResponse?.id);
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
       setLoginError(true);
@@ -101,6 +127,22 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setIsUserLoading(false);
       setIsWeb3AuthLoading(false);
     }
+  };
+
+  /**
+   * Save hasPriorAccountLogin for use with initial login UX for a new user,
+   * eg. to show an onboarding status
+   * @returns boolean
+   */
+  const savePriorAccountLoginStatus = () => {
+    const hasPriorAccountLogin =
+      localStorage.getItem("has-prior-account-login") !== null;
+
+    if (!hasPriorAccountLogin) {
+      localStorage.setItem("has-prior-account-login", "true");
+    }
+
+    return hasPriorAccountLogin;
   };
 
   /**
@@ -123,7 +165,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
             // Signed in with a social network
             web3AuthInstance.getUserInfo().then(async (userInfo: any) => {
               setLoginType(userInfo.typeOfLogin);
-              await loginVanaUser(userInfo.idToken);
+              await loginVanaUser(userInfo.idToken, userInfo.typeOfLogin);
             });
           } else {
             // Signed in with a wallet
@@ -132,7 +174,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
               const idTokenDetails = await web3AuthInstance.authenticateUser();
               const idTokenPayload = getJwtPayload(idTokenDetails.idToken);
               setLoginType(idTokenPayload.issuer);
-              await loginVanaUser(idTokenDetails.idToken);
+              await loginVanaUser(
+                idTokenDetails.idToken,
+                idTokenPayload.issuer,
+              );
             } catch (error) {
               setLoginError(true);
               console.error("Unable to authenticate wallet user", error);
@@ -274,6 +319,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     } catch (error: any) {
       console.error("Error trying to log out.", error);
     } finally {
+      heapTrackServerSide(user?.id, HEAP_EVENTS.LOGOUT);
       setIsWeb3AuthLoading(false);
       setWalletProvider(null);
       setUser(null);
@@ -295,6 +341,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         hasuraToken,
         isLoading: isWeb3AuthLoading || isUserLoading,
         isAuthenticated: !!user,
+        isInitialAccountLogin,
       }}
     >
       {children}
@@ -310,7 +357,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
           <>
             Please{" "}
             <Link href={`mailto:${config.vanaSupportEmail}`}>email us</Link>{" "}
-            with details of your login attempt.
+            with details of your log in attempt.
           </>
         }
       />

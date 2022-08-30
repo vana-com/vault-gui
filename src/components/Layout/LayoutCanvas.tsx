@@ -10,7 +10,7 @@ const LayoutCanvas = ({ children }: Children) => (
 );
 
 /* The grid space for any canvas layout that requires it */
-export const layoutCanvasGridStyle = [
+const layoutCanvasGridStyle = [
   tw`relative grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3`,
 ];
 
@@ -23,7 +23,7 @@ const LayoutCanvasGrid = ({ children }: Children) => (
   A background pattern to provide focus for the Canvas.
   This pattern is from https://heropatterns.com/
  */
-export const canvasPattern = [
+const canvasPattern = [
   css`
     background-image: url(/images/plus.svg);
     opacity: 0.05;
@@ -38,4 +38,10 @@ const LayoutCanvasPattern = () => (
   <div css={[tw`absolute inset-0`, canvasPattern]} />
 );
 
-export { LayoutCanvas, LayoutCanvasGrid, LayoutCanvasPattern };
+export {
+  canvasPattern,
+  LayoutCanvas,
+  LayoutCanvasGrid,
+  layoutCanvasGridStyle,
+  LayoutCanvasPattern,
+};

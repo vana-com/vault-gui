@@ -19,7 +19,7 @@ interface Props {
 
 const LayoutLoading = ({ crumbs }: Props) => (
   <>
-    <TitleAndMetaTags color="black" title="Loading | Vana" />
+    <TitleAndMetaTags color="black" title="Vault | Vana" />
 
     <LayoutPage showAsAuthenticated>
       <NavBreadcrumb crumbs={crumbs} />

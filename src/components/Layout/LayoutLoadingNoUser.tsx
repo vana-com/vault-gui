@@ -12,7 +12,6 @@ import {
   Spinner,
   TitleAndMetaTags,
 } from "src/components";
-// import { FocusStack } from "src/components/VaultShare";
 
 /* 
   A one-off: we only show this when authenticating a user. 
@@ -22,11 +21,11 @@ import {
 
 const LayoutLoadingNoUser = () => {
   const router = useRouter();
-  const isSendPath = router.pathname === "/send";
+  const isSendPath = router.pathname === "/share";
 
   return (
     <>
-      <TitleAndMetaTags color="black" title="Loading | Vana" />
+      <TitleAndMetaTags color="black" title="Vault | Vana" />
       {isSendPath ? (
         <Center tw="h-screen">
           <Spinner />

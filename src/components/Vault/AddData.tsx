@@ -5,7 +5,7 @@ import tw from "twin.macro";
 import {
   Button,
   DataCardButton,
-  DialogModalAdd,
+  DialogModal,
   Group,
   Link,
   Stack,
@@ -13,17 +13,24 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Module } from "src/types";
+import { heapTrackServerSide } from "src/utils";
+
+const { HEAP_EVENTS } = config;
 
 interface Props {
+  userId: string;
   modules: Module[] | undefined;
   children: React.ReactNode;
   buttonIsLarge?: boolean;
 }
 
-const AddData = ({ modules, children, buttonIsLarge }: Props) => (
-  <DialogModalAdd
+const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
+  <DialogModal
     buttonNode={
       <Button
+        onClick={() => {
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA);
+        }}
         type="button"
         variant="solid"
         size={buttonIsLarge ? "xl" : "md"}
@@ -48,13 +55,13 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
           </Text>
           {/* TODO: LEAVE FOR NOW, will reintroduce again next cycle */}
           <Text variant="note" color="labelTertiary">
-            Don&apos;t see the app you want?{" "}
+            Don&apos;t find what you&apos;re looking for?{" "}
             <Link
               target="_blank"
               rel="noopener noreferrer"
               href={config.vanaSupportedAppsFeedback}
             >
-              Tell us more
+              Request it.
             </Link>
           </Text>
         </Group>
@@ -66,7 +73,7 @@ const AddData = ({ modules, children, buttonIsLarge }: Props) => (
         ))}
       </div>
     </Stack>
-  </DialogModalAdd>
+  </DialogModal>
 );
 
 export { AddData };

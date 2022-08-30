@@ -1,3 +1,7 @@
+/**
+ * Methods to use for sending events to Heap on the Client Side
+ */
+
 export const heapIdentify = (userId: string) => {
   if (typeof heap === "object") {
     heap?.identify(userId);

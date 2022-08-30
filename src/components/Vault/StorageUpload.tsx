@@ -7,13 +7,20 @@ import tw from "twin.macro";
 
 import { Button, Stack, ToastDefault } from "src/components";
 import config from "src/config";
-import { encryptAndUploadUserDataFiles, heapTrack } from "src/utils";
+import {
+  encryptAndUploadUserDataFiles,
+  heapTrack,
+  heapTrackServerSide,
+} from "src/utils";
 import { IWalletProvider } from "src/utils/identity/walletProvider";
 
 import { useFileDropzone } from "./FileDropzone";
 import { StorageUploadPresenter } from "./index";
 
+const { HEAP_EVENTS } = config;
+
 interface Props {
+  userId: string;
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
   externalId: string;
@@ -21,6 +28,7 @@ interface Props {
 }
 
 const StorageUpload = ({
+  userId,
   moduleName,
   createUserModule,
   externalId,
@@ -127,6 +135,9 @@ const StorageUpload = ({
       heapTrack("Uploaded Data", {
         module: moduleName,
         numFilesUploaded: filesToUpload.length,
+      });
+      heapTrackServerSide(userId, HEAP_EVENTS.DATA_STORED, {
+        module: moduleName,
       });
       setTimeout(() => router.push("/"), 500);
     } catch (error: any) {
