@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React from "react";
+
+import config from "src/config";
 
 type TitleAndMetaTagsProps = {
   description?: string;
@@ -17,7 +18,7 @@ export function TitleAndMetaTags({
   image,
   pathname,
   title = "Vana",
-  url = "https://vana.xyz",
+  url = config.vanaPublicURL,
 }: TitleAndMetaTagsProps) {
   const router = useRouter();
 
