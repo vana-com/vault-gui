@@ -92,6 +92,7 @@ module.exports = {
       //   DEFAULT: theme('colors.separator', 'currentColor'),
       // },
       screens: {
+        mobile: { max: "640px" },
         standalone: { raw: '(display-mode:standalone)' },
       },
       fontFamily: {
