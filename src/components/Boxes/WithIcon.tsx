@@ -1,23 +1,22 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
+import { TwCss } from "src/types";
+
 /* WithIcon is a simple utility to set an icone before or after some text */
 
 interface Props {
   children: React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
+  css?: TwCss;
 }
 
-const WithIcon = ({ children, prefix, suffix }: Props) => (
+const WithIcon = ({ children, prefix, suffix, css }: Props) => (
   <>
-    {prefix && (
-      <div tw="inline-flex transform -translate-y-[0.5px]">{prefix}</div>
-    )}
+    {prefix && <div css={[tw`inline-flex`, css]}>{prefix}</div>}
     {children}
-    {suffix && (
-      <div tw="inline-flex transform -translate-y-[0.5px]">{suffix}</div>
-    )}
+    {suffix && <div css={[tw`inline-flex`, css]}>{suffix}</div>}
   </>
 );
 
