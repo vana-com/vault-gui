@@ -19,7 +19,12 @@ const encryptAndUploadUserDataFiles = async (
   externalId: string,
   walletProvider: IWalletProvider | null,
   handleUploadProgress: (event: any) => void,
-  createUserModule: (urlToData: string, urlNumber: number) => Promise<void>,
+  createUserModule: (
+    urlToData: string,
+    urlNumber: number,
+    fileName: string,
+    fileSize: number,
+  ) => Promise<void>,
 ) => {
   // Multiple files should be processed uploaded in parallel so we create arrays and use Promise.all
 
@@ -57,14 +62,17 @@ const encryptAndUploadUserDataFiles = async (
     throw new Error("Unable to upload all files");
   }
 
-  // Get the list of object URLs for the files that were uploaded
-  const objectURLs = uploadResults.map((result) => result.uploadURL);
-
   // Associate object URL with the user in the DB.
-  const mutationPromises = objectURLs.map((url, i) =>
+  const mutationPromises = uploadResults.map((result, i) => {
+    const { uploadURL, uploadFileName, uploadFileSize } = result;
     // url is always a string due to successfulUpload === true
-    createUserModule(url as string, i + 1),
-  );
+    return createUserModule(
+      uploadURL as string,
+      i + 1,
+      uploadFileName?.slice(0, -4) ?? "", // Remove ".enc" from the filename in hasura
+      uploadFileSize ?? 0,
+    );
+  });
   await Promise.all(mutationPromises);
 };
 

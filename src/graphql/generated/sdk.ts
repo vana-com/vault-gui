@@ -16,6 +16,7 @@ export type Scalars = {
   DateTime: any;
   JSON: any;
   Upload: any;
+  bigint: any;
   float8: any;
   jsonb: any;
   numeric: any;
@@ -391,6 +392,14 @@ export enum CashOutRequests_Update_Column {
   WorkerId = 'workerId'
 }
 
+export type CashOutRequests_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<CashOutRequests_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CashOutRequests_Set_Input>;
+  where: CashOutRequests_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type CashOutRequests_Var_Pop_Fields = {
   __typename?: 'CashOutRequests_var_pop_fields';
@@ -536,6 +545,12 @@ export enum CollectionTypes_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type CollectionTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CollectionTypes_Set_Input>;
+  where: CollectionTypes_Bool_Exp;
+};
 
 /** columns and relationships of "customers" */
 export type Customers = {
@@ -774,6 +789,12 @@ export enum Customers_Update_Column {
   UserId = 'userId'
 }
 
+export type Customers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Customers_Set_Input>;
+  where: Customers_Bool_Exp;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
@@ -991,6 +1012,12 @@ export enum EtxTaskSessions_Update_Column {
   UserId = 'userId'
 }
 
+export type EtxTaskSessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<EtxTaskSessions_Set_Input>;
+  where: EtxTaskSessions_Bool_Exp;
+};
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']>;
   caption?: InputMaybe<Scalars['String']>;
@@ -1175,6 +1202,12 @@ export enum FireboaCashOutCryptoRequests_Update_Column {
   WalletId = 'walletId'
 }
 
+export type FireboaCashOutCryptoRequests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutCryptoRequests_Set_Input>;
+  where: FireboaCashOutCryptoRequests_Bool_Exp;
+};
+
 /** columns and relationships of "fireboa_cash_out_gift_card_requests" */
 export type FireboaCashOutGiftCardRequests = {
   __typename?: 'FireboaCashOutGiftCardRequests';
@@ -1334,6 +1367,12 @@ export enum FireboaCashOutGiftCardRequests_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type FireboaCashOutGiftCardRequests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutGiftCardRequests_Set_Input>;
+  where: FireboaCashOutGiftCardRequests_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_preferred_methods" */
 export type FireboaCashOutPreferredMethods = {
@@ -1522,6 +1561,12 @@ export enum FireboaCashOutPreferredMethods_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type FireboaCashOutPreferredMethods_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutPreferredMethods_Set_Input>;
+  where: FireboaCashOutPreferredMethods_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_requests" */
 export type FireboaCashOutRequests = {
@@ -1839,6 +1884,14 @@ export enum FireboaCashOutRequests_Update_Column {
   WorkerId = 'workerId'
 }
 
+export type FireboaCashOutRequests_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<FireboaCashOutRequests_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutRequests_Set_Input>;
+  where: FireboaCashOutRequests_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type FireboaCashOutRequests_Var_Pop_Fields = {
   __typename?: 'FireboaCashOutRequests_var_pop_fields';
@@ -2027,6 +2080,12 @@ export enum FireboaModules_Update_Column {
   /** column name */
   Reusable = 'reusable'
 }
+
+export type FireboaModules_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaModules_Set_Input>;
+  where: FireboaModules_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_projects" */
 export type FireboaProjects = {
@@ -2390,6 +2449,22 @@ export enum FireboaProjectsModulesUsers_Update_Column {
   UserId = 'userId'
 }
 
+export type FireboaProjectsModulesUsers_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<FireboaProjectsModulesUsers_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<FireboaProjectsModulesUsers_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<FireboaProjectsModulesUsers_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<FireboaProjectsModulesUsers_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<FireboaProjectsModulesUsers_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsModulesUsers_Set_Input>;
+  where: FireboaProjectsModulesUsers_Bool_Exp;
+};
+
 /** aggregated selection of "fireboa_projects_modules" */
 export type FireboaProjectsModules_Aggregate = {
   __typename?: 'FireboaProjectsModules_aggregate';
@@ -2701,6 +2776,24 @@ export enum FireboaProjectsModules_Update_Column {
   ModuleId = 'moduleId'
 }
 
+export type FireboaProjectsModules_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<FireboaProjectsModules_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<FireboaProjectsModules_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<FireboaProjectsModules_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<FireboaProjectsModules_Delete_Key_Input>;
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<FireboaProjectsModules_Inc_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<FireboaProjectsModules_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsModules_Set_Input>;
+  where: FireboaProjectsModules_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type FireboaProjectsModules_Var_Pop_Fields = {
   __typename?: 'FireboaProjectsModules_var_pop_fields';
@@ -2796,7 +2889,7 @@ export type FireboaProjectsUsers_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_users" */
 export enum FireboaProjectsUsers_Constraint {
-  /** unique or primary key constraint on columns "fireboa_project_id", "user_id" */
+  /** unique or primary key constraint on columns "user_id", "fireboa_project_id" */
   FireboaProjectUserPkey = 'fireboa_project_user_pkey'
 }
 
@@ -2892,6 +2985,12 @@ export enum FireboaProjectsUsers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type FireboaProjectsUsers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsUsers_Set_Input>;
+  where: FireboaProjectsUsers_Bool_Exp;
+};
 
 /** aggregated selection of "fireboa_projects" */
 export type FireboaProjects_Aggregate = {
@@ -3056,6 +3155,12 @@ export enum FireboaProjects_Update_Column {
   SerializedStateChart = 'serializedStateChart'
 }
 
+export type FireboaProjects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjects_Set_Input>;
+  where: FireboaProjects_Bool_Exp;
+};
+
 export type FloatFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
@@ -3191,6 +3296,12 @@ export enum FraudStatusEnum_Update_Column {
   /** column name */
   FraudStatus = 'fraudStatus'
 }
+
+export type FraudStatusEnum_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FraudStatusEnum_Set_Input>;
+  where: FraudStatusEnum_Bool_Exp;
+};
 
 export type GenericMorph = I18NLocale | StrapiModule | StrapiProject | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | VanaConnectFaq;
 
@@ -3391,6 +3502,12 @@ export enum IdentitiesLegalIdTypeEnums_Update_Column {
   Value = 'value'
 }
 
+export type IdentitiesLegalIdTypeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<IdentitiesLegalIdTypeEnums_Set_Input>;
+  where: IdentitiesLegalIdTypeEnums_Bool_Exp;
+};
+
 /** columns and relationships of "images" */
 export type Images = {
   __typename?: 'Images';
@@ -3564,6 +3681,12 @@ export enum Images_Update_Column {
   /** column name */
   Url = 'url'
 }
+
+export type Images_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Images_Set_Input>;
+  where: Images_Bool_Exp;
+};
 
 export type IntFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
@@ -3780,6 +3903,12 @@ export enum ModuleInstructions_Update_Column {
   /** column name */
   ModuleId = 'moduleId'
 }
+
+export type ModuleInstructions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ModuleInstructions_Set_Input>;
+  where: ModuleInstructions_Bool_Exp;
+};
 
 /** columns and relationships of "modules" */
 export type Modules = {
@@ -4036,6 +4165,12 @@ export enum Modules_Update_Column {
   UrlToDownloadData = 'urlToDownloadData'
 }
 
+export type Modules_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Modules_Set_Input>;
+  where: Modules_Bool_Exp;
+};
+
 export type Pagination = {
   __typename?: 'Pagination';
   page: Scalars['Int'];
@@ -4178,6 +4313,12 @@ export enum ProjectStatuses_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type ProjectStatuses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ProjectStatuses_Set_Input>;
+  where: ProjectStatuses_Bool_Exp;
+};
 
 export enum PublicationState {
   Live = 'LIVE',
@@ -4423,6 +4564,12 @@ export enum Sessions_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type Sessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Sessions_Set_Input>;
+  where: Sessions_Bool_Exp;
+};
 
 export type StrapiModule = {
   __typename?: 'StrapiModule';
@@ -4796,6 +4943,12 @@ export enum StripeIdentitySessionErrorCodeEnums_Update_Column {
   Value = 'value'
 }
 
+export type StripeIdentitySessionErrorCodeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Set_Input>;
+  where: StripeIdentitySessionErrorCodeEnums_Bool_Exp;
+};
+
 /** status of the initiated Stripe Identity verification session */
 export type StripeIdentitySessionStatusEnums = {
   __typename?: 'StripeIdentitySessionStatusEnums';
@@ -4942,6 +5095,12 @@ export enum StripeIdentitySessionStatusEnums_Update_Column {
   Value = 'value'
 }
 
+export type StripeIdentitySessionStatusEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionStatusEnums_Set_Input>;
+  where: StripeIdentitySessionStatusEnums_Bool_Exp;
+};
+
 /** type of verification session initiated */
 export type StripeIdentitySessionTypeEnums = {
   __typename?: 'StripeIdentitySessionTypeEnums';
@@ -5077,6 +5236,12 @@ export enum StripeIdentitySessionTypeEnums_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type StripeIdentitySessionTypeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionTypeEnums_Set_Input>;
+  where: StripeIdentitySessionTypeEnums_Bool_Exp;
+};
 
 /** All stripe identity verification sessions and statuses  */
 export type StripeVerificationSessions = {
@@ -5390,6 +5555,12 @@ export enum StripeVerificationSessions_Update_Column {
   UserId = 'userId'
 }
 
+export type StripeVerificationSessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeVerificationSessions_Set_Input>;
+  where: StripeVerificationSessions_Bool_Exp;
+};
+
 /** columns and relationships of "survey_responses" */
 export type SurveyResponses = {
   __typename?: 'SurveyResponses';
@@ -5603,6 +5774,12 @@ export enum SurveyResponses_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type SurveyResponses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<SurveyResponses_Set_Input>;
+  where: SurveyResponses_Bool_Exp;
+};
 
 /** columns and relationships of "surveys" */
 export type Surveys = {
@@ -5849,6 +6026,12 @@ export enum Surveys_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Surveys_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Surveys_Set_Input>;
+  where: Surveys_Bool_Exp;
+};
+
 export type UploadFile = {
   __typename?: 'UploadFile';
   alternativeText?: Maybe<Scalars['String']>;
@@ -6020,7 +6203,7 @@ export type UserIdentities_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_identities" */
 export enum UserIdentities_Constraint {
-  /** unique or primary key constraint on columns "legal_id_type", "legal_id_number", "legal_id_country" */
+  /** unique or primary key constraint on columns "legal_id_country", "legal_id_number", "legal_id_type" */
   UserIdentitiesLegalIdNumberLegalIdTypeLegalIdCounKey = 'user_identities_legal_id_number_legal_id_type_legal_id_coun_key',
   /** unique or primary key constraint on columns "id" */
   UserIdentitiesPkey = 'user_identities_pkey'
@@ -6276,6 +6459,12 @@ export enum UserIdentities_Update_Column {
   UserId = 'userID'
 }
 
+export type UserIdentities_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserIdentities_Set_Input>;
+  where: UserIdentities_Bool_Exp;
+};
+
 /** columns and relationships of "user_module_progress_enum" */
 export type UserModuleStatus = {
   __typename?: 'UserModuleStatus';
@@ -6388,6 +6577,12 @@ export enum UserModuleStatus_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type UserModuleStatus_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserModuleStatus_Set_Input>;
+  where: UserModuleStatus_Bool_Exp;
+};
 
 /** columns and relationships of "user_referrals" */
 export type UserReferrals = {
@@ -6595,6 +6790,12 @@ export enum UserReferrals_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type UserReferrals_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserReferrals_Set_Input>;
+  where: UserReferrals_Bool_Exp;
+};
+
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'Users';
@@ -6645,6 +6846,8 @@ export type Users = {
   userReferralsReferrer: Array<UserReferrals>;
   /** An aggregate relationship */
   userReferralsReferrer_aggregate: UserReferrals_Aggregate;
+  /** An object relationship */
+  userSupplementary?: Maybe<Users_Supplementary>;
   /** An array relationship */
   usersModules: Array<UsersModules>;
   /** An aggregate relationship */
@@ -7043,10 +7246,18 @@ export enum UsersImages_Update_Column {
   UserId = 'userId'
 }
 
+export type UsersImages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UsersImages_Set_Input>;
+  where: UsersImages_Bool_Exp;
+};
+
 /** columns and relationships of "users_modules" */
 export type UsersModules = {
   __typename?: 'UsersModules';
   createdAt: Scalars['timestamptz'];
+  fileName?: Maybe<Scalars['String']>;
+  fileSize: Scalars['bigint'];
   id: Scalars['uuid'];
   /** An object relationship */
   module: Modules;
@@ -7116,12 +7327,14 @@ export type UsersModules_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type UsersModules_Avg_Fields = {
   __typename?: 'UsersModules_avg_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "users_modules" */
 export type UsersModules_Avg_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7132,6 +7345,8 @@ export type UsersModules_Bool_Exp = {
   _not?: InputMaybe<UsersModules_Bool_Exp>;
   _or?: InputMaybe<Array<UsersModules_Bool_Exp>>;
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  fileName?: InputMaybe<String_Comparison_Exp>;
+  fileSize?: InputMaybe<Bigint_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   module?: InputMaybe<Modules_Bool_Exp>;
   moduleId?: InputMaybe<Uuid_Comparison_Exp>;
@@ -7151,6 +7366,7 @@ export enum UsersModules_Constraint {
 
 /** input type for incrementing numeric columns in table "users_modules" */
 export type UsersModules_Inc_Input = {
+  fileSize?: InputMaybe<Scalars['bigint']>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Scalars['Int']>;
 };
@@ -7158,6 +7374,8 @@ export type UsersModules_Inc_Input = {
 /** input type for inserting data into table "users_modules" */
 export type UsersModules_Insert_Input = {
   createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fileName?: InputMaybe<Scalars['String']>;
+  fileSize?: InputMaybe<Scalars['bigint']>;
   id?: InputMaybe<Scalars['uuid']>;
   module?: InputMaybe<Modules_Obj_Rel_Insert_Input>;
   moduleId?: InputMaybe<Scalars['uuid']>;
@@ -7174,6 +7392,8 @@ export type UsersModules_Insert_Input = {
 export type UsersModules_Max_Fields = {
   __typename?: 'UsersModules_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  fileName?: Maybe<Scalars['String']>;
+  fileSize?: Maybe<Scalars['bigint']>;
   id?: Maybe<Scalars['uuid']>;
   moduleId?: Maybe<Scalars['uuid']>;
   progress?: Maybe<Scalars['String']>;
@@ -7187,6 +7407,8 @@ export type UsersModules_Max_Fields = {
 /** order by max() on columns of table "users_modules" */
 export type UsersModules_Max_Order_By = {
   createdAt?: InputMaybe<Order_By>;
+  fileName?: InputMaybe<Order_By>;
+  fileSize?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   moduleId?: InputMaybe<Order_By>;
   progress?: InputMaybe<Order_By>;
@@ -7201,6 +7423,8 @@ export type UsersModules_Max_Order_By = {
 export type UsersModules_Min_Fields = {
   __typename?: 'UsersModules_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  fileName?: Maybe<Scalars['String']>;
+  fileSize?: Maybe<Scalars['bigint']>;
   id?: Maybe<Scalars['uuid']>;
   moduleId?: Maybe<Scalars['uuid']>;
   progress?: Maybe<Scalars['String']>;
@@ -7214,6 +7438,8 @@ export type UsersModules_Min_Fields = {
 /** order by min() on columns of table "users_modules" */
 export type UsersModules_Min_Order_By = {
   createdAt?: InputMaybe<Order_By>;
+  fileName?: InputMaybe<Order_By>;
+  fileSize?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   moduleId?: InputMaybe<Order_By>;
   progress?: InputMaybe<Order_By>;
@@ -7243,6 +7469,8 @@ export type UsersModules_On_Conflict = {
 /** Ordering options when selecting data from "users_modules". */
 export type UsersModules_Order_By = {
   createdAt?: InputMaybe<Order_By>;
+  fileName?: InputMaybe<Order_By>;
+  fileSize?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   module?: InputMaybe<Modules_Order_By>;
   moduleId?: InputMaybe<Order_By>;
@@ -7264,6 +7492,10 @@ export enum UsersModules_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
+  FileName = 'fileName',
+  /** column name */
+  FileSize = 'fileSize',
+  /** column name */
   Id = 'id',
   /** column name */
   ModuleId = 'moduleId',
@@ -7282,6 +7514,8 @@ export enum UsersModules_Select_Column {
 /** input type for updating data in table "users_modules" */
 export type UsersModules_Set_Input = {
   createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fileName?: InputMaybe<Scalars['String']>;
+  fileSize?: InputMaybe<Scalars['bigint']>;
   id?: InputMaybe<Scalars['uuid']>;
   moduleId?: InputMaybe<Scalars['uuid']>;
   progress?: InputMaybe<Scalars['String']>;
@@ -7295,12 +7529,14 @@ export type UsersModules_Set_Input = {
 /** aggregate stddev on columns */
 export type UsersModules_Stddev_Fields = {
   __typename?: 'UsersModules_stddev_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "users_modules" */
 export type UsersModules_Stddev_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7308,12 +7544,14 @@ export type UsersModules_Stddev_Order_By = {
 /** aggregate stddev_pop on columns */
 export type UsersModules_Stddev_Pop_Fields = {
   __typename?: 'UsersModules_stddev_pop_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "users_modules" */
 export type UsersModules_Stddev_Pop_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7321,12 +7559,14 @@ export type UsersModules_Stddev_Pop_Order_By = {
 /** aggregate stddev_samp on columns */
 export type UsersModules_Stddev_Samp_Fields = {
   __typename?: 'UsersModules_stddev_samp_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "users_modules" */
 export type UsersModules_Stddev_Samp_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7334,12 +7574,14 @@ export type UsersModules_Stddev_Samp_Order_By = {
 /** aggregate sum on columns */
 export type UsersModules_Sum_Fields = {
   __typename?: 'UsersModules_sum_fields';
+  fileSize?: Maybe<Scalars['bigint']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "users_modules" */
 export type UsersModules_Sum_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7348,6 +7590,10 @@ export type UsersModules_Sum_Order_By = {
 export enum UsersModules_Update_Column {
   /** column name */
   CreatedAt = 'createdAt',
+  /** column name */
+  FileName = 'fileName',
+  /** column name */
+  FileSize = 'fileSize',
   /** column name */
   Id = 'id',
   /** column name */
@@ -7364,15 +7610,25 @@ export enum UsersModules_Update_Column {
   UserId = 'userId'
 }
 
+export type UsersModules_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<UsersModules_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UsersModules_Set_Input>;
+  where: UsersModules_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type UsersModules_Var_Pop_Fields = {
   __typename?: 'UsersModules_var_pop_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "users_modules" */
 export type UsersModules_Var_Pop_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7380,12 +7636,14 @@ export type UsersModules_Var_Pop_Order_By = {
 /** aggregate var_samp on columns */
 export type UsersModules_Var_Samp_Fields = {
   __typename?: 'UsersModules_var_samp_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "users_modules" */
 export type UsersModules_Var_Samp_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7393,12 +7651,14 @@ export type UsersModules_Var_Samp_Order_By = {
 /** aggregate variance on columns */
 export type UsersModules_Variance_Fields = {
   __typename?: 'UsersModules_variance_fields';
+  fileSize?: Maybe<Scalars['Float']>;
   /** A module's data can consist of multiple files */
   urlNumber?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "users_modules" */
 export type UsersModules_Variance_Order_By = {
+  fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
 };
@@ -7679,6 +7939,7 @@ export type Users_Bool_Exp = {
   userIdentities?: InputMaybe<UserIdentities_Bool_Exp>;
   userReferralsReferredUser?: InputMaybe<UserReferrals_Bool_Exp>;
   userReferralsReferrer?: InputMaybe<UserReferrals_Bool_Exp>;
+  userSupplementary?: InputMaybe<Users_Supplementary_Bool_Exp>;
   usersModules?: InputMaybe<UsersModules_Bool_Exp>;
   usersProjects?: InputMaybe<Users_Projects_Bool_Exp>;
   visualJudgementModuleResponses?: InputMaybe<VisualJudgementModuleResponses_Bool_Exp>;
@@ -7726,6 +7987,7 @@ export type Users_Insert_Input = {
   userIdentities?: InputMaybe<UserIdentities_Arr_Rel_Insert_Input>;
   userReferralsReferredUser?: InputMaybe<UserReferrals_Obj_Rel_Insert_Input>;
   userReferralsReferrer?: InputMaybe<UserReferrals_Arr_Rel_Insert_Input>;
+  userSupplementary?: InputMaybe<Users_Supplementary_Obj_Rel_Insert_Input>;
   usersModules?: InputMaybe<UsersModules_Arr_Rel_Insert_Input>;
   usersProjects?: InputMaybe<Users_Projects_Arr_Rel_Insert_Input>;
   visualJudgementModuleResponses?: InputMaybe<VisualJudgementModuleResponses_Arr_Rel_Insert_Input>;
@@ -7807,6 +8069,7 @@ export type Users_Order_By = {
   userIdentities_aggregate?: InputMaybe<UserIdentities_Aggregate_Order_By>;
   userReferralsReferredUser?: InputMaybe<UserReferrals_Order_By>;
   userReferralsReferrer_aggregate?: InputMaybe<UserReferrals_Aggregate_Order_By>;
+  userSupplementary?: InputMaybe<Users_Supplementary_Order_By>;
   usersModules_aggregate?: InputMaybe<UsersModules_Aggregate_Order_By>;
   usersProjects_aggregate?: InputMaybe<Users_Projects_Aggregate_Order_By>;
   visualJudgementModuleResponses_aggregate?: InputMaybe<VisualJudgementModuleResponses_Aggregate_Order_By>;
@@ -7908,6 +8171,14 @@ export enum Users_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type Users_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Users_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type Users_Var_Pop_Fields = {
@@ -8198,6 +8469,12 @@ export enum VisualJudgementModuleResponses_Update_Column {
   VisualJudgementModuleImageId = 'visualJudgementModuleImageId'
 }
 
+export type VisualJudgementModuleResponses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModuleResponses_Set_Input>;
+  where: VisualJudgementModuleResponses_Bool_Exp;
+};
+
 /** columns and relationships of "wallets" */
 export type Wallets = {
   __typename?: 'Wallets';
@@ -8445,6 +8722,12 @@ export enum Wallets_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type Wallets_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Wallets_Set_Input>;
+  where: Wallets_Bool_Exp;
+};
 
 /** columns and relationships of "workers" */
 export type Workers = {
@@ -8906,6 +9189,14 @@ export enum Workers_Update_Column {
   UserId = 'userId'
 }
 
+export type Workers_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Workers_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Workers_Set_Input>;
+  where: Workers_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Workers_Var_Pop_Fields = {
   __typename?: 'Workers_var_pop_fields';
@@ -8925,6 +9216,19 @@ export type Workers_Variance_Fields = {
   __typename?: 'Workers_variance_fields';
   cashedOut?: Maybe<Scalars['Float']>;
   numIncompleteTasks?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
+export type Bigint_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['bigint']>;
+  _gt?: InputMaybe<Scalars['bigint']>;
+  _gte?: InputMaybe<Scalars['bigint']>;
+  _in?: InputMaybe<Array<Scalars['bigint']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['bigint']>;
+  _lte?: InputMaybe<Scalars['bigint']>;
+  _neq?: InputMaybe<Scalars['bigint']>;
+  _nin?: InputMaybe<Array<Scalars['bigint']>>;
 };
 
 /** columns and relationships of "cash_out_methods" */
@@ -9074,6 +9378,12 @@ export enum CashOutMethods_Update_Column {
   Name = 'name'
 }
 
+export type CashOutMethods_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CashOutMethods_Set_Input>;
+  where: CashOutMethods_Bool_Exp;
+};
+
 /** columns and relationships of "data_types" */
 export type DatatTypes = {
   __typename?: 'datatTypes';
@@ -9187,6 +9497,12 @@ export enum DatatTypes_Update_Column {
   Name = 'name'
 }
 
+export type DatatTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<DatatTypes_Set_Input>;
+  where: DatatTypes_Bool_Exp;
+};
+
 /** columns and relationships of "feature_types" */
 export type FeatureTypes = {
   __typename?: 'featureTypes';
@@ -9299,6 +9615,12 @@ export enum FeatureTypes_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type FeatureTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FeatureTypes_Set_Input>;
+  where: FeatureTypes_Bool_Exp;
+};
 
 /** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
 export type Float8_Comparison_Exp = {
@@ -9426,6 +9748,12 @@ export enum Gender_Update_Column {
   Value = 'value'
 }
 
+export type Gender_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Gender_Set_Input>;
+  where: Gender_Bool_Exp;
+};
+
 /** columns and relationships of "have_labeled_data_types" */
 export type HaveLabeledDataTypesEnum = {
   __typename?: 'haveLabeledDataTypesEnum';
@@ -9539,6 +9867,12 @@ export enum HaveLabeledDataTypesEnum_Update_Column {
   Value = 'value'
 }
 
+export type HaveLabeledDataTypesEnum_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<HaveLabeledDataTypesEnum_Set_Input>;
+  where: HaveLabeledDataTypesEnum_Bool_Exp;
+};
+
 /** columns and relationships of "industry_types" */
 export type Industry_Types = {
   __typename?: 'industry_types';
@@ -9651,6 +9985,12 @@ export enum Industry_Types_Update_Column {
   /** column name */
   Name = 'name'
 }
+
+export type Industry_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Industry_Types_Set_Input>;
+  where: Industry_Types_Bool_Exp;
+};
 
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
@@ -9792,6 +10132,12 @@ export enum LabellingPlatforms_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type LabellingPlatforms_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<LabellingPlatforms_Set_Input>;
+  where: LabellingPlatforms_Bool_Exp;
+};
 
 /** columns and relationships of "managers" */
 export type Managers = {
@@ -9957,6 +10303,12 @@ export enum Managers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Managers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Managers_Set_Input>;
+  where: Managers_Bool_Exp;
+};
 
 /** Projects for the Vana Marketplace */
 export type Marketplace_Projects = {
@@ -10135,6 +10487,12 @@ export enum Marketplace_Projects_Update_Column {
   UrlSlug = 'urlSlug'
 }
 
+export type Marketplace_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Marketplace_Projects_Set_Input>;
+  where: Marketplace_Projects_Bool_Exp;
+};
+
 /** Many-to-Many relationship between modules and marketplace projects. (moduleA, projectB) means moduleA is required to complete projectB */
 export type Modules_Marketplace_Projects = {
   __typename?: 'modules_marketplace_projects';
@@ -10285,6 +10643,12 @@ export enum Modules_Marketplace_Projects_Update_Column {
   ProjectId = 'projectId'
 }
 
+export type Modules_Marketplace_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Modules_Marketplace_Projects_Set_Input>;
+  where: Modules_Marketplace_Projects_Bool_Exp;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
@@ -10378,6 +10742,8 @@ export type Mutation_Root = {
   createManyUsersModules?: Maybe<UsersModules_Mutation_Response>;
   /** insert data into the table: "users_projects" */
   createManyUsersProjects?: Maybe<Users_Projects_Mutation_Response>;
+  /** insert data into the table: "users_supplementary" */
+  createManyUsersSupplementaries?: Maybe<Users_Supplementary_Mutation_Response>;
   /** insert data into the table: "visual_judgement_module_images" */
   createManyVisualJudgementModuleImages?: Maybe<VisualJudgementModuleImages_Mutation_Response>;
   /** insert data into the table: "visual_judgement_module_responses" */
@@ -10476,6 +10842,8 @@ export type Mutation_Root = {
   createOneUserProject?: Maybe<Users_Projects>;
   /** insert a single row into the table: "user_referrals" */
   createOneUserReferral?: Maybe<UserReferrals>;
+  /** insert a single row into the table: "users_supplementary" */
+  createOneUserSupplementary?: Maybe<Users_Supplementary>;
   /** insert a single row into the table: "visual_judgement_modules" */
   createOneVisualJudgementModule?: Maybe<VisualJudgementModules>;
   /** insert a single row into the table: "visual_judgement_module_images" */
@@ -10584,6 +10952,8 @@ export type Mutation_Root = {
   deleteManyUsersModules?: Maybe<UsersModules_Mutation_Response>;
   /** delete data from the table: "users_projects" */
   deleteManyUsersProjects?: Maybe<Users_Projects_Mutation_Response>;
+  /** delete data from the table: "users_supplementary" */
+  deleteManyUsersSupplementaries?: Maybe<Users_Supplementary_Mutation_Response>;
   /** delete data from the table: "visual_judgement_module_images" */
   deleteManyVisualJudgementModuleImages?: Maybe<VisualJudgementModuleImages_Mutation_Response>;
   /** delete data from the table: "visual_judgement_module_responses" */
@@ -10682,6 +11052,8 @@ export type Mutation_Root = {
   deleteOneUserProject?: Maybe<Users_Projects>;
   /** delete single row from the table: "user_referrals" */
   deleteOneUserReferral?: Maybe<UserReferrals>;
+  /** delete single row from the table: "users_supplementary" */
+  deleteOneUserSupplementary?: Maybe<Users_Supplementary>;
   /** delete single row from the table: "users_modules" */
   deleteOneUsersModules?: Maybe<UsersModules>;
   /** delete single row from the table: "visual_judgement_modules" */
@@ -10846,6 +11218,8 @@ export type Mutation_Root = {
   updateManyUsersModules?: Maybe<UsersModules_Mutation_Response>;
   /** update data of the table: "users_projects" */
   updateManyUsersProjects?: Maybe<Users_Projects_Mutation_Response>;
+  /** update data of the table: "users_supplementary" */
+  updateManyUsersSupplementaries?: Maybe<Users_Supplementary_Mutation_Response>;
   /** update data of the table: "visual_judgement_module_images" */
   updateManyVisualJudgementModuleImages?: Maybe<VisualJudgementModuleImages_Mutation_Response>;
   /** update data of the table: "visual_judgement_module_responses" */
@@ -10944,6 +11318,8 @@ export type Mutation_Root = {
   updateOneUserProject?: Maybe<Users_Projects>;
   /** update single row of the table: "user_referrals" */
   updateOneUserReferral?: Maybe<UserReferrals>;
+  /** update single row of the table: "users_supplementary" */
+  updateOneUserSupplementary?: Maybe<Users_Supplementary>;
   /** update single row of the table: "visual_judgement_modules" */
   updateOneVisualJudgementModule?: Maybe<VisualJudgementModules>;
   /** update single row of the table: "visual_judgement_module_images" */
@@ -10964,26 +11340,138 @@ export type Mutation_Root = {
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   updateVanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
+  /** update multiples rows of table: "cash_out_requests" */
+  update_CashOutRequests_many?: Maybe<Array<Maybe<CashOutRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "collection_type" */
+  update_CollectionTypes_many?: Maybe<Array<Maybe<CollectionTypes_Mutation_Response>>>;
+  /** update multiples rows of table: "customers" */
+  update_Customers_many?: Maybe<Array<Maybe<Customers_Mutation_Response>>>;
+  /** update multiples rows of table: "etx_task_sessions" */
+  update_EtxTaskSessions_many?: Maybe<Array<Maybe<EtxTaskSessions_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_crypto_requests" */
+  update_FireboaCashOutCryptoRequests_many?: Maybe<Array<Maybe<FireboaCashOutCryptoRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_gift_card_requests" */
+  update_FireboaCashOutGiftCardRequests_many?: Maybe<Array<Maybe<FireboaCashOutGiftCardRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_preferred_methods" */
+  update_FireboaCashOutPreferredMethods_many?: Maybe<Array<Maybe<FireboaCashOutPreferredMethods_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_requests" */
+  update_FireboaCashOutRequests_many?: Maybe<Array<Maybe<FireboaCashOutRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_modules" */
+  update_FireboaModules_many?: Maybe<Array<Maybe<FireboaModules_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_modules_users" */
+  update_FireboaProjectsModulesUsers_many?: Maybe<Array<Maybe<FireboaProjectsModulesUsers_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_modules" */
+  update_FireboaProjectsModules_many?: Maybe<Array<Maybe<FireboaProjectsModules_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_users" */
+  update_FireboaProjectsUsers_many?: Maybe<Array<Maybe<FireboaProjectsUsers_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects" */
+  update_FireboaProjects_many?: Maybe<Array<Maybe<FireboaProjects_Mutation_Response>>>;
+  /** update multiples rows of table: "fraud_status_enum" */
+  update_FraudStatusEnum_many?: Maybe<Array<Maybe<FraudStatusEnum_Mutation_Response>>>;
+  /** update multiples rows of table: "identities_legal_id_type_enum" */
+  update_IdentitiesLegalIdTypeEnums_many?: Maybe<Array<Maybe<IdentitiesLegalIdTypeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "images" */
+  update_Images_many?: Maybe<Array<Maybe<Images_Mutation_Response>>>;
+  /** update multiples rows of table: "module_instructions" */
+  update_ModuleInstructions_many?: Maybe<Array<Maybe<ModuleInstructions_Mutation_Response>>>;
+  /** update multiples rows of table: "modules" */
+  update_Modules_many?: Maybe<Array<Maybe<Modules_Mutation_Response>>>;
+  /** update multiples rows of table: "project_statuses" */
+  update_ProjectStatuses_many?: Maybe<Array<Maybe<ProjectStatuses_Mutation_Response>>>;
+  /** update multiples rows of table: "sessions" */
+  update_Sessions_many?: Maybe<Array<Maybe<Sessions_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_error_code_enum" */
+  update_StripeIdentitySessionErrorCodeEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionErrorCodeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_status_enum" */
+  update_StripeIdentitySessionStatusEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionStatusEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_type_enum" */
+  update_StripeIdentitySessionTypeEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionTypeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_verification_sessions" */
+  update_StripeVerificationSessions_many?: Maybe<Array<Maybe<StripeVerificationSessions_Mutation_Response>>>;
+  /** update multiples rows of table: "survey_responses" */
+  update_SurveyResponses_many?: Maybe<Array<Maybe<SurveyResponses_Mutation_Response>>>;
+  /** update multiples rows of table: "surveys" */
+  update_Surveys_many?: Maybe<Array<Maybe<Surveys_Mutation_Response>>>;
+  /** update multiples rows of table: "user_identities" */
+  update_UserIdentities_many?: Maybe<Array<Maybe<UserIdentities_Mutation_Response>>>;
+  /** update multiples rows of table: "user_module_progress_enum" */
+  update_UserModuleStatus_many?: Maybe<Array<Maybe<UserModuleStatus_Mutation_Response>>>;
+  /** update multiples rows of table: "user_referrals" */
+  update_UserReferrals_many?: Maybe<Array<Maybe<UserReferrals_Mutation_Response>>>;
+  /** update multiples rows of table: "users_images" */
+  update_UsersImages_many?: Maybe<Array<Maybe<UsersImages_Mutation_Response>>>;
+  /** update multiples rows of table: "users_modules" */
+  update_UsersModules_many?: Maybe<Array<Maybe<UsersModules_Mutation_Response>>>;
+  /** update multiples rows of table: "users" */
+  update_Users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_module_responses" */
+  update_VisualJudgementModuleResponses_many?: Maybe<Array<Maybe<VisualJudgementModuleResponses_Mutation_Response>>>;
+  /** update multiples rows of table: "wallets" */
+  update_Wallets_many?: Maybe<Array<Maybe<Wallets_Mutation_Response>>>;
+  /** update multiples rows of table: "workers" */
+  update_Workers_many?: Maybe<Array<Maybe<Workers_Mutation_Response>>>;
+  /** update multiples rows of table: "cash_out_methods" */
+  update_cashOutMethods_many?: Maybe<Array<Maybe<CashOutMethods_Mutation_Response>>>;
+  /** update multiples rows of table: "data_types" */
+  update_datatTypes_many?: Maybe<Array<Maybe<DatatTypes_Mutation_Response>>>;
+  /** update multiples rows of table: "feature_types" */
+  update_featureTypes_many?: Maybe<Array<Maybe<FeatureTypes_Mutation_Response>>>;
   /** update data of the table: "gender" */
   update_gender?: Maybe<Gender_Mutation_Response>;
   /** update single row of the table: "gender" */
   update_gender_by_pk?: Maybe<Gender>;
+  /** update multiples rows of table: "gender" */
+  update_gender_many?: Maybe<Array<Maybe<Gender_Mutation_Response>>>;
+  /** update multiples rows of table: "have_labeled_data_types" */
+  update_haveLabeledDataTypesEnum_many?: Maybe<Array<Maybe<HaveLabeledDataTypesEnum_Mutation_Response>>>;
   /** update data of the table: "industry_types" */
   update_industry_types?: Maybe<Industry_Types_Mutation_Response>;
   /** update single row of the table: "industry_types" */
   update_industry_types_by_pk?: Maybe<Industry_Types>;
+  /** update multiples rows of table: "industry_types" */
+  update_industry_types_many?: Maybe<Array<Maybe<Industry_Types_Mutation_Response>>>;
+  /** update multiples rows of table: "labelling_platforms" */
+  update_labellingPlatforms_many?: Maybe<Array<Maybe<LabellingPlatforms_Mutation_Response>>>;
   /** update data of the table: "managers" */
   update_managers?: Maybe<Managers_Mutation_Response>;
   /** update single row of the table: "managers" */
   update_managers_by_pk?: Maybe<Managers>;
+  /** update multiples rows of table: "managers" */
+  update_managers_many?: Maybe<Array<Maybe<Managers_Mutation_Response>>>;
+  /** update multiples rows of table: "marketplace_projects" */
+  update_marketplace_projects_many?: Maybe<Array<Maybe<Marketplace_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "modules_marketplace_projects" */
+  update_modules_marketplace_projects_many?: Maybe<Array<Maybe<Modules_Marketplace_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "organizations_customers" */
+  update_organizationsCustomers_many?: Maybe<Array<Maybe<OrganizationsCustomers_Mutation_Response>>>;
+  /** update multiples rows of table: "organizations" */
+  update_organizations_many?: Maybe<Array<Maybe<Organizations_Mutation_Response>>>;
+  /** update multiples rows of table: "pricing_plans" */
+  update_pricingPlans_many?: Maybe<Array<Maybe<PricingPlans_Mutation_Response>>>;
+  /** update multiples rows of table: "spotify_state_types" */
+  update_spotifyStateTypes_many?: Maybe<Array<Maybe<SpotifyStateTypes_Mutation_Response>>>;
   /** update data of the table: "strapi" */
   update_strapi?: Maybe<Strapi_Mutation_Response>;
   /** update single row of the table: "strapi" */
   update_strapi_by_pk?: Maybe<Strapi>;
+  /** update multiples rows of table: "strapi" */
+  update_strapi_many?: Maybe<Array<Maybe<Strapi_Mutation_Response>>>;
   /** update data of the table: "user_ip_addresses" */
   update_user_ip_addresses?: Maybe<User_Ip_Addresses_Mutation_Response>;
   /** update single row of the table: "user_ip_addresses" */
   update_user_ip_addresses_by_pk?: Maybe<User_Ip_Addresses>;
+  /** update multiples rows of table: "user_ip_addresses" */
+  update_user_ip_addresses_many?: Maybe<Array<Maybe<User_Ip_Addresses_Mutation_Response>>>;
+  /** update multiples rows of table: "users_projects" */
+  update_users_projects_many?: Maybe<Array<Maybe<Users_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "users_supplementary" */
+  update_users_supplementary_many?: Maybe<Array<Maybe<Users_Supplementary_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_module_images" */
+  update_visualJudgementModuleImages_many?: Maybe<Array<Maybe<VisualJudgementModuleImages_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_modules" */
+  update_visualJudgementModules_many?: Maybe<Array<Maybe<VisualJudgementModules_Mutation_Response>>>;
+  /** update multiples rows of table: "workers_spotify" */
+  update_workersSpotify_many?: Maybe<Array<Maybe<WorkersSpotify_Mutation_Response>>>;
   upload: UploadFileEntityResponse;
 };
 
@@ -11300,6 +11788,13 @@ export type Mutation_RootCreateManyUsersModulesArgs = {
 export type Mutation_RootCreateManyUsersProjectsArgs = {
   objects: Array<Users_Projects_Insert_Input>;
   on_conflict?: InputMaybe<Users_Projects_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateManyUsersSupplementariesArgs = {
+  objects: Array<Users_Supplementary_Insert_Input>;
+  on_conflict?: InputMaybe<Users_Supplementary_On_Conflict>;
 };
 
 
@@ -11647,6 +12142,13 @@ export type Mutation_RootCreateOneUserReferralArgs = {
 
 
 /** mutation root */
+export type Mutation_RootCreateOneUserSupplementaryArgs = {
+  object: Users_Supplementary_Insert_Input;
+  on_conflict?: InputMaybe<Users_Supplementary_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootCreateOneVisualJudgementModuleArgs = {
   object: VisualJudgementModules_Insert_Input;
   on_conflict?: InputMaybe<VisualJudgementModules_On_Conflict>;
@@ -11989,6 +12491,12 @@ export type Mutation_RootDeleteManyUsersProjectsArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDeleteManyUsersSupplementariesArgs = {
+  where: Users_Supplementary_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootDeleteManyVisualJudgementModuleImagesArgs = {
   where: VisualJudgementModuleImages_Bool_Exp;
 };
@@ -12283,6 +12791,12 @@ export type Mutation_RootDeleteOneUserProjectArgs = {
 
 /** mutation root */
 export type Mutation_RootDeleteOneUserReferralArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteOneUserSupplementaryArgs = {
   id: Scalars['uuid'];
 };
 
@@ -12881,6 +13395,13 @@ export type Mutation_RootUpdateManyUsersProjectsArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateManyUsersSupplementariesArgs = {
+  _set?: InputMaybe<Users_Supplementary_Set_Input>;
+  where: Users_Supplementary_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdateManyVisualJudgementModuleImagesArgs = {
   _append?: InputMaybe<VisualJudgementModuleImages_Append_Input>;
   _delete_at_path?: InputMaybe<VisualJudgementModuleImages_Delete_At_Path_Input>;
@@ -13251,6 +13772,13 @@ export type Mutation_RootUpdateOneUserReferralArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateOneUserSupplementaryArgs = {
+  _set?: InputMaybe<Users_Supplementary_Set_Input>;
+  pk_columns: Users_Supplementary_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdateOneVisualJudgementModuleArgs = {
   _append?: InputMaybe<VisualJudgementModules_Append_Input>;
   _delete_at_path?: InputMaybe<VisualJudgementModules_Delete_At_Path_Input>;
@@ -13346,6 +13874,234 @@ export type Mutation_RootUpdateVanaConnectFaqArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_CashOutRequests_ManyArgs = {
+  updates: Array<CashOutRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CollectionTypes_ManyArgs = {
+  updates: Array<CollectionTypes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Customers_ManyArgs = {
+  updates: Array<Customers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_EtxTaskSessions_ManyArgs = {
+  updates: Array<EtxTaskSessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutCryptoRequests_ManyArgs = {
+  updates: Array<FireboaCashOutCryptoRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutGiftCardRequests_ManyArgs = {
+  updates: Array<FireboaCashOutGiftCardRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutPreferredMethods_ManyArgs = {
+  updates: Array<FireboaCashOutPreferredMethods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutRequests_ManyArgs = {
+  updates: Array<FireboaCashOutRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaModules_ManyArgs = {
+  updates: Array<FireboaModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsModulesUsers_ManyArgs = {
+  updates: Array<FireboaProjectsModulesUsers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsModules_ManyArgs = {
+  updates: Array<FireboaProjectsModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsUsers_ManyArgs = {
+  updates: Array<FireboaProjectsUsers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjects_ManyArgs = {
+  updates: Array<FireboaProjects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FraudStatusEnum_ManyArgs = {
+  updates: Array<FraudStatusEnum_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_IdentitiesLegalIdTypeEnums_ManyArgs = {
+  updates: Array<IdentitiesLegalIdTypeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Images_ManyArgs = {
+  updates: Array<Images_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ModuleInstructions_ManyArgs = {
+  updates: Array<ModuleInstructions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Modules_ManyArgs = {
+  updates: Array<Modules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ProjectStatuses_ManyArgs = {
+  updates: Array<ProjectStatuses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sessions_ManyArgs = {
+  updates: Array<Sessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionErrorCodeEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionErrorCodeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionStatusEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionStatusEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionTypeEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionTypeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeVerificationSessions_ManyArgs = {
+  updates: Array<StripeVerificationSessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SurveyResponses_ManyArgs = {
+  updates: Array<SurveyResponses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Surveys_ManyArgs = {
+  updates: Array<Surveys_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserIdentities_ManyArgs = {
+  updates: Array<UserIdentities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserModuleStatus_ManyArgs = {
+  updates: Array<UserModuleStatus_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserReferrals_ManyArgs = {
+  updates: Array<UserReferrals_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersImages_ManyArgs = {
+  updates: Array<UsersImages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersModules_ManyArgs = {
+  updates: Array<UsersModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_ManyArgs = {
+  updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModuleResponses_ManyArgs = {
+  updates: Array<VisualJudgementModuleResponses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Wallets_ManyArgs = {
+  updates: Array<Wallets_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Workers_ManyArgs = {
+  updates: Array<Workers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CashOutMethods_ManyArgs = {
+  updates: Array<CashOutMethods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_DatatTypes_ManyArgs = {
+  updates: Array<DatatTypes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FeatureTypes_ManyArgs = {
+  updates: Array<FeatureTypes_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_GenderArgs = {
   _set?: InputMaybe<Gender_Set_Input>;
   where: Gender_Bool_Exp;
@@ -13356,6 +14112,18 @@ export type Mutation_RootUpdate_GenderArgs = {
 export type Mutation_RootUpdate_Gender_By_PkArgs = {
   _set?: InputMaybe<Gender_Set_Input>;
   pk_columns: Gender_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gender_ManyArgs = {
+  updates: Array<Gender_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_HaveLabeledDataTypesEnum_ManyArgs = {
+  updates: Array<HaveLabeledDataTypesEnum_Updates>;
 };
 
 
@@ -13374,6 +14142,18 @@ export type Mutation_RootUpdate_Industry_Types_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Industry_Types_ManyArgs = {
+  updates: Array<Industry_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_LabellingPlatforms_ManyArgs = {
+  updates: Array<LabellingPlatforms_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ManagersArgs = {
   _set?: InputMaybe<Managers_Set_Input>;
   where: Managers_Bool_Exp;
@@ -13384,6 +14164,48 @@ export type Mutation_RootUpdate_ManagersArgs = {
 export type Mutation_RootUpdate_Managers_By_PkArgs = {
   _set?: InputMaybe<Managers_Set_Input>;
   pk_columns: Managers_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Managers_ManyArgs = {
+  updates: Array<Managers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Marketplace_Projects_ManyArgs = {
+  updates: Array<Marketplace_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Modules_Marketplace_Projects_ManyArgs = {
+  updates: Array<Modules_Marketplace_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_OrganizationsCustomers_ManyArgs = {
+  updates: Array<OrganizationsCustomers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organizations_ManyArgs = {
+  updates: Array<Organizations_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PricingPlans_ManyArgs = {
+  updates: Array<PricingPlans_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SpotifyStateTypes_ManyArgs = {
+  updates: Array<SpotifyStateTypes_Updates>;
 };
 
 
@@ -13402,6 +14224,12 @@ export type Mutation_RootUpdate_Strapi_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Strapi_ManyArgs = {
+  updates: Array<Strapi_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_User_Ip_AddressesArgs = {
   _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
   where: User_Ip_Addresses_Bool_Exp;
@@ -13412,6 +14240,42 @@ export type Mutation_RootUpdate_User_Ip_AddressesArgs = {
 export type Mutation_RootUpdate_User_Ip_Addresses_By_PkArgs = {
   _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
   pk_columns: User_Ip_Addresses_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Ip_Addresses_ManyArgs = {
+  updates: Array<User_Ip_Addresses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_Projects_ManyArgs = {
+  updates: Array<Users_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_Supplementary_ManyArgs = {
+  updates: Array<Users_Supplementary_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModuleImages_ManyArgs = {
+  updates: Array<VisualJudgementModuleImages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModules_ManyArgs = {
+  updates: Array<VisualJudgementModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_WorkersSpotify_ManyArgs = {
+  updates: Array<WorkersSpotify_Updates>;
 };
 
 
@@ -13542,7 +14406,7 @@ export type OrganizationsCustomers_Bool_Exp = {
 
 /** unique or primary key constraints on table "organizations_customers" */
 export enum OrganizationsCustomers_Constraint {
-  /** unique or primary key constraint on columns "customer_id", "organization_id" */
+  /** unique or primary key constraint on columns "organization_id", "customer_id" */
   OrganizationsCustomersPkey = 'organizations_customers_pkey'
 }
 
@@ -13644,6 +14508,12 @@ export enum OrganizationsCustomers_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type OrganizationsCustomers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<OrganizationsCustomers_Set_Input>;
+  where: OrganizationsCustomers_Bool_Exp;
+};
 
 /** aggregated selection of "organizations" */
 export type Organizations_Aggregate = {
@@ -13837,6 +14707,12 @@ export enum Organizations_Update_Column {
   /** column name */
   TechnicalContactId = 'technicalContactId'
 }
+
+export type Organizations_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Organizations_Set_Input>;
+  where: Organizations_Bool_Exp;
+};
 
 /** columns and relationships of "pricing_plans" */
 export type PricingPlans = {
@@ -14060,6 +14936,14 @@ export enum PricingPlans_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type PricingPlans_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<PricingPlans_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<PricingPlans_Set_Input>;
+  where: PricingPlans_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type PricingPlans_Var_Pop_Fields = {
@@ -14371,6 +15255,8 @@ export type Query_Root = {
   userReferrals: Array<UserReferrals>;
   /** fetch aggregated fields from the table: "user_referrals" */
   userReferralsAggregate: UserReferrals_Aggregate;
+  /** fetch data from the table: "users_supplementary" using primary key columns */
+  userSupplementary?: Maybe<Users_Supplementary>;
   /** fetch data from the table: "user_ip_addresses" */
   user_ip_addresses: Array<User_Ip_Addresses>;
   /** fetch aggregated fields from the table: "user_ip_addresses" */
@@ -14397,6 +15283,10 @@ export type Query_Root = {
   usersProjects: Array<Users_Projects>;
   /** fetch aggregated fields from the table: "users_projects" */
   usersProjectsAggregate: Users_Projects_Aggregate;
+  /** fetch data from the table: "users_supplementary" */
+  usersSupplementaries: Array<Users_Supplementary>;
+  /** fetch aggregated fields from the table: "users_supplementary" */
+  usersSupplementariesAggregate: Users_Supplementary_Aggregate;
   vanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
   vanaConnectFaqs?: Maybe<VanaConnectFaqEntityResponseCollection>;
   /** fetch data from the table: "visual_judgement_modules" using primary key columns */
@@ -15525,6 +16415,11 @@ export type Query_RootUserReferralsAggregateArgs = {
 };
 
 
+export type Query_RootUserSupplementaryArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_RootUser_Ip_AddressesArgs = {
   distinct_on?: InputMaybe<Array<User_Ip_Addresses_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -15641,6 +16536,24 @@ export type Query_RootUsersProjectsAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Users_Projects_Order_By>>;
   where?: InputMaybe<Users_Projects_Bool_Exp>;
+};
+
+
+export type Query_RootUsersSupplementariesArgs = {
+  distinct_on?: InputMaybe<Array<Users_Supplementary_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Supplementary_Order_By>>;
+  where?: InputMaybe<Users_Supplementary_Bool_Exp>;
+};
+
+
+export type Query_RootUsersSupplementariesAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Users_Supplementary_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Supplementary_Order_By>>;
+  where?: InputMaybe<Users_Supplementary_Bool_Exp>;
 };
 
 
@@ -15924,6 +16837,12 @@ export enum SpotifyStateTypes_Update_Column {
   Name = 'name'
 }
 
+export type SpotifyStateTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<SpotifyStateTypes_Set_Input>;
+  where: SpotifyStateTypes_Bool_Exp;
+};
+
 /** columns and relationships of "strapi" */
 export type Strapi = {
   __typename?: 'strapi';
@@ -16035,6 +16954,12 @@ export enum Strapi_Update_Column {
   /** column name */
   Id = 'id'
 }
+
+export type Strapi_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Strapi_Set_Input>;
+  where: Strapi_Bool_Exp;
+};
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
@@ -16310,6 +17235,8 @@ export type Subscription_Root = {
   userReferrals: Array<UserReferrals>;
   /** fetch aggregated fields from the table: "user_referrals" */
   userReferralsAggregate: UserReferrals_Aggregate;
+  /** fetch data from the table: "users_supplementary" using primary key columns */
+  userSupplementary?: Maybe<Users_Supplementary>;
   /** fetch data from the table: "user_ip_addresses" */
   user_ip_addresses: Array<User_Ip_Addresses>;
   /** fetch aggregated fields from the table: "user_ip_addresses" */
@@ -16332,6 +17259,10 @@ export type Subscription_Root = {
   usersProjects: Array<Users_Projects>;
   /** fetch aggregated fields from the table: "users_projects" */
   usersProjectsAggregate: Users_Projects_Aggregate;
+  /** fetch data from the table: "users_supplementary" */
+  usersSupplementaries: Array<Users_Supplementary>;
+  /** fetch aggregated fields from the table: "users_supplementary" */
+  usersSupplementariesAggregate: Users_Supplementary_Aggregate;
   /** fetch data from the table: "visual_judgement_modules" using primary key columns */
   visualJudgementModule?: Maybe<VisualJudgementModules>;
   /** fetch data from the table: "visual_judgement_module_images" using primary key columns */
@@ -17408,6 +18339,11 @@ export type Subscription_RootUserReferralsAggregateArgs = {
 };
 
 
+export type Subscription_RootUserSupplementaryArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootUser_Ip_AddressesArgs = {
   distinct_on?: InputMaybe<Array<User_Ip_Addresses_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -17500,6 +18436,24 @@ export type Subscription_RootUsersProjectsAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Users_Projects_Order_By>>;
   where?: InputMaybe<Users_Projects_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsersSupplementariesArgs = {
+  distinct_on?: InputMaybe<Array<Users_Supplementary_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Supplementary_Order_By>>;
+  where?: InputMaybe<Users_Supplementary_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsersSupplementariesAggregateArgs = {
+  distinct_on?: InputMaybe<Array<Users_Supplementary_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Supplementary_Order_By>>;
+  where?: InputMaybe<Users_Supplementary_Bool_Exp>;
 };
 
 
@@ -17701,7 +18655,7 @@ export type User_Ip_Addresses_Bool_Exp = {
 export enum User_Ip_Addresses_Constraint {
   /** unique or primary key constraint on columns "id" */
   UserIpAddressesPkey = 'user_ip_addresses_pkey',
-  /** unique or primary key constraint on columns "ip_address", "user_id" */
+  /** unique or primary key constraint on columns "user_id", "ip_address" */
   UserIpAddressesUserIdIpAddressKey = 'user_ip_addresses_user_id_ip_address_key'
 }
 
@@ -17800,6 +18754,12 @@ export enum User_Ip_Addresses_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+export type User_Ip_Addresses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
+  where: User_Ip_Addresses_Bool_Exp;
+};
 
 /** columns and relationships of "users_projects" */
 export type Users_Projects = {
@@ -17963,6 +18923,233 @@ export enum Users_Projects_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Users_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Projects_Set_Input>;
+  where: Users_Projects_Bool_Exp;
+};
+
+/** Extra vault-data about a user */
+export type Users_Supplementary = {
+  __typename?: 'users_supplementary';
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  publicKey?: Maybe<Scalars['String']>;
+  socialLoginMethod?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['timestamptz'];
+  /** An object relationship */
+  user: Users;
+  userId: Scalars['uuid'];
+  userSecret?: Maybe<Scalars['String']>;
+  walletAddress?: Maybe<Scalars['String']>;
+  walletChain?: Maybe<Scalars['String']>;
+  walletType?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "users_supplementary" */
+export type Users_Supplementary_Aggregate = {
+  __typename?: 'users_supplementary_aggregate';
+  aggregate?: Maybe<Users_Supplementary_Aggregate_Fields>;
+  nodes: Array<Users_Supplementary>;
+};
+
+/** aggregate fields of "users_supplementary" */
+export type Users_Supplementary_Aggregate_Fields = {
+  __typename?: 'users_supplementary_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Users_Supplementary_Max_Fields>;
+  min?: Maybe<Users_Supplementary_Min_Fields>;
+};
+
+
+/** aggregate fields of "users_supplementary" */
+export type Users_Supplementary_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Users_Supplementary_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "users_supplementary". All fields are combined with a logical 'AND'. */
+export type Users_Supplementary_Bool_Exp = {
+  _and?: InputMaybe<Array<Users_Supplementary_Bool_Exp>>;
+  _not?: InputMaybe<Users_Supplementary_Bool_Exp>;
+  _or?: InputMaybe<Array<Users_Supplementary_Bool_Exp>>;
+  createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  publicKey?: InputMaybe<String_Comparison_Exp>;
+  socialLoginMethod?: InputMaybe<String_Comparison_Exp>;
+  updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  userId?: InputMaybe<Uuid_Comparison_Exp>;
+  userSecret?: InputMaybe<String_Comparison_Exp>;
+  walletAddress?: InputMaybe<String_Comparison_Exp>;
+  walletChain?: InputMaybe<String_Comparison_Exp>;
+  walletType?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "users_supplementary" */
+export enum Users_Supplementary_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  UsersSupplementaryPkey = 'users_supplementary_pkey',
+  /** unique or primary key constraint on columns "user_id" */
+  UsersSupplementaryUserIdKey = 'users_supplementary_user_id_key'
+}
+
+/** input type for inserting data into table "users_supplementary" */
+export type Users_Supplementary_Insert_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  publicKey?: InputMaybe<Scalars['String']>;
+  socialLoginMethod?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  userId?: InputMaybe<Scalars['uuid']>;
+  userSecret?: InputMaybe<Scalars['String']>;
+  walletAddress?: InputMaybe<Scalars['String']>;
+  walletChain?: InputMaybe<Scalars['String']>;
+  walletType?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Users_Supplementary_Max_Fields = {
+  __typename?: 'users_supplementary_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  publicKey?: Maybe<Scalars['String']>;
+  socialLoginMethod?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['uuid']>;
+  userSecret?: Maybe<Scalars['String']>;
+  walletAddress?: Maybe<Scalars['String']>;
+  walletChain?: Maybe<Scalars['String']>;
+  walletType?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Users_Supplementary_Min_Fields = {
+  __typename?: 'users_supplementary_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  publicKey?: Maybe<Scalars['String']>;
+  socialLoginMethod?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['uuid']>;
+  userSecret?: Maybe<Scalars['String']>;
+  walletAddress?: Maybe<Scalars['String']>;
+  walletChain?: Maybe<Scalars['String']>;
+  walletType?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "users_supplementary" */
+export type Users_Supplementary_Mutation_Response = {
+  __typename?: 'users_supplementary_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Users_Supplementary>;
+};
+
+/** input type for inserting object relation for remote table "users_supplementary" */
+export type Users_Supplementary_Obj_Rel_Insert_Input = {
+  data: Users_Supplementary_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Users_Supplementary_On_Conflict>;
+};
+
+/** on_conflict condition type for table "users_supplementary" */
+export type Users_Supplementary_On_Conflict = {
+  constraint: Users_Supplementary_Constraint;
+  update_columns?: Array<Users_Supplementary_Update_Column>;
+  where?: InputMaybe<Users_Supplementary_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "users_supplementary". */
+export type Users_Supplementary_Order_By = {
+  createdAt?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  publicKey?: InputMaybe<Order_By>;
+  socialLoginMethod?: InputMaybe<Order_By>;
+  updatedAt?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  userId?: InputMaybe<Order_By>;
+  userSecret?: InputMaybe<Order_By>;
+  walletAddress?: InputMaybe<Order_By>;
+  walletChain?: InputMaybe<Order_By>;
+  walletType?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: users_supplementary */
+export type Users_Supplementary_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "users_supplementary" */
+export enum Users_Supplementary_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PublicKey = 'publicKey',
+  /** column name */
+  SocialLoginMethod = 'socialLoginMethod',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId',
+  /** column name */
+  UserSecret = 'userSecret',
+  /** column name */
+  WalletAddress = 'walletAddress',
+  /** column name */
+  WalletChain = 'walletChain',
+  /** column name */
+  WalletType = 'walletType'
+}
+
+/** input type for updating data in table "users_supplementary" */
+export type Users_Supplementary_Set_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  publicKey?: InputMaybe<Scalars['String']>;
+  socialLoginMethod?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+  userSecret?: InputMaybe<Scalars['String']>;
+  walletAddress?: InputMaybe<Scalars['String']>;
+  walletChain?: InputMaybe<Scalars['String']>;
+  walletType?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "users_supplementary" */
+export enum Users_Supplementary_Update_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PublicKey = 'publicKey',
+  /** column name */
+  SocialLoginMethod = 'socialLoginMethod',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId',
+  /** column name */
+  UserSecret = 'userSecret',
+  /** column name */
+  WalletAddress = 'walletAddress',
+  /** column name */
+  WalletChain = 'walletChain',
+  /** column name */
+  WalletType = 'walletType'
+}
+
+export type Users_Supplementary_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Supplementary_Set_Input>;
+  where: Users_Supplementary_Bool_Exp;
+};
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -18224,6 +19411,22 @@ export enum VisualJudgementModuleImages_Update_Column {
   VisualJudgementModuleId = 'visualJudgementModuleId'
 }
 
+export type VisualJudgementModuleImages_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<VisualJudgementModuleImages_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<VisualJudgementModuleImages_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<VisualJudgementModuleImages_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<VisualJudgementModuleImages_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<VisualJudgementModuleImages_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModuleImages_Set_Input>;
+  where: VisualJudgementModuleImages_Bool_Exp;
+};
+
 /** columns and relationships of "visual_judgement_modules" */
 export type VisualJudgementModules = {
   __typename?: 'visualJudgementModules';
@@ -18455,6 +19658,22 @@ export enum VisualJudgementModules_Update_Column {
   Instruction = 'instruction'
 }
 
+export type VisualJudgementModules_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<VisualJudgementModules_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<VisualJudgementModules_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<VisualJudgementModules_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<VisualJudgementModules_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<VisualJudgementModules_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModules_Set_Input>;
+  where: VisualJudgementModules_Bool_Exp;
+};
+
 /** columns and relationships of "workers_spotify" */
 export type WorkersSpotify = {
   __typename?: 'workersSpotify';
@@ -18635,6 +19854,12 @@ export enum WorkersSpotify_Update_Column {
   WorkerId = 'workerId'
 }
 
+export type WorkersSpotify_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<WorkersSpotify_Set_Input>;
+  where: WorkersSpotify_Bool_Exp;
+};
+
 export type UserWithCustomerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, createdAt: any, updatedAt: any, customer?: { __typename?: 'Customers', id: any, createdAt: any, updatedAt: any, organization?: { __typename?: 'organizations', id: any, name: string, stripeCustomerId?: string | null } | null } | null, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null } | null };
 
 export type UserWithWorkerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> };
@@ -18653,6 +19878,8 @@ export type CreateUserModuleMutationVariables = Exact<{
   moduleId: Scalars['uuid'];
   userId: Scalars['uuid'];
   urlNumber: Scalars['Int'];
+  fileName: Scalars['String'];
+  fileSize: Scalars['bigint'];
 }>;
 
 
@@ -18749,7 +19976,7 @@ export type GetUserModulesSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
+export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, fileName?: string | null, fileSize: any, createdAt: any, module: { __typename?: 'Modules', name: string } }> };
 
 export const UserWithCustomerFragmentDoc = gql`
     fragment UserWithCustomer on Users {
@@ -18812,9 +20039,9 @@ export const CreateUserDocument = gql`
 }
     `;
 export const CreateUserModuleDocument = gql`
-    mutation createUserModule($urlToData: String!, $moduleId: uuid!, $userId: uuid!, $urlNumber: Int!) {
+    mutation createUserModule($urlToData: String!, $moduleId: uuid!, $userId: uuid!, $urlNumber: Int!, $fileName: String!, $fileSize: bigint!) {
   createOneUserModule(
-    object: {urlToData: $urlToData, moduleId: $moduleId, userId: $userId, progress: "COMPLETE", urlNumber: $urlNumber}
+    object: {urlToData: $urlToData, moduleId: $moduleId, userId: $userId, progress: "COMPLETE", urlNumber: $urlNumber, fileName: $fileName, fileSize: $fileSize}
   ) {
     id
   }
@@ -18979,6 +20206,9 @@ export const GetUserModulesDocument = gql`
     }
     moduleId
     urlToData
+    fileName
+    fileSize
+    createdAt
   }
 }
     `;
