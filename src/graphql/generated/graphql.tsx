@@ -18990,7 +18990,9 @@ export type Users_Supplementary_Bool_Exp = {
 /** unique or primary key constraints on table "users_supplementary" */
 export enum Users_Supplementary_Constraint {
   /** unique or primary key constraint on columns "id" */
-  UsersSupplementaryPkey = 'users_supplementary_pkey'
+  UsersSupplementaryPkey = 'users_supplementary_pkey',
+  /** unique or primary key constraint on columns "user_id" */
+  UsersSupplementaryUserIdKey = 'users_supplementary_user_id_key'
 }
 
 /** input type for inserting data into table "users_supplementary" */
