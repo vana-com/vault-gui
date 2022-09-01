@@ -60,6 +60,9 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
               target="_blank"
               rel="noopener noreferrer"
               href={config.vanaSupportedAppsFeedback}
+              onClick={() =>
+                heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_REQUEST)
+              }
             >
               Request it.
             </Link>
@@ -69,7 +72,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
       <hr />
       <div tw="p-[1px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-insetHalf">
         {modules?.map((module) => (
-          <DataCardButton key={module.id} module={module} />
+          <DataCardButton key={module.id} module={module} userId={userId} />
         ))}
       </div>
     </Stack>
