@@ -4,4 +4,3 @@ export * from "./navigation";
 export * from "./onboardingCards";
 export * from "./sharePermissions";
 export * from "./storeInstructions";
-export * from "./testModules";
