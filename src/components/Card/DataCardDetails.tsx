@@ -14,7 +14,7 @@ interface Props {
 const DataCardDetails = ({ module }: Props) => (
   <Stack tw="gap-0.5">
     <Text variant="note" weight="semibold" tw="text-label text-left">
-      {module.fileName?.slice(0, -4)}
+      {module.fileName}
     </Text>
     {/* <Text variant="note" weight="semibold" tw="text-label text-left">
       {id.slice(-8)}

@@ -69,7 +69,7 @@ const encryptAndUploadUserDataFiles = async (
     return createUserModule(
       uploadURL as string,
       i + 1,
-      uploadFileName ?? "",
+      uploadFileName?.slice(0, -4) ?? "",
       uploadFileSize ?? 0,
     );
   });

@@ -50,9 +50,7 @@ const DataModule = ({
       <Stack tw="gap-2">
         {module.fileName ? (
           <DataModuleDetail label="File name">
-            <Group tw="gap-1 items-center">
-              {module.fileName.slice(0, -4)}
-            </Group>
+            <Group tw="gap-1 items-center">{module.fileName}</Group>
           </DataModuleDetail>
         ) : (
           <></>
