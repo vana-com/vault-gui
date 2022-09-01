@@ -2,13 +2,24 @@
 
 ## Guide to Running Locally
 
-1. Install Docker Desktop
+1. Install Docker Desktop and Docker Compose v1 (v2 currently not supported)
 2. Setup `development-stack` and `hasura-console` repos locally
 3. Setup Doppler using the
    [doppler setup document](https://vana.slab.com/posts/doppler-setup-71xn4xeu)
 4. Run `yarn install`
-5. Run the reset script to setup all local Docker infra: `./scripts/reset-vault-gui-completely-including-data`
-   OR run the container with `./scripts/dc-start-vault-gui`
+5. To run the entire stack locally:
+   ```bash
+   # Run the vault reset script to setup all local Docker infra: 
+   ./scripts/reset-vault-gui-completely-including-data
+
+   # OR run the container without resetting data:
+   ./scripts/dc-start-vault-gui
+   ```
+   
+   To run only vault-gui and point the backend to development environment, run: 
+   ```bash
+   doppler setup --project vault-gui --config dev && doppler run -- yarn dev
+   ```
 7. Visit localhost:5000
 
 ## Linting

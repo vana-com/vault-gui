@@ -43,6 +43,7 @@
     "@toruslabs/openlogin": "^2.5.0",
     "@typeform/embed-react": "^1.19.0",
     "@web3auth/base": "^1.2.0",
+    "@web3auth/core": "^2.0.0",
     "@web3auth/ethereum-provider": "1.2.0",
     "@web3auth/metamask-adapter": "1.2.0",
     "@web3auth/openlogin-adapter": "^1.2.0",

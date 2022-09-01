@@ -3685,6 +3685,13 @@
   dependencies:
     "@web3auth/base" "^1.2.0"
 
+"@web3auth/base-plugin@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-2.0.0.tgz#159d87386de0ad8e8f90ac86de94de6ca550334a"
+  integrity sha512-Sxoj3meMQWkR4yjtiSMjRnbVgvM3EXn1UHjYjvUpn/SNQCW9Hg+10LK90+lxLkGDTropYpJcuJI88hzv0/MCdw==
+  dependencies:
+    "@web3auth/base" "^2.0.0"
+
 "@web3auth/base-provider@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@web3auth/base-provider/-/base-provider-1.2.0.tgz#9737281082d094691107fae5fee8f80aef1cbd60"
@@ -3715,6 +3722,17 @@
     loglevel "^1.8.0"
     ts-custom-error "^3.2.0"
 
+"@web3auth/base@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3auth/base/-/base-2.0.0.tgz#34cb7e1403340bc93becbd97c250ba33cb22984b"
+  integrity sha512-vQ7Rc247wMSFc0vEwjOsiA/gfB7jJOBnJ0gLG1agLtAfKePEAbJ5zYDU39YHoKQ2dncTeNxisQy2X0oF60msHw==
+  dependencies:
+    "@toruslabs/http-helpers" "^3.1.0"
+    "@toruslabs/openlogin-jrpc" "^2.1.0"
+    jwt-decode "^3.1.2"
+    loglevel "^1.8.0"
+    ts-custom-error "^3.2.0"
+
 "@web3auth/core@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@web3auth/core/-/core-1.2.0.tgz#6d5c241314261a94d580206e4e98f3a8286aeb6c"
@@ -3723,6 +3741,15 @@
     "@toruslabs/openlogin-jrpc" "^2.1.0"
     "@web3auth/base" "^1.2.0"
     "@web3auth/base-plugin" "^1.2.0"
+
+"@web3auth/core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3auth/core/-/core-2.0.0.tgz#43c0bb794b19bee583defe7c30e41b847715cd90"
+  integrity sha512-Zvuh8lV6IvYUVRtYkltVeH3tcdmLzdjRQKlQt/GRQy+bsTdTNJNnAsrt0081+5nAg07qMAX2/8kOqFGPsqnlwQ==
+  dependencies:
+    "@toruslabs/openlogin-jrpc" "^2.1.0"
+    "@web3auth/base" "^2.0.0"
+    "@web3auth/base-plugin" "^2.0.0"
 
 "@web3auth/ethereum-provider@1.2.0", "@web3auth/ethereum-provider@^1.2.0":
   version "1.2.0"

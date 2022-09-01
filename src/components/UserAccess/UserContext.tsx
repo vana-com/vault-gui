@@ -4,6 +4,7 @@ import {
   CONNECTED_EVENT_DATA,
   WALLET_ADAPTERS,
 } from "@web3auth/base";
+import { Web3AuthCore } from "@web3auth/core";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
@@ -63,7 +64,7 @@ interface UserProviderProps {
 
 const UserProvider = ({ children }: UserProviderProps) => {
   const router = useRouter();
-  const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null);
+  const [web3Auth, setWeb3Auth] = useState<Web3AuthCore | null>(null);
   const [walletProvider, setWalletProvider] = useState<IWalletProvider | null>(
     null,
   );
@@ -82,6 +83,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   // Due to clashes between useTheme and web3Auth.uiConfig types,
   // definitively set the theme to either light or dark
   const theme = resolvedTheme === "dark" ? "dark" : "light";
+  let openLoginAdapter;
 
   /**
    * Web3Auth connected, get the User from Hasura
@@ -149,7 +151,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
    * Listen to events from a Web3Auth instance
    * @param web3AuthInstance
    */
-  const subscribeAuthEvents = (web3AuthInstance: Web3Auth) => {
+  const subscribeAuthEvents = (web3AuthInstance: Web3AuthCore) => {
     // User is logged in with Web3Auth. `web3auth.provider` is available here
     web3AuthInstance.on(
       ADAPTER_EVENTS.CONNECTED,
@@ -236,17 +238,19 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // Web3Auth must be dynamically imported in Next.js: https://github.com/Web3Auth/Web3Auth/issues/267
         // The Web3Auth import at the top of the page is to get types working during compile time
         // eslint-disable-next-line @typescript-eslint/no-shadow
-        const { Web3Auth } = await import("@web3auth/web3auth");
-        const web3AuthInstance = new Web3Auth({
-          uiConfig: {
-            appLogo: "https://vault.vana.xyz/vana.svg",
-            theme,
-          },
+        // const { Web3Auth } = await import("@web3auth/web3auth");
+        // const web3AuthInstance = new Web3Auth({
+        //   uiConfig: {
+        //     appLogo: "https://vault.vana.xyz/vana.svg",
+        //     theme,
+        //   },
+        //   ...config.web3AuthOptions,
+        // });
+        const web3AuthInstance = new Web3AuthCore({
           ...config.web3AuthOptions,
         });
 
         // OpenLogin adapter
-        let openLoginAdapter;
         if (window.location.origin.endsWith(config.vercelDomain)) {
           // Attempt to whitelist origin in Web3Auth manually for Vercel preview builds
           const res = await fetch(`/api/auth/sign-origin`, { method: "POST" }); // Use POST to send Origin header automatically
@@ -272,11 +276,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
         setWeb3Auth(web3AuthInstance);
         subscribeAuthEvents(web3AuthInstance);
-        await web3AuthInstance.initModal({
-          modalConfig: {
-            [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
-          },
-        });
+        // await web3AuthInstance.initModal({
+        //   modalConfig: {
+        //     [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
+        //   },
+        // });
       } catch (error) {
         console.error("Unable to initialize Web3Auth", error);
         setLoginError(true);
@@ -303,7 +307,16 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     try {
       setIsWeb3AuthLoading(true);
-      await web3Auth.connect();
+      // await web3Auth.connect();
+      openLoginAdapter = new OpenloginAdapter(config.openLoginAdapterConfig());
+      await web3Auth.init();
+      await web3Auth.connectTo(openLoginAdapter.name, {
+        loginProvider: "jwt",
+        extraLoginOptions: {
+          domain: "https://auth.vana.xyz",
+          verifierIdField: "sub",
+        },
+      });
     } catch (error: any) {
       console.error("Unable to connect with Web3auth.", error);
       setLoginError(true);

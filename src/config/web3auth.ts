@@ -36,6 +36,24 @@ const openLoginAdapterConfig = (
     originData,
     network: WEB_3_AUTH_NETWORK,
     clientId: WEB_3_AUTH_CLIENT_ID,
+    // loginConfig: {
+    //   google: {
+    //     name: "any name",
+    //     verifier: "google-development",
+    //     typeOfLogin: "google",
+    //     clientId:
+    //       "432753364585-du5nmp9uc7s8h65d1rkqmbtq3thdd2ut.apps.googleusercontent.com",
+    //   },
+    // },
+
+    loginConfig: {
+      jwt: {
+        name: "any name",
+        verifier: "auth0-prod",
+        typeOfLogin: "jwt",
+        clientId: "lgQxIvLZMSg7txTsZgRPPKCFksNssXtX",
+      },
+    },
   },
 });
 
