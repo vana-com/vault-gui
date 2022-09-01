@@ -66,6 +66,7 @@ const encryptAndUploadUserDataFiles = async (
   const mutationPromises = uploadResults.map((result, i) => {
     const { uploadURL, uploadFileName, uploadFileSize } = result;
     // url is always a string due to successfulUpload === true
+    console.log("here is the result", result);
     return createUserModule(
       uploadURL as string,
       i + 1,

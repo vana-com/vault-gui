@@ -6,9 +6,9 @@ export interface Module {
   id?: string;
   name: string;
   fileName?: string;
-  lastUpdated?: string;
+  updatedAt?: string;
   dateCreated?: string;
-  fileSize?: string;
+  fileSize?: number;
 }
 
 export interface ModuleObj {

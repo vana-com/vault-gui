@@ -12,7 +12,6 @@ import {
 } from "src/components";
 import { ptBreadcrumbs } from "src/components/system/Styles";
 import config from "src/config";
-import { testModules } from "src/data";
 import { ModuleObj } from "src/types";
 import { heapTrackServerSide } from "src/utils";
 
@@ -51,13 +50,13 @@ const DataModule = ({
       <Stack tw="gap-2">
         {/* TODO: pass module details when avalable */}
         <DataModuleDetail label="File name">
-          <Group tw="gap-1 items-center">{testModules[0].fileName}</Group>
+          <Group tw="gap-1 items-center">{module.module.fileName}</Group>
         </DataModuleDetail>
         <DataModuleDetail label="Size">
-          {testModules[0].fileSize}
+          {module.module.fileSize}
         </DataModuleDetail>
         <DataModuleDetail label="Last updated">
-          {testModules[0].lastUpdated}
+          {module.module.updatedAt}
         </DataModuleDetail>
       </Stack>
       <hr />

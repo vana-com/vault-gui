@@ -8,5 +8,8 @@ subscription getUserModules($userId: uuid!) {
     }
     moduleId
     urlToData
+    fileName
+    fileSize
+    updatedAt
   }
 }

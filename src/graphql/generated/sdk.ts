@@ -19962,7 +19962,7 @@ export type GetUsersModulesFromIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersModulesFromIdsQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, urlToData: string, fileName?: string | null, fileSize: any }> };
+export type GetUsersModulesFromIdsQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, urlToData: string }> };
 
 export type GetVanaAdminDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -19974,7 +19974,7 @@ export type GetUserModulesSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
+export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, fileName?: string | null, fileSize: any, updatedAt: any, module: { __typename?: 'Modules', name: string } }> };
 
 export const UserWithCustomerFragmentDoc = gql`
     fragment UserWithCustomer on Users {
@@ -20155,8 +20155,6 @@ export const GetUsersModulesFromIdsDocument = gql`
   ) {
     id
     urlToData
-    fileName
-    fileSize
   }
 }
     `;
@@ -20206,6 +20204,9 @@ export const GetUserModulesDocument = gql`
     }
     moduleId
     urlToData
+    fileName
+    fileSize
+    updatedAt
   }
 }
     `;
