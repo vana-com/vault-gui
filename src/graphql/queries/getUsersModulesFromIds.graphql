@@ -8,5 +8,7 @@ query getUsersModulesFromIds($usersModulesIds: [uuid!], $userId: uuid!) {
   ) {
     id
     urlToData
+    fileName
+    fileSize
   }
 }
