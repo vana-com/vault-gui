@@ -19962,7 +19962,7 @@ export type GetUsersModulesFromIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersModulesFromIdsQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, urlToData: string }> };
+export type GetUsersModulesFromIdsQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, urlToData: string, fileName?: string | null, fileSize: any }> };
 
 export type GetVanaAdminDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -20492,6 +20492,8 @@ export const GetUsersModulesFromIdsDocument = gql`
   ) {
     id
     urlToData
+    fileName
+    fileSize
   }
 }
     `;
