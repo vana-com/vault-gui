@@ -22,7 +22,12 @@ const { HEAP_EVENTS } = config;
 interface Props {
   userId: string;
   moduleName: string;
-  createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
+  createUserModule: (
+    urlToData: string,
+    urlNumber: number,
+    fileName: string,
+    fileSize: number,
+  ) => Promise<void>;
   externalId: string;
   web3AuthWalletProvider: IWalletProvider | null;
 }

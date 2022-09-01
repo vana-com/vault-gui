@@ -12,7 +12,6 @@ import {
 } from "src/components";
 import { ptBreadcrumbs } from "src/components/system/Styles";
 import config from "src/config";
-import { testModules } from "src/data";
 import { ModuleObj } from "src/types";
 import { heapTrackServerSide } from "src/utils";
 
@@ -49,16 +48,25 @@ const DataModule = ({
     </Stack>
     <Stack tw="px-inset py-insetAlmost gap-insetAlmost">
       <Stack tw="gap-2">
-        {/* TODO: pass module details when avalable */}
-        <DataModuleDetail label="File name">
-          <Group tw="gap-1 items-center">{testModules[0].fileName}</Group>
-        </DataModuleDetail>
-        <DataModuleDetail label="Size">
-          {testModules[0].fileSize}
-        </DataModuleDetail>
-        <DataModuleDetail label="Last updated">
-          {testModules[0].lastUpdated}
-        </DataModuleDetail>
+        {module.fileName ? (
+          <DataModuleDetail label="File name">
+            <Group tw="gap-1 items-center">{module.fileName}</Group>
+          </DataModuleDetail>
+        ) : (
+          <></>
+        )}
+        {module.fileSize ? (
+          <DataModuleDetail label="Size">{module.fileSize}</DataModuleDetail>
+        ) : (
+          <></>
+        )}
+        {module.createdAt ? (
+          <DataModuleDetail label="Last updated">
+            {module.createdAt}
+          </DataModuleDetail>
+        ) : (
+          <></>
+        )}
       </Stack>
       <hr />
 
