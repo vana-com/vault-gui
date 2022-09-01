@@ -39,12 +39,13 @@ const DataModule = ({
     >
       <CardHeadingModule
         name={module.module.name}
-        heading={`${module.module.name} data block`}
+        heading={`${module.module.name} data`}
         variant="title1"
       />
-      <DataModuleDetail label="Data Block ID" alignByWidth={false}>
+      {/* TODO: reinstate when data is assigned a human readable name, eg. "blue-running-yosemite" */}
+      {/* <DataModuleDetail label="Data ID" alignByWidth={false}>
         {module.id}
-      </DataModuleDetail>
+      </DataModuleDetail> */}
     </Stack>
     <Stack tw="px-inset py-insetAlmost gap-insetAlmost">
       <Stack tw="gap-2">
@@ -79,8 +80,8 @@ const DataModule = ({
           handleDeleteModule();
         }}
         isDeleting={isDeleting}
-        deletionName="this data block"
-        buttonLabel="Delete this data block"
+        deletionName="this data"
+        buttonLabel="Delete this data"
       />
     </Stack>
   </DialogDrawer2>
