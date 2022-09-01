@@ -35,6 +35,13 @@ export default class MyDocument extends Document {
             }}
           />
           {/* End Heap Tag */}
+          <link
+            rel="preload"
+            href="/inter-var-latin.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
         </Head>
         <body>
           <Main />

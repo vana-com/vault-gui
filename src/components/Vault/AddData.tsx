@@ -37,7 +37,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
         prefix={<Icon icon="carbon:locked" height="1.125em" />}
         css={[
           tw`font-semibold ring-1 ring-inset ring-labelQuaternary`,
-          buttonIsLarge ? tw`min-w-[280px]` : tw`min-w-[140px]`,
+          buttonIsLarge ? tw`sm:min-w-[280px]` : tw`sm:min-w-[140px]`,
         ]}
       >
         {children}
