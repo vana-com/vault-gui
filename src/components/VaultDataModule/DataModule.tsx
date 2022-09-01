@@ -48,14 +48,25 @@ const DataModule = ({
     </Stack>
     <Stack tw="px-inset py-insetAlmost gap-insetAlmost">
       <Stack tw="gap-2">
-        {/* TODO: pass module details when avalable */}
-        <DataModuleDetail label="File name">
-          <Group tw="gap-1 items-center">{module.fileName ?? "file.zip"}</Group>
-        </DataModuleDetail>
-        <DataModuleDetail label="Size">{module.fileSize ?? 0}</DataModuleDetail>
-        <DataModuleDetail label="Last updated">
-          {module.createdAt ?? 0}
-        </DataModuleDetail>
+        {module.fileName ? (
+          <DataModuleDetail label="File name">
+            <Group tw="gap-1 items-center">{module.fileName}</Group>
+          </DataModuleDetail>
+        ) : (
+          <></>
+        )}
+        {module.fileSize ? (
+          <DataModuleDetail label="Size">{module.fileSize}</DataModuleDetail>
+        ) : (
+          <></>
+        )}
+        {module.createdAt ? (
+          <DataModuleDetail label="Last updated">
+            {module.createdAt}
+          </DataModuleDetail>
+        ) : (
+          <></>
+        )}
       </Stack>
       <hr />
 
