@@ -31,8 +31,6 @@ const DataCard = ({ module }: Props) => (
     {/* content stack */}
     <Stack tw="h-full justify-between">
       <CardHeader name={module.module.name} />
-
-      {/* TODO: pass real module details when available */}
       <DataCardDetails module={module} />
     </Stack>
   </div>
