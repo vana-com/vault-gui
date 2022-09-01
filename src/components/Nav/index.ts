@@ -1,6 +1,7 @@
 export * from "./Nav.css";
 export * from "./NavAside";
 export * from "./NavAsideBetaTypeform";
+export * from "./NavAsideBetaTypeformMobile";
 export * from "./NavAsideContent";
 export * from "./Navbar";
 export * from "./NavbarWrapper";

@@ -20,7 +20,11 @@ import {
 } from "src/components";
 import config from "src/config";
 
-const NavAsideContent = () => {
+interface Props {
+  showTypeform?: boolean;
+}
+
+const NavAsideContent = ({ showTypeform }: Props) => {
   const { isAuthenticated } = useUserContext();
 
   return (
@@ -64,8 +68,12 @@ const NavAsideContent = () => {
 
       {/* BETA */}
       <div tw="mt-auto pb-inset md:pb-insetDouble">
-        <hr tw="border-separatorLight" />
-        <NavAsideBetaTypeform />
+        {showTypeform && (
+          <>
+            <hr tw="border-separatorLight" />
+            <NavAsideBetaTypeform />
+          </>
+        )}
         <hr tw="border-separatorLight" />
 
         {/* SUPPORT */}

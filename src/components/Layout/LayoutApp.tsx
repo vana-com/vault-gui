@@ -7,6 +7,7 @@ import tw from "twin.macro";
 
 import {
   DropdownMenuControlled,
+  NavAsideBetaTypeformMobile,
   NavAsideContent,
   Navbar,
   Stack,
@@ -98,6 +99,15 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
                 <NavAsideContent />
               </Stack>
             </DropdownMenuControlled>
+          </div>
+        </div>
+      )}
+
+      {/* MOBILE TYPEFORM */}
+      {renderNavMobile && !isSendPath && isMobile && (
+        <div tw="fixed bottom-inset left-0">
+          <div tw="px-inset h-navH flex items-center">
+            <NavAsideBetaTypeformMobile />
           </div>
         </div>
       )}
