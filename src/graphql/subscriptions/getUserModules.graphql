@@ -10,6 +10,6 @@ subscription getUserModules($userId: uuid!) {
     urlToData
     fileName
     fileSize
-    updatedAt
+    createdAt
   }
 }

@@ -19976,7 +19976,7 @@ export type GetUserModulesSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, fileName?: string | null, fileSize: any, updatedAt: any, module: { __typename?: 'Modules', name: string } }> };
+export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, fileName?: string | null, fileSize: any, createdAt: any, module: { __typename?: 'Modules', name: string } }> };
 
 export const UserWithCustomerFragmentDoc = gql`
     fragment UserWithCustomer on Users {
@@ -20208,7 +20208,7 @@ export const GetUserModulesDocument = gql`
     urlToData
     fileName
     fileSize
-    updatedAt
+    createdAt
   }
 }
     `;

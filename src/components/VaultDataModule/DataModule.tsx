@@ -50,13 +50,11 @@ const DataModule = ({
       <Stack tw="gap-2">
         {/* TODO: pass module details when avalable */}
         <DataModuleDetail label="File name">
-          <Group tw="gap-1 items-center">{module.module.fileName}</Group>
+          <Group tw="gap-1 items-center">{module.fileName ?? "file.zip"}</Group>
         </DataModuleDetail>
-        <DataModuleDetail label="Size">
-          {module.module.fileSize}
-        </DataModuleDetail>
+        <DataModuleDetail label="Size">{module.fileSize ?? 0}</DataModuleDetail>
         <DataModuleDetail label="Last updated">
-          {module.module.updatedAt}
+          {module.createdAt ?? 0}
         </DataModuleDetail>
       </Stack>
       <hr />
