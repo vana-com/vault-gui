@@ -69,7 +69,7 @@ const encryptAndUploadUserDataFiles = async (
     return createUserModule(
       uploadURL as string,
       i + 1,
-      uploadFileName?.slice(0, -4) ?? "",
+      uploadFileName?.slice(0, -4) ?? "", // Remove ".enc" from the filename in hasura
       uploadFileSize ?? 0,
     );
   });
