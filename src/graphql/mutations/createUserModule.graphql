@@ -3,6 +3,8 @@ mutation createUserModule(
   $moduleId: uuid!
   $userId: uuid!
   $urlNumber: Int!
+  $fileName: String!
+  $fileSize: String!
 ) {
   createOneUserModule(
     object: {
@@ -11,6 +13,8 @@ mutation createUserModule(
       userId: $userId
       progress: "COMPLETE"
       urlNumber: $urlNumber
+      fileName: $fileName
+      fileSize: $fileSize
     }
   ) {
     id
