@@ -1,12 +1,18 @@
+// eslint-disable-next-line simple-import-sort/imports
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import useMeasure from "react-use-measure";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw, { css } from "twin.macro";
 
-import { Center, OnboardCard } from "src/components";
+import { Center, OnboardCard, useUserContext } from "src/components";
 import { onboardingCards } from "src/data";
 import { Children } from "src/types";
+
+import config from "src/config";
+import { heapTrackServerSide } from "src/utils";
+
+const { HEAP_EVENTS } = config;
 
 /* 
   Onboard is a carousel of primary Vault features.
@@ -53,6 +59,16 @@ const Onboard = ({ children }: Children) => {
   const direction = count > previous ? 1 : -1;
   const cardIndex = count % onboardingCards.length;
 
+  const { user } = useUserContext();
+
+  // For Tracking
+  const trackOnboardingClick = (c: number) => {
+    if (c === 1)
+      heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_ONBOARING_STAGE_TWO);
+    else if (c === 2)
+      heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_ONBOARING_STAGE_THREE);
+  };
+
   // TESTS
   // console.log("count", count);
   // console.log("width", width);
@@ -89,7 +105,10 @@ const Onboard = ({ children }: Children) => {
           >
             <OnboardCard
               card={onboardingCards[cardIndex]}
-              onClick={() => setCount(count + 1)}
+              onClick={() => {
+                setCount(count + 1);
+                trackOnboardingClick(count + 1);
+              }}
               isLastCard={cardIndex === onboardingCards.length - 1}
             >
               {children}
@@ -106,7 +125,10 @@ const Onboard = ({ children }: Children) => {
               tw`w-2.5 h-2.5 rounded-full bg-separator`,
               index === cardIndex && tw`transform scale-[1.15] bg-label`,
             ]}
-            onClick={() => setCount(index)}
+            onClick={() => {
+              setCount(index);
+              trackOnboardingClick(index);
+            }}
           />
         ))}
       </Center>

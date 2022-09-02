@@ -5,8 +5,8 @@ const generalConfig = {
   vanaSupportEmail: "support@vana.com",
   vanaBetaFeedback: "https://4eyuszgyknu.typeform.com/vanarocks",
   vanaSupportedAppsFeedback: "https://4eyuszgyknu.typeform.com/vanadata",
-  vanaPrivacyURL: "https://www.vana.xyz/privacy-policy",
-  vanaPublicURL: "https://www.vana.xyz",
+  vanaPrivacyURL: "https://www.vana.com/privacy-policy",
+  vanaPublicURL: "https://www.vana.com",
 
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
@@ -18,6 +18,11 @@ const generalConfig = {
    */
   encryptionChunkSize: 64 * 1024 * 1024,
   chacha20Poly1305Signature: "zDKO6XYXioc",
+
+  // DO NOT MODIFY: Changing this message will brick existing encrypted data without a proper migration
+  encryptionKeySignatureMessage: `Sign this to retrieve your Vana encryption key.
+  
+  ###`,
 
   zipFileMimeTypes: [
     "zip",

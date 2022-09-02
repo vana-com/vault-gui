@@ -98,7 +98,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ idToken, loginType: loginTypeLocallyScoped }),
       });
       const { user: userFromResponse, hasuraToken: hasuraTokenFromResponse } =
         await loginResponse.json();
@@ -239,7 +239,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         const { Web3Auth } = await import("@web3auth/web3auth");
         const web3AuthInstance = new Web3Auth({
           uiConfig: {
-            appLogo: "https://vault.vana.xyz/vana.svg",
+            appLogo: "https://vault.vana.com/vana.svg",
             theme,
           },
           ...config.web3AuthOptions,

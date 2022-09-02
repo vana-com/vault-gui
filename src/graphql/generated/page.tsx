@@ -14,6 +14,7 @@ import { getApolloClient } from '../../utils/apolloClient';
 
 
 
+
 export async function getServerPageGetModule
     (options: Omit<Apollo.QueryOptions<Types.GetModuleQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
@@ -48,41 +49,6 @@ export const ssrGetModule = {
       getServerPage: getServerPageGetModule,
       withPage: withPageGetModule,
       usePage: useGetModule,
-    }
-export async function getServerPageGetModuleInstructions
-    (options: Omit<Apollo.QueryOptions<Types.GetModuleInstructionsQueryVariables>, 'query'>, ctx?: any ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.GetModuleInstructionsQuery>({ ...options, query: Operations.GetModuleInstructionsDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useGetModuleInstructions = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetModuleInstructionsQuery, Types.GetModuleInstructionsQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.GetModuleInstructionsDocument, options);
-};
-export type PageGetModuleInstructionsComp = React.FC<{data?: Types.GetModuleInstructionsQuery, error?: Apollo.ApolloError}>;
-export const withPageGetModuleInstructions = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetModuleInstructionsQuery, Types.GetModuleInstructionsQueryVariables>) => (WrappedComponent:PageGetModuleInstructionsComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.GetModuleInstructionsDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrGetModuleInstructions = {
-      getServerPage: getServerPageGetModuleInstructions,
-      withPage: withPageGetModuleInstructions,
-      usePage: useGetModuleInstructions,
     }
 export async function getServerPageGetModules
     (options: Omit<Apollo.QueryOptions<Types.GetModulesQueryVariables>, 'query'>, ctx?: any ){
@@ -119,76 +85,6 @@ export const ssrGetModules = {
       withPage: withPageGetModules,
       usePage: useGetModules,
     }
-export async function getServerPageGetProjectUser
-    (options: Omit<Apollo.QueryOptions<Types.GetProjectUserQueryVariables>, 'query'>, ctx?: any ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.GetProjectUserQuery>({ ...options, query: Operations.GetProjectUserDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useGetProjectUser = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetProjectUserQuery, Types.GetProjectUserQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.GetProjectUserDocument, options);
-};
-export type PageGetProjectUserComp = React.FC<{data?: Types.GetProjectUserQuery, error?: Apollo.ApolloError}>;
-export const withPageGetProjectUser = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetProjectUserQuery, Types.GetProjectUserQueryVariables>) => (WrappedComponent:PageGetProjectUserComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.GetProjectUserDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrGetProjectUser = {
-      getServerPage: getServerPageGetProjectUser,
-      withPage: withPageGetProjectUser,
-      usePage: useGetProjectUser,
-    }
-export async function getServerPageGetUser
-    (options: Omit<Apollo.QueryOptions<Types.GetUserQueryVariables>, 'query'>, ctx?: any ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.GetUserQuery>({ ...options, query: Operations.GetUserDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useGetUser = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserQuery, Types.GetUserQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.GetUserDocument, options);
-};
-export type PageGetUserComp = React.FC<{data?: Types.GetUserQuery, error?: Apollo.ApolloError}>;
-export const withPageGetUser = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserQuery, Types.GetUserQueryVariables>) => (WrappedComponent:PageGetUserComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.GetUserDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrGetUser = {
-      getServerPage: getServerPageGetUser,
-      withPage: withPageGetUser,
-      usePage: useGetUser,
-    }
 export async function getServerPageGetUserFromExternalIdOrEmail
     (options: Omit<Apollo.QueryOptions<Types.GetUserFromExternalIdOrEmailQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
@@ -224,11 +120,11 @@ export const ssrGetUserFromExternalIdOrEmail = {
       withPage: withPageGetUserFromExternalIdOrEmail,
       usePage: useGetUserFromExternalIdOrEmail,
     }
-export async function getServerPageGetUserModulesAll
-    (options: Omit<Apollo.QueryOptions<Types.GetUserModulesAllQueryVariables>, 'query'>, ctx?: any ){
+export async function getServerPageGetUserModules
+    (options: Omit<Apollo.QueryOptions<Types.GetUserModulesQueryQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
         
-        const data = await apolloClient.query<Types.GetUserModulesAllQuery>({ ...options, query: Operations.GetUserModulesAllDocument });
+        const data = await apolloClient.query<Types.GetUserModulesQueryQuery>({ ...options, query: Operations.GetUserModulesQueryDocument });
         
         const apolloState = apolloClient.cache.extract();
 
@@ -240,24 +136,24 @@ export async function getServerPageGetUserModulesAll
             },
         };
       }
-export const useGetUserModulesAll = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserModulesAllQuery, Types.GetUserModulesAllQueryVariables>) => {
+export const useGetUserModules = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserModulesQueryQuery, Types.GetUserModulesQueryQueryVariables>) => {
   const router = useRouter();
   const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.GetUserModulesAllDocument, options);
+  return useQuery(Operations.GetUserModulesQueryDocument, options);
 };
-export type PageGetUserModulesAllComp = React.FC<{data?: Types.GetUserModulesAllQuery, error?: Apollo.ApolloError}>;
-export const withPageGetUserModulesAll = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserModulesAllQuery, Types.GetUserModulesAllQueryVariables>) => (WrappedComponent:PageGetUserModulesAllComp) : NextPage  => (props) => {
+export type PageGetUserModulesComp = React.FC<{data?: Types.GetUserModulesQueryQuery, error?: Apollo.ApolloError}>;
+export const withPageGetUserModules = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetUserModulesQueryQuery, Types.GetUserModulesQueryQueryVariables>) => (WrappedComponent:PageGetUserModulesComp) : NextPage  => (props) => {
                 const router = useRouter()
                 const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.GetUserModulesAllDocument, options)    
+                const {data, error } = useQuery(Operations.GetUserModulesQueryDocument, options)    
                 return <WrappedComponent {...props} data={data} error={error} /> ;
                    
             }; 
-export const ssrGetUserModulesAll = {
-      getServerPage: getServerPageGetUserModulesAll,
-      withPage: withPageGetUserModulesAll,
-      usePage: useGetUserModulesAll,
+export const ssrGetUserModules = {
+      getServerPage: getServerPageGetUserModules,
+      withPage: withPageGetUserModules,
+      usePage: useGetUserModules,
     }
 export async function getServerPageGetUserUuidFromExternalId
     (options: Omit<Apollo.QueryOptions<Types.GetUserUuidFromExternalIdQueryVariables>, 'query'>, ctx?: any ){

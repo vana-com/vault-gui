@@ -29,7 +29,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
     buttonNode={
       <Button
         onClick={() => {
-          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA);
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA_BUTTON);
         }}
         type="button"
         variant="solid"
@@ -37,7 +37,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
         prefix={<Icon icon="carbon:locked" height="1.125em" />}
         css={[
           tw`font-semibold ring-1 ring-inset ring-labelQuaternary`,
-          buttonIsLarge ? tw`min-w-[280px]` : tw`min-w-[140px]`,
+          buttonIsLarge ? tw`sm:min-w-[280px]` : tw`sm:min-w-[140px]`,
         ]}
       >
         {children}
@@ -60,6 +60,12 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
               target="_blank"
               rel="noopener noreferrer"
               href={config.vanaSupportedAppsFeedback}
+              onClick={() =>
+                heapTrackServerSide(
+                  userId,
+                  HEAP_EVENTS.CLICK_REQUEST_NEW_DATA_SOURCE,
+                )
+              }
             >
               Request it.
             </Link>
@@ -69,7 +75,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
       <hr />
       <div tw="p-[1px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-insetHalf">
         {modules?.map((module) => (
-          <DataCardButton key={module.id} module={module} />
+          <DataCardButton key={module.id} module={module} userId={userId} />
         ))}
       </div>
     </Stack>

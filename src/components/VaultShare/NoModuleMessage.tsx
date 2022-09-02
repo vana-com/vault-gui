@@ -11,7 +11,7 @@ interface Props {
 }
 
 const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
-  <FocusStack isCentered withMinHeight>
+  <FocusStack isCentered>
     <Link
       underline={false}
       href="/"

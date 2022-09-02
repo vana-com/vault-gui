@@ -12,9 +12,8 @@ import {
 } from "src/components";
 import { ptBreadcrumbs } from "src/components/system/Styles";
 import config from "src/config";
-import { testModules } from "src/data";
 import { ModuleObj } from "src/types";
-import { heapTrackServerSide } from "src/utils";
+import { getFileSizeString, heapTrackServerSide } from "src/utils";
 
 const { HEAP_EVENTS } = config;
 
@@ -40,25 +39,31 @@ const DataModule = ({
     >
       <CardHeadingModule
         name={module.module.name}
-        heading={`${module.module.name} data block`}
+        heading={`${module.module.name} data`}
         variant="title1"
       />
-      <DataModuleDetail label="Data Block ID" alignByWidth={false}>
+      {/* TODO: reinstate when data is assigned a human readable name, eg. "blue-running-yosemite" */}
+      {/* <DataModuleDetail label="Data ID" alignByWidth={false}>
         {module.id}
-      </DataModuleDetail>
+      </DataModuleDetail> */}
     </Stack>
     <Stack tw="px-inset py-insetAlmost gap-insetAlmost">
       <Stack tw="gap-2">
-        {/* TODO: pass module details when avalable */}
-        <DataModuleDetail label="File name">
-          <Group tw="gap-1 items-center">{testModules[0].fileName}</Group>
-        </DataModuleDetail>
-        <DataModuleDetail label="Size">
-          {testModules[0].fileSize}
-        </DataModuleDetail>
-        <DataModuleDetail label="Last updated">
-          {testModules[0].lastUpdated}
-        </DataModuleDetail>
+        {module.fileName && (
+          <DataModuleDetail label="File name">
+            <Group tw="gap-1 items-center">{module.fileName}</Group>
+          </DataModuleDetail>
+        )}
+        {module.fileSize && (
+          <DataModuleDetail label="Size">
+            {getFileSizeString(module.fileSize)}
+          </DataModuleDetail>
+        )}
+        {module.createdAt && (
+          <DataModuleDetail label="Last updated">
+            {new Date(module.createdAt).toLocaleDateString()}
+          </DataModuleDetail>
+        )}
       </Stack>
       <hr />
 
@@ -71,8 +76,8 @@ const DataModule = ({
           handleDeleteModule();
         }}
         isDeleting={isDeleting}
-        deletionName="this data block"
-        buttonLabel="Delete this data block"
+        deletionName="this data"
+        buttonLabel="Delete this data"
       />
     </Stack>
   </DialogDrawer2>

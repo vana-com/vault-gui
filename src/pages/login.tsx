@@ -16,9 +16,10 @@ import {
   Text,
   TitleAndMetaTags,
   useUserContext,
-  WithIcon,
 } from "src/components";
 import config from "src/config";
+
+const textWithIcnStyle = tw`text-labelSecondary flex items-start md:items-center md:justify-center text-center gap-0.5 md:gap-1.5 w-4/6 md:w-full mx-auto`;
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
@@ -60,19 +61,19 @@ const LoginPage: NextPage = () => {
                 <Text variant="base" weight="semibold">
                   Log in or create a new account
                 </Text>
-                <Text
-                  variant="note"
-                  tw="text-labelSecondary flex items-center gap-1"
-                >
-                  <WithIcon prefix={<Icon icon="carbon:idea" />}>
+                <Text variant="note" css={textWithIcnStyle}>
+                  <div tw="flex items-center transform mobile:translate-y-0.5">
+                    <Icon icon="carbon:idea" tw="inline" />
+                  </div>
+                  <div tw="">
                     If you already have an account, use the same login method.
-                  </WithIcon>
+                  </div>
                 </Text>
-                <Text
-                  variant="note"
-                  tw="text-labelSecondary flex items-center gap-1"
-                >
-                  <WithIcon prefix={<Icon icon="carbon:checkmark-outline" />}>
+                <Text variant="note" css={textWithIcnStyle}>
+                  <div tw="flex items-center transform mobile:translate-y-0.5">
+                    <Icon icon="carbon:checkmark-outline" tw="inline" />
+                  </div>
+                  <div>
                     If you don&apos;t have an account,{" "}
                     <Link
                       target="_blank"
@@ -80,9 +81,9 @@ const LoginPage: NextPage = () => {
                       href={config.vanaPublicURL}
                     >
                       Vana
-                    </Link>
+                    </Link>{" "}
                     will create one for you.
-                  </WithIcon>
+                  </div>
                 </Text>
               </Stack>
               <LoginButton />

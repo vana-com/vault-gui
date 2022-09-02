@@ -1,0 +1,10 @@
+query getUserModulesQuery($userId: uuid!) {
+  usersModules(where: { userId: { _eq: $userId } }) {
+    id
+    module {
+      name
+    }
+    moduleId
+    urlToData
+  }
+}
