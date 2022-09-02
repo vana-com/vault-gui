@@ -15,16 +15,20 @@ import {
   Text,
   WithIcon,
 } from "src/components";
+import config from "src/config";
 import { Module } from "src/types";
+import { heapTrackServerSide } from "src/utils";
+
+const { HEAP_EVENTS } = config;
 
 interface Props {
   module: Module;
   showActionHover?: boolean;
+  userId: string;
 }
 
 /* DataCardButton is very similar to DataCard with same card styles */
-
-const DataCardButton = ({ module, showActionHover }: Props) => {
+const DataCardButton = ({ module, showActionHover, userId }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const link = `/store/${module.name.toLowerCase()}`;
 
@@ -33,7 +37,12 @@ const DataCardButton = ({ module, showActionHover }: Props) => {
       <button
         type="button"
         css={[styledCard, styledCardHover, styledCardHoverIcon]}
-        onClick={() => setIsLoading(true)}
+        onClick={() => {
+          setIsLoading(true);
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA_MODULE_PANEL, {
+            module: module.name,
+          });
+        }}
       >
         {/* appears on hover based on `styledCardHoverIcon`  */}
         {showActionHover && (
