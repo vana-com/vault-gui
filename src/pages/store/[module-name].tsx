@@ -49,6 +49,8 @@ const VaultStoragePage: NextPage = () => {
   const createUserModuleCallback = async (
     urlToData: string,
     urlNumber: number,
+    fileName: string,
+    fileSize: number,
   ) => {
     await createUserModule({
       variables: {
@@ -56,6 +58,8 @@ const VaultStoragePage: NextPage = () => {
         userId: user?.id,
         moduleId: module.id,
         urlNumber,
+        fileName,
+        fileSize,
       },
     });
   };

@@ -94,7 +94,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
                 </button>
               }
             >
-              <Stack tw="gap-7">
+              <Stack tw="gap-w4 lg:gap-7">
                 <NavAsideContent />
               </Stack>
             </DropdownMenuControlled>

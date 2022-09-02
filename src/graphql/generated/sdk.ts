@@ -19860,6 +19860,10 @@ export type WorkersSpotify_Updates = {
   where: WorkersSpotify_Bool_Exp;
 };
 
+export type UserWithCustomerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, createdAt: any, updatedAt: any, customer?: { __typename?: 'Customers', id: any, createdAt: any, updatedAt: any, organization?: { __typename?: 'organizations', id: any, name: string, stripeCustomerId?: string | null } | null } | null, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null } | null };
+
+export type UserWithWorkerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> };
+
 export type CreateUserMutationVariables = Exact<{
   name: Scalars['String'];
   emailAddress: Scalars['String'];
@@ -19874,6 +19878,8 @@ export type CreateUserModuleMutationVariables = Exact<{
   moduleId: Scalars['uuid'];
   userId: Scalars['uuid'];
   urlNumber: Scalars['Int'];
+  fileName: Scalars['String'];
+  fileSize: Scalars['bigint'];
 }>;
 
 
@@ -19886,19 +19892,6 @@ export type CreateUserProjectMutationVariables = Exact<{
 
 
 export type CreateUserProjectMutation = { __typename?: 'mutation_root', createOneUserProject?: { __typename?: 'users_projects', status: string } | null };
-
-export type CreateUserSupplementaryMutationVariables = Exact<{
-  userId: Scalars['uuid'];
-  walletType: Scalars['String'];
-  walletChain: Scalars['String'];
-  walletAddress: Scalars['String'];
-  publicKey?: InputMaybe<Scalars['String']>;
-  socialLoginMethod?: InputMaybe<Scalars['String']>;
-  userSecret: Scalars['String'];
-}>;
-
-
-export type CreateUserSupplementaryMutation = { __typename?: 'mutation_root', createOneUserSupplementary?: { __typename?: 'users_supplementary', user: { __typename?: 'Users', id: any, emailAddress: string, name: string, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null } } | null };
 
 export type SoftDeleteUserModulesMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -19923,10 +19916,32 @@ export type GetModuleQueryVariables = Exact<{
 
 export type GetModuleQuery = { __typename?: 'query_root', modules: Array<{ __typename?: 'Modules', iconURL: string, id: any, name: string, moduleInstructions: Array<{ __typename?: 'ModuleInstructions', instructionsMarkdown: string }> }> };
 
+export type GetModuleInstructionsQueryVariables = Exact<{
+  projectModuleId: Scalars['uuid'];
+}>;
+
+
+export type GetModuleInstructionsQuery = { __typename?: 'query_root', fireboaProjectModule?: { __typename?: 'FireboaProjectsModules', instructions: string, module: { __typename?: 'FireboaModules', resourceLocation: string } } | null };
+
 export type GetModulesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetModulesQuery = { __typename?: 'query_root', modules: Array<{ __typename?: 'Modules', iconURL: string, id: any, name: string }> };
+
+export type GetProjectUserQueryVariables = Exact<{
+  fireboaProjectId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+}>;
+
+
+export type GetProjectUserQuery = { __typename?: 'query_root', fireboaProjectUser?: { __typename?: 'FireboaProjectsUsers', currentState: ProjectStatuses_Enum, user: { __typename?: 'Users', id: any }, fireboaProject: { __typename?: 'FireboaProjects', id: any } } | null };
+
+export type GetUserQueryVariables = Exact<{
+  externalId: Scalars['String'];
+}>;
+
+
+export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> }> };
 
 export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -19934,7 +19949,7 @@ export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
 }>;
 
 
-export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null }> };
+export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -19961,9 +19976,55 @@ export type GetUserModulesSubscriptionVariables = Exact<{
 }>;
 
 
-export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
+export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, fileName?: string | null, fileSize: any, createdAt: any, module: { __typename?: 'Modules', name: string } }> };
 
-
+export const UserWithCustomerFragmentDoc = gql`
+    fragment UserWithCustomer on Users {
+  id
+  emailAddress
+  phoneNumber
+  name
+  createdAt
+  updatedAt
+  customer {
+    id
+    createdAt
+    updatedAt
+    organization {
+      id
+      name
+      stripeCustomerId
+    }
+  }
+  worker {
+    id
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const UserWithWorkerFragmentDoc = gql`
+    fragment UserWithWorker on Users {
+  id
+  emailAddress
+  phoneNumber
+  name
+  referralSource
+  createdAt
+  updatedAt
+  worker {
+    id
+    createdAt
+    updatedAt
+    cashedOut
+    masterServicesAgreementAccepted
+    termsOfServiceAccepted
+  }
+  etxTaskSessions {
+    id
+  }
+}
+    `;
 export const CreateUserDocument = gql`
     mutation createUser($name: String!, $emailAddress: String!, $externalId: String!) {
   createOneUser(
@@ -19978,9 +20039,9 @@ export const CreateUserDocument = gql`
 }
     `;
 export const CreateUserModuleDocument = gql`
-    mutation createUserModule($urlToData: String!, $moduleId: uuid!, $userId: uuid!, $urlNumber: Int!) {
+    mutation createUserModule($urlToData: String!, $moduleId: uuid!, $userId: uuid!, $urlNumber: Int!, $fileName: String!, $fileSize: bigint!) {
   createOneUserModule(
-    object: {urlToData: $urlToData, moduleId: $moduleId, userId: $userId, progress: "COMPLETE", urlNumber: $urlNumber}
+    object: {urlToData: $urlToData, moduleId: $moduleId, userId: $userId, progress: "COMPLETE", urlNumber: $urlNumber, fileName: $fileName, fileSize: $fileSize}
   ) {
     id
   }
@@ -19992,24 +20053,6 @@ export const CreateUserProjectDocument = gql`
     object: {projectId: $projectId, status: "COMPLETED", userId: $userId}
   ) {
     status
-  }
-}
-    `;
-export const CreateUserSupplementaryDocument = gql`
-    mutation createUserSupplementary($userId: uuid!, $walletType: String!, $walletChain: String!, $walletAddress: String!, $publicKey: String, $socialLoginMethod: String, $userSecret: String!) {
-  createOneUserSupplementary(
-    object: {userId: $userId, walletType: $walletType, walletChain: $walletChain, walletAddress: $walletAddress, publicKey: $publicKey, socialLoginMethod: $socialLoginMethod, userSecret: $userSecret}
-  ) {
-    user {
-      id
-      emailAddress
-      name
-      externalId
-      userSupplementary {
-        publicKey
-        userSecret
-      }
-    }
   }
 }
     `;
@@ -20045,6 +20088,16 @@ export const GetModuleDocument = gql`
   }
 }
     `;
+export const GetModuleInstructionsDocument = gql`
+    query getModuleInstructions($projectModuleId: uuid!) {
+  fireboaProjectModule(id: $projectModuleId) {
+    instructions
+    module {
+      resourceLocation
+    }
+  }
+}
+    `;
 export const GetModulesDocument = gql`
     query getModules {
   modules(where: {isActive: {_eq: true}}) {
@@ -20054,6 +20107,26 @@ export const GetModulesDocument = gql`
   }
 }
     `;
+export const GetProjectUserDocument = gql`
+    query getProjectUser($fireboaProjectId: uuid!, $userId: uuid!) {
+  fireboaProjectUser(fireboaProjectId: $fireboaProjectId, userId: $userId) {
+    user {
+      id
+    }
+    fireboaProject {
+      id
+    }
+    currentState
+  }
+}
+    `;
+export const GetUserDocument = gql`
+    query getUser($externalId: String!) {
+  users(limit: 1, where: {externalId: {_eq: $externalId}}) {
+    ...UserWithWorker
+  }
+}
+    ${UserWithWorkerFragmentDoc}`;
 export const GetUserFromExternalIdOrEmailDocument = gql`
     query getUserFromExternalIdOrEmail($externalId: String!, $emailAddress: String!) {
   users(
@@ -20064,10 +20137,6 @@ export const GetUserFromExternalIdOrEmailDocument = gql`
     emailAddress
     id
     externalId
-    userSupplementary {
-      publicKey
-      userSecret
-    }
   }
 }
     `;
@@ -20137,6 +20206,9 @@ export const GetUserModulesDocument = gql`
     }
     moduleId
     urlToData
+    fileName
+    fileSize
+    createdAt
   }
 }
     `;
@@ -20157,9 +20229,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     createUserProject(variables?: CreateUserProjectMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserProjectMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserProjectMutation>(CreateUserProjectDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createUserProject', 'mutation');
     },
-    createUserSupplementary(variables: CreateUserSupplementaryMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<CreateUserSupplementaryMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateUserSupplementaryMutation>(CreateUserSupplementaryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createUserSupplementary', 'mutation');
-    },
     softDeleteUserModules(variables: SoftDeleteUserModulesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SoftDeleteUserModulesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<SoftDeleteUserModulesMutation>(SoftDeleteUserModulesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'softDeleteUserModules', 'mutation');
     },
@@ -20169,8 +20238,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getModule(variables: GetModuleQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetModuleQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetModuleQuery>(GetModuleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getModule', 'query');
     },
+    getModuleInstructions(variables: GetModuleInstructionsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetModuleInstructionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetModuleInstructionsQuery>(GetModuleInstructionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getModuleInstructions', 'query');
+    },
     getModules(variables?: GetModulesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetModulesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetModulesQuery>(GetModulesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getModules', 'query');
+    },
+    getProjectUser(variables: GetProjectUserQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetProjectUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProjectUserQuery>(GetProjectUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getProjectUser', 'query');
+    },
+    getUser(variables: GetUserQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserQuery>(GetUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUser', 'query');
     },
     getUserFromExternalIdOrEmail(variables: GetUserFromExternalIdOrEmailQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserFromExternalIdOrEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserFromExternalIdOrEmailQuery>(GetUserFromExternalIdOrEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserFromExternalIdOrEmail', 'query');

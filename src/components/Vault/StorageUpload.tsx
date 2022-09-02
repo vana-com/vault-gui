@@ -20,7 +20,12 @@ const { HEAP_EVENTS } = config;
 
 interface Props {
   moduleName: string;
-  createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
+  createUserModule: (
+    urlToData: string,
+    urlNumber: number,
+    fileName: string,
+    fileSize: number,
+  ) => Promise<void>;
 }
 
 const StorageUpload = ({ moduleName, createUserModule }: Props) => {

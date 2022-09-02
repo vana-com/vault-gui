@@ -14,8 +14,7 @@ interface Props {
 const DataCardDetails = ({ module }: Props) => (
   <Stack tw="gap-0.5">
     <Text variant="note" weight="semibold" tw="text-label text-left">
-      {/* TODO: use module.module.fileName when available, create the filename manually for now */}
-      {module.urlToData.split("/").pop()}
+      {module.fileName}
     </Text>
     {/* <Text variant="note" weight="semibold" tw="text-label text-left">
       {id.slice(-8)}

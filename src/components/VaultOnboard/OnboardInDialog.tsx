@@ -20,7 +20,7 @@ const OnboardInDialog = ({ showOnboarding, setShowOnboarding }: Props) => (
         <Button
           size="md"
           variant="ghost"
-          tw="gap-2 font-normal text-labelSecondary focus:text-label"
+          tw="gap-1 md:gap-2 font-normal text-labelSecondary focus:text-label"
           prefix={<Icon icon="carbon:information" />}
           onClick={() => setShowOnboarding(true)}
         >
