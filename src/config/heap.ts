@@ -5,6 +5,8 @@ enum HEAP_EVENTS {
   CLICK_ADD_INSTAGRAM = "Click Add Instagram",
   CLICK_ADD_REQUEST = "Click Add Request",
   CLICK_ADD_UNKNOWN = "Click Add Unknown",
+  CLICK_ONBOARING_STAGE_TWO = "Click Onboarding Stage Two",
+  CLICK_ONBOARING_STAGE_THREE = "Click Onboarding Stage Three",
   CLICK_DATA_DELETE_MODAL_CANCEL = "Click Cancel Data Delete Modal",
   CLICK_DATA_DELETE_MODAL_CONFIRM = "Click Cancel Data Delete Modal",
   CLICK_DELETE_VAULT = "Click Delete Vault",
