@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 import { Group, Stack, Text } from "src/components";
 import { InstagramInterestsCopy, TestUnknownCopy } from "src/data";
-import { ShareKind, ShareService } from "src/types";
+import { ShareKind, ShareService, ShareServiceType } from "src/types";
 import { capitalizeString } from "src/utils";
 
 import { FocusStack } from "./Subelement";
@@ -28,7 +28,7 @@ const PermissionItem = ({ item }: { item: PermissionItemProps }) => (
 // NB: we only return Instagram interests only for now.
 const getShareKind = (
   queryString: string,
-  serviceName: ShareService,
+  serviceName: ShareServiceType,
 ): ShareKind => {
   if (
     serviceName === ShareService.INSTAGRAM &&
@@ -55,7 +55,7 @@ const getShareCopy = (shareKind: ShareKind): ShareCopyProps => {
 
 interface Props {
   query: string;
-  serviceName: ShareService;
+  serviceName: ShareServiceType;
 }
 
 const PermissionList = ({ query, serviceName }: Props) => {

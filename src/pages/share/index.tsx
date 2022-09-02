@@ -17,7 +17,7 @@ import {
 } from "src/components/VaultShare";
 import config from "src/config";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import { ShareUiStatus } from "src/types";
+import { ShareService, ShareServiceType, ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
 import { heapTrackServerSide } from "src/utils";
 import {
@@ -65,7 +65,9 @@ const SendPage: NextPage = () => {
   const prettyAppName = decodeURI(appName as string).replace(`-`, ` `);
 
   // normalize service name
-  const normalizedServiceName = ((serviceName as string) ?? "").toLowerCase();
+  const normalizedServiceName: ShareServiceType = (
+    (serviceName as ShareService) ?? ""
+  ).toLowerCase();
 
   // TODO: @joe - Clean up query to prevent sql injection
   const cleanQueryString = decodeURI(queryString as string);
