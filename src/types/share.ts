@@ -17,6 +17,7 @@ export type ShareServiceType = ShareService | string;
 
 export enum ShareKind {
   INSTAGRAM_INTERESTS = "InstagramInterests",
+  INSTAGRAM_COMMENTS = "InstagramComments",
   // Provide a fallback for tests…
   UNKNOWN = "unknown",
 }

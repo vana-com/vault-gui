@@ -3,7 +3,11 @@ import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
 import { Group, Stack, Text } from "src/components";
-import { InstagramInterestsCopy, TestUnknownCopy } from "src/data";
+import {
+  InstagramCommentsCopy,
+  InstagramInterestsCopy,
+  TestUnknownCopy,
+} from "src/data";
 import { ShareKind, ShareService, ShareServiceType } from "src/types";
 import { capitalizeString } from "src/utils";
 
@@ -36,6 +40,12 @@ const getShareKind = (
   ) {
     return ShareKind.INSTAGRAM_INTERESTS;
   }
+  if (
+    serviceName === ShareService.INSTAGRAM &&
+    queryString.includes("comments")
+  ) {
+    return ShareKind.INSTAGRAM_COMMENTS;
+  }
   return ShareKind.UNKNOWN;
 };
 
@@ -48,6 +58,8 @@ const getShareCopy = (shareKind: ShareKind): ShareCopyProps => {
   switch (shareKind) {
     case ShareKind.INSTAGRAM_INTERESTS:
       return InstagramInterestsCopy;
+    case ShareKind.INSTAGRAM_COMMENTS:
+      return InstagramCommentsCopy;
     default:
       return TestUnknownCopy;
   }

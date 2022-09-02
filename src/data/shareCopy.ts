@@ -18,6 +18,21 @@ export const InstagramInterestsCopy = {
   ],
 };
 
+export const InstagramCommentsCopy = {
+  heading: "Comments",
+  permissions: [
+    {
+      id: "1",
+      text: "Allow access to your Instagram Comments data",
+    },
+    {
+      id: "2",
+      text: "Cannot change your Instagram Comments data",
+      denial: true,
+    },
+  ],
+};
+
 export const TestUnknownCopy = {
   heading: "Unknown",
   permissions: [
