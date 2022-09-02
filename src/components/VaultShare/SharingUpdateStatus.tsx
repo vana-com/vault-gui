@@ -9,7 +9,7 @@ interface Props {
   status: DataPipeline.Status;
 }
 
-const SendUpdateStatus = ({ stage, status }: Props) => {
+const SharingUpdateStatus = ({ stage, status }: Props) => {
   const decryptedOrExtracted =
     stage === DataPipeline.Stage.DECRYPTED_DATA ||
     stage === DataPipeline.Stage.EXTRACTED_DATA;
@@ -50,4 +50,4 @@ const SendUpdateStatus = ({ stage, status }: Props) => {
   );
 };
 
-export { SendUpdateStatus };
+export { SharingUpdateStatus };

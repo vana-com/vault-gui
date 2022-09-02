@@ -4,14 +4,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import tw from "twin.macro";
 
 import { Group, Link, Stack, styledMotionDiv, Text } from "src/components";
-import { SendUpdateStatus } from "src/components/VaultShare";
+import { SharingUpdateStatus } from "src/components/VaultShare";
 import config from "src/config";
 import * as DataPipeline from "src/types/DataPipeline";
 
 import { FocusStack } from "./Subelement";
 
 /* 
-  SendStatus presents UI messages for the sharing status. For the Pending status, we also show the sub-statuses for sending data progress. 
+  SharingStatus presents UI messages for the sharing status. For the Pending status, we also show the sub-statuses for sharing data progress. 
  */
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
   stage: DataPipeline.Stage;
 }
 
-const SendStatus = ({ status, stage }: Props) => {
+const SharingStatus = ({ status, stage }: Props) => {
   console.log("status", status);
   console.log("stage", stage);
 
@@ -38,7 +38,7 @@ const SendStatus = ({ status, stage }: Props) => {
           >
             <Stack tw="h-full items-center justify-center">
               <Stack tw="items-center -mt-3">
-                <SendUpdateStatus stage={stage} status={status} />
+                <SharingUpdateStatus stage={stage} status={status} />
               </Stack>
             </Stack>
           </motion.div>
@@ -108,4 +108,4 @@ const SendStatus = ({ status, stage }: Props) => {
   );
 };
 
-export { SendStatus };
+export { SharingStatus };

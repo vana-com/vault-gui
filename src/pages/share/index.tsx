@@ -11,7 +11,7 @@ import {
   NoModuleMessage,
   PermissionContract,
   PermissionList,
-  SendStatus,
+  SharingStatus,
   VaultSharePageTitle,
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
@@ -268,7 +268,7 @@ const SendPage: NextPage = () => {
 
         {/* ACCEPTED, RUN QUERY */}
         {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
-          <SendStatus status={shareStatus} stage={updateStatus} />
+          <SharingStatus status={shareStatus} stage={updateStatus} />
         )}
       </VaultSharePageWithStatus>
     </>
