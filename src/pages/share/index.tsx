@@ -255,15 +255,19 @@ const SendPage: NextPage = () => {
 
         {/* READY TO ACCEPT */}
         {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
-          <PermissionContract
-            onAccept={onDataRequestApproval}
-            onDeny={() => {
-              heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
-              closePopup(window);
-            }}
-          >
-            <PermissionList query={cleanQueryString} />
-          </PermissionContract>
+          <>
+            <PermissionList
+              query={cleanQueryString}
+              serviceName={normalizedServiceName}
+            />
+            <PermissionContract
+              onAccept={onDataRequestApproval}
+              onDeny={() => {
+                heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
+                closePopup(window);
+              }}
+            />
+          </>
         )}
 
         {/* ACCEPTED, RUN QUERY */}
