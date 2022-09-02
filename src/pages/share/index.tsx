@@ -155,7 +155,11 @@ const SendPage: NextPage = () => {
       if (!userSecret) {
         throw new Error("User secret is not available.");
       }
-      const signedSecret = await walletProvider?.signMessage(userSecret);
+      const signUserSecretMessage =
+        config.encryptionKeySignatureMessage.replace("###", userSecret);
+      const signedSecret = await walletProvider?.signMessage(
+        signUserSecretMessage,
+      );
       const decrypted = await decryptData(file, signedSecret);
       setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
 

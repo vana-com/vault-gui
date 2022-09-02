@@ -19,7 +19,10 @@ const textEncoder = new TextEncoder();
  * @param file - The file to encrypt
  * @param password - Used to derive the encryption key for ChaCha20-Poly1305
  */
-const encryptFileChaCha20Poly1305 = async (file: File, password = "") => {
+const encryptFileChaCha20Poly1305 = async (
+  file: File,
+  password: string | undefined,
+) => {
   await _sodium.ready;
   const sodium = _sodium;
 

@@ -117,11 +117,18 @@ const StorageUpload = ({ moduleName, createUserModule }: Props) => {
     try {
       const sanitizedFiles = await stripZipFiles(filesToUpload);
 
+      const userSecret = user?.userSupplementary?.userSecret;
+      if (!userSecret) {
+        throw new Error("User secret is not available.");
+      }
+      const signUserSecretMessage =
+        config.encryptionKeySignatureMessage.replace("###", userSecret);
+
       await encryptAndUploadUserDataFiles(
         sanitizedFiles,
         moduleName,
         user?.externalId || "",
-        user?.userSupplementary?.userSecret || "",
+        signUserSecretMessage,
         walletProvider,
         handleUploadProgress,
         createUserModule,
