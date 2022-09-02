@@ -9,7 +9,10 @@ interface Props {
   status: DataPipeline.Status;
 }
 
-const SendUpdateStatus = ({ stage, status }: Props) => {
+const SharingUpdateStatus = ({ stage, status }: Props) => {
+  const requested =
+    status === DataPipeline.Status.IDLE ||
+    stage === DataPipeline.Stage.FETCH_DATA;
   const decryptedOrExtracted =
     stage === DataPipeline.Stage.DECRYPTED_DATA ||
     stage === DataPipeline.Stage.EXTRACTED_DATA;
@@ -18,10 +21,7 @@ const SendUpdateStatus = ({ stage, status }: Props) => {
   let lede;
 
   // Requesting
-  if (
-    status === DataPipeline.Status.IDLE ||
-    stage === DataPipeline.Stage.FETCH_DATA
-  ) {
+  if (requested) {
     heading = "Requesting";
     lede = "Decrypting your data. Hold tight…";
   }
@@ -50,4 +50,4 @@ const SendUpdateStatus = ({ stage, status }: Props) => {
   );
 };
 
-export { SendUpdateStatus };
+export { SharingUpdateStatus };
