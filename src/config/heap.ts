@@ -8,6 +8,7 @@ enum HEAP_EVENTS {
   CLICK_DATA_DELETE_MODAL_CANCEL = "Click Cancel Data Delete Modal",
   CLICK_DATA_DELETE_MODAL_CONFIRM = "Click Cancel Data Delete Modal",
   CLICK_DELETE_VAULT = "Click Delete Vault",
+  CLICK_HOW_DOES_THIS_WORK = "Click Hoe Does This Work",
   DATA_DELETED = "Data Deleted",
   DATA_STORED = "Data Stored",
   LOGIN = "Login",
