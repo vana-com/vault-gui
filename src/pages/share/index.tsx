@@ -242,7 +242,7 @@ const SendPage: NextPage = () => {
       <VaultSharePageWithStatus appName={prettyAppName} uiStatus={uiStatus}>
         {/* SERVER DATA IS LOADING */}
         {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
-          <FocusStack isCentered withMinHeight>
+          <FocusStack isCentered>
             <Spinner />
           </FocusStack>
         )}

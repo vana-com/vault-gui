@@ -31,8 +31,9 @@ const VaultSharePage = ({
 }: Props) => (
   <Center tw="min-h-screen">
     <Container size="lg">
-      <Stack tw="flex-1 gap-6 p-insetHalf">
-        <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">
+      {/* MAIN PANEL: min-height allows the child panel to use flex-1 to always fill the remaining space. When the permissions copy increases, we can simply adjust the min-height here. */}
+      <Stack tw="gap-6 p-insetHalf min-h-[540px]">
+        <Stack tw="flex flex-col items-center justify-center gap-0.5">
           <Group tw="gap-2 items-center pb-4">
             <VanaLogo
               boxSize={ICON_SIZE}

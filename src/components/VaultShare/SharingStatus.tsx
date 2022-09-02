@@ -24,7 +24,7 @@ const SharingStatus = ({ status, stage }: Props) => {
   console.log("stage", stage);
 
   return (
-    <FocusStack withMinHeight isCentered tw="relative">
+    <FocusStack isCentered tw="relative">
       {/* IDLE OR PENDING */}
       {(status === DataPipeline.Status.IDLE ||
         status === DataPipeline.Status.PENDING) && (
