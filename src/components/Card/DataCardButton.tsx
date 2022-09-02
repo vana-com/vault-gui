@@ -39,7 +39,7 @@ const DataCardButton = ({ module, showActionHover, userId }: Props) => {
         css={[styledCard, styledCardHover, styledCardHoverIcon]}
         onClick={() => {
           setIsLoading(true);
-          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA_PANEL, {
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA_MODULE_PANEL, {
             module: module.name,
           });
         }}

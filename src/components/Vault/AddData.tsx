@@ -61,7 +61,10 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
               rel="noopener noreferrer"
               href={config.vanaSupportedAppsFeedback}
               onClick={() =>
-                heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_REQUEST)
+                heapTrackServerSide(
+                  userId,
+                  HEAP_EVENTS.CLICK_REQUEST_NEW_DATA_SOURCE,
+                )
               }
             >
               Request it.

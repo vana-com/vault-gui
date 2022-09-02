@@ -2,11 +2,11 @@ enum HEAP_EVENTS {
   // Clicks on the Add Data button, not for a specific module
   CLICK_ADD_DATA_BUTTON = "Click Add Data Button",
   // Clicks on panel to add data for a specific module
-  CLICK_ADD_DATA_PANEL = "Click Add Data Panel",
-  CLICK_ADD_REQUEST = "Click Add Request",
-  CLICK_DATA_DELETE_MODAL_CANCEL = "Click Cancel Data Delete Modal",
-  CLICK_DATA_DELETE_MODAL_CONFIRM = "Click Cancel Data Delete Modal",
+  CLICK_ADD_DATA_MODULE_PANEL = "Click Add Data Module Panel",
+  CLICK_REQUEST_NEW_DATA_SOURCE = "Click Request New Data Source",
   CLICK_DELETE_VAULT = "Click Delete Vault",
+  CLICK_VAULT_DELETE_MODAL_CANCEL = "Click Cancel Vault Delete",
+  CLICK_VAULT_DELETE_MODAL_CONFIRM = "Click Confirm Vault Delete",
   CLICK_GIVE_FEEDBACK = "Click Give Feedback",
   CLICK_GET_HELP = "Click Get Help",
   CLICK_HOW_DOES_THIS_WORK = "Click How Does This Work",
