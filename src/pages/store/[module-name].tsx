@@ -29,7 +29,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-  const { user, walletProvider } = useUserContext();
+  const { user } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
 
   // Extract consts from router.query
@@ -115,11 +115,8 @@ const VaultStoragePage: NextPage = () => {
         <LayoutCanvas>
           <LayoutCanvasPattern />
           <StorageUpload
-            userId={user?.id}
             moduleName={moduleName}
             createUserModule={createUserModuleCallback}
-            externalId={user?.externalId ?? ""}
-            web3AuthWalletProvider={walletProvider}
           />
         </LayoutCanvas>
       </LayoutPage>
