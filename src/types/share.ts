@@ -5,8 +5,21 @@ export interface ShareModule {
   dataModule: ModuleName;
 }
 
-export enum SharePermissionKind {
-  InstagramInterests = "InstagramInterests",
+// Purposely set to lowercase to match the normalizedServiceName
+// in src/pages/share/index
+export enum ShareService {
+  INSTAGRAM = "instagram",
+  // Provide a fallback for tests…
+  UNKNOWN = "unknown",
+}
+
+export type ShareServiceType = ShareService | string;
+
+export enum ShareKind {
+  INSTAGRAM_INTERESTS = "InstagramInterests",
+  INSTAGRAM_COMMENTS = "InstagramComments",
+  // Provide a fallback for tests…
+  UNKNOWN = "unknown",
 }
 
 export enum ShareUiStatus {
