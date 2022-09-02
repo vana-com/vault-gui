@@ -19,6 +19,7 @@ const uploadFile = async (
   progressHandler: ProgressHandler,
 ) => {
   const fileName = encodeURIComponent(file.name);
+  const fileSize = file.size;
 
   try {
     // Get the pre-signed upload URL for GCS
@@ -53,6 +54,8 @@ const uploadFile = async (
     return {
       uploadSuccessful: isOk,
       uploadURL: isOk ? `${url}${fullFileName}` : null,
+      uploadFileName: fileName,
+      uploadFileSize: fileSize,
     };
   } catch (error) {
     console.log(JSON.stringify(error));

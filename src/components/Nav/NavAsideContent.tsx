@@ -27,7 +27,7 @@ const NavAsideContent = () => {
     <>
       {/* MENU */}
       {isAuthenticated && (
-        <Stack tw="pt-insetHalf gap-[2px]">
+        <Stack tw="pt-insetHalf gap-px">
           <NextLink passHref href="/">
             <Text
               as="a"

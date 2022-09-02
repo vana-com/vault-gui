@@ -73,15 +73,15 @@ try is clearing all the cached data.
 
 ## Development
 
-[development-vault.vana.xyz](http://development-vault.vana.xyz/)
+[development-vault.vana.com](http://development-vault.vana.com/)
 
 ## Staging
 
-[staging-vault.vana.xyz](http://staging-vault.vana.xyz/)
+[staging-vault.vana.com](http://staging-vault.vana.com/)
 
 ## Production
 
-[vault.vana.xyz](http://vault.vana.xyz/)
+[vault.vana.com](http://vault.vana.com/)
 
 # 🕸 Web Framework
 
