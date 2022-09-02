@@ -124,7 +124,7 @@ const SendPage: NextPage = () => {
       },
     };
 
-    // This is the "final" message -- the data payload
+    // This is the "final" message: the data payload
     console.log("worker done | data:", JSON.stringify(payloadToSend));
 
     // Get the window context safely
