@@ -19,7 +19,7 @@ const generalConfig = {
   encryptionChunkSize: 64 * 1024 * 1024,
   chacha20Poly1305Signature: "zDKO6XYXioc",
 
-  // Do not modify. Changing this message will brick existing encrypted data without a proper migration
+  // DO NOT MODIFY: Changing this message will brick existing encrypted data without a proper migration
   encryptionKeySignatureMessage: `Sign this to retrieve your Vana encryption key.
   
   ###`,
