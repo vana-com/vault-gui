@@ -17,6 +17,7 @@ const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
   moduleName: string,
   externalId: string,
+  userSecret: string,
   walletProvider: IWalletProvider | null,
   handleUploadProgress: (event: any) => void,
   createUserModule: (
@@ -26,30 +27,17 @@ const encryptAndUploadUserDataFiles = async (
     fileSize: number,
   ) => Promise<void>,
 ) => {
+  const signedSecret = await walletProvider?.signMessage(userSecret);
+  const encryptionFilePromises = files.map((file) =>
+    encryptFileChaCha20Poly1305(file, signedSecret),
+  );
+
   // Multiple files should be processed uploaded in parallel so we create arrays and use Promise.all
-
-  const plainTextPasswords = files.map(() => Math.random().toString(36));
-  const encryptedPasswords = await Promise.all(
-    plainTextPasswords.map(
-      async (p) => (await walletProvider?.encryptMessage(p)) as string,
-    ),
-  );
-
-  const encryptionFilePromises = files.map((file, i) =>
-    encryptFileChaCha20Poly1305(file, plainTextPasswords[i]),
-  );
-
   const encryptedFilesToUpload = await Promise.all(encryptionFilePromises);
 
   // Upload files to object store (S3 or GCS)
-  const uploadPromises = encryptedFilesToUpload.map((file, i) =>
-    uploadFile(
-      file,
-      moduleName,
-      externalId,
-      encryptedPasswords[i],
-      handleUploadProgress,
-    ),
+  const uploadPromises = encryptedFilesToUpload.map((file) =>
+    uploadFile(file, moduleName, externalId, handleUploadProgress),
   );
 
   const uploadResults = await Promise.all(uploadPromises);

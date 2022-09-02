@@ -13,10 +13,10 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { fileName, moduleName, externalId, encryptedPassword } = req.body;
+  const { fileName, moduleName, externalId } = req.body;
 
   try {
-    if (fileName && moduleName && externalId && encryptedPassword) {
+    if (fileName && moduleName && externalId) {
       const fullFileName = generateUserDataObjectName(
         fileName as string,
         externalId as string,
@@ -29,7 +29,6 @@ export default async (
         fields: {
           // Save module name as metadata, so we can identify which module this file belongs to
           "x-goog-meta-module-name": moduleName,
-          "x-goog-meta-encrypted-password": encryptedPassword,
         },
       } as GenerateSignedPostPolicyV4Options;
 

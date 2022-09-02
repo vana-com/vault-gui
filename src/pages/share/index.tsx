@@ -148,16 +148,19 @@ const SendPage: NextPage = () => {
     setShareStatus(DataPipeline.Status.PENDING);
 
     try {
-      const { file, encryptedPassword } = await fetchZipFromUrl(params.dataUrl);
+      const file = await fetchZipFromUrl(params.dataUrl);
       setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
-      const plainTextPassword = await walletProvider?.decryptMessage(
-        encryptedPassword,
-      );
-      if (!plainTextPassword) {
-        throw new Error("Unable to decrypt encryptedPassword for file.");
-      }
 
-      const decrypted = await decryptData(file, plainTextPassword);
+      const userSecret = user?.userSupplementary?.userSecret;
+      if (!userSecret) {
+        throw new Error("User secret is not available.");
+      }
+      const signUserSecretMessage =
+        config.encryptionKeySignatureMessage.replace("###", userSecret);
+      const signedSecret = await walletProvider?.signMessage(
+        signUserSecretMessage,
+      );
+      const decrypted = await decryptData(file, signedSecret);
       setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
 
       const extracted = await extractData(decrypted, params.serviceName);
