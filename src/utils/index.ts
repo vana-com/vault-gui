@@ -4,6 +4,7 @@ export * from "./encryptFileChaCha20Poly1305";
 export * from "./formatModuleNameFromQueryString";
 export * from "./generateUserDataObjectName";
 export * from "./getAbbreviatedFileName";
+export * from "./getFileSizeString";
 export * from "./getSecret";
 export * from "./heapClientSide";
 export * from "./heapServerSide";
