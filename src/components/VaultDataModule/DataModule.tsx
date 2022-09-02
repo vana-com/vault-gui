@@ -13,7 +13,7 @@ import {
 import { ptBreadcrumbs } from "src/components/system/Styles";
 import config from "src/config";
 import { ModuleObj } from "src/types";
-import { heapTrackServerSide } from "src/utils";
+import { getFileSizeString, heapTrackServerSide } from "src/utils";
 
 const { HEAP_EVENTS } = config;
 
@@ -49,24 +49,20 @@ const DataModule = ({
     </Stack>
     <Stack tw="px-inset py-insetAlmost gap-insetAlmost">
       <Stack tw="gap-2">
-        {module.fileName ? (
+        {module.fileName && (
           <DataModuleDetail label="File name">
             <Group tw="gap-1 items-center">{module.fileName}</Group>
           </DataModuleDetail>
-        ) : (
-          <></>
         )}
-        {module.fileSize ? (
-          <DataModuleDetail label="Size">{module.fileSize}</DataModuleDetail>
-        ) : (
-          <></>
-        )}
-        {module.createdAt ? (
-          <DataModuleDetail label="Last updated">
-            {module.createdAt}
+        {module.fileSize && (
+          <DataModuleDetail label="Size">
+            {getFileSizeString(module.fileSize)}
           </DataModuleDetail>
-        ) : (
-          <></>
+        )}
+        {module.createdAt && (
+          <DataModuleDetail label="Last updated">
+            {new Date(module.createdAt).toLocaleDateString()}
+          </DataModuleDetail>
         )}
       </Stack>
       <hr />
