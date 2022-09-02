@@ -1,6 +1,4 @@
-import { encrypt } from "@metamask/eth-sig-util";
 import { SafeEventEmitterProvider } from "@web3auth/base";
-import { bufferToHex } from "ethereumjs-util";
 import Web3 from "web3";
 
 import { IWalletProvider } from "./walletProvider";
@@ -30,50 +28,25 @@ const ethProvider = (provider: SafeEventEmitterProvider): IWalletProvider => {
     }
   };
 
-  const encryptMessage = async (messageToEncrypt: string): Promise<string> => {
+  const signMessage = async (messageToSign: string): Promise<string> => {
     try {
-      const walletAddress = await getWalletAddress();
-      const encryptionPublicKey = (await provider.request({
-        method: "eth_getEncryptionPublicKey",
-        params: [walletAddress],
-      })) as string;
-      const encryptedMessage = bufferToHex(
-        Buffer.from(
-          JSON.stringify(
-            encrypt({
-              publicKey: encryptionPublicKey,
-              data: messageToEncrypt,
-              version: "x25519-xsalsa20-poly1305",
-            }),
-          ),
-          "utf8",
-        ),
+      const web3 = new Web3(provider as any);
+      const address = await getWalletAddress();
+      const signedMessage = await web3.eth.personal.sign(
+        messageToSign,
+        address,
+        "",
       );
-      return encryptedMessage;
+      return signedMessage;
     } catch (error) {
-      console.error("Error encrypting message", error);
-      return "";
-    }
-  };
-
-  const decryptMessage = async (encryptedMessage: string): Promise<string> => {
-    try {
-      const walletAddress = await getWalletAddress();
-      const decryptedMessage = (await provider.request({
-        method: "eth_decrypt",
-        params: [encryptedMessage, walletAddress],
-      })) as string;
-      return decryptedMessage;
-    } catch (error) {
-      console.error("Error decrypting message", error);
+      console.error("Error signing a message", error);
       return "";
     }
   };
 
   return {
-    decryptMessage,
-    encryptMessage,
     getWalletAddress,
+    signMessage,
   };
 };
 

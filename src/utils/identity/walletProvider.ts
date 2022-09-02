@@ -4,8 +4,7 @@ import ethProvider from "./ethProvider";
 
 export interface IWalletProvider {
   getWalletAddress: () => Promise<string>;
-  encryptMessage(messageToEncrypt: string): Promise<string>;
-  decryptMessage(encryptedMessage: string): Promise<string>;
+  signMessage(messageToSign: string): Promise<string>;
 }
 
 export const getWalletProvider = (

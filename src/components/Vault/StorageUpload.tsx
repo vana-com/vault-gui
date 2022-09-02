@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Stack, ToastDefault } from "src/components";
+import { Button, Stack, ToastDefault, useUserContext } from "src/components";
 import config from "src/config";
 import {
   encryptAndUploadUserDataFiles,
   heapTrack,
   heapTrackServerSide,
 } from "src/utils";
-import { IWalletProvider } from "src/utils/identity/walletProvider";
 
 import { useFileDropzone } from "./FileDropzone";
 import { StorageUploadPresenter } from "./index";
@@ -20,21 +19,13 @@ import { StorageUploadPresenter } from "./index";
 const { HEAP_EVENTS } = config;
 
 interface Props {
-  userId: string;
   moduleName: string;
   createUserModule: (urlToData: string, urlNumber: number) => Promise<void>;
-  externalId: string;
-  web3AuthWalletProvider: IWalletProvider | null;
 }
 
-const StorageUpload = ({
-  userId,
-  moduleName,
-  createUserModule,
-  externalId,
-  web3AuthWalletProvider,
-}: Props) => {
+const StorageUpload = ({ moduleName, createUserModule }: Props) => {
   const router = useRouter();
+  const { user, walletProvider } = useUserContext();
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -124,8 +115,9 @@ const StorageUpload = ({
       await encryptAndUploadUserDataFiles(
         sanitizedFiles,
         moduleName,
-        externalId,
-        web3AuthWalletProvider,
+        user?.externalId || "",
+        user?.userSupplementary?.userSecret || "",
+        walletProvider,
         handleUploadProgress,
         createUserModule,
       );
@@ -136,7 +128,7 @@ const StorageUpload = ({
         module: moduleName,
         numFilesUploaded: filesToUpload.length,
       });
-      heapTrackServerSide(userId, HEAP_EVENTS.DATA_STORED, {
+      heapTrackServerSide(user?.id, HEAP_EVENTS.DATA_STORED, {
         module: moduleName,
       });
       setTimeout(() => router.push("/"), 500);

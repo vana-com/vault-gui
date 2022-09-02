@@ -1,5 +1,0 @@
-query getUser($externalId: String!) {
-  users(limit: 1, where: { externalId: { _eq: $externalId } }) {
-    ...UserWithWorker
-  }
-}

@@ -15,7 +15,6 @@ const uploadFile = async (
   file: File,
   moduleName: string,
   externalId: string,
-  encryptedPassword: string,
   progressHandler: ProgressHandler,
 ) => {
   const fileName = encodeURIComponent(file.name);
@@ -31,7 +30,6 @@ const uploadFile = async (
         fileName,
         moduleName,
         externalId,
-        encryptedPassword,
       }),
     });
     const { fullFileName, url, fields } = await res.json();

@@ -1,9 +1,10 @@
+import crypto from "crypto";
 import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import config from "src/config";
-import { getSdk } from "src/graphql/generated";
+import { getSdk, Users } from "src/graphql/generated";
 import { Sdk } from "src/graphql/generated/sdk";
 import { createHasuraJWT, getIdTokenPayload } from "src/utils";
 
@@ -18,7 +19,7 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { idToken } = req.body;
+  const { idToken, loginType } = req.body;
   try {
     if (!idToken) {
       return res.status(400).json({
@@ -38,19 +39,19 @@ export default async (
       let emailAddress;
       let name;
       let walletAddress;
+      let publicKey;
 
       if (issuer === config.ISSUER_OPENLOGIN) {
         // Social Login
-        walletAddress = publicKeyToAddress(
-          idTokenPayload.wallets[0].public_key,
-        );
+        publicKey = idTokenPayload.wallets[0].public_key;
+        walletAddress = publicKeyToAddress(publicKey);
         emailAddress = idTokenPayload.email;
         name = idTokenPayload.name;
       } else {
         // External Wallet Login
         walletAddress = idTokenPayload.wallets[0].address;
         emailAddress = `${new Date().getTime()}@dummy-email.com`;
-        name = `Wallet User`;
+        name = `${loginType} user`;
       }
 
       const externalId = walletAddress.toLowerCase();
@@ -66,7 +67,14 @@ export default async (
       );
       const sdk = getSdk(graphQLClient);
 
-      const user = await getUser(sdk, externalId, name, emailAddress);
+      const user = await getUser(
+        sdk,
+        externalId,
+        publicKey,
+        name,
+        emailAddress,
+        loginType,
+      );
 
       return res.status(200).json({ user, hasuraToken: hasuraJwt });
     }
@@ -91,10 +99,12 @@ export default async (
 const getUser = async (
   sdk: Sdk,
   externalId: string,
+  publicKey: string,
   name: string,
   emailAddress: string,
+  loginType: string,
 ) => {
-  let user;
+  let user: Users;
   const { users } = await sdk.getUserFromExternalIdOrEmail({
     emailAddress,
     externalId,
@@ -102,15 +112,15 @@ const getUser = async (
 
   if (users?.length >= 1) {
     // Found a user
-    [user] = users;
+    user = users[0] as Users;
 
     if (
-      users[0].externalId.startsWith("google-oauth2|") ||
-      users[0].externalId.startsWith("auth0|")
+      user.externalId.startsWith("google-oauth2|") ||
+      user.externalId.startsWith("auth0|")
     ) {
       // Migrate user external ID from Auth0 to Web3Auth
       await sdk.updateUserExternalId({
-        userId: users[0].id,
+        userId: user.id,
         externalId,
       });
       user.externalId = externalId;
@@ -122,7 +132,28 @@ const getUser = async (
       emailAddress,
       externalId,
     });
-    user = createOneUser;
+    user = createOneUser as Users;
+  }
+
+  // Create user supplementary information if none exists
+  if (!user.userSupplementary) {
+    // Public key is only available for social logins (torus wallets)
+    const socialLoginMethod = publicKey ? loginType : null;
+    const walletType = publicKey ? "torus" : loginType;
+    const userSecret = crypto.randomBytes(32).toString("hex");
+    const userSupplementary = {
+      publicKey,
+      socialLoginMethod,
+      userId: user.id,
+      userSecret,
+      walletAddress: externalId,
+      walletChain: config.WEB_3_AUTH_ETHEREUM_CHAIN_ID,
+      walletType,
+    };
+    const { createOneUserSupplementary } = await sdk.createUserSupplementary(
+      userSupplementary,
+    );
+    return createOneUserSupplementary?.user;
   }
 
   return user;

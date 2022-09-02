@@ -19,9 +19,13 @@ const textEncoder = new TextEncoder();
  * @param file - The file to encrypt
  * @param password - Used to derive the encryption key for ChaCha20-Poly1305
  */
-const encryptFileChaCha20Poly1305 = async (file: File, password: string) => {
+const encryptFileChaCha20Poly1305 = async (file: File, password = "") => {
   await _sodium.ready;
   const sodium = _sodium;
+
+  if (!password) {
+    throw new Error("Unable to encrypt file, password not provided");
+  }
 
   // Creates a salt which is a random Uint8Array of length sodium.crypto_pwhash_SALTBYTES
   const salt = sodium.randombytes_buf(sodium.crypto_pwhash_SALTBYTES);
