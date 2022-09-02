@@ -9,6 +9,7 @@ enum HEAP_EVENTS {
   CLICK_DATA_DELETE_MODAL_CONFIRM = "Click Cancel Data Delete Modal",
   CLICK_DELETE_VAULT = "Click Delete Vault",
   CLICK_GIVE_FEEDBACK = "Click Give Feedback",
+  CLICK_GET_HELP = "Click Get Help",
   CLICK_HOW_DOES_THIS_WORK = "Click How Does This Work",
   CLICK_ONBOARING_STAGE_THREE = "Click Onboarding Stage Three",
   CLICK_ONBOARING_STAGE_TWO = "Click Onboarding Stage Two",
