@@ -27,19 +27,6 @@ interface Props {
   userId: string;
 }
 
-const getHeapName = (module: any) => {
-  switch (module.name.toLowerCase()) {
-    case "instagram":
-      return HEAP_EVENTS.CLICK_ADD_INSTAGRAM;
-    case "facebook":
-      return HEAP_EVENTS.CLICK_ADD_FACEBOOK;
-    case "google":
-      return HEAP_EVENTS.CLICK_ADD_GOOGLE;
-    default:
-      return HEAP_EVENTS.CLICK_ADD_UNKNOWN;
-  }
-};
-
 /* DataCardButton is very similar to DataCard with same card styles */
 const DataCardButton = ({ module, showActionHover, userId }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +39,9 @@ const DataCardButton = ({ module, showActionHover, userId }: Props) => {
         css={[styledCard, styledCardHover, styledCardHoverIcon]}
         onClick={() => {
           setIsLoading(true);
-          heapTrackServerSide(userId, getHeapName(module));
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA_PANEL, {
+            module: module.name,
+          });
         }}
       >
         {/* appears on hover based on `styledCardHoverIcon`  */}

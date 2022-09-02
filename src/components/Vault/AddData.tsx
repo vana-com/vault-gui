@@ -29,7 +29,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
     buttonNode={
       <Button
         onClick={() => {
-          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA);
+          heapTrackServerSide(userId, HEAP_EVENTS.CLICK_ADD_DATA_BUTTON);
         }}
         type="button"
         variant="solid"

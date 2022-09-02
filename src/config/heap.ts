@@ -1,10 +1,9 @@
 enum HEAP_EVENTS {
-  CLICK_ADD_DATA = "Click Add Data",
-  CLICK_ADD_FACEBOOK = "Click Add Facebook Data",
-  CLICK_ADD_GOOGLE = "Click Add Google Data",
-  CLICK_ADD_INSTAGRAM = "Click Add Instagram",
+  // Clicks on the Add Data button, not for a specific module
+  CLICK_ADD_DATA_BUTTON = "Click Add Data Button",
+  // Clicks on panel to add data for a specific module
+  CLICK_ADD_DATA_PANEL = "Click Add Data Panel",
   CLICK_ADD_REQUEST = "Click Add Request",
-  CLICK_ADD_UNKNOWN = "Click Add Unknown",
   CLICK_DATA_DELETE_MODAL_CANCEL = "Click Cancel Data Delete Modal",
   CLICK_DATA_DELETE_MODAL_CONFIRM = "Click Cancel Data Delete Modal",
   CLICK_DELETE_VAULT = "Click Delete Vault",
@@ -15,8 +14,8 @@ enum HEAP_EVENTS {
   CLICK_ONBOARING_STAGE_TWO = "Click Onboarding Stage Two",
   DATA_DELETED = "Data Deleted",
   DATA_STORED = "Data Stored",
-  LOGIN = "Login",
-  LOGOUT = "Logout",
+  LOGIN = "Log in",
+  LOGOUT = "Log out",
   SHARE_APPROVED = "Share Approved",
   SHARE_CANCELLED = "Share Cancelled",
 }
