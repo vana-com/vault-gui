@@ -140,7 +140,7 @@ const SendPage: NextPage = () => {
     // Allow time to show success message before we close the window
     setTimeout(() => {
       closePopup(_window);
-    }, 3 * 1000);
+    }, 2 * 1000);
   };
 
   const beginDataPipeline = async (params: PipelineParams) => {
