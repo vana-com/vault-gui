@@ -69,6 +69,7 @@ export default {
   JWKS_WALLET,
   WEB_3_AUTH_CLIENT_ID,
   WEB_3_AUTH_CLIENT_SECRET,
+  WEB_3_AUTH_ETHEREUM_CHAIN_ID,
   web3AuthOptions,
   openLoginAdapterConfig,
   openLoginModalConfig,

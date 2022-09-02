@@ -98,7 +98,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ idToken, loginType: loginTypeLocallyScoped }),
       });
       const { user: userFromResponse, hasuraToken: hasuraTokenFromResponse } =
         await loginResponse.json();

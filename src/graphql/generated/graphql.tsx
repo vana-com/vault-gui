@@ -19860,10 +19860,6 @@ export type WorkersSpotify_Updates = {
   where: WorkersSpotify_Bool_Exp;
 };
 
-export type UserWithCustomerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, createdAt: any, updatedAt: any, customer?: { __typename?: 'Customers', id: any, createdAt: any, updatedAt: any, organization?: { __typename?: 'organizations', id: any, name: string, stripeCustomerId?: string | null } | null } | null, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null } | null };
-
-export type UserWithWorkerFragment = { __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> };
-
 export type CreateUserMutationVariables = Exact<{
   name: Scalars['String'];
   emailAddress: Scalars['String'];
@@ -19893,6 +19889,19 @@ export type CreateUserProjectMutationVariables = Exact<{
 
 export type CreateUserProjectMutation = { __typename?: 'mutation_root', createOneUserProject?: { __typename?: 'users_projects', status: string } | null };
 
+export type CreateUserSupplementaryMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  walletType: Scalars['String'];
+  walletChain: Scalars['String'];
+  walletAddress: Scalars['String'];
+  publicKey?: InputMaybe<Scalars['String']>;
+  socialLoginMethod?: InputMaybe<Scalars['String']>;
+  userSecret: Scalars['String'];
+}>;
+
+
+export type CreateUserSupplementaryMutation = { __typename?: 'mutation_root', createOneUserSupplementary?: { __typename?: 'users_supplementary', user: { __typename?: 'Users', id: any, emailAddress: string, name: string, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null } } | null };
+
 export type SoftDeleteUserModulesMutationVariables = Exact<{
   userId: Scalars['uuid'];
   usersModulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
@@ -19916,32 +19925,10 @@ export type GetModuleQueryVariables = Exact<{
 
 export type GetModuleQuery = { __typename?: 'query_root', modules: Array<{ __typename?: 'Modules', iconURL: string, id: any, name: string, moduleInstructions: Array<{ __typename?: 'ModuleInstructions', instructionsMarkdown: string }> }> };
 
-export type GetModuleInstructionsQueryVariables = Exact<{
-  projectModuleId: Scalars['uuid'];
-}>;
-
-
-export type GetModuleInstructionsQuery = { __typename?: 'query_root', fireboaProjectModule?: { __typename?: 'FireboaProjectsModules', instructions: string, module: { __typename?: 'FireboaModules', resourceLocation: string } } | null };
-
 export type GetModulesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetModulesQuery = { __typename?: 'query_root', modules: Array<{ __typename?: 'Modules', iconURL: string, id: any, name: string }> };
-
-export type GetProjectUserQueryVariables = Exact<{
-  fireboaProjectId: Scalars['uuid'];
-  userId: Scalars['uuid'];
-}>;
-
-
-export type GetProjectUserQuery = { __typename?: 'query_root', fireboaProjectUser?: { __typename?: 'FireboaProjectsUsers', currentState: ProjectStatuses_Enum, user: { __typename?: 'Users', id: any }, fireboaProject: { __typename?: 'FireboaProjects', id: any } } | null };
-
-export type GetUserQueryVariables = Exact<{
-  externalId: Scalars['String'];
-}>;
-
-
-export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', id: any, emailAddress: string, phoneNumber?: string | null, name: string, referralSource?: string | null, createdAt: any, updatedAt: any, worker?: { __typename?: 'Workers', id: any, createdAt: any, updatedAt?: any | null, cashedOut: number, masterServicesAgreementAccepted: boolean, termsOfServiceAccepted: boolean } | null, etxTaskSessions: Array<{ __typename?: 'EtxTaskSessions', id: any }> }> };
 
 export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -19949,7 +19936,7 @@ export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
 }>;
 
 
-export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string }> };
+export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -19978,53 +19965,7 @@ export type GetUserModulesSubscriptionVariables = Exact<{
 
 export type GetUserModulesSubscription = { __typename?: 'subscription_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, fileName?: string | null, fileSize: any, createdAt: any, module: { __typename?: 'Modules', name: string } }> };
 
-export const UserWithCustomerFragmentDoc = gql`
-    fragment UserWithCustomer on Users {
-  id
-  emailAddress
-  phoneNumber
-  name
-  createdAt
-  updatedAt
-  customer {
-    id
-    createdAt
-    updatedAt
-    organization {
-      id
-      name
-      stripeCustomerId
-    }
-  }
-  worker {
-    id
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const UserWithWorkerFragmentDoc = gql`
-    fragment UserWithWorker on Users {
-  id
-  emailAddress
-  phoneNumber
-  name
-  referralSource
-  createdAt
-  updatedAt
-  worker {
-    id
-    createdAt
-    updatedAt
-    cashedOut
-    masterServicesAgreementAccepted
-    termsOfServiceAccepted
-  }
-  etxTaskSessions {
-    id
-  }
-}
-    `;
+
 export const CreateUserDocument = gql`
     mutation createUser($name: String!, $emailAddress: String!, $externalId: String!) {
   createOneUser(
@@ -20142,6 +20083,56 @@ export function useCreateUserProjectMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateUserProjectMutationHookResult = ReturnType<typeof useCreateUserProjectMutation>;
 export type CreateUserProjectMutationResult = Apollo.MutationResult<CreateUserProjectMutation>;
 export type CreateUserProjectMutationOptions = Apollo.BaseMutationOptions<CreateUserProjectMutation, CreateUserProjectMutationVariables>;
+export const CreateUserSupplementaryDocument = gql`
+    mutation createUserSupplementary($userId: uuid!, $walletType: String!, $walletChain: String!, $walletAddress: String!, $publicKey: String, $socialLoginMethod: String, $userSecret: String!) {
+  createOneUserSupplementary(
+    object: {userId: $userId, walletType: $walletType, walletChain: $walletChain, walletAddress: $walletAddress, publicKey: $publicKey, socialLoginMethod: $socialLoginMethod, userSecret: $userSecret}
+  ) {
+    user {
+      id
+      emailAddress
+      name
+      externalId
+      userSupplementary {
+        publicKey
+        userSecret
+      }
+    }
+  }
+}
+    `;
+export type CreateUserSupplementaryMutationFn = Apollo.MutationFunction<CreateUserSupplementaryMutation, CreateUserSupplementaryMutationVariables>;
+
+/**
+ * __useCreateUserSupplementaryMutation__
+ *
+ * To run a mutation, you first call `useCreateUserSupplementaryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserSupplementaryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserSupplementaryMutation, { data, loading, error }] = useCreateUserSupplementaryMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      walletType: // value for 'walletType'
+ *      walletChain: // value for 'walletChain'
+ *      walletAddress: // value for 'walletAddress'
+ *      publicKey: // value for 'publicKey'
+ *      socialLoginMethod: // value for 'socialLoginMethod'
+ *      userSecret: // value for 'userSecret'
+ *   },
+ * });
+ */
+export function useCreateUserSupplementaryMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserSupplementaryMutation, CreateUserSupplementaryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserSupplementaryMutation, CreateUserSupplementaryMutationVariables>(CreateUserSupplementaryDocument, options);
+      }
+export type CreateUserSupplementaryMutationHookResult = ReturnType<typeof useCreateUserSupplementaryMutation>;
+export type CreateUserSupplementaryMutationResult = Apollo.MutationResult<CreateUserSupplementaryMutation>;
+export type CreateUserSupplementaryMutationOptions = Apollo.BaseMutationOptions<CreateUserSupplementaryMutation, CreateUserSupplementaryMutationVariables>;
 export const SoftDeleteUserModulesDocument = gql`
     mutation softDeleteUserModules($userId: uuid!, $usersModulesIds: [uuid!]) {
   updateManyUsersModules(
@@ -20256,44 +20247,6 @@ export function useGetModuleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetModuleQueryHookResult = ReturnType<typeof useGetModuleQuery>;
 export type GetModuleLazyQueryHookResult = ReturnType<typeof useGetModuleLazyQuery>;
 export type GetModuleQueryResult = Apollo.QueryResult<GetModuleQuery, GetModuleQueryVariables>;
-export const GetModuleInstructionsDocument = gql`
-    query getModuleInstructions($projectModuleId: uuid!) {
-  fireboaProjectModule(id: $projectModuleId) {
-    instructions
-    module {
-      resourceLocation
-    }
-  }
-}
-    `;
-
-/**
- * __useGetModuleInstructionsQuery__
- *
- * To run a query within a React component, call `useGetModuleInstructionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetModuleInstructionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetModuleInstructionsQuery({
- *   variables: {
- *      projectModuleId: // value for 'projectModuleId'
- *   },
- * });
- */
-export function useGetModuleInstructionsQuery(baseOptions: Apollo.QueryHookOptions<GetModuleInstructionsQuery, GetModuleInstructionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetModuleInstructionsQuery, GetModuleInstructionsQueryVariables>(GetModuleInstructionsDocument, options);
-      }
-export function useGetModuleInstructionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModuleInstructionsQuery, GetModuleInstructionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetModuleInstructionsQuery, GetModuleInstructionsQueryVariables>(GetModuleInstructionsDocument, options);
-        }
-export type GetModuleInstructionsQueryHookResult = ReturnType<typeof useGetModuleInstructionsQuery>;
-export type GetModuleInstructionsLazyQueryHookResult = ReturnType<typeof useGetModuleInstructionsLazyQuery>;
-export type GetModuleInstructionsQueryResult = Apollo.QueryResult<GetModuleInstructionsQuery, GetModuleInstructionsQueryVariables>;
 export const GetModulesDocument = gql`
     query getModules {
   modules(where: {isActive: {_eq: true}}) {
@@ -20330,83 +20283,6 @@ export function useGetModulesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetModulesQueryHookResult = ReturnType<typeof useGetModulesQuery>;
 export type GetModulesLazyQueryHookResult = ReturnType<typeof useGetModulesLazyQuery>;
 export type GetModulesQueryResult = Apollo.QueryResult<GetModulesQuery, GetModulesQueryVariables>;
-export const GetProjectUserDocument = gql`
-    query getProjectUser($fireboaProjectId: uuid!, $userId: uuid!) {
-  fireboaProjectUser(fireboaProjectId: $fireboaProjectId, userId: $userId) {
-    user {
-      id
-    }
-    fireboaProject {
-      id
-    }
-    currentState
-  }
-}
-    `;
-
-/**
- * __useGetProjectUserQuery__
- *
- * To run a query within a React component, call `useGetProjectUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetProjectUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetProjectUserQuery({
- *   variables: {
- *      fireboaProjectId: // value for 'fireboaProjectId'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useGetProjectUserQuery(baseOptions: Apollo.QueryHookOptions<GetProjectUserQuery, GetProjectUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetProjectUserQuery, GetProjectUserQueryVariables>(GetProjectUserDocument, options);
-      }
-export function useGetProjectUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProjectUserQuery, GetProjectUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetProjectUserQuery, GetProjectUserQueryVariables>(GetProjectUserDocument, options);
-        }
-export type GetProjectUserQueryHookResult = ReturnType<typeof useGetProjectUserQuery>;
-export type GetProjectUserLazyQueryHookResult = ReturnType<typeof useGetProjectUserLazyQuery>;
-export type GetProjectUserQueryResult = Apollo.QueryResult<GetProjectUserQuery, GetProjectUserQueryVariables>;
-export const GetUserDocument = gql`
-    query getUser($externalId: String!) {
-  users(limit: 1, where: {externalId: {_eq: $externalId}}) {
-    ...UserWithWorker
-  }
-}
-    ${UserWithWorkerFragmentDoc}`;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      externalId: // value for 'externalId'
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUserFromExternalIdOrEmailDocument = gql`
     query getUserFromExternalIdOrEmail($externalId: String!, $emailAddress: String!) {
   users(
@@ -20417,6 +20293,10 @@ export const GetUserFromExternalIdOrEmailDocument = gql`
     emailAddress
     id
     externalId
+    userSupplementary {
+      publicKey
+      userSecret
+    }
   }
 }
     `;
