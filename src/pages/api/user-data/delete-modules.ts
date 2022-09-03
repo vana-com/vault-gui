@@ -4,8 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
-import { getHasuraTokenPayload } from "src/utils";
-import { deleteFile } from "src/utils/gcp/deleteFile";
+import { deleteGCSObject, getHasuraTokenPayload } from "src/utils";
 
 /**
  * Delete the file in objects store for a specific users_modules rows and set the
@@ -62,7 +61,7 @@ export default async (
         .json({ error: "Invalid user", deleteSuccessful: false });
     }
 
-    const { usersModules: modules } = await sdk.getUsersModulesFromIds({
+    const { usersModules: modulesToDelete } = await sdk.getUsersModulesFromIds({
       usersModulesIds,
       userId,
     });
@@ -71,14 +70,14 @@ export default async (
      * 1) Delete file blobs from GCS (or other places in the future)
      */
 
-    const moduleLocations = modules.map((mod) => mod.urlToData);
+    const moduleLocations = modulesToDelete.map((mod) => mod.urlToData);
     const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`;
 
     // Make paths relative
     const files = moduleLocations.map((fullPath: string) =>
       fullPath?.replace(urlPrefix, ""),
     );
-    const filePromises = files.map((file: string) => deleteFile(file));
+    const filePromises = files.map((file: string) => deleteGCSObject(file));
 
     const results = await Promise.allSettled(filePromises);
     const failedFiles = results.filter((p) => p.status === "rejected");
@@ -99,9 +98,9 @@ export default async (
         modulesIds: usersModulesIds,
       });
 
-    if (deleteUserModulesRows?.affected_rows !== modules.length) {
+    if (deleteUserModulesRows?.affected_rows !== modulesToDelete.length) {
       throw new Error(
-        `Deleted hasura user module count did not match expected length -- affected_rows:${deleteUserModulesRows?.affected_rows} modules:${modules.length}`,
+        `Deleted hasura user module count did not match expected length -- affected_rows:${deleteUserModulesRows?.affected_rows} modules:${modulesToDelete.length}`,
       );
     }
 

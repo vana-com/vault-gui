@@ -4,12 +4,15 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
-import { getHasuraTokenPayload } from "src/utils";
-import { deleteFile } from "src/utils/gcp/deleteFile";
+import { deleteGCSObject, getHasuraTokenPayload } from "src/utils";
 
 /**
- * FULLY deletes a user account -- removes all uploaded from gcp, modules rows from hasura, and even the user account from hasura as well
- * only supports "vault-only" accounts currently
+ * Hard delete of a Vault user account:
+ * - Removes all user data files uploaded to GCS
+ * - Removes all SQL data in Hasura
+ *
+ * If the user has completed fireboa, the delete fails after users_modules rows
+ * are deleted
  */
 export default async (
   req: NextApiRequest,
@@ -59,22 +62,19 @@ export default async (
 
     if (!userId) {
       // No id can be found for the user
-      return res.status(400).json({ error: "Invalid user", sucess: false });
+      return res.status(400).json({ error: "Invalid user", success: false });
     }
 
     /**
-     * Here we actually start the "hard" deletion process. This includes:
-     *  - (1) Data stored / uploaded
-     *  - (2) Generated account information
-     *  - (?) Delete web3auth wallet / account ????
-     */
-
-    /**
+     * Start the deletion process:
+     *
      * (1) Delete file blobs from GCS (or other places in the future)
      */
 
-    const { usersModules: modules } = await sdk.getAllUserModules({ userId });
-    const moduleLocations = modules.map((mod) => mod.urlToData);
+    const { usersModules: storedModules } = await sdk.getAllUserModules({
+      userId,
+    });
+    const moduleLocations = storedModules.map((mod) => mod.urlToData);
 
     const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`;
 
@@ -82,7 +82,7 @@ export default async (
     const files = moduleLocations.map((fullPath: string) =>
       fullPath?.replace(urlPrefix, ""),
     );
-    const filePromises = files.map((file: string) => deleteFile(file));
+    const filePromises = files.map((file: string) => deleteGCSObject(file));
 
     const results = await Promise.allSettled(filePromises);
     const passedFiles = results.filter((p) => p.status === "fulfilled");
@@ -99,14 +99,12 @@ export default async (
      * (2) Delete SQL data from hasura
      */
 
-    // (a) Delete records from user_modules
+    // (a) Delete records from users_modules
     const { deleteManyUsersModules: deleteUserModulesRows } =
       await sdk.deleteUserModules({ userId });
 
-    if (deleteUserModulesRows?.affected_rows !== modules.length) {
-      throw new Error(
-        `Deleted hasura user module count did not match expected length -- affected_rows:${deleteUserModulesRows?.affected_rows} modules:${modules.length}`,
-      );
+    if (deleteUserModulesRows?.affected_rows !== storedModules.length) {
+      throw new Error("Unable to delete all rows in users_modules");
     }
 
     // (b) Delete records from users
@@ -115,17 +113,14 @@ export default async (
     });
 
     if (deleteUserRow?.id !== userId) {
-      throw new Error(
-        `Could not delete hasura user row -- found '${deleteUserRow?.id}' instead of '${userId}'`,
-      );
+      throw new Error("Unable to delete users row");
     }
 
-    // 🎉 All done 🎉
     return res.status(200).json({
       success: true,
-      deletedUploadFiles: passedFiles?.length,
-      deletedUserModulesVana: deleteUserModulesRows?.affected_rows,
-      deleteUserIdVana: deleteUserRow?.id,
+      numDeletedStoredFiles: passedFiles?.length,
+      numDeletedUserModulesRows: deleteUserModulesRows?.affected_rows,
+      deletedUserId: deleteUserRow?.id,
     });
   } catch (error: any) {
     log.error(error);
