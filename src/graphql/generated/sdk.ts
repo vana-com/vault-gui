@@ -17990,6 +17990,13 @@ export type UpdateUserExternalIdMutationVariables = Exact<{
 
 export type UpdateUserExternalIdMutation = { __typename?: 'mutation_root', updateOneUser?: { __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string } | null };
 
+export type GetAllUserModulesQueryVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type GetAllUserModulesQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
+
 export type GetModuleQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -18009,13 +18016,6 @@ export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
 
 
 export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null }> };
-
-export type GetUserModulesQueryQueryVariables = Exact<{
-  userId: Scalars['uuid'];
-}>;
-
-
-export type GetUserModulesQueryQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -18127,6 +18127,18 @@ export const UpdateUserExternalIdDocument = gql`
   }
 }
     `;
+export const GetAllUserModulesDocument = gql`
+    query getAllUserModules($userId: uuid!) {
+  usersModules(where: {userId: {_eq: $userId}}) {
+    id
+    module {
+      name
+    }
+    moduleId
+    urlToData
+  }
+}
+    `;
 export const GetModuleDocument = gql`
     query getModule($name: String!) {
   modules(where: {name: {_eq: $name}}) {
@@ -18162,18 +18174,6 @@ export const GetUserFromExternalIdOrEmailDocument = gql`
       publicKey
       userSecret
     }
-  }
-}
-    `;
-export const GetUserModulesQueryDocument = gql`
-    query getUserModulesQuery($userId: uuid!) {
-  usersModules(where: {userId: {_eq: $userId}}) {
-    id
-    module {
-      name
-    }
-    moduleId
-    urlToData
   }
 }
     `;
@@ -18281,6 +18281,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     updateUserExternalId(variables: UpdateUserExternalIdMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateUserExternalIdMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserExternalIdMutation>(UpdateUserExternalIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateUserExternalId', 'mutation');
     },
+    getAllUserModules(variables: GetAllUserModulesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetAllUserModulesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllUserModulesQuery>(GetAllUserModulesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllUserModules', 'query');
+    },
     getModule(variables: GetModuleQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetModuleQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetModuleQuery>(GetModuleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getModule', 'query');
     },
@@ -18289,9 +18292,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getUserFromExternalIdOrEmail(variables: GetUserFromExternalIdOrEmailQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserFromExternalIdOrEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserFromExternalIdOrEmailQuery>(GetUserFromExternalIdOrEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserFromExternalIdOrEmail', 'query');
-    },
-    getUserModulesQuery(variables: GetUserModulesQueryQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserModulesQueryQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetUserModulesQueryQuery>(GetUserModulesQueryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserModulesQuery', 'query');
     },
     getUserUUIDFromExternalId(variables: GetUserUuidFromExternalIdQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserUuidFromExternalIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserUuidFromExternalIdQuery>(GetUserUuidFromExternalIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserUUIDFromExternalId', 'query');

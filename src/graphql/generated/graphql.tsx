@@ -17990,6 +17990,13 @@ export type UpdateUserExternalIdMutationVariables = Exact<{
 
 export type UpdateUserExternalIdMutation = { __typename?: 'mutation_root', updateOneUser?: { __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string } | null };
 
+export type GetAllUserModulesQueryVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type GetAllUserModulesQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
+
 export type GetModuleQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -18009,13 +18016,6 @@ export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
 
 
 export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null }> };
-
-export type GetUserModulesQueryQueryVariables = Exact<{
-  userId: Scalars['uuid'];
-}>;
-
-
-export type GetUserModulesQueryQuery = { __typename?: 'query_root', usersModules: Array<{ __typename?: 'UsersModules', id: any, moduleId: any, urlToData: string, module: { __typename?: 'Modules', name: string } }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -18351,6 +18351,46 @@ export function useUpdateUserExternalIdMutation(baseOptions?: Apollo.MutationHoo
 export type UpdateUserExternalIdMutationHookResult = ReturnType<typeof useUpdateUserExternalIdMutation>;
 export type UpdateUserExternalIdMutationResult = Apollo.MutationResult<UpdateUserExternalIdMutation>;
 export type UpdateUserExternalIdMutationOptions = Apollo.BaseMutationOptions<UpdateUserExternalIdMutation, UpdateUserExternalIdMutationVariables>;
+export const GetAllUserModulesDocument = gql`
+    query getAllUserModules($userId: uuid!) {
+  usersModules(where: {userId: {_eq: $userId}}) {
+    id
+    module {
+      name
+    }
+    moduleId
+    urlToData
+  }
+}
+    `;
+
+/**
+ * __useGetAllUserModulesQuery__
+ *
+ * To run a query within a React component, call `useGetAllUserModulesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUserModulesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUserModulesQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetAllUserModulesQuery(baseOptions: Apollo.QueryHookOptions<GetAllUserModulesQuery, GetAllUserModulesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllUserModulesQuery, GetAllUserModulesQueryVariables>(GetAllUserModulesDocument, options);
+      }
+export function useGetAllUserModulesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllUserModulesQuery, GetAllUserModulesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllUserModulesQuery, GetAllUserModulesQueryVariables>(GetAllUserModulesDocument, options);
+        }
+export type GetAllUserModulesQueryHookResult = ReturnType<typeof useGetAllUserModulesQuery>;
+export type GetAllUserModulesLazyQueryHookResult = ReturnType<typeof useGetAllUserModulesLazyQuery>;
+export type GetAllUserModulesQueryResult = Apollo.QueryResult<GetAllUserModulesQuery, GetAllUserModulesQueryVariables>;
 export const GetModuleDocument = gql`
     query getModule($name: String!) {
   modules(where: {name: {_eq: $name}}) {
@@ -18473,46 +18513,6 @@ export function useGetUserFromExternalIdOrEmailLazyQuery(baseOptions?: Apollo.La
 export type GetUserFromExternalIdOrEmailQueryHookResult = ReturnType<typeof useGetUserFromExternalIdOrEmailQuery>;
 export type GetUserFromExternalIdOrEmailLazyQueryHookResult = ReturnType<typeof useGetUserFromExternalIdOrEmailLazyQuery>;
 export type GetUserFromExternalIdOrEmailQueryResult = Apollo.QueryResult<GetUserFromExternalIdOrEmailQuery, GetUserFromExternalIdOrEmailQueryVariables>;
-export const GetUserModulesQueryDocument = gql`
-    query getUserModulesQuery($userId: uuid!) {
-  usersModules(where: {userId: {_eq: $userId}}) {
-    id
-    module {
-      name
-    }
-    moduleId
-    urlToData
-  }
-}
-    `;
-
-/**
- * __useGetUserModulesQueryQuery__
- *
- * To run a query within a React component, call `useGetUserModulesQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserModulesQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserModulesQueryQuery({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useGetUserModulesQueryQuery(baseOptions: Apollo.QueryHookOptions<GetUserModulesQueryQuery, GetUserModulesQueryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserModulesQueryQuery, GetUserModulesQueryQueryVariables>(GetUserModulesQueryDocument, options);
-      }
-export function useGetUserModulesQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserModulesQueryQuery, GetUserModulesQueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserModulesQueryQuery, GetUserModulesQueryQueryVariables>(GetUserModulesQueryDocument, options);
-        }
-export type GetUserModulesQueryQueryHookResult = ReturnType<typeof useGetUserModulesQueryQuery>;
-export type GetUserModulesQueryLazyQueryHookResult = ReturnType<typeof useGetUserModulesQueryLazyQuery>;
-export type GetUserModulesQueryQueryResult = Apollo.QueryResult<GetUserModulesQueryQuery, GetUserModulesQueryQueryVariables>;
 export const GetUserUuidFromExternalIdDocument = gql`
     query getUserUUIDFromExternalId($externalId: String!) {
   users(limit: 1, where: {externalId: {_eq: $externalId}}) {

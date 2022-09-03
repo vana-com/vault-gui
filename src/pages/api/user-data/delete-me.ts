@@ -73,7 +73,7 @@ export default async (
      * (1) Delete file blobs from GCS (or other places in the future)
      */
 
-    const { usersModules: modules } = await sdk.getUserModulesQuery({ userId });
+    const { usersModules: modules } = await sdk.getAllUserModules({ userId });
     const moduleLocations = modules.map((mod) => mod.urlToData);
 
     const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`;

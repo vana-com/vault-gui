@@ -1,4 +1,4 @@
-query getUserModulesQuery($userId: uuid!) {
+query getAllUserModules($userId: uuid!) {
   usersModules(where: { userId: { _eq: $userId } }) {
     id
     module {
