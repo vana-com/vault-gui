@@ -13,6 +13,43 @@ import { getApolloClient } from '../../utils/apolloClient';
 
 
 
+
+
+export async function getServerPageGetAllUserModules
+    (options: Omit<Apollo.QueryOptions<Types.GetAllUserModulesQueryVariables>, 'query'>, ctx?: any ){
+        const apolloClient = getApolloClient(ctx);
+        
+        const data = await apolloClient.query<Types.GetAllUserModulesQuery>({ ...options, query: Operations.GetAllUserModulesDocument });
+        
+        const apolloState = apolloClient.cache.extract();
+
+        return {
+            props: {
+                apolloState: apolloState,
+                data: data?.data,
+                error: data?.error ?? data?.errors ?? null,
+            },
+        };
+      }
+export const useGetAllUserModules = (
+  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetAllUserModulesQuery, Types.GetAllUserModulesQueryVariables>) => {
+  const router = useRouter();
+  const options = optionsFunc ? optionsFunc(router) : {};
+  return useQuery(Operations.GetAllUserModulesDocument, options);
+};
+export type PageGetAllUserModulesComp = React.FC<{data?: Types.GetAllUserModulesQuery, error?: Apollo.ApolloError}>;
+export const withPageGetAllUserModules = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetAllUserModulesQuery, Types.GetAllUserModulesQueryVariables>) => (WrappedComponent:PageGetAllUserModulesComp) : NextPage  => (props) => {
+                const router = useRouter()
+                const options = optionsFunc ? optionsFunc(router) : {};
+                const {data, error } = useQuery(Operations.GetAllUserModulesDocument, options)    
+                return <WrappedComponent {...props} data={data} error={error} /> ;
+                   
+            }; 
+export const ssrGetAllUserModules = {
+      getServerPage: getServerPageGetAllUserModules,
+      withPage: withPageGetAllUserModules,
+      usePage: useGetAllUserModules,
+    }
 export async function getServerPageGetModule
     (options: Omit<Apollo.QueryOptions<Types.GetModuleQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);

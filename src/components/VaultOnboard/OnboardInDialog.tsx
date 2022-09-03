@@ -2,7 +2,12 @@ import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, DialogModalControlled, Onboard , useUserContext } from "src/components";
+import {
+  Button,
+  DialogModalControlled,
+  Onboard,
+  useUserContext,
+} from "src/components";
 import config from "src/config";
 import { heapTrackServerSide } from "src/utils";
 

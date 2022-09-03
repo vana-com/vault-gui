@@ -67,7 +67,7 @@ const HomePage: NextPage = () => {
     setIsDeleting(true);
 
     const { deleteSuccessful } = await (
-      await fetch(`/api/user-data/delete`, {
+      await fetch(`/api/user-data/delete-modules`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
