@@ -91,7 +91,7 @@ export default async (
     }
 
     /**
-     * 2) Delete user module rows
+     * 2) Soft delete user module rows
      */
     const { deleteManyUsersModules: deleteUserModulesRows } =
       await sdk.deleteUserModulesById({ userId, modulesIds: usersModulesIds });

@@ -1,5 +1,0 @@
-mutation deleteUserModulesById($userId: uuid!, $modulesIds: [uuid!]) {
-  deleteManyUsersModules(where: {userId: {_eq: $userId}, moduleId: {_in: $modulesIds}}) {
-    affected_rows
-  }
-}
