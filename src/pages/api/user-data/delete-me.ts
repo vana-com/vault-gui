@@ -4,7 +4,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
-import { deleteGCSObject, getHasuraTokenPayload } from "src/utils";
+import { getHasuraTokenPayload } from "src/utils";
+import { deleteGCSObject } from "src/utils/serverUtils";
 
 /**
  * Hard delete of a Vault user account:

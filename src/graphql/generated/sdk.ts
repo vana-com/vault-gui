@@ -17974,13 +17974,13 @@ export type DeleteVaultUserMutationVariables = Exact<{
 
 export type DeleteVaultUserMutation = { __typename?: 'mutation_root', deleteOneUser?: { __typename?: 'Users', id: any } | null };
 
-export type SoftDeleteUserModulesByIdMutationVariables = Exact<{
+export type SoftDeleteUserModulesMutationVariables = Exact<{
   userId: Scalars['uuid'];
-  modulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
+  usersModulesIds?: InputMaybe<Array<Scalars['uuid']> | Scalars['uuid']>;
 }>;
 
 
-export type SoftDeleteUserModulesByIdMutation = { __typename?: 'mutation_root', deleteManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
+export type SoftDeleteUserModulesMutation = { __typename?: 'mutation_root', updateManyUsersModules?: { __typename?: 'UsersModules_mutation_response', affected_rows: number } | null };
 
 export type UpdateUserExternalIdMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -18108,10 +18108,11 @@ export const DeleteVaultUserDocument = gql`
   }
 }
     `;
-export const SoftDeleteUserModulesByIdDocument = gql`
-    mutation softDeleteUserModulesById($userId: uuid!, $modulesIds: [uuid!]) {
-  deleteManyUsersModules(
-    where: {userId: {_eq: $userId}, moduleId: {_in: $modulesIds}}
+export const SoftDeleteUserModulesDocument = gql`
+    mutation softDeleteUserModules($userId: uuid!, $usersModulesIds: [uuid!]) {
+  updateManyUsersModules(
+    where: {id: {_in: $usersModulesIds}, userId: {_eq: $userId}}
+    _set: {progress: "DELETED"}
   ) {
     affected_rows
   }
@@ -18275,8 +18276,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     deleteVaultUser(variables: DeleteVaultUserMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<DeleteVaultUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteVaultUserMutation>(DeleteVaultUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteVaultUser', 'mutation');
     },
-    softDeleteUserModulesById(variables: SoftDeleteUserModulesByIdMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SoftDeleteUserModulesByIdMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SoftDeleteUserModulesByIdMutation>(SoftDeleteUserModulesByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'softDeleteUserModulesById', 'mutation');
+    softDeleteUserModules(variables: SoftDeleteUserModulesMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<SoftDeleteUserModulesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SoftDeleteUserModulesMutation>(SoftDeleteUserModulesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'softDeleteUserModules', 'mutation');
     },
     updateUserExternalId(variables: UpdateUserExternalIdMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<UpdateUserExternalIdMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserExternalIdMutation>(UpdateUserExternalIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateUserExternalId', 'mutation');

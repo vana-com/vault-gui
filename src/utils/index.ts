@@ -1,6 +1,5 @@
 export * from "./apolloClient";
 export * from "./capitalizeString";
-export * from "./deleteGCSObject";
 export * from "./encryptAndUploadUserDataFile";
 export * from "./encryptFileChaCha20Poly1305";
 export * from "./formatModuleNameFromQueryString";

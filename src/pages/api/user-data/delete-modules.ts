@@ -4,7 +4,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import serverConfig from "src/config/server";
 import { getSdk } from "src/graphql/generated";
-import { deleteGCSObject, getHasuraTokenPayload } from "src/utils";
+import { getHasuraTokenPayload } from "src/utils";
+import { deleteGCSObject } from "src/utils/serverUtils";
 
 /**
  * Delete the file in objects store for a specific users_modules rows and set the
@@ -92,15 +93,16 @@ export default async (
     /**
      * 2) Soft delete user module rows
      */
-    const { deleteManyUsersModules: deleteUserModulesRows } =
-      await sdk.softDeleteUserModulesById({
+    const { updateManyUsersModules: updateUserModulesRows } =
+      await sdk.softDeleteUserModules({
         userId,
-        modulesIds: usersModulesIds,
+        usersModulesIds,
       });
 
-    if (deleteUserModulesRows?.affected_rows !== modulesToDelete.length) {
+    if (updateUserModulesRows?.affected_rows !== modulesToDelete.length) {
       throw new Error(
-        `Deleted hasura user module count did not match expected length -- affected_rows:${deleteUserModulesRows?.affected_rows} modules:${modulesToDelete.length}`,
+        `Deleted hasura user module count did not match expected length -- affected_rows: ${updateUserModulesRows?.affected_rows},
+         num modules to delete: ${modulesToDelete.length}`,
       );
     }
 
