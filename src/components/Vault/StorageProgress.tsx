@@ -9,8 +9,9 @@ interface Props {
 
 const ENCRYPTION_PROGRESS_CUTOFF = 6;
 
+// requires flex-1 to occup the space defined by the min-height set on the outer div of <StorageUploadPresenter>
 const StorageProgress = ({ storeProgress }: Props) => (
-  <Stack tw="gap-0 mx-auto justify-center pt-3 pb-5 min-h-[160px]">
+  <Stack tw="flex-1 gap-0.5 mx-auto justify-center pt-3 pb-5 transform lg:translate-y-1.5">
     <Text variant="display" weight="semibold" tw="text-center text-6xl">
       {storeProgress}%
     </Text>
