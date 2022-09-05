@@ -1,3 +1,4 @@
 export * from "./Onboard";
 export * from "./OnboardCard";
-export * from "./OnboardInDialog";
+export * from "./OnboardDialog";
+export * from "./OnboardDialogControlled";
