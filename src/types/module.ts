@@ -5,10 +5,6 @@ export type ModuleName = "Facebook" | "Google" | "Instagram";
 export interface Module {
   id?: string;
   name: string;
-  fileName?: string;
-  lastUpdated?: string;
-  dateCreated?: string;
-  fileSize?: string;
 }
 
 export interface ModuleObj {
@@ -16,6 +12,9 @@ export interface ModuleObj {
   id: string;
   moduleId: string;
   urlToData: string;
+  fileName?: string | null;
+  fileSize: number;
+  createdAt: string;
 }
 
 export interface NavCrumb {

@@ -17,34 +17,27 @@ const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
   moduleName: string,
   externalId: string,
+  userSecret: string,
   walletProvider: IWalletProvider | null,
   handleUploadProgress: (event: any) => void,
-  createUserModule: (urlToData: string, urlNumber: number) => Promise<void>,
+  createUserModule: (
+    urlToData: string,
+    urlNumber: number,
+    fileName: string,
+    fileSize: number,
+  ) => Promise<void>,
 ) => {
+  const signedSecret = await walletProvider?.signMessage(userSecret);
+  const encryptionFilePromises = files.map((file) =>
+    encryptFileChaCha20Poly1305(file, signedSecret),
+  );
+
   // Multiple files should be processed uploaded in parallel so we create arrays and use Promise.all
-
-  const plainTextPasswords = files.map(() => Math.random().toString(36));
-  const encryptedPasswords = await Promise.all(
-    plainTextPasswords.map(
-      async (p) => (await walletProvider?.encryptMessage(p)) as string,
-    ),
-  );
-
-  const encryptionFilePromises = files.map((file, i) =>
-    encryptFileChaCha20Poly1305(file, plainTextPasswords[i]),
-  );
-
   const encryptedFilesToUpload = await Promise.all(encryptionFilePromises);
 
   // Upload files to object store (S3 or GCS)
-  const uploadPromises = encryptedFilesToUpload.map((file, i) =>
-    uploadFile(
-      file,
-      moduleName,
-      externalId,
-      encryptedPasswords[i],
-      handleUploadProgress,
-    ),
+  const uploadPromises = encryptedFilesToUpload.map((file) =>
+    uploadFile(file, moduleName, externalId, handleUploadProgress),
   );
 
   const uploadResults = await Promise.all(uploadPromises);
@@ -57,14 +50,17 @@ const encryptAndUploadUserDataFiles = async (
     throw new Error("Unable to upload all files");
   }
 
-  // Get the list of object URLs for the files that were uploaded
-  const objectURLs = uploadResults.map((result) => result.uploadURL);
-
   // Associate object URL with the user in the DB.
-  const mutationPromises = objectURLs.map((url, i) =>
+  const mutationPromises = uploadResults.map((result, i) => {
+    const { uploadURL, uploadFileName, uploadFileSize } = result;
     // url is always a string due to successfulUpload === true
-    createUserModule(url as string, i + 1),
-  );
+    return createUserModule(
+      uploadURL as string,
+      i + 1,
+      uploadFileName?.slice(0, -4) ?? "", // Remove ".enc" from the filename in hasura
+      uploadFileSize ?? 0,
+    );
+  });
   await Promise.all(mutationPromises);
 };
 

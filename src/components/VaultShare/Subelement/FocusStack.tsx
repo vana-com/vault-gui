@@ -2,13 +2,13 @@
 import tw, { styled } from "twin.macro";
 
 interface Props {
-  withMinHeight?: boolean;
   isCentered?: boolean;
 }
 
-const FocusStack = styled.div(({ withMinHeight, isCentered }: Props) => [
+const FocusStack = styled.div(({ isCentered }: Props) => [
   tw`flex flex-col gap-0 overflow-hidden border rounded-lg bg-fillSecondary border-separator`,
-  withMinHeight && tw`min-h-[268px]`,
+  // use flex-1 to always fill the remaining space set by the min-height rule in VaultSharePage
+  tw`flex-1`,
   isCentered && tw`items-center justify-center`,
 ]);
 

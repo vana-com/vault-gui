@@ -8,23 +8,30 @@ interface Props {
   uiStatus: ShareUiStatus;
 }
 
+const getLede = (uiStatus: ShareUiStatus, appName: string) => {
+  switch (uiStatus) {
+    case ShareUiStatus.USER_IS_NOT_LOGGED_IN:
+      return "You need to log in to grant Vault access";
+    case ShareUiStatus.HASURA_IS_LOADING:
+      return `Do you want to grant ${appName} access to your Vault?`;
+    case ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA:
+      return "You do not have Vault data that the application is requesting";
+    case ShareUiStatus.USER_HAS_ACCEPTED:
+      return `Sharing Vault data to ${appName}`;
+    default:
+      return appName
+        ? `Do you want to grant ${appName} access to your Vault?`
+        : "";
+  }
+};
+
 const VaultSharePageWithStatus = ({
   uiStatus,
   appName,
   accessingDomain,
   children,
 }: Props) => {
-  let lede = appName
-    ? `Do you want to give ${appName} access to your Vault?`
-    : "";
-  if (uiStatus === ShareUiStatus.USER_IS_NOT_LOGGED_IN)
-    lede = "You need to log in to give Vault access";
-  if (uiStatus === ShareUiStatus.HASURA_IS_LOADING)
-    lede = `Do you want to give ${appName} access to your Vault?`;
-  if (uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA)
-    lede = "You do not have Vault data that the application is requesting";
-  if (uiStatus === ShareUiStatus.USER_HAS_ACCEPTED)
-    lede = `Sending Vault data to ${appName}`;
+  const lede = getLede(uiStatus, appName);
 
   return (
     <VaultSharePage
@@ -32,7 +39,7 @@ const VaultSharePageWithStatus = ({
       heading={
         uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA
           ? "No Vault data"
-          : "Give Vault access"
+          : "Grant Vault access"
       }
       lede={lede}
     >

@@ -29,7 +29,7 @@ import { formatModuleNameFromQueryString } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
-  const { user, walletProvider } = useUserContext();
+  const { user } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
 
   // Extract consts from router.query
@@ -49,6 +49,8 @@ const VaultStoragePage: NextPage = () => {
   const createUserModuleCallback = async (
     urlToData: string,
     urlNumber: number,
+    fileName: string,
+    fileSize: number,
   ) => {
     await createUserModule({
       variables: {
@@ -56,6 +58,8 @@ const VaultStoragePage: NextPage = () => {
         userId: user?.id,
         moduleId: module.id,
         urlNumber,
+        fileName,
+        fileSize,
       },
     });
   };
@@ -115,11 +119,8 @@ const VaultStoragePage: NextPage = () => {
         <LayoutCanvas>
           <LayoutCanvasPattern />
           <StorageUpload
-            userId={user?.id}
             moduleName={moduleName}
             createUserModule={createUserModuleCallback}
-            externalId={user?.externalId ?? ""}
-            web3AuthWalletProvider={walletProvider}
           />
         </LayoutCanvas>
       </LayoutPage>

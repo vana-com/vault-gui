@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import tw, { css } from "twin.macro";
 
 import {
   Center,
@@ -26,13 +26,14 @@ const VaultSharePage = ({
   accessDenied,
   accessDomain,
   children,
-  heading = "Give Vault access",
+  heading = "Grant Vault access",
   lede,
 }: Props) => (
   <Center tw="min-h-screen">
     <Container size="lg">
-      <Stack tw="flex-1 gap-6 p-insetHalf">
-        <Stack tw="flex-1 flex flex-col items-center justify-center gap-0.5">
+      {/* MAIN PANEL: min-height allows the child panel to use flex-1 to always fill the remaining space. When the permissions copy increases, we can simply adjust the min-height here. */}
+      <Stack tw="gap-6 p-insetHalf min-h-[540px]">
+        <Stack tw="flex flex-col items-center justify-center gap-0.5">
           <Group tw="gap-2 items-center pb-4">
             <VanaLogo
               boxSize={ICON_SIZE}
@@ -45,14 +46,17 @@ const VaultSharePage = ({
             ) : (
               <Icon icon="carbon:arrow-right" height={ICON_SIZE} />
             )}
-            <Flex tw="items-center justify-center rounded-md bg-label text-background h-[30px] w-[30px]">
+            <Flex
+              tw="items-center justify-center rounded-md bg-label text-background"
+              style={{ width: ICON_SIZE, height: ICON_SIZE }}
+            >
               <Icon icon="carbon:data-set" height="21px" />
             </Flex>
           </Group>
           <Text as="h1" variant="title3" weight="heavy" color="label">
             {heading}
           </Text>
-          <Text variant="body" color="labelTertiary">
+          <Text variant="body" color="labelTertiary" tw="pt-0.5">
             {lede}
           </Text>
           {accessDomain && (

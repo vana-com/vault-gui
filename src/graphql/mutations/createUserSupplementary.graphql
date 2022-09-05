@@ -1,0 +1,32 @@
+mutation createUserSupplementary(
+  $userId: uuid!
+  $walletType: String!
+  $walletChain: String!
+  $walletAddress: String!
+  $publicKey: String
+  $socialLoginMethod: String
+  $userSecret: String!
+) {
+  createOneUserSupplementary(
+    object:{
+    	userId: $userId
+      walletType: $walletType
+      walletChain: $walletChain
+      walletAddress: $walletAddress
+      publicKey: $publicKey
+      socialLoginMethod: $socialLoginMethod
+      userSecret: $userSecret
+  	}
+  ) {
+    user {
+      id
+      emailAddress
+      name
+      externalId
+      userSupplementary {
+        publicKey
+        userSecret
+      }
+    }
+  }
+}

@@ -11,13 +11,13 @@ import {
   NoModuleMessage,
   PermissionContract,
   PermissionList,
-  SendStatus,
+  SharingStatus,
   VaultSharePageTitle,
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
 import config from "src/config";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import { ShareUiStatus } from "src/types";
+import { ShareService, ShareServiceType, ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
 import { heapTrackServerSide } from "src/utils";
 import {
@@ -65,7 +65,9 @@ const SendPage: NextPage = () => {
   const prettyAppName = decodeURI(appName as string).replace(`-`, ` `);
 
   // normalize service name
-  const normalizedServiceName = ((serviceName as string) ?? "").toLowerCase();
+  const normalizedServiceName: ShareServiceType = (
+    (serviceName as ShareService) ?? ""
+  ).toLowerCase();
 
   // TODO: @joe - Clean up query to prevent sql injection
   const cleanQueryString = decodeURI(queryString as string);
@@ -122,7 +124,7 @@ const SendPage: NextPage = () => {
       },
     };
 
-    // This is the "final" message -- the data payload
+    // This is the "final" message: the data payload
     console.log("worker done | data:", JSON.stringify(payloadToSend));
 
     // Get the window context safely
@@ -138,7 +140,7 @@ const SendPage: NextPage = () => {
     // Allow time to show success message before we close the window
     setTimeout(() => {
       closePopup(_window);
-    }, 3 * 1000);
+    }, 2 * 1000);
   };
 
   const beginDataPipeline = async (params: PipelineParams) => {
@@ -148,16 +150,19 @@ const SendPage: NextPage = () => {
     setShareStatus(DataPipeline.Status.PENDING);
 
     try {
-      const { file, encryptedPassword } = await fetchZipFromUrl(params.dataUrl);
+      const file = await fetchZipFromUrl(params.dataUrl);
       setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
-      const plainTextPassword = await walletProvider?.decryptMessage(
-        encryptedPassword,
-      );
-      if (!plainTextPassword) {
-        throw new Error("Unable to decrypt encryptedPassword for file.");
-      }
 
-      const decrypted = await decryptData(file, plainTextPassword);
+      const userSecret = user?.userSupplementary?.userSecret;
+      if (!userSecret) {
+        throw new Error("User secret is not available.");
+      }
+      const signUserSecretMessage =
+        config.encryptionKeySignatureMessage.replace("###", userSecret);
+      const signedSecret = await walletProvider?.signMessage(
+        signUserSecretMessage,
+      );
+      const decrypted = await decryptData(file, signedSecret);
       setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
 
       const extracted = await extractData(decrypted, params.serviceName);
@@ -240,7 +245,7 @@ const SendPage: NextPage = () => {
       <VaultSharePageWithStatus appName={prettyAppName} uiStatus={uiStatus}>
         {/* SERVER DATA IS LOADING */}
         {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
-          <FocusStack isCentered withMinHeight>
+          <FocusStack isCentered>
             <Spinner />
           </FocusStack>
         )}
@@ -255,20 +260,24 @@ const SendPage: NextPage = () => {
 
         {/* READY TO ACCEPT */}
         {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
-          <PermissionContract
-            onAccept={onDataRequestApproval}
-            onDeny={() => {
-              heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
-              closePopup(window);
-            }}
-          >
-            <PermissionList query={cleanQueryString} />
-          </PermissionContract>
+          <>
+            <PermissionList
+              query={cleanQueryString}
+              serviceName={normalizedServiceName}
+            />
+            <PermissionContract
+              onAccept={onDataRequestApproval}
+              onDeny={() => {
+                heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
+                closePopup(window);
+              }}
+            />
+          </>
         )}
 
         {/* ACCEPTED, RUN QUERY */}
         {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
-          <SendStatus status={shareStatus} stage={updateStatus} />
+          <SharingStatus status={shareStatus} stage={updateStatus} />
         )}
       </VaultSharePageWithStatus>
     </>

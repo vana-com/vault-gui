@@ -1,0 +1,5 @@
+mutation deleteUserModules($userId: uuid!) {
+  deleteManyUsersModules(where: {userId: {_eq: $userId}}) {
+    affected_rows
+  }
+}
