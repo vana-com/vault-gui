@@ -9,7 +9,7 @@ interface Props {
 
 const NavAside = ({ children }: Props) => (
   <Stack tw="relative h-full">
-    <NavAsideContent />
+    <NavAsideContent showTypeform />
     {children}
   </Stack>
 );
