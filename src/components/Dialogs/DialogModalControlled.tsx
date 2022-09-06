@@ -16,7 +16,7 @@ import {
 import { TwCss } from "src/types";
 
 interface Props extends DialogContentProps {
-  buttonNode: React.ReactNode;
+  buttonNode?: React.ReactNode;
   children: React.ReactNode;
   open: boolean;
   onOpenChange: (isOpen: boolean) => void;
