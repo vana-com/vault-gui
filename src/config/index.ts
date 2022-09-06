@@ -7,6 +7,7 @@ const generalConfig = {
   vanaSupportedAppsFeedback: "https://4eyuszgyknu.typeform.com/vanadata",
   vanaPrivacyURL: "https://www.vana.com/privacy-policy",
   vanaPublicURL: "https://www.vana.com",
+  vanaVaultURL: "https://vault.vana.com",
 
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
