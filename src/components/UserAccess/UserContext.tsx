@@ -275,6 +275,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
         await web3AuthInstance.initModal({
           modalConfig: {
             [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
+            [WALLET_ADAPTERS.WALLET_CONNECT_V1]: {
+              label: "wallet-connect",
+              showOnModal: false,
+            },
           },
         });
       } catch (error) {
