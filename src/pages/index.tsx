@@ -17,7 +17,8 @@ import {
   NavBreadcrumb,
   NavHeader,
   NavHeaderRule,
-  OnboardInDialog,
+  OnboardDialog,
+  OnboardDialogControlled,
   Stack,
   TitleAndMetaTags,
   ToastDefault,
@@ -37,6 +38,11 @@ const HomePage: NextPage = () => {
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const setHasSeenOnboarding = () => {
+    localStorage.setItem("has-seen-onboarding", "true");
+  };
+  const hasSeenOnboarding =
+    localStorage.getItem("has-seen-onboarding") === "true";
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();
@@ -113,17 +119,12 @@ const HomePage: NextPage = () => {
       <TitleAndMetaTags color="black" title="Vault | Vana" />
 
       <LayoutPage>
-        {/* BREADCRUMB: show OnboardInDialog if !hasNoModules */}
+        {/* BREADCRUMB: show OnboardDialog if has modules */}
         <NavBreadcrumb
           crumbs={hasNoStoredModules ? [navigationBreadcrumbs[0]] : undefined}
         >
           <Group tw="gap-3">
-            {!hasNoStoredModules && (
-              <OnboardInDialog
-                showOnboarding={showOnboarding}
-                setShowOnboarding={setShowOnboarding}
-              />
-            )}
+            {!hasNoStoredModules && <OnboardDialog />}
             {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
               <AddData userId={user?.id} modules={notStoredModules}>
                 Add data
@@ -132,13 +133,10 @@ const HomePage: NextPage = () => {
           </Group>
         </NavBreadcrumb>
 
-        {/* HEADER: show OnboardInDialog if hasNoModules */}
+        {/* HEADER: show OnboardDialog if hasNoModules */}
         {hasNoStoredModules ? (
           <NavHeader heading="What data do you want to add?">
-            <OnboardInDialog
-              showOnboarding={showOnboarding}
-              setShowOnboarding={setShowOnboarding}
-            />
+            <OnboardDialog />
           </NavHeader>
         ) : (
           <NavHeaderRule />
@@ -187,6 +185,15 @@ const HomePage: NextPage = () => {
             </LayoutCanvasGrid>
           )}
         </LayoutCanvas>
+
+        {/* AUTOMATED ONBOARDING on isInitialAccountLogin only. Only renders to the DOM when conditions are met, has no internal state nor trigger. */}
+        {!hasSeenOnboarding && (
+          <OnboardDialogControlled
+            showOnboarding={showOnboarding}
+            setShowOnboarding={setShowOnboarding}
+            setHasSeenOnboarding={setHasSeenOnboarding}
+          />
+        )}
 
         {/* MODULE DELETION STATUS TOASTS */}
         <ToastDefault
