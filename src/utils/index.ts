@@ -10,6 +10,7 @@ export * from "./getSecret";
 export * from "./heapClientSide";
 export * from "./heapServerSide";
 export * from "./identity/createHasuraJWT";
+export * from "./identity/displayMetamaskLoginModal";
 export * from "./identity/getHasuraTokenPayload";
 export * from "./identity/getIdTokenPayload";
 export * from "./identity/getJwtPayload";

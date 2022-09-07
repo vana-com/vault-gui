@@ -17,6 +17,7 @@ import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
 import {
+  displayMetamaskLoginModal,
   getJwtPayload,
   heapAddAccountPropsServerSide,
   heapIdentify,
@@ -213,6 +214,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     web3AuthInstance.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
       setIsWeb3AuthLoading(isVisible);
+      displayMetamaskLoginModal(isVisible);
     });
   };
 
