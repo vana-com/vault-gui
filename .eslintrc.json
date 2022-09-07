@@ -4,6 +4,7 @@
     "plugin:@next/next/core-web-vitals"
   ],
   "rules": {
-    "no-console": 0
+    "no-console": 0,
+    "react/no-unknown-property": ["error", { "ignore": ["css", "tw"] }]
   }
 }
