@@ -278,7 +278,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
           modalConfig: {
             [WALLET_ADAPTERS.OPENLOGIN]: config.openLoginModalConfig,
             [WALLET_ADAPTERS.WALLET_CONNECT_V1]: {
-              label: "wallet-connect",
+              label: "wallet-connect-v1",
               showOnModal: false,
             },
           },

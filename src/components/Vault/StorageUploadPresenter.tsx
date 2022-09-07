@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { DragEventHandler } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
 import {
@@ -66,10 +67,10 @@ const StorageUploadPresenter = ({
         onClick={openFileDialog}
         css={[boxStyle, boxHoverStyle]}
       >
-        <Stack tw="items-center gap-0.5">
+        <Stack tw="items-center gap-0.5 text-label">
           <Icon icon="carbon:upload" height="1.75em" />
           <div tw="pt-1">
-            <Text color="black" weight="semibold" variant="body">
+            <Text weight="semibold" variant="body">
               Drop file(s) here or click to select
             </Text>
           </div>
@@ -85,8 +86,8 @@ const StorageUploadPresenter = ({
       <Stack tw="gap-2 transform lg:translate-y-1.5" css={boxStyle}>
         {filesToUpload.map((fileToUpload, i) => (
           <Stack key={fileToUpload.toString()} tw="gap-1 items-center">
-            <Group tw="gap-1 justify-center items-center">
-              <Text color="black" weight="semibold" variant="body">
+            <Group tw="gap-1 justify-center items-center text-label">
+              <Text weight="semibold" variant="body">
                 {getAbbreviatedFileName(fileToUpload.name)}
               </Text>
               <TooltipDefault
@@ -98,7 +99,7 @@ const StorageUploadPresenter = ({
                 <Button
                   aria-label="Remove file to upload"
                   variant="icon"
-                  tw="text-black"
+                  tw="text-label"
                   type="reset"
                   onClick={() => {
                     const copyFilesToUpload = [...filesToUpload];
