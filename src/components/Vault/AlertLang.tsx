@@ -10,6 +10,7 @@ interface Props {
 }
 
 const AlertLang = ({ moduleName }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isEnglishAccount, setIsEnglishAccount] = useState(false);
 
   return (
