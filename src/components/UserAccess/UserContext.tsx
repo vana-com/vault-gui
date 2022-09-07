@@ -281,6 +281,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
               label: "wallet-connect-v1",
               showOnModal: false,
             },
+            [WALLET_ADAPTERS.TORUS_EVM]: {
+              label: "torus-evm",
+              showOnModal: false,
+            },
           },
         });
       } catch (error) {
