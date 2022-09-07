@@ -152,6 +152,11 @@ const stylesBase = css`
   [disabled] {
     opacity: 0.6;
   }
+
+  /* Disable wallet connect */
+  .w3ajs-wallet-connect.w3a-wallet-connect {
+    display: none !important;
+  }
 `;
 
 const GlobalStyles = () => (
