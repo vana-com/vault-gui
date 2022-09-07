@@ -15,7 +15,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
   <FocusStack isCentered>
     <Link
       underline={false}
-      href={config.vanaVaultURL}
+      href={`${config.vanaVaultURL}/store/${serviceName}`}
       target="_blank"
       rel="external noopener noreferrer"
       tw="p-8"
