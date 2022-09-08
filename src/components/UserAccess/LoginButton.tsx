@@ -8,18 +8,16 @@ const LoginButton = () => {
   const { loginUser, isLoading } = useUserContext();
 
   return (
-    <>
-      <Button
-        variant="solid"
-        size="xl"
-        prefix={<Icon icon="carbon:locked" height="1.125em" />}
-        css={tw`min-w-[280px] max-w-[220px] font-semibold`}
-        disabled={isLoading}
-        onClick={loginUser}
-      >
-        Log In
-      </Button>
-    </>
+    <Button
+      variant="solid"
+      size="xl"
+      prefix={<Icon icon="carbon:locked" height="1.125em" />}
+      css={tw`min-w-[280px] max-w-[220px] font-semibold`}
+      disabled={isLoading}
+      onClick={loginUser}
+    >
+      Log In
+    </Button>
   );
 };
 

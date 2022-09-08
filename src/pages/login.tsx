@@ -10,14 +10,13 @@ import {
   LayoutCanvas,
   LayoutCanvasPattern,
   LayoutPage,
-  Link,
   LoginButton,
+  LoginLink,
   Stack,
   Text,
   TitleAndMetaTags,
   useUserContext,
 } from "src/components";
-import config from "src/config";
 
 const textWithIcnStyle = tw`text-labelSecondary flex items-start md:items-center md:justify-center text-center gap-0.5 md:gap-1.5 w-4/6 md:w-full mx-auto`;
 
@@ -65,28 +64,15 @@ const LoginPage: NextPage = () => {
                   <div tw="flex items-center transform mobile:translate-y-0.5">
                     <Icon icon="carbon:idea" tw="inline" />
                   </div>
-                  <div tw="">
-                    If you already have an account, use the same login method.
-                  </div>
-                </Text>
-                <Text variant="note" css={textWithIcnStyle}>
-                  <div tw="flex items-center transform mobile:translate-y-0.5">
-                    <Icon icon="carbon:checkmark-outline" tw="inline" />
-                  </div>
-                  <div>
-                    If you don&apos;t have an account,{" "}
-                    <Link
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={config.vanaPublicURL}
-                    >
-                      Vana
-                    </Link>{" "}
-                    will create one for you.
-                  </div>
+                  <div tw="">Remember to use the same login method.</div>
                 </Text>
               </Stack>
               <LoginButton />
+
+              {/* SIGN-UP */}
+              <Text variant="note" css={textWithIcnStyle}>
+                No account? <LoginLink />
+              </Text>
             </Stack>
           </Center>
         </LayoutCanvas>
