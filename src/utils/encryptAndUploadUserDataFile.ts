@@ -16,7 +16,7 @@ import { IWalletProvider } from "./identity/walletProvider";
 const encryptAndUploadUserDataFiles = async (
   files: Array<File>,
   moduleName: string,
-  externalId: string,
+  hasuraToken: string,
   userSecret: string,
   walletProvider: IWalletProvider | null,
   handleUploadProgress: (event: any) => void,
@@ -37,7 +37,7 @@ const encryptAndUploadUserDataFiles = async (
 
   // Upload files to object store (S3 or GCS)
   const uploadPromises = encryptedFilesToUpload.map((file) =>
-    uploadFile(file, moduleName, externalId, handleUploadProgress),
+    uploadFile(file, moduleName, hasuraToken, handleUploadProgress),
   );
 
   const uploadResults = await Promise.all(uploadPromises);

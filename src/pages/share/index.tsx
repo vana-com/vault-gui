@@ -186,10 +186,10 @@ const SendPage: NextPage = () => {
     const result = await fetch("/api/user-data/download-url", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        hasuraToken: token,
         userModuleId,
       }),
     });
