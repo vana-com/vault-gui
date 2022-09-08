@@ -6,7 +6,7 @@ interface Props {
 }
 
 const FocusStack = styled.div(({ isCentered }: Props) => [
-  tw`flex flex-col gap-0 overflow-hidden border rounded-lg bg-fillSecondary border-separator`,
+  tw`flex flex-col gap-0 overflow-hidden border rounded-lg bg-fillSecondary border-separator p-insetHalf`,
   // use flex-1 to always fill the remaining space set by the min-height rule in VaultSharePage
   tw`flex-1`,
   isCentered && tw`items-center justify-center`,
