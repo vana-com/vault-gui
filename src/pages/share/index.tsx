@@ -62,7 +62,7 @@ const SendPage: NextPage = () => {
   const { appName, serviceName, queryString } = router.query;
 
   // Make it human readable again
-  const prettyAppName = decodeURI(appName as string).replace(`-`, ` `);
+  const prettyAppName = decodeURI(appName as string).replaceAll(`-`, ` `);
 
   // normalize service name
   const normalizedServiceName: ShareServiceType = (

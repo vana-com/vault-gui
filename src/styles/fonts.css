@@ -8,42 +8,42 @@
   src: url("/fonts/ModernEra-Regular.woff") format("woff");
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "Sans";
   src: url("/fonts/ModernEra-Medium.woff") format("woff");
   font-style: normal;
   font-weight: 500;
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "Sans";
   src: url("/fonts/ModernEra-Bold.woff") format("woff");
   font-style: normal;
   font-weight: 600;
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "Sans";
   src: url("/fonts/ModernEra-Bold.woff") format("woff");
   font-style: normal;
   font-weight: 700;
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "Sans";
   src: url("/fonts/ModernEra-ExtraBold.woff") format("woff");
   font-style: normal;
   font-weight: 800;
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "Sans";
   src: url("/fonts/ModernEra-Black.woff") format("woff");
   font-style: normal;
   font-weight: 900;
-  font-display: optional;
+  font-display: swap;
 }
 
 /* INTER */
@@ -51,7 +51,7 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 100 900; /* Range of weights supported */
-  font-display: optional;
+  font-display: swap;
   src: url(/fonts/inter-var-latin.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
@@ -63,7 +63,7 @@
   font-family: "IBM Plex Mono";
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: local("IBM Plex Mono"), local("IBMPlexMono"),
     url("/fonts/IBMPlexMono-Regular-Latin1.woff") format("woff");
   unicode-range: "U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,\
@@ -74,7 +74,7 @@
   font-family: "IBM Plex Mono";
   font-style: italic;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: local("IBM Plex Mono"), local("IBMPlexMono"),
     url("/fonts/IBMPlexMono-Italic-Latin1.woff") format("woff");
   unicode-range: "U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,\

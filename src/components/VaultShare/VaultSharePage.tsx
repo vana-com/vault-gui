@@ -56,7 +56,7 @@ const VaultSharePage = ({
           <Text as="h1" variant="title3" weight="heavy" color="label">
             {heading}
           </Text>
-          <Text variant="body" color="labelTertiary" tw="pt-0.5">
+          <Text variant="body" color="labelTertiary" tw="pt-0.5 text-center">
             {lede}
           </Text>
           {accessDomain && (
