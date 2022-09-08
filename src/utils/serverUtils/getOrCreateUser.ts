@@ -2,26 +2,28 @@ import crypto from "crypto";
 
 import config from "src/config";
 import { Users } from "src/graphql/generated";
-import { Sdk } from "src/graphql/generated/sdk";
+
+import { getHasuraClient } from ".";
 
 /**
  * Get an existing user or create a new one
- * @param sdk
  * @param externalId
+ * @param publicKey
  * @param name
  * @param emailAddress
+ * @param loginType
  * @returns User
  */
 const getOrCreateUser = async (
-  sdk: Sdk,
   externalId: string,
   publicKey: string,
   name: string,
   emailAddress: string,
   loginType: string,
 ) => {
+  const adminHasuraClient = getHasuraClient();
   let user: Users;
-  const { users } = await sdk.getUserFromExternalIdOrEmail({
+  const { users } = await adminHasuraClient.getUserFromExternalIdOrEmail({
     emailAddress,
     externalId,
   });
@@ -35,7 +37,7 @@ const getOrCreateUser = async (
       user.externalId.startsWith("auth0|")
     ) {
       // Migrate user external ID from Auth0 to Web3Auth
-      await sdk.updateUserExternalId({
+      await adminHasuraClient.updateUserExternalId({
         userId: user.id,
         externalId,
       });
@@ -43,7 +45,7 @@ const getOrCreateUser = async (
     }
   } else {
     // Create a new user. Generate a dummy email for users that sign in with a wallet
-    const { createOneUser } = await sdk.createUser({
+    const { createOneUser } = await adminHasuraClient.createUser({
       name,
       emailAddress,
       externalId,
@@ -66,9 +68,8 @@ const getOrCreateUser = async (
       walletChain: config.WEB_3_AUTH_ETHEREUM_CHAIN_ID,
       walletType,
     };
-    const { createOneUserSupplementary } = await sdk.createUserSupplementary(
-      userSupplementary,
-    );
+    const { createOneUserSupplementary } =
+      await adminHasuraClient.createUserSupplementary(userSupplementary);
     return createOneUserSupplementary?.user;
   }
 

@@ -1,11 +1,16 @@
-import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import serverConfig from "src/config/server";
-import { getSdk } from "src/graphql/generated";
-import { getHasuraTokenPayload } from "src/utils";
-import { deleteGCSObject } from "src/utils/serverUtils";
+import { withMiddleware } from "src/middleware";
+import { ApiResponse } from "src/types/apiResponse";
+import { deleteGCSObject, getHasuraClient } from "src/utils/serverUtils";
+
+interface DeleteMeResponse extends ApiResponse {
+  numDeletedStoredFiles?: number;
+  numDeletedUserModulesRows?: number;
+  deletedUserId?: string;
+}
 
 /**
  * Hard delete of a Vault user account:
@@ -15,56 +20,13 @@ import { deleteGCSObject } from "src/utils/serverUtils";
  * If the user has completed fireboa, the delete fails after users_modules rows
  * are deleted
  */
-export default async (
+const deleteMe = async (
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse<DeleteMeResponse>,
 ): Promise<void> => {
-  const { hasuraToken } = req.body;
+  const { user } = req.body;
   try {
-    // Make sure they have passed in an auth token
-    if (!hasuraToken) {
-      return res.status(400).json({
-        success: false,
-        error: "Missing required parameters: hasuraToken",
-      });
-    }
-
-    const hasuraTokenPayload = (await getHasuraTokenPayload(
-      hasuraToken,
-    )) as any;
-
-    // Validate token & request "trusted" payload with needed identity information
-    if (!hasuraTokenPayload) {
-      return res.status(401).json({
-        success: false,
-        error: "User does not have a valid Hasura token. Please login again.",
-      });
-    }
-
-    const externalId =
-      hasuraTokenPayload["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
-
-    const graphQLClient = new GraphQLClient(
-      process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
-      {
-        headers: {
-          "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
-        },
-      },
-    );
-    const sdk = getSdk(graphQLClient);
-
-    // Grab the "user" object that has info like the uuid
-    const { users } = await sdk.getUserUUIDFromExternalId({
-      externalId,
-    });
-
-    const { id: userId } = users && users[0];
-
-    if (!userId) {
-      // No id can be found for the user
-      return res.status(400).json({ error: "Invalid user", success: false });
-    }
+    const adminHasuraClient = getHasuraClient();
 
     /**
      * Start the deletion process:
@@ -72,9 +34,10 @@ export default async (
      * (1) Delete file blobs from GCS (or other places in the future)
      */
 
-    const { usersModules: storedModules } = await sdk.getAllUserModules({
-      userId,
-    });
+    const { usersModules: storedModules } =
+      await adminHasuraClient.getAllUserModules({
+        userId: user.id,
+      });
     const moduleLocations = storedModules.map((mod) => mod.urlToData);
 
     const urlPrefix = `https://storage.googleapis.com/${serverConfig.userDataBucket?.name}/`;
@@ -102,18 +65,19 @@ export default async (
 
     // (a) Delete records from users_modules
     const { deleteManyUsersModules: deleteUserModulesRows } =
-      await sdk.deleteUserModules({ userId });
+      await adminHasuraClient.deleteUserModules({ userId: user.id });
 
     if (deleteUserModulesRows?.affected_rows !== storedModules.length) {
       throw new Error("Unable to delete all rows in users_modules");
     }
 
     // (b) Delete records from users
-    const { deleteOneUser: deleteUserRow } = await sdk.deleteVaultUser({
-      userId,
-    });
+    const { deleteOneUser: deleteUserRow } =
+      await adminHasuraClient.deleteVaultUser({
+        userId: user.id,
+      });
 
-    if (deleteUserRow?.id !== userId) {
+    if (deleteUserRow?.id !== user.id) {
       throw new Error("Unable to delete users row");
     }
 
@@ -122,12 +86,14 @@ export default async (
       numDeletedStoredFiles: passedFiles?.length,
       numDeletedUserModulesRows: deleteUserModulesRows?.affected_rows,
       deletedUserId: deleteUserRow?.id,
-    });
-  } catch (error: any) {
+    } as DeleteMeResponse);
+  } catch (error) {
     log.error(error);
     return res.status(500).json({
       success: false,
-      error,
-    });
+      message: "Unable to delete user account",
+    } as DeleteMeResponse);
   }
 };
+
+export default withMiddleware("withAuthenticatedUser")(deleteMe);
