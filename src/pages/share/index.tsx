@@ -236,6 +236,14 @@ const SendPage: NextPage = () => {
    */
   const closePopup = (self: Window) => self.close();
 
+  /**
+   * Open
+   */
+  const openInNewTab = (url: string): void => {
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  };
+
   return (
     <>
       {/* These 2 component take uiStatus and handle their own internal UI */}
@@ -254,7 +262,10 @@ const SendPage: NextPage = () => {
         {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
           <NoModuleMessage
             serviceName={serviceName as string}
-            handleClick={() => closePopup(window)}
+            handleClick={() => {
+              openInNewTab(`${config.vanaVaultURL}/store/${serviceName}`);
+              closePopup(window);
+            }}
           />
         )}
 
