@@ -19,7 +19,7 @@ import config from "src/config";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { ShareService, ShareServiceType, ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
-import { heapTrackServerSide } from "src/utils";
+import { heapTrackServerSide, openInNewTab } from "src/utils";
 import {
   decryptData,
   extractData,
@@ -235,14 +235,6 @@ const SendPage: NextPage = () => {
    * @returns nothing
    */
   const closePopup = (self: Window) => self.close();
-
-  /**
-   * Open
-   */
-  const openInNewTab = (url: string): void => {
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = null;
-  };
 
   return (
     <>
