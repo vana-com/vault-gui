@@ -30,7 +30,7 @@ interface Props {
 
 const StorageUpload = ({ moduleName, createUserModule }: Props) => {
   const router = useRouter();
-  const { user, walletProvider } = useUserContext();
+  const { user, walletProvider, hasuraToken } = useUserContext();
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -127,7 +127,7 @@ const StorageUpload = ({ moduleName, createUserModule }: Props) => {
       await encryptAndUploadUserDataFiles(
         sanitizedFiles,
         moduleName,
-        user?.externalId || "",
+        hasuraToken || "",
         signUserSecretMessage,
         walletProvider,
         handleUploadProgress,

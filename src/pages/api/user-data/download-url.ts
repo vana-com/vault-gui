@@ -1,67 +1,35 @@
 import { GetSignedUrlConfig } from "@google-cloud/storage";
-import { GraphQLClient } from "graphql-request";
 import log from "loglevel";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import config from "src/config";
 import serverConfig from "src/config/server";
-import { getSdk } from "src/graphql/generated";
-import { getHasuraTokenPayload } from "src/utils";
+import { withMiddleware } from "src/middleware/";
+import { ApiResponse } from "src/types/apiResponse";
+
+interface DownloadUrlResponse extends ApiResponse {
+  signedUrl?: string;
+}
 
 /**
  * Return a short-lived URL to allow downloading the user data.
  */
-export default async (
+const downloadUrl = async (
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse<DownloadUrlResponse>,
 ): Promise<void> => {
-  const { hasuraToken, userModuleId } = req.body;
+  const { hasuraClient, userModuleId, user } = req.body;
   try {
-    if (!hasuraToken || !userModuleId) {
+    if (!userModuleId) {
       return res.status(400).json({
         success: false,
-        message: "Missing required parameters: hasuraToken or usersModuleId",
-      });
+        message: "Missing required parameters: userModuleId",
+      } as DownloadUrlResponse);
     }
 
-    const hasuraTokenPayload = (await getHasuraTokenPayload(
-      hasuraToken,
-    )) as any;
-
-    if (!hasuraTokenPayload) {
-      return res.status(401).json({
-        success: false,
-        message: "User does not have a valid Hasura token. Please login again.",
-      });
-    }
-
-    const externalId =
-      hasuraTokenPayload["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
-
-    const graphQLClient = new GraphQLClient(
-      process.env.NEXT_PUBLIC_HASURA_GRAPHQL_DOCKER_URL as string,
-      {
-        headers: {
-          Authorization: `Bearer ${hasuraToken}`,
-        },
-      },
-    );
-
-    const sdk = getSdk(graphQLClient);
-    const { users } = await sdk.getUserUUIDFromExternalId({
-      externalId,
-    });
-
-    const { id: userId } = users && users[0];
-
-    if (!userId) {
-      // No id can be found for the user
-      return res.status(400).json({ error: "Invalid user", success: false });
-    }
-
-    const { usersModules } = await sdk.getUsersModulesFromIds({
+    const { usersModules } = await hasuraClient.getUsersModulesFromIds({
       usersModulesIds: [userModuleId],
-      userId,
+      userId: user.id,
     });
 
     if (usersModules && usersModules.length > 0) {
@@ -82,16 +50,22 @@ export default async (
           .file(fileName)
           .getSignedUrl(options);
 
-        return res.status(200).json({ signedUrl, success: true });
+        return res
+          .status(200)
+          .json({ signedUrl, success: true } as DownloadUrlResponse);
       }
     }
-    return res
-      .status(404)
-      .json({ message: "User module not found", success: false });
+    return res.status(404).json({
+      message: "User module not found",
+      success: false,
+    } as DownloadUrlResponse);
   } catch (error) {
     log.error(error);
-    return res
-      .status(500)
-      .json({ message: "Error while generating signed URL", success: false });
+    return res.status(500).json({
+      message: "Error while generating signed URL",
+      success: false,
+    } as DownloadUrlResponse);
   }
 };
+
+export default withMiddleware("withAuthenticatedUser")(downloadUrl);

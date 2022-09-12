@@ -58,7 +58,11 @@ const SharingStatus = ({ status, stage }: Props) => {
             <Stack tw="h-full items-center justify-center">
               <Stack tw="gap-1.5 items-center text-error -mt-3">
                 <Group tw="gap-1.5 text-error items-center">
-                  <Icon icon="carbon:error" height="21px" />
+                  <Icon
+                    icon="carbon:error"
+                    height="1.1em"
+                    tw="-mt-[0.1em] lg:mt-0"
+                  />
                   <Text
                     variant="body"
                     color="error"
@@ -68,7 +72,7 @@ const SharingStatus = ({ status, stage }: Props) => {
                     Something went wrong
                   </Text>
                 </Group>
-                <Text as="span" variant="base" weight="normal">
+                <Text as="span" variant="base" weight="normal" tw="text-center">
                   Close this window and try again. You can also{" "}
                   <Link href={`mailto:${config.vanaSupportEmail}`}>
                     email us

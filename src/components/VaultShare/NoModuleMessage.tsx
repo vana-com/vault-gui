@@ -2,9 +2,8 @@ import { Icon } from "@iconify/react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Button, Link } from "src/components";
+import { Button } from "src/components";
 import { FocusStack } from "src/components/VaultShare";
-import config from "src/config";
 
 interface Props {
   handleClick: () => void;
@@ -13,13 +12,7 @@ interface Props {
 
 const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
   <FocusStack isCentered>
-    <Link
-      underline={false}
-      href={`${config.vanaVaultURL}/store/${serviceName}`}
-      target="_blank"
-      rel="external noopener noreferrer"
-      tw="p-8"
-    >
+    <div tw="p-8">
       <Button
         variant="solid"
         size="xl"
@@ -29,7 +22,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
       >
         Add {serviceName} data
       </Button>
-    </Link>
+    </div>
   </FocusStack>
 );
 

@@ -72,20 +72,20 @@ const HomePage: NextPage = () => {
   const deleteModule = async (moduleId: string) => {
     setIsDeleting(true);
 
-    const { deleteSuccessful } = await (
+    const { success } = await (
       await fetch(`/api/user-data/delete-modules`, {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${hasuraToken}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           usersModulesIds: [moduleId],
-          hasuraToken,
         }),
       })
     ).json();
 
-    if (deleteSuccessful) {
+    if (success) {
       setShowDeleteSuccessToast(true);
       setTimeout(() => router.push("/"), 250);
     } else {
@@ -94,7 +94,7 @@ const HomePage: NextPage = () => {
     }
   };
 
-  // Programmtically setShowOnboarding based on isInitialAccountLogin
+  // Programmatically setShowOnboarding based on isInitialAccountLogin
   useEffect(() => {
     if (isInitialAccountLogin) {
       setTimeout(() => setShowOnboarding(true), 750);

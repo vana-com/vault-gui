@@ -19,7 +19,7 @@ import config from "src/config";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { ShareService, ShareServiceType, ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
-import { heapTrackServerSide } from "src/utils";
+import { heapTrackServerSide, openInNewTab } from "src/utils";
 import {
   decryptData,
   extractData,
@@ -62,7 +62,7 @@ const SendPage: NextPage = () => {
   const { appName, serviceName, queryString } = router.query;
 
   // Make it human readable again
-  const prettyAppName = decodeURI(appName as string).replace(`-`, ` `);
+  const prettyAppName = decodeURI(appName as string).replaceAll(`-`, ` `);
 
   // normalize service name
   const normalizedServiceName: ShareServiceType = (
@@ -186,10 +186,10 @@ const SendPage: NextPage = () => {
     const result = await fetch("/api/user-data/download-url", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        hasuraToken: token,
         userModuleId,
       }),
     });
@@ -254,7 +254,10 @@ const SendPage: NextPage = () => {
         {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
           <NoModuleMessage
             serviceName={serviceName as string}
-            handleClick={() => closePopup(window)}
+            handleClick={() => {
+              openInNewTab(`${config.vanaVaultURL}/store/${serviceName}`);
+              closePopup(window);
+            }}
           />
         )}
 

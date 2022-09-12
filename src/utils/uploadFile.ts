@@ -14,7 +14,7 @@ type ProgressHandler = (progressEvent: ProgressEvent) => void;
 const uploadFile = async (
   file: File,
   moduleName: string,
-  externalId: string,
+  hasuraToken: string,
   progressHandler: ProgressHandler,
 ) => {
   const fileName = encodeURIComponent(file.name);
@@ -25,12 +25,12 @@ const uploadFile = async (
     const res = await fetch(`/api/user-data/upload-url`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${hasuraToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         fileName,
         moduleName,
-        externalId,
       }),
     });
     const { fullFileName, url, fields } = await res.json();

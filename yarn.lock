@@ -649,15 +649,16 @@
   dependencies:
     prettier "^2.2.1"
 
-"@corsali/userdata-extractor@^0.0.5":
-  version "0.0.5"
-  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.0.5/935ac4cf14883ce4cd7cb6de3f5f9e07be209f46#935ac4cf14883ce4cd7cb6de3f5f9e07be209f46"
-  integrity sha512-wSKRnCoDD/6N2PE1n5nx1wmrzo4Ez+tAG9D+rccLcPWHkLJimyh3FMOVuI2ovJFe2PRrI0KO0AQFC8u0i3AjHA==
+"@corsali/userdata-extractor@0.1.0":
+  version "0.1.0"
+  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.1.0/eb380ef855035aaac5f42a3dbfdd1af1e115251d#eb380ef855035aaac5f42a3dbfdd1af1e115251d"
+  integrity sha512-ccTxeDUDPRNg5nysajoWnLchgmlym3N6rf8YXaJfMC7FLdjEcBU1N9w2K3/0kl94p/gwBAHeTP+k3LE1gc0fgQ==
   dependencies:
     "@zip.js/zip.js" "2.4.21"
     axios "^0.27.2"
     jsonpath "^1.1.1"
-    sql.js "^1.7.0"
+    lodash.mapvalues "^4.6.0"
+    sql.js "^1.8.0"
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -9235,6 +9236,11 @@ lodash.isstring@^4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
   integrity sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==
 
+lodash.mapvalues@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
+  integrity sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ==
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -9931,6 +9937,11 @@ negotiator@0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
+
+next-api-middleware@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/next-api-middleware/-/next-api-middleware-2.0.1.tgz#e794da5dc7bb41b3226ee50eb70313bdedeb324b"
+  integrity sha512-yqOQjrOXkqZ7f1FybmTRWE1F4ypfcNWMC5FnmLresfu4ljY0W7iNwvOsaxSvCnoLYF5dnqxq+XeVeac7Gx9s9A==
 
 next-themes@^0.2.0:
   version "0.2.0"
@@ -11663,10 +11674,10 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
-sql.js@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/sql.js/-/sql.js-1.7.0.tgz#cadfed9773b643fbba0fc1ed1847e3a647e1fcb9"
-  integrity sha512-qAfft3xkSgHqmmfNugWTp/59PsqIw8gbeao5TZmpmzQQsAJ49de3iDDKuxVixidYs6dkHNksY8m27v2dZNn2jw==
+sql.js@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/sql.js/-/sql.js-1.8.0.tgz#cb45d957e17a2239662fe2f614c9b678990867a6"
+  integrity sha512-3HD8pSkZL+5YvYUI8nlvNILs61ALqq34xgmF+BHpqxe68yZIJ1H+sIVIODvni25+CcxHUxDyrTJUL0lE/m7afw==
 
 sshpk@^1.14.1, sshpk@^1.7.0:
   version "1.17.0"
