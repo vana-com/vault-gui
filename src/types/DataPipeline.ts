@@ -1,7 +1,8 @@
-enum MessageType {
-  UPDATE = "update",
-  ERROR = "error",
-  DATA = "data",
+enum VaultMessageType {
+  SHARE_REQUEST_INITIATED = "SHARE_REQUEST_INITIATED",
+  SHARE_REQUEST_RECEIVED = "SHARE_REQUEST_RECEIVED",
+  SHARE_RESPONSE_SUCCESSFUL = "SHARE_RESPONSE_SUCCESSFUL",
+  SHARE_RESPONSE_ERROR = "SHARE_RESPONSE_ERROR",
 }
 
 enum Stage {
@@ -18,11 +19,10 @@ enum Status {
   REJECTED = "REJECTED",
 }
 
-interface Message {
-  type: MessageType;
-  done: boolean;
+interface VaultMessage {
+  messageType: VaultMessageType;
   payload: any;
 }
 
-export { MessageType, Stage, Status };
-export type { Message };
+export { Stage, Status, VaultMessageType };
+export type { VaultMessage };
