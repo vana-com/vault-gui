@@ -17,5 +17,6 @@ export * from "./identity/getJwtPayload";
 export * from "./openInNewTab";
 export * from "./renderModuleStoreInstructions";
 export * from "./setLoginPath";
+export * from "./setWeb3AuthModalCopy";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";
