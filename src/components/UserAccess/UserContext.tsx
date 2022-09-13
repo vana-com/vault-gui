@@ -23,6 +23,7 @@ import {
   heapIdentify,
   heapTrackServerSide,
   setLoginPath,
+  setWeb3AuthModalHeading,
 } from "src/utils";
 import {
   getWalletProvider,
@@ -35,7 +36,7 @@ interface UserContextProps {
   user: Users | null;
   loginType: string | null;
   walletProvider: IWalletProvider | null;
-  loginUser: () => Promise<void>;
+  loginUser: (isSignUp: boolean) => Promise<void>;
   logoutUser: () => Promise<void>;
   isLoading: boolean;
   isAuthenticated: boolean;
@@ -76,6 +77,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [hasuraToken, setHasuraToken] = useState<string | null>(null);
   const [isWeb3AuthLoading, setIsWeb3AuthLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [isInitialAccountLogin, setIsInitialAccountLogin] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -215,6 +217,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
     web3AuthInstance.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
       setIsWeb3AuthLoading(isVisible);
       displayMetamaskLoginModal(isVisible);
+      if (!isVisible) {
+        setIsSignUp(false);
+      }
     });
   };
 
@@ -230,6 +235,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
       localStorage.setItem("hasura-token", token);
     }
   };
+
+  useEffect(() => {
+    // When "sign up" is clicked, we need to change Web3Auth modal heading
+    if (isSignUp) {
+      setWeb3AuthModalHeading("Sign up");
+    }
+  }, [isSignUp]);
 
   // Initialize Web3Auth only once
   useEffect(() => {
@@ -302,8 +314,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
     initWeb3Auth();
   }, []);
 
-  const loginUser = async () => {
+  const loginUser = async (_isSignUp: boolean) => {
     setLoginError(false);
+    setIsSignUp(_isSignUp);
 
     if (!web3Auth) {
       console.error("Web3Auth not initialized yet, unable to log in");

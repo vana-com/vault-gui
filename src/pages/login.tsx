@@ -11,7 +11,7 @@ import {
   LayoutCanvasPattern,
   LayoutPage,
   LoginButton,
-  LoginLink,
+  SignupLink,
   Stack,
   Text,
   TitleAndMetaTags,
@@ -69,7 +69,7 @@ const LoginPage: NextPage = () => {
 
               {/* SIGN-UP */}
               <Text variant="note" css={textWithIconStyle}>
-                No account? <LoginLink />
+                No account? <SignupLink />
               </Text>
             </Stack>
           </Center>

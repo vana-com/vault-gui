@@ -14,7 +14,7 @@ const LoginButton = () => {
       prefix={<Icon icon="carbon:locked" height="1.125em" />}
       css={tw`min-w-[280px] max-w-[220px] font-semibold`}
       disabled={isLoading}
-      onClick={loginUser}
+      onClick={async () => loginUser(false)}
     >
       Log In
     </Button>
