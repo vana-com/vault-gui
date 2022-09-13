@@ -1,6 +1,5 @@
 import type { QueryResult } from "@corsali/userdata-extractor";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -17,7 +16,7 @@ import {
 } from "src/components/VaultShare";
 import config from "src/config";
 import { useGetUserModulesSubscription } from "src/graphql/generated";
-import { ShareService, ShareServiceType, ShareUiStatus } from "src/types";
+import { ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
 import { heapTrackServerSide, openInNewTab } from "src/utils";
 import {
@@ -30,9 +29,15 @@ import {
 
 const { HEAP_EVENTS } = config;
 
+interface ShareParams {
+  appName: string; // The name of "client" that is requesting data (helloworld-gui)
+  service: string; // The name of the data service that is being requested (instagram)
+  queryString: string; // The query to be executed on the data service (sql: select * from posts)
+  requestor: string; // The domain of the app which started the share request
+}
+
 // Sharing API Page to be opened in 3rd-party website as a popup
 const SendPage: NextPage = () => {
-  const router = useRouter();
   const { user, hasuraToken, walletProvider } = useUserContext();
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
@@ -40,8 +45,10 @@ const SendPage: NextPage = () => {
   const [updateStatus, setUpdateStatus] = useState(
     DataPipeline.Stage.FETCH_DATA,
   );
-  const [uiStatus, setUiStatus] = useState(ShareUiStatus.HASURA_IS_LOADING);
-
+  const [uiStatus, setUiStatus] = useState(
+    ShareUiStatus.SHARE_REQUEST_RECEIVED,
+  );
+  const [shareParams, setShareParams] = useState<ShareParams | null>(null);
   const windowRef = useRef<Window>();
 
   /**
@@ -49,31 +56,36 @@ const SendPage: NextPage = () => {
    */
   useEffect(() => {
     windowRef.current = window;
+
+    window.onmessage = (event) => {
+      try {
+        const messageJson = JSON.parse(event.data);
+        if (
+          messageJson?.messageType ===
+          DataPipeline.VaultMessageType.SHARE_REQUEST_INITIATED
+        ) {
+          // New share request received
+          const { appName, service, queryString } = messageJson?.payload ?? {};
+          setShareParams({
+            appName,
+            service: service?.toLowerCase(),
+            queryString,
+            requestor: event.origin,
+          });
+
+          // Send acknowledge back to requestor
+          window.opener.postMessage(
+            JSON.stringify({
+              messageType: DataPipeline.VaultMessageType.SHARE_REQUEST_RECEIVED,
+            }),
+            event.origin,
+          );
+        }
+      } catch (e) {
+        console.warn("Unable to parse message for Vault.");
+      }
+    };
   }, []);
-
-  // Get popup's query params
-  // TODO: @joe - replace w/ more secure method
-  // TODO: @joe - add domain to the query params, for use on UI
-  /*
-   * appName: The name of "client" that is requesting data (helloworld-gui)
-   * serviceName: The name of the data service that is being requested (instagram)
-   * queryString: The query to be executed on the data service (sql: select * from posts)
-   */
-  const { appName, serviceName, queryString } = router.query;
-
-  // Make it human readable again
-  const prettyAppName = decodeURI(appName as string).replaceAll(`-`, ` `);
-
-  // normalize service name
-  const normalizedServiceName: ShareServiceType = (
-    (serviceName as ShareService) ?? ""
-  ).toLowerCase();
-
-  // TODO: @joe - Clean up query to prevent sql injection
-  const cleanQueryString = decodeURI(queryString as string);
-
-  // TODO: @joe - load url from window.origin?
-  // const accessingDomain = "openai.com";
 
   const { data: userModulesData, loading: isUserModulesDataLoading } =
     useGetUserModulesSubscription({
@@ -84,7 +96,7 @@ const SendPage: NextPage = () => {
   const selectedModule = userModulesData
     ? userModulesData.usersModules.filter(
         (userModule) =>
-          userModule.module.name.toLowerCase() === normalizedServiceName,
+          userModule.module.name.toLowerCase() === shareParams?.service,
       )
     : [];
 
@@ -93,7 +105,9 @@ const SendPage: NextPage = () => {
    */
   useEffect(() => {
     // The order of these if statements is important!
-    if (userHasAcceptedSharingRequest) {
+    if (!shareParams) {
+      setUiStatus(ShareUiStatus.SHARE_REQUEST_RECEIVED);
+    } else if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     } else if (!user) {
       setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
@@ -105,6 +119,7 @@ const SendPage: NextPage = () => {
       setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
     }
   }, [
+    shareParams,
     user,
     isUserModulesDataLoading,
     selectedModule,
@@ -117,29 +132,24 @@ const SendPage: NextPage = () => {
     setShareStatus(DataPipeline.Status.RESOLVED);
 
     // Construct the payload to be sent to the client
-    const payloadToSend = {
-      done: true,
-      payload: {
-        rows: payload,
-      },
+    const payloadToSend: DataPipeline.VaultMessage = {
+      messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_SUCCESSFUL,
+      payload,
     };
 
-    // This is the "final" message: the data payload
-    console.log("worker done | data:", JSON.stringify(payloadToSend));
+    if (!windowRef?.current) return;
 
-    // Get the window context safely
-    const _window = windowRef.current;
-
-    // Double sanity check that the window (and it's opener) is available
-    if (!_window || !_window.opener) return;
-
-    // Send the data to the "parent" window
-    // TODO: @joe / @kahtaf - change to only send to the parent, rather than globally
-    _window.opener.postMessage(JSON.stringify(payloadToSend), "*");
+    // Send the data to the requestor window
+    windowRef.current.opener?.postMessage(
+      JSON.stringify(payloadToSend),
+      shareParams?.requestor,
+    );
 
     // Allow time to show success message before we close the window
     setTimeout(() => {
-      closePopup(_window);
+      if (windowRef?.current) {
+        closePopup(windowRef.current);
+      }
     }, 2 * 1000);
   };
 
@@ -172,9 +182,19 @@ const SendPage: NextPage = () => {
       setUpdateStatus(DataPipeline.Stage.QUERY_DATA);
 
       sendPipelinePayload(queried);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending data to application", error);
       setShareStatus(DataPipeline.Status.REJECTED);
+
+      // Send any error messages back to requestor
+      const payloadToSend: DataPipeline.VaultMessage = {
+        messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_ERROR,
+        payload: error.message,
+      };
+      windowRef?.current?.opener?.postMessage(
+        JSON.stringify(payloadToSend),
+        shareParams?.requestor,
+      );
     }
   };
 
@@ -215,14 +235,14 @@ const SendPage: NextPage = () => {
     const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
 
     // Check all attributes are present
-    if (!userModuleId || !signedUrl) {
+    if (!userModuleId || !signedUrl || !shareParams) {
       throw new Error("Missing attributes");
     }
 
     const dataPipelineParams: PipelineParams = {
-      query: cleanQueryString,
+      query: shareParams.queryString,
       dataUrl: signedUrl,
-      serviceName: normalizedServiceName,
+      serviceName: shareParams.service,
     };
 
     // Starts the data pipeline
@@ -242,9 +262,13 @@ const SendPage: NextPage = () => {
       <VaultSharePageTitle uiStatus={uiStatus} />
 
       {/* TODO: provide the accessing domain */}
-      <VaultSharePageWithStatus appName={prettyAppName} uiStatus={uiStatus}>
+      <VaultSharePageWithStatus
+        appName={shareParams?.appName as string}
+        uiStatus={uiStatus}
+      >
         {/* SERVER DATA IS LOADING */}
-        {uiStatus === ShareUiStatus.HASURA_IS_LOADING && (
+        {(uiStatus === ShareUiStatus.HASURA_IS_LOADING ||
+          uiStatus === ShareUiStatus.SHARE_REQUEST_RECEIVED) && (
           <FocusStack isCentered>
             <Spinner />
           </FocusStack>
@@ -253,9 +277,11 @@ const SendPage: NextPage = () => {
         {/* NO USER MODULE DATA */}
         {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
           <NoModuleMessage
-            serviceName={serviceName as string}
+            serviceName={shareParams?.appName as string}
             handleClick={() => {
-              openInNewTab(`${config.vanaVaultURL}/store/${serviceName}`);
+              openInNewTab(
+                `${config.vanaVaultURL}/store/${shareParams?.service}`,
+              );
               closePopup(window);
             }}
           />
@@ -265,8 +291,8 @@ const SendPage: NextPage = () => {
         {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
           <>
             <PermissionList
-              query={cleanQueryString}
-              serviceName={normalizedServiceName}
+              query={shareParams?.queryString as string}
+              serviceName={shareParams?.service as string}
             />
             <PermissionContract
               onAccept={onDataRequestApproval}
