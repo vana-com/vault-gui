@@ -4,8 +4,10 @@ export type LinkProps = {
   underline?: boolean;
 };
 
+export const styledLink = tw`outline-none decoration-current decoration-[0.05em] underline-offset-[0.15em]`;
+
 export const Link = styled.a(({ underline = true }: LinkProps) => [
-  tw`outline-none decoration-current decoration-[0.05em] underline-offset-[0.15em]`,
+  styledLink,
   underline && tw`underline`,
   css`
     font-size: inherit;
