@@ -146,7 +146,7 @@ module.exports = {
         w96: "clamp(12rem, 26vw, 24rem)"
       },
       maxWidth: {
-        canvasWidth: "1280px",
+        canvasWidth: "1284px",
       }
     },
     borderColor: ({ theme }) => ({

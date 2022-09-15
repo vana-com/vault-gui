@@ -7,6 +7,7 @@ import tw from "twin.macro";
 
 import {
   DropdownMenuControlled,
+  Link,
   styledNavButton,
   styledTrigger,
   Text,
@@ -14,6 +15,7 @@ import {
   useUserContext,
   VanaLogo,
 } from "src/components";
+import config from "src/config";
 
 interface Props {
   children?: React.ReactNode;
@@ -35,11 +37,32 @@ const Navbar = ({ children }: Props) => {
             boxSize="1.5em"
             tw="bg-label text-background rounded-[4px]"
           />
-          <Text variant="footnoteMeta" weight="heavy" tw="text-label">
-            Vault
+          <Text
+            variant="footnoteMeta"
+            weight="heavy"
+            tw="text-label flex gap-1"
+          >
+            <span>Vault</span>
+            <span tw="text-labelTertiary font-bold">Beta</span>
           </Text>
         </div>
       </NextLink>
+
+      {/* VANA LINK if not logged in */}
+      {!user && (
+        <Text variant="note" weight="medium">
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href={config.vanaPublicURL}
+            underline={false}
+            tw="flex items-center gap-0.5 transition-colors hover:text-labelSecondary"
+          >
+            <span>by Vana</span>
+            <Icon icon="carbon:arrow-up-right" width="0.7em" />
+          </Link>
+        </Text>
+      )}
 
       {/* USER AVATAR */}
       {user && (

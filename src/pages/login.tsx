@@ -10,16 +10,15 @@ import {
   LayoutCanvas,
   LayoutCanvasPattern,
   LayoutPage,
-  Link,
   LoginButton,
+  SignupLink,
   Stack,
   Text,
   TitleAndMetaTags,
   useUserContext,
 } from "src/components";
-import config from "src/config";
 
-const textWithIcnStyle = tw`text-labelSecondary flex items-start md:items-center md:justify-center text-center gap-0.5 md:gap-1.5 w-4/6 md:w-full mx-auto`;
+const textWithIconStyle = tw`text-labelSecondary flex items-center md:items-center md:justify-center text-center gap-1 md:gap-1.5`;
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
@@ -58,35 +57,20 @@ const LoginPage: NextPage = () => {
           <Center tw="min-h-[300px] relative">
             <Stack tw="gap-5 items-center">
               <Stack tw="gap-1 items-center">
-                <Text variant="base" weight="semibold">
-                  Log in or create a new account
+                <Text variant="large" weight="bold">
+                  Log in
                 </Text>
-                <Text variant="note" css={textWithIcnStyle}>
-                  <div tw="flex items-center transform mobile:translate-y-0.5">
-                    <Icon icon="carbon:idea" tw="inline" />
-                  </div>
-                  <div tw="">
-                    If you already have an account, use the same login method.
-                  </div>
-                </Text>
-                <Text variant="note" css={textWithIcnStyle}>
-                  <div tw="flex items-center transform mobile:translate-y-0.5">
-                    <Icon icon="carbon:checkmark-outline" tw="inline" />
-                  </div>
-                  <div>
-                    If you don&apos;t have an account,{" "}
-                    <Link
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={config.vanaPublicURL}
-                    >
-                      Vana
-                    </Link>{" "}
-                    will create one for you.
-                  </div>
+                <Text variant="note" css={textWithIconStyle}>
+                  <Icon icon="carbon:idea" />
+                  <div tw="">Remember to use the same login method</div>
                 </Text>
               </Stack>
               <LoginButton />
+
+              {/* SIGN-UP */}
+              <Text variant="note" css={textWithIconStyle}>
+                No account? <SignupLink />
+              </Text>
             </Stack>
           </Center>
         </LayoutCanvas>

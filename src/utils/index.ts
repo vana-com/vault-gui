@@ -14,6 +14,7 @@ export * from "./identity/displayMetamaskLoginModal";
 export * from "./identity/getHasuraTokenPayload";
 export * from "./identity/getIdTokenPayload";
 export * from "./identity/getJwtPayload";
+export * from "./identity/setWeb3AuthModalHeading";
 export * from "./openInNewTab";
 export * from "./renderModuleStoreInstructions";
 export * from "./setLoginPath";

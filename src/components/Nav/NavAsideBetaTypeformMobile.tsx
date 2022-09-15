@@ -14,9 +14,9 @@ const NavAsideBetaTypeformMobile = () => (
     hidden={{ foo: "foo value", bar: "bar value" }}
   >
     <Group tw="flex gap-1 flex-1 items-center h-navLinkH">
-      <Text variant="headingMeta" weight="bold">
+      {/* <Text variant="headingMeta" weight="bold">
         Beta
-      </Text>
+      </Text> */}
       <Text variant="note" weight="medium" tw="flex items-center gap-0.5">
         <WithIcon suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}>
           Give feedback
