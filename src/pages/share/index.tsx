@@ -135,6 +135,11 @@ const SendPage: NextPage = () => {
     const payloadToSend: DataPipeline.VaultMessage = {
       messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_SUCCESSFUL,
       payload,
+      user: {
+        id: user?.id,
+        email: user?.emailAddress,
+        name: user?.name,
+      },
     };
 
     if (!windowRef?.current) return;
