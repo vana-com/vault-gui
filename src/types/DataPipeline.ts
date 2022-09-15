@@ -22,6 +22,11 @@ enum Status {
 interface VaultMessage {
   messageType: VaultMessageType;
   payload: any;
+  user?: {
+    id: string;
+    email?: string;
+    name?: string;
+  };
 }
 
 export { Stage, Status, VaultMessageType };
