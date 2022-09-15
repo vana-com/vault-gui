@@ -3,6 +3,7 @@ export * from "./NavAside";
 export * from "./NavAsideBetaTypeform";
 export * from "./NavAsideBetaTypeformMobile";
 export * from "./NavAsideContent";
+export * from "./NavAsideExplore";
 export * from "./Navbar";
 export * from "./NavbarWrapper";
 export * from "./NavBreadcrumb";

@@ -7,6 +7,7 @@ import {
   Flex,
   Link,
   NavAsideBetaTypeform,
+  NavAsideExplore,
   PopoverHelp,
   Stack,
   styledNavLink,
@@ -68,6 +69,9 @@ const NavAsideContent = ({ showTypeform }: Props) => {
 
       {/* BETA */}
       <div tw="mt-auto pb-inset md:pb-insetDouble">
+        <hr tw="border-separatorLight" />
+        <NavAsideExplore />
+        <hr tw="border-separatorLight" />
         {showTypeform && (
           <>
             <hr tw="border-separatorLight" />

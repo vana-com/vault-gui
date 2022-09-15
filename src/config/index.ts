@@ -8,6 +8,7 @@ const generalConfig = {
   vanaPrivacyURL: "https://www.vana.com/privacy-policy",
   vanaPublicURL: "https://www.vana.com",
   vanaVaultURL: "https://vault.vana.com",
+  vanaExploreURL: "https://explore.vana.com",
 
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
