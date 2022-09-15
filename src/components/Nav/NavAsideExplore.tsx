@@ -52,7 +52,7 @@ const NavAsideExplore = () => {
               <WithIcon
                 suffix={<Icon icon="carbon:arrow-up-right" rotate="0deg" />}
               >
-                Earn &amp; learn
+                Discover apps
               </WithIcon>
             </Text>
           </Stack>
