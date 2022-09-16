@@ -82,6 +82,22 @@ module.exports = {
           90: 'var(--orange90)',
           100: 'var(--orange100)',
         },
+        // https://coolors.co/ff5351
+        orangeRed: {
+          500: "#ff5351",
+        },
+        // https://coolors.co/dbff0a
+        chartreuse: {
+          500: "#dbff0a",
+        },
+        // https://coolors.co/0075ff
+        blueCrayola: {
+          500: "#0075ff",
+        },
+        // https://coolors.co/ffe0b3
+        navajo: {
+          500: "#ffe0b3",
+        },
         errors: {
           50: 'var(--error50)',
           60: 'var(--error60)',
