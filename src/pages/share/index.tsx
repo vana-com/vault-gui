@@ -31,7 +31,7 @@ const { HEAP_EVENTS } = config;
 
 interface ShareParams {
   appName: string; // The name of "client" that is requesting data (helloworld-gui)
-  queries: string[]; // The query strings to be executed on the data service (sql: select * from posts)
+  queries: string[]; // The query strings to be executed on the data service (["select * from instagram.post_comments"])
   requestor: string; // The domain of the app which started the share request
 }
 
@@ -99,22 +99,30 @@ const SendPage: NextPage = () => {
       )
     : [];
 
+  // Returns an array of services that the user doesn't have data for
+  const getMissingServices = (): string[] => {
+    const hasModules =
+      selectedModules?.map((um) => um.module.name.toLowerCase()) ?? [];
+    return requestedServices.filter((s) => !hasModules.includes(s));
+  };
+  const missingServices = getMissingServices();
+
   /**
    * Set the UI status for the page
    */
   useEffect(() => {
-    // The order of these if statements is important!
+    // The order of these if statements are important!
     if (!shareParams) {
       setUiStatus(ShareUiStatus.SHARE_REQUEST_RECEIVED);
     } else if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     } else if (!user) {
       setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
-    } else if (user && isUserModulesDataLoading) {
+    } else if (isUserModulesDataLoading) {
       setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
-    } else if (user && selectedModules.length === 0) {
+    } else if (missingServices.length !== 0) {
       setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
-    } else if (user && selectedModules[0] && !userHasAcceptedSharingRequest) {
+    } else {
       setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
     }
   }, [
@@ -179,17 +187,20 @@ const SendPage: NextPage = () => {
     } catch (error: any) {
       console.error("Error sending data to application", error);
       setShareStatus(DataPipeline.Status.REJECTED);
-
-      // Send any error messages back to requestor
-      const payloadToSend: DataPipeline.VaultMessage = {
-        messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_ERROR,
-        payload: error.message,
-      };
-      windowRef?.current?.opener?.postMessage(
-        JSON.stringify(payloadToSend),
-        shareParams?.requestor,
-      );
+      sendPipelineError(error.message);
     }
+  };
+
+  // Send any error messages back to requestor
+  const sendPipelineError = (errorMessage: string) => {
+    const payloadToSend: DataPipeline.VaultMessage = {
+      messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_ERROR,
+      payload: errorMessage,
+    };
+    windowRef?.current?.opener?.postMessage(
+      JSON.stringify(payloadToSend),
+      shareParams?.requestor,
+    );
   };
 
   /**
@@ -251,17 +262,19 @@ const SendPage: NextPage = () => {
         )}
 
         {/* NO USER MODULE DATA */}
-        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
-          <NoModuleMessage
-            serviceName={shareParams?.appName as string}
-            handleClick={() => {
-              openInNewTab(
-                `${config.vanaVaultURL}/store/${requestedServices?.[0]}`,
-              );
-              closePopup(window);
-            }}
-          />
-        )}
+        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA &&
+          missingServices.length > 0 && (
+            <NoModuleMessage
+              serviceName={missingServices[0]}
+              handleClick={() => {
+                openInNewTab(`/store/${missingServices[0]}`);
+                sendPipelineError(
+                  `User does not have data for the following: ${missingServices}`,
+                );
+                closePopup(window);
+              }}
+            />
+          )}
 
         {/* READY TO ACCEPT */}
         {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
@@ -271,6 +284,7 @@ const SendPage: NextPage = () => {
               onAccept={onDataRequestApproval}
               onDeny={() => {
                 heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
+                sendPipelineError(`User did not approve the share request`);
                 closePopup(window);
               }}
             />
