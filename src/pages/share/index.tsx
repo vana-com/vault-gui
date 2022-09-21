@@ -1,4 +1,10 @@
-import type { QueryResult } from "@corsali/userdata-extractor";
+import {
+  Database,
+  extractTablesFromSqlQuery,
+  QueryResult,
+  ServiceFile,
+  zipToSQLiteInstance,
+} from "@corsali/userdata-extractor";
 import { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,20 +25,13 @@ import { useGetUserModulesSubscription } from "src/graphql/generated";
 import { ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
 import { heapTrackServerSide, openInNewTab } from "src/utils";
-import {
-  decryptData,
-  extractData,
-  fetchZipFromUrl,
-  PipelineParams,
-  queryData,
-} from "src/utils/pipeline";
+import { decryptFiles, fetchUserData } from "src/utils/dataQueryPipeline";
 
 const { HEAP_EVENTS } = config;
 
 interface ShareParams {
   appName: string; // The name of "client" that is requesting data (helloworld-gui)
-  service: string; // The name of the data service that is being requested (instagram)
-  queryString: string; // The query to be executed on the data service (sql: select * from posts)
+  queries: string[]; // The query strings to be executed on the data service (["select * from instagram.post_comments"])
   requestor: string; // The domain of the app which started the share request
 }
 
@@ -65,11 +64,10 @@ const SendPage: NextPage = () => {
           DataPipeline.VaultMessageType.SHARE_REQUEST_INITIATED
         ) {
           // New share request received
-          const { appName, service, queryString } = messageJson?.payload ?? {};
+          const { appName, queries } = messageJson?.payload ?? {};
           setShareParams({
             appName,
-            service: service?.toLowerCase(),
-            queryString,
+            queries,
             requestor: event.origin,
           });
 
@@ -93,42 +91,122 @@ const SendPage: NextPage = () => {
       skip: !user?.id,
     });
 
-  const selectedModule = userModulesData
-    ? userModulesData.usersModules.filter(
-        (userModule) =>
-          userModule.module.name.toLowerCase() === shareParams?.service,
+  const permissionMap = extractTablesFromSqlQuery(shareParams?.queries ?? []);
+  const requestedServices = Object.keys(permissionMap); // List of services to query, ex: ["instagram", "facebook"]
+  const selectedModules = userModulesData
+    ? userModulesData.usersModules.filter((userModule) =>
+        requestedServices.includes(userModule.module.name.toLowerCase()),
       )
     : [];
+
+  // Returns an array of services that the user doesn't have data for
+  const getMissingServices = (): string[] => {
+    const hasModules =
+      selectedModules?.map((um) => um.module.name.toLowerCase()) ?? [];
+    return requestedServices.filter((s) => !hasModules.includes(s));
+  };
+  const missingServices = getMissingServices();
 
   /**
    * Set the UI status for the page
    */
   useEffect(() => {
-    // The order of these if statements is important!
+    // The order of these if statements are important!
     if (!shareParams) {
       setUiStatus(ShareUiStatus.SHARE_REQUEST_RECEIVED);
     } else if (userHasAcceptedSharingRequest) {
       setUiStatus(ShareUiStatus.USER_HAS_ACCEPTED);
     } else if (!user) {
       setUiStatus(ShareUiStatus.USER_IS_NOT_LOGGED_IN);
-    } else if (user && isUserModulesDataLoading) {
+    } else if (isUserModulesDataLoading) {
       setUiStatus(ShareUiStatus.HASURA_IS_LOADING);
-    } else if (user && selectedModule.length === 0) {
+    } else if (missingServices.length !== 0) {
       setUiStatus(ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA);
-    } else if (user && selectedModule[0] && !userHasAcceptedSharingRequest) {
+    } else {
       setUiStatus(ShareUiStatus.USER_IS_READY_TO_ACCEPT);
     }
   }, [
     shareParams,
     user,
     isUserModulesDataLoading,
-    selectedModule,
+    selectedModules,
     userHasAcceptedSharingRequest,
   ]);
-  console.log("uiStatus", uiStatus);
 
+  const onDataRequestApproval = async () => {
+    try {
+      heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_APPROVED);
+      setUserHasAcceptedSharingRequest(true);
+      setShareStatus(DataPipeline.Status.PENDING);
+      console.log("Starting the sharing process...");
+
+      // Download all encrypted files
+      const serviceFilesEncrypted: ServiceFile[] = await fetchUserData(
+        selectedModules,
+        hasuraToken as string,
+      );
+      setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
+
+      // Ensure at least one encrypted file is available
+      if (!serviceFilesEncrypted.length) {
+        throw new Error("Unable to download user data");
+      }
+
+      // Get password from user to decrypt files
+      const userSecret = user?.userSupplementary?.userSecret;
+      if (!userSecret) {
+        throw new Error("User secret is not available.");
+      }
+      const signUserSecretMessage =
+        config.encryptionKeySignatureMessage.replace("###", userSecret);
+      const signedSecret = await walletProvider?.signMessage(
+        signUserSecretMessage,
+      );
+
+      // Decrypt necessary user data files
+      const serviceFilesDecrypted = await decryptFiles(
+        serviceFilesEncrypted,
+        signedSecret as string,
+      );
+      setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
+
+      // Structure data into a database
+      const database: Database = await zipToSQLiteInstance(
+        serviceFilesDecrypted,
+      );
+      setUpdateStatus(DataPipeline.Stage.EXTRACTED_DATA);
+
+      // Query database
+      const queryResults = await database.runQuery(
+        shareParams?.queries as string[],
+      );
+      setUpdateStatus(DataPipeline.Stage.QUERY_DATA);
+
+      // Send results back to app
+      sendPipelinePayload(queryResults);
+    } catch (error: any) {
+      console.error("Error sending data to application", error);
+      setShareStatus(DataPipeline.Status.REJECTED);
+      sendPipelineError(error.message);
+    }
+  };
+
+  // Send any error messages back to requestor
+  const sendPipelineError = (errorMessage: string) => {
+    const payloadToSend: DataPipeline.VaultMessage = {
+      messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_ERROR,
+      payload: errorMessage,
+    };
+    windowRef?.current?.opener?.postMessage(
+      JSON.stringify(payloadToSend),
+      shareParams?.requestor,
+    );
+  };
+
+  /**
+   * Send results from queried user data back to requesting app
+   */
   const sendPipelinePayload = (payload: QueryResult[]) => {
-    // UI: Resolved/Finish state
     setShareStatus(DataPipeline.Status.RESOLVED);
 
     // Construct the payload to be sent to the client
@@ -158,102 +236,6 @@ const SendPage: NextPage = () => {
     }, 2 * 1000);
   };
 
-  const beginDataPipeline = async (params: PipelineParams) => {
-    console.log("DataPipeline started");
-
-    // UI: Pending State
-    setShareStatus(DataPipeline.Status.PENDING);
-
-    try {
-      const file = await fetchZipFromUrl(params.dataUrl);
-      setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
-
-      const userSecret = user?.userSupplementary?.userSecret;
-      if (!userSecret) {
-        throw new Error("User secret is not available.");
-      }
-      const signUserSecretMessage =
-        config.encryptionKeySignatureMessage.replace("###", userSecret);
-      const signedSecret = await walletProvider?.signMessage(
-        signUserSecretMessage,
-      );
-      const decrypted = await decryptData(file, signedSecret);
-      setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
-
-      const extracted = await extractData(decrypted, params.serviceName);
-      setUpdateStatus(DataPipeline.Stage.EXTRACTED_DATA);
-
-      const queried = await queryData(extracted, params.query);
-      setUpdateStatus(DataPipeline.Stage.QUERY_DATA);
-
-      sendPipelinePayload(queried);
-    } catch (error: any) {
-      console.error("Error sending data to application", error);
-      setShareStatus(DataPipeline.Status.REJECTED);
-
-      // Send any error messages back to requestor
-      const payloadToSend: DataPipeline.VaultMessage = {
-        messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_ERROR,
-        payload: error.message,
-      };
-      windowRef?.current?.opener?.postMessage(
-        JSON.stringify(payloadToSend),
-        shareParams?.requestor,
-      );
-    }
-  };
-
-  const fetchSignedUrl = async (token: string | null, userModuleId: string) => {
-    if (!token) {
-      throw new Error(`Failed to fetch signed url: hasuraToken missing`);
-    }
-
-    const result = await fetch("/api/user-data/download-url", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userModuleId,
-      }),
-    });
-
-    if (result.status !== 200) {
-      throw new Error(`Failed to fetch signed url: ${result.status}`);
-    }
-
-    const parsed = await result.json();
-
-    if (!parsed?.success)
-      throw new Error(`Failed to fetch signed url: ${result.status}`);
-    else return parsed.signedUrl;
-  };
-
-  const onDataRequestApproval = async () => {
-    heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_APPROVED);
-    setUserHasAcceptedSharingRequest(true);
-
-    console.log("Starting the sharing process...");
-
-    const userModuleId = selectedModule[0].id;
-    const signedUrl = await fetchSignedUrl(hasuraToken, userModuleId);
-
-    // Check all attributes are present
-    if (!userModuleId || !signedUrl || !shareParams) {
-      throw new Error("Missing attributes");
-    }
-
-    const dataPipelineParams: PipelineParams = {
-      query: shareParams.queryString,
-      dataUrl: signedUrl,
-      serviceName: shareParams.service,
-    };
-
-    // Starts the data pipeline
-    beginDataPipeline(dataPipelineParams);
-  };
-
   /**
    * Closes the popup window
    * @param self window ref
@@ -280,29 +262,29 @@ const SendPage: NextPage = () => {
         )}
 
         {/* NO USER MODULE DATA */}
-        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA && (
-          <NoModuleMessage
-            serviceName={shareParams?.appName as string}
-            handleClick={() => {
-              openInNewTab(
-                `${config.vanaVaultURL}/store/${shareParams?.service}`,
-              );
-              closePopup(window);
-            }}
-          />
-        )}
+        {uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA &&
+          missingServices.length > 0 && (
+            <NoModuleMessage
+              serviceName={missingServices[0]}
+              handleClick={() => {
+                openInNewTab(`/store/${missingServices[0]}`);
+                sendPipelineError(
+                  `User does not have data for the following: ${missingServices}`,
+                );
+                closePopup(window);
+              }}
+            />
+          )}
 
         {/* READY TO ACCEPT */}
         {uiStatus === ShareUiStatus.USER_IS_READY_TO_ACCEPT && (
           <>
-            <PermissionList
-              query={shareParams?.queryString as string}
-              serviceName={shareParams?.service as string}
-            />
+            <PermissionList permissionMap={permissionMap} />
             <PermissionContract
               onAccept={onDataRequestApproval}
               onDeny={() => {
                 heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_CANCELLED);
+                sendPipelineError(`User did not approve the share request`);
                 closePopup(window);
               }}
             />

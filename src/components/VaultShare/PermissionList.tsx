@@ -3,95 +3,41 @@ import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
 import { Group, Stack, Text } from "src/components";
-import {
-  InstagramCommentsCopy,
-  InstagramInterestsCopy,
-  TestUnknownCopy,
-} from "src/data";
-import { ShareKind, ShareService, ShareServiceType } from "src/types";
 import { capitalizeString } from "src/utils";
 
 import { FocusStack } from "./Subelement";
 
 interface PermissionItemProps {
-  id: string;
   text: string | React.ReactNode;
-  denial?: boolean;
 }
 
-const PermissionItem = ({ item }: { item: PermissionItemProps }) => (
+const PermissionItem = ({ text }: PermissionItemProps) => (
   <Group tw="items-center gap-2 text-labelTertiary">
-    <Icon
-      icon={item.denial ? "carbon:close-outline" : "carbon:checkmark-outline"}
-    />
-    <Text variant="body">{item.text}</Text>
+    <Icon icon="carbon:checkmark-outline" />
+    <Text variant="body">{text}</Text>
   </Group>
 );
 
-// Determine the ShareKind from the given service name + query.
-// NB: we only return Instagram interests only for now.
-const getShareKind = (
-  queryString: string,
-  serviceName: ShareServiceType,
-): ShareKind => {
-  if (
-    serviceName === ShareService.INSTAGRAM &&
-    queryString.includes("interests")
-  ) {
-    return ShareKind.INSTAGRAM_INTERESTS;
-  }
-  if (
-    serviceName === ShareService.INSTAGRAM &&
-    queryString.includes("comments")
-  ) {
-    return ShareKind.INSTAGRAM_COMMENTS;
-  }
-  return ShareKind.UNKNOWN;
-};
-
-interface ShareCopyProps {
-  heading: string;
-  permissions: PermissionItemProps[];
-}
-
-const getShareCopy = (shareKind: ShareKind): ShareCopyProps => {
-  switch (shareKind) {
-    case ShareKind.INSTAGRAM_INTERESTS:
-      return InstagramInterestsCopy;
-    case ShareKind.INSTAGRAM_COMMENTS:
-      return InstagramCommentsCopy;
-    default:
-      return TestUnknownCopy;
-  }
-};
-
 interface Props {
-  query: string;
-  serviceName: ShareServiceType;
+  permissionMap: { [key: string]: string[] };
 }
 
-const PermissionList = ({ query, serviceName }: Props) => {
-  const shareKind = getShareKind(query, serviceName);
-  const shareCopy = getShareCopy(shareKind);
-
-  return (
-    <FocusStack>
-      <Group tw="p-4">
-        <Text variant="body" tw="flex">
-          Share your&nbsp;
-          <Text weight="bold">
-            {capitalizeString(serviceName)} {shareCopy.heading}
-          </Text>
+const PermissionList = ({ permissionMap }: Props) => (
+  <FocusStack>
+    {Object.keys(permissionMap).map((serviceName) => (
+      <Stack tw="p-4 gap-3" key={serviceName}>
+        <Text weight="bold" tw="block">
+          {capitalizeString(serviceName)}
         </Text>
-      </Group>
-      <hr />
-      <Stack tw="p-4 gap-3">
-        {shareCopy.permissions.map((item) => (
-          <PermissionItem key={item.id} item={item} />
+        <hr />
+        {permissionMap[serviceName]?.map((permission) => (
+          <PermissionItem
+            key={permission}
+            text={capitalizeString(permission?.replaceAll("_", " "))}
+          />
         ))}
       </Stack>
-    </FocusStack>
-  );
-};
-
+    ))}
+  </FocusStack>
+);
 export { PermissionList };
