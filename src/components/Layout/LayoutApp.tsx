@@ -35,6 +35,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
 
   // `setIsMobile` once only on initial page load in production mode
   // …but we add width to deps for local development
+  // TODO: how can we use the node.production flag here?
   useEffect(() => {
     if (width < 640) {
       setIsMobile(true);
