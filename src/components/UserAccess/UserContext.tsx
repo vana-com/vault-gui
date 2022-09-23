@@ -20,6 +20,7 @@ import {
   displayMetamaskLoginModal,
   getJwtPayload,
   heapAddAccountPropsServerSide,
+  heapAddUserProperties,
   heapIdentify,
   heapTrackServerSide,
   setLoginPath,
@@ -120,12 +121,17 @@ const UserProvider = ({ children }: UserProviderProps) => {
       });
       heapAddAccountPropsServerSide(userFromResponse?.id, {
         "Login Type": loginTypeLocallyScoped,
+        Email: userFromResponse?.emailAddress,
       });
       // Associates the Heap Tag running in the user's browser with the user
       heapIdentify(userFromResponse?.id);
+      heapAddUserProperties({
+        "Login Type": loginTypeLocallyScoped,
+        Email: userFromResponse?.emailAddress,
+      });
     } catch (error: any) {
       console.error("Unable to get Vana user", error);
-      setLoginError(true);
+      // setLoginError(true);
     } finally {
       setIsUserLoading(false);
       setIsWeb3AuthLoading(false);
@@ -182,14 +188,14 @@ const UserProvider = ({ children }: UserProviderProps) => {
                 idTokenPayload.issuer,
               );
             } catch (error) {
-              setLoginError(true);
+              // setLoginError(true);
               console.error("Unable to authenticate wallet user", error);
             } finally {
               setIsUserLoading(false);
             }
           }
         } else {
-          setLoginError(true);
+          // setLoginError(true);
           console.error("Unable to get user wallet address");
         }
       },
@@ -301,7 +307,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
         });
       } catch (error) {
         console.error("Unable to initialize Web3Auth", error);
-        setLoginError(true);
+        // setLoginError(true);
       } finally {
         // Prevent prematurely disabling loading state if we're fetching a Vana user
         setTimeout(() => {
@@ -320,7 +326,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     if (!web3Auth) {
       console.error("Web3Auth not initialized yet, unable to log in");
-      setLoginError(true);
+      // setLoginError(true);
       return;
     }
 
@@ -329,7 +335,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
       await web3Auth.connect();
     } catch (error: any) {
       console.error("Unable to connect with Web3auth.", error);
-      setLoginError(true);
+      // setLoginError(true);
     }
   };
 
