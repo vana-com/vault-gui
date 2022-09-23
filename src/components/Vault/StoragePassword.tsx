@@ -8,6 +8,8 @@ import { CarbonCheckmarkOutline } from "src/components/Icons";
 
 import { StoragePasswordLabel } from "./index";
 
+/* CURRENTLY NOT IN USE */
+
 const StoragePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleInputClick = () => setShowPassword(!showPassword);
