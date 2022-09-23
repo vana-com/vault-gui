@@ -22,7 +22,7 @@ const NavAsideExplore = () => {
 
   return (
     <Link
-      href={config.vanaExploreURL}
+      href={`${config.vanaExploreURL}/?source=vault-sidebar`}
       target="_blank"
       rel="noreferrer noopener"
       underline={false}
