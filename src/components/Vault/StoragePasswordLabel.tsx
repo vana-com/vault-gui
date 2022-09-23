@@ -4,6 +4,8 @@ import tw from "twin.macro";
 import { BoxProps, Group, Text } from "src/components";
 import { CarbonLocked } from "src/components/Icons";
 
+/* CURRENTLY NOT IN USE */
+
 const DefaultLabel = () => (
   <>
     <Text weight="semibold" variant="footnote" color="black">

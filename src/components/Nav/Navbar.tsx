@@ -50,16 +50,16 @@ const Navbar = ({ children }: Props) => {
 
       {/* VANA LINK if not logged in */}
       {!user && (
-        <Text variant="note" weight="medium">
+        <Text variant="footnote" weight="medium">
           <Link
             target="_blank"
             rel="noopener noreferrer"
             href={config.vanaPublicURL}
             underline={false}
-            tw="flex items-center gap-0.5 transition-colors hover:text-labelSecondary"
+            tw="flex items-center gap-0.5 transition-colors hover:text-labelSecondary border border-stone-300 rounded-full h-[27px] px-3 duration-150 ease-in-out hover:border-stone-600 hover:bg-chartreuse-500 hover:text-stone-900"
           >
-            <span>by Vana</span>
-            <Icon icon="carbon:arrow-up-right" width="0.7em" />
+            <span tw="transform -translate-y-[0.5px]">by Vana</span>
+            {/* <Icon icon="carbon:arrow-up-right" width="0.7em" /> */}
           </Link>
         </Text>
       )}

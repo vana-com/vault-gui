@@ -82,6 +82,22 @@ module.exports = {
           90: 'var(--orange90)',
           100: 'var(--orange100)',
         },
+        // https://coolors.co/ff5351
+        orangeRed: {
+          500: "#ff5351",
+        },
+        // https://coolors.co/dbff0a
+        chartreuse: {
+          500: "#dbff0a",
+        },
+        // https://coolors.co/0075ff
+        blueCrayola: {
+          500: "#0075ff",
+        },
+        // https://coolors.co/ffe0b3
+        navajo: {
+          500: "#ffe0b3",
+        },
         errors: {
           50: 'var(--error50)',
           60: 'var(--error60)',
@@ -125,6 +141,7 @@ module.exports = {
         navH: "56px",
         navHPlusPx: "57px",
         navLinkH: "clamp(36px, 2.0620rem + 0.7264vw, 42px)",
+        rowItem: "clamp(38px, 2.1870rem + 0.7264vw, 44px)",
         asideW: "210px",
         insetHalf: "clamp(0.75rem, 0.9988rem + 0.9370vw, 1.125rem)",
         insetAlmost: "clamp(1.25rem, 0.9988rem + 1.3370vw, 1.75rem)",

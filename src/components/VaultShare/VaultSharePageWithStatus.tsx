@@ -13,14 +13,14 @@ const getLede = (uiStatus: ShareUiStatus, appName: string) => {
     case ShareUiStatus.USER_IS_NOT_LOGGED_IN:
       return "You need to log in to grant Vault access";
     case ShareUiStatus.HASURA_IS_LOADING:
-      return `Do you want to grant "${appName}" access to your Vault?`;
+      return `Do you want to grant ${appName} access to this data from your Vault?`;
     case ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA:
       return "You do not have the Vault data this application is requesting";
     case ShareUiStatus.USER_HAS_ACCEPTED:
-      return `Sharing Vault data to "${appName}"`;
+      return `Sharing Vault data to ${appName}`;
     default:
       return appName
-        ? `Do you want to grant "${appName}" access to your Vault?`
+        ? `Do you want to grant ${appName} access to this data from your Vault?`
         : "";
   }
 };
