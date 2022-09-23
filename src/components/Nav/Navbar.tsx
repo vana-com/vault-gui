@@ -71,7 +71,7 @@ const Navbar = ({ children }: Props) => {
       {user && (
         <DropdownMenuControlled
           onOpenChange={setIsOpen}
-          onClick={(_) =>
+          onClick={(_: any) =>
             heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_USER_ACCOUNT)
           }
           open={isOpen}
