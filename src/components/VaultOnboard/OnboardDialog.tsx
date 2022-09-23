@@ -32,7 +32,7 @@ const OnboardDialog = () => {
           prefix={<Icon icon="carbon:information" />}
           onClick={() => {
             setIsOpen(true);
-            heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_HOW_DOES_THIS_WORK);
+            heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_LETS_GET_STARTED);
           }}
         >
           How does this work?
@@ -44,7 +44,10 @@ const OnboardDialog = () => {
         <Button
           variant="solid"
           size="lg"
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false);
+            heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_HOW_DOES_THIS_WORK);
+          }}
           suffix={<Icon icon="carbon:arrow-right" />}
         >
           Let&apos;s get started

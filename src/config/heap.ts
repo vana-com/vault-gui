@@ -10,6 +10,7 @@ enum HEAP_EVENTS {
   CLICK_GIVE_FEEDBACK = "Click Give Feedback",
   CLICK_GET_HELP = "Click Get Help",
   CLICK_HOW_DOES_THIS_WORK = "Click How Does This Work",
+  CLICK_LETS_GET_STARTED = "Click Lets Get Started",
   CLICK_ONBOARING_STAGE_THREE = "Click Onboarding Stage Three",
   CLICK_ONBOARING_STAGE_TWO = "Click Onboarding Stage Two",
   DATA_DELETED = "Data Deleted",
