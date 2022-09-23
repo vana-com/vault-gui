@@ -14,6 +14,7 @@ enum HEAP_EVENTS {
   CLICK_LETS_GET_STARTED = "Click Lets Get Started",
   CLICK_ONBOARING_STAGE_THREE = "Click Onboarding Stage Three",
   CLICK_ONBOARING_STAGE_TWO = "Click Onboarding Stage Two",
+  CLICK_USER_ACCOUNT = "Click User Account",
   DATA_DELETED = "Data Deleted",
   DATA_STORED = "Data Stored",
   SIGNUP_LINK = "Signup Link",
