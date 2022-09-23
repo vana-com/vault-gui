@@ -13,7 +13,7 @@ const PermissionContract = ({ onAccept, onDeny }: PermissionContractProps) => (
     {/* ACCESS TIMESPAN */}
     {/* LATER: check or select access time */}
     {/* <CheckboxDefault label="Give access only once" /> */}
-    <Text color="labelTertiary" variant="note" tw="pr-1 pb-w4">
+    <Text color="labelSecondary" variant="note" tw="pr-1 pb-w4">
       This will give access only once
     </Text>
 
