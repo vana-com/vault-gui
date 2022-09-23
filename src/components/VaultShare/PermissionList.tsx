@@ -48,32 +48,18 @@ const PermissionList = ({ permissionMap }: Props) => {
   return (
     <FocusStack isInset={false} css={tw`relative overflow-auto`}>
       {Object.keys(permissionMap).map((serviceName, index) => (
-        <>
-          <Stack tw="gap-0 relative" key={serviceName}>
-            <PermissionHeader index={index}>
-              {capitalizeString(serviceName)}
-            </PermissionHeader>
-            <Stack tw="px-insetHalf gap-2 py-[0.85em]">
-              {permissionMap[serviceName]?.map((permission) => (
-                <PermissionItem key={permission}>
-                  {capitalizeString(permission?.replaceAll("_", " "))}
-                </PermissionItem>
-              ))}
-            </Stack>
+        <Stack tw="gap-0 relative" key={serviceName}>
+          <PermissionHeader index={index}>
+            {capitalizeString(serviceName)}
+          </PermissionHeader>
+          <Stack tw="px-insetHalf gap-2 py-[0.85em]">
+            {permissionMap[serviceName]?.map((permission) => (
+              <PermissionItem key={permission}>
+                {capitalizeString(permission?.replaceAll("_", " "))}
+              </PermissionItem>
+            ))}
           </Stack>
-          <Stack tw="gap-0 relative" key={serviceName}>
-            <PermissionHeader index={1}>
-              {capitalizeString(serviceName)}
-            </PermissionHeader>
-            <Stack tw="px-insetHalf gap-2 py-[0.85em]">
-              {permissionMap[serviceName]?.map((permission) => (
-                <PermissionItem key={permission}>
-                  {capitalizeString(permission?.replaceAll("_", " "))}
-                </PermissionItem>
-              ))}
-            </Stack>
-          </Stack>
-        </>
+        </Stack>
       ))}
 
       {/* USER DETAILS */}
