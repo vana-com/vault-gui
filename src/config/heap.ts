@@ -14,6 +14,7 @@ enum HEAP_EVENTS {
   CLICK_ONBOARING_STAGE_TWO = "Click Onboarding Stage Two",
   DATA_DELETED = "Data Deleted",
   DATA_STORED = "Data Stored",
+  SIGNUP_LINK = "Signup Link",
   LOGIN = "Log in",
   LOGOUT = "Log out",
   SHARE_APPROVED = "Share Approved",
