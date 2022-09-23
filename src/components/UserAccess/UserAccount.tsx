@@ -2,11 +2,14 @@ import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
 import {
+  DeleteVault,
   Group,
   LogoutButton,
   Stack,
   styledNavButton,
+  styledNavLink,
   Text,
+  WithIcon,
 } from "src/components";
 import { capitalizeString } from "src/utils";
 
@@ -47,18 +50,22 @@ const UserAccount = ({ user, accountLoginService }: Props) => {
       <Stack tw="gap-[2px]">
         <LogoutButton />
         {/* TODO: reinstate when delete account function is ready */}
-        {/* <hr tw="border-separatorLight" />
-      <Text
-        as="button"
-        variant="base"
-        weight="medium"
-        css={[styledNavLink, tw`w-full px-3`]}
-        tw="text-labelTertiary"
-      >
-        <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>
-          Delete Vault
-        </WithIcon>
-      </Text> */}
+        <hr tw="border-separatorLight" />
+        <DeleteVault
+          buttonNode={
+            <Text
+              as="button"
+              variant="base"
+              weight="medium"
+              css={[styledNavLink, tw`w-full px-3`]}
+              tw="text-labelTertiary"
+            >
+              <WithIcon prefix={<Icon icon="carbon:renew" height="0.85em" />}>
+                Delete Vault
+              </WithIcon>
+            </Text>
+          }
+        />
       </Stack>
     </Stack>
   );

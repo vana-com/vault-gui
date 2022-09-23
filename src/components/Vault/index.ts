@@ -1,5 +1,7 @@
 export * from "./AddData";
 export * from "./DeleteData";
+export * from "./DeleteVault";
+export * from "./DeleteVaultPresenter";
 export * from "./StorageInstructions";
 export * from "./StorageInstructionsCollapsible";
 export * from "./StorageInstructionsModal";
