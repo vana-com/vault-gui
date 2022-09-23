@@ -10,14 +10,13 @@ import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
-import { Spinner, useUserContext } from "src/components";
+import { Spinner, TitleAndMetaTags, useUserContext } from "src/components";
 import {
   FocusStack,
   NoModuleMessage,
   PermissionContract,
   PermissionList,
   SharingStatus,
-  VaultSharePageTitle,
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
 import config from "src/config";
@@ -246,7 +245,8 @@ const SendPage: NextPage = () => {
   return (
     <>
       {/* These 2 component take uiStatus and handle their own internal UI */}
-      <VaultSharePageTitle uiStatus={uiStatus} />
+      {/* <VaultSharePageTitle uiStatus={uiStatus} /> */}
+      <TitleAndMetaTags color="black" title="Share your Vault Data | Vana" />
 
       {/* TODO: provide the accessing domain */}
       <VaultSharePageWithStatus
