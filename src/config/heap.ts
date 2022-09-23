@@ -5,6 +5,7 @@ enum HEAP_EVENTS {
   CLICK_ADD_DATA_MODULE_PANEL = "Click Add Data Module Panel",
   CLICK_REQUEST_NEW_DATA_SOURCE = "Click Request New Data Source",
   CLICK_DELETE_VAULT = "Click Delete Vault",
+  CLICK_EXPLORE_DISCOVER_APPS = "Click Explore Discover Apps",
   CLICK_VAULT_DELETE_MODAL_CANCEL = "Click Cancel Vault Delete",
   CLICK_VAULT_DELETE_MODAL_CONFIRM = "Click Confirm Vault Delete",
   CLICK_GIVE_FEEDBACK = "Click Give Feedback",
