@@ -24,6 +24,8 @@ import isEqual from "lodash/isEqual";
 import type { AppProps } from "next/app";
 import { useMemo } from "react";
 
+import { getLocalItem } from "./localStorage";
+
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let accessToken = "public";
@@ -41,7 +43,7 @@ const createApolloClient = () => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const cachedToken = localStorage.getItem("hasura-token");
+    const cachedToken = getLocalItem("hasura-token");
     if (cachedToken) {
       accessToken = cachedToken;
     } else {
@@ -75,11 +77,13 @@ const createApolloClient = () => {
   if (ssrMode) {
     dataLink = httpLink;
   } else {
-    persistCache({
-      cache,
-      storage: new LocalStorageWrapper(window.localStorage),
-      debug: true,
-    });
+    if (window.localStorage) {
+      persistCache({
+        cache,
+        storage: new LocalStorageWrapper(window.localStorage),
+        debug: true,
+      });
+    }
 
     const webSocketLink = new WebSocketLink({
       uri: process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WSS_URL as string,

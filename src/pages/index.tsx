@@ -29,7 +29,11 @@ import {
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
-import { formatModuleNameFromQueryString } from "src/utils";
+import {
+  formatModuleNameFromQueryString,
+  getLocalItem,
+  setLocalItem,
+} from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
@@ -39,10 +43,9 @@ const HomePage: NextPage = () => {
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const setHasSeenOnboarding = () => {
-    localStorage.setItem("has-seen-onboarding", "true");
+    setLocalItem("has-seen-onboarding", "true");
   };
-  const hasSeenOnboarding =
-    localStorage.getItem("has-seen-onboarding") === "true";
+  const hasSeenOnboarding = getLocalItem("has-seen-onboarding") === "true";
 
   const { data: { modules: allModules } = {}, loading: isModulesLoading } =
     useGetModulesQuery();

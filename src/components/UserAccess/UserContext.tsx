@@ -19,10 +19,13 @@ import { Users } from "src/graphql/generated";
 import {
   displayMetamaskLoginModal,
   getJwtPayload,
+  getLocalItem,
   heapAddAccountPropsServerSide,
   heapAddUserProperties,
   heapIdentify,
   heapTrackServerSide,
+  removeLocalItem,
+  setLocalItem,
   setLoginPath,
   setWeb3AuthModalHeading,
 } from "src/utils";
@@ -113,9 +116,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setUser(userFromResponse);
       saveHasuraToken(hasuraTokenFromResponse);
 
-      // setIsInitialAccountLogin
-      const hasPriorAccountLogin = savePriorAccountLoginStatus();
-      setIsInitialAccountLogin(!hasPriorAccountLogin);
+      // Save hasPriorAccountLogin for use with initial login UX for a new user,
+      // eg. to show an onboarding status
+      setIsInitialAccountLogin(
+        getLocalItem("has-prior-account-login") !== "true",
+      );
+      setLocalItem("has-prior-account-login", "true");
+
       heapTrackServerSide(userFromResponse?.id, HEAP_EVENTS.LOGIN, {
         "Login Type": loginTypeLocallyScoped,
       });
@@ -136,22 +143,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
       setIsUserLoading(false);
       setIsWeb3AuthLoading(false);
     }
-  };
-
-  /**
-   * Save hasPriorAccountLogin for use with initial login UX for a new user,
-   * eg. to show an onboarding status
-   * @returns boolean
-   */
-  const savePriorAccountLoginStatus = () => {
-    const hasPriorAccountLogin =
-      localStorage.getItem("has-prior-account-login") !== null;
-
-    if (!hasPriorAccountLogin) {
-      localStorage.setItem("has-prior-account-login", "true");
-    }
-
-    return hasPriorAccountLogin;
   };
 
   /**
@@ -236,9 +227,9 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const saveHasuraToken = (token: string | null) => {
     setHasuraToken(token);
     if (!token) {
-      localStorage.removeItem("hasura-token");
+      removeLocalItem("hasura-token");
     } else {
-      localStorage.setItem("hasura-token", token);
+      setLocalItem("hasura-token", token);
     }
   };
 
