@@ -16,6 +16,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Link, ToastDefault } from "src/components";
 import config from "src/config";
 import { Users } from "src/graphql/generated";
+import { useDeviceDetect } from "src/hooks";
 import {
   displayMetamaskLoginModal,
   getJwtPayload,
@@ -85,6 +86,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [loginError, setLoginError] = useState(false);
   const [isInitialAccountLogin, setIsInitialAccountLogin] = useState(false);
   const { resolvedTheme } = useTheme();
+  const { isMobileUserAgent } = useDeviceDetect();
 
   // Due to clashes between useTheme and web3Auth.uiConfig types,
   // definitively set the theme to either light or dark
@@ -213,7 +215,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     web3AuthInstance.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, (isVisible) => {
       setIsWeb3AuthLoading(isVisible);
-      displayMetamaskLoginModal(isVisible);
+      displayMetamaskLoginModal(isVisible, isMobileUserAgent);
       if (!isVisible) {
         setIsSignUp(false);
       }
