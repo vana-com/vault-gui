@@ -42,8 +42,11 @@ interface Props {
 }
 
 const PermissionList = ({ permissionMap }: Props) => {
-  const { user } = useUserContext();
-  console.log("user", user);
+  const { user, loginType } = useUserContext();
+
+  // TESTS
+  // console.log("user", user);
+  // console.log("loginType", loginType);
 
   return (
     <FocusStack isInset={false} css={tw`relative overflow-auto`}>
@@ -72,12 +75,14 @@ const PermissionList = ({ permissionMap }: Props) => {
               {user?.id.slice(-8)}
             </Text>
           </PermissionItem>
-          <PermissionItem>
-            Email:{" "}
-            {user?.emailAddress
-              ? user.emailAddress
-              : "Not yet added. Please add one…"}
-          </PermissionItem>
+          {loginType !== "metamask" && (
+            <PermissionItem>
+              Email:{" "}
+              {user?.emailAddress
+                ? user.emailAddress
+                : "Not yet added. Please add one…"}
+            </PermissionItem>
+          )}
         </Stack>
       </Stack>
     </FocusStack>
