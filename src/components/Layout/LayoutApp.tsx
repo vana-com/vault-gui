@@ -1,7 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import useMeasure from "react-use-measure";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -14,6 +13,7 @@ import {
   styledNavButton,
   styledTrigger,
 } from "src/components";
+import { useDeviceDetect } from "src/hooks";
 
 interface Props {
   children?: React.ReactNode;
@@ -30,19 +30,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
   const isSendPath = router.pathname === "/share";
 
   // Determine if viewport isMobile
-  const [ref, { width }] = useMeasure();
-  const [isMobile, setIsMobile] = useState(false);
-
-  // `setIsMobile` once only on initial page load in production mode
-  // …but we add width to deps for local development
-  // TODO: how can we use the node.production flag here?
-  useEffect(() => {
-    if (width < 640) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, [width]);
+  const { isMobileViewport } = useDeviceDetect();
 
   // Reset DropdownMenuControlled on route change
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +40,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
     <>
       {/* NAVBAR */}
       {!isSendPath && (
-        <div ref={ref} tw="fixed top-0 left-0 right-0 bg-background">
+        <div tw="fixed top-0 left-0 right-0 bg-background">
           <div tw="mx-auto max-w-canvasWidth">
             <Navbar />
           </div>
@@ -71,7 +59,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
       </div>
 
       {/* MOBILE NAV */}
-      {renderNavMobile && !isSendPath && isMobile && (
+      {renderNavMobile && !isSendPath && isMobileViewport && (
         <div tw="fixed bottom-inset right-0">
           <div tw="px-inset h-navH">
             <DropdownMenuControlled
@@ -105,7 +93,7 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
       )}
 
       {/* MOBILE TYPEFORM */}
-      {renderNavMobile && !isSendPath && isMobile && (
+      {renderNavMobile && !isSendPath && isMobileViewport && (
         <div tw="fixed bottom-inset left-0">
           <div tw="px-inset h-navH flex items-center">
             <NavAsideBetaTypeformMobile />
