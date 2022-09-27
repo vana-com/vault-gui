@@ -16,6 +16,9 @@ import {
   VanaLogo,
 } from "src/components";
 import config from "src/config";
+import { heapTrackServerSide } from "src/utils";
+
+const { HEAP_EVENTS } = config;
 
 interface Props {
   children?: React.ReactNode;
@@ -68,6 +71,9 @@ const Navbar = ({ children }: Props) => {
       {user && (
         <DropdownMenuControlled
           onOpenChange={setIsOpen}
+          onClick={(_: any) =>
+            heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_USER_ACCOUNT)
+          }
           open={isOpen}
           align="end"
           alignOffset={0}

@@ -22,7 +22,7 @@ const NavAsideExplore = () => {
 
   return (
     <Link
-      href={config.vanaExploreURL}
+      href={`${config.vanaExploreURL}/?source=vault-sidebar`}
       target="_blank"
       rel="noreferrer noopener"
       underline={false}
@@ -46,7 +46,10 @@ const NavAsideExplore = () => {
               weight="medium"
               tw="flex items-center gap-0.5"
               onClick={(_) =>
-                heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_GIVE_FEEDBACK)
+                heapTrackServerSide(
+                  user?.id,
+                  HEAP_EVENTS.CLICK_EXPLORE_DISCOVER_APPS,
+                )
               }
             >
               <WithIcon
