@@ -71,6 +71,16 @@ const LoginPage: NextPage = () => {
               <Text variant="note" css={textWithIconStyle}>
                 No account? <SignupLink />
               </Text>
+
+              {/* SIGN-UP */}
+              <a
+                href={window?.location?.href}
+                target="_blank"
+                download
+                rel="noreferrer"
+              >
+                Open in external browser
+              </a>
             </Stack>
           </Center>
         </LayoutCanvas>
