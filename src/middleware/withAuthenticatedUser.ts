@@ -41,8 +41,8 @@ export const withAuthenticatedUser: Middleware = async (
     emailAddress: "",
   });
 
-  if (!users || users[0]) {
-    // No id can be found for the user
+  // No users found
+  if (!users || users.length === 0) {
     return res
       .status(400)
       .json({ error: "Unable to find a user", success: false } as ApiResponse);
