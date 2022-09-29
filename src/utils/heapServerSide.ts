@@ -10,10 +10,9 @@ const { HEAP_API_URL, HEAP_APP_ID } = config;
 
 const heapFetch = async (endpoint: string, body: any) => {
   try {
-    return await axios.post(`${HEAP_API_URL}${endpoint}`, body);
+    await axios.post(`${HEAP_API_URL}${endpoint}`, body);
   } catch (e) {
     console.error("Unable to call Heap API", e);
-    return {};
   }
 };
 
@@ -36,8 +35,7 @@ const trackEventToCallInServer = async (
     properties: properties || {},
   };
 
-  const response = await heapFetch("/track", body);
-  return response;
+  await heapFetch("/track", body);
 };
 
 /**
@@ -56,8 +54,7 @@ const addAccountPropsToCallInServer = async (
     properties: properties || {},
   };
 
-  const response = await heapFetch("/add_account_properties", body);
-  return response;
+  await heapFetch("/add_account_properties", body);
 };
 
 /**
