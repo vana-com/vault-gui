@@ -13,12 +13,38 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
+  JSON: any;
+  Upload: any;
   bigint: any;
   float8: any;
   jsonb: any;
   numeric: any;
   timestamptz: any;
   uuid: any;
+};
+
+export type BooleanFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
+  contains?: InputMaybe<Scalars['Boolean']>;
+  containsi?: InputMaybe<Scalars['Boolean']>;
+  endsWith?: InputMaybe<Scalars['Boolean']>;
+  eq?: InputMaybe<Scalars['Boolean']>;
+  gt?: InputMaybe<Scalars['Boolean']>;
+  gte?: InputMaybe<Scalars['Boolean']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
+  lt?: InputMaybe<Scalars['Boolean']>;
+  lte?: InputMaybe<Scalars['Boolean']>;
+  ne?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<BooleanFilterInput>;
+  notContains?: InputMaybe<Scalars['Boolean']>;
+  notContainsi?: InputMaybe<Scalars['Boolean']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
+  startsWith?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -140,9 +166,9 @@ export type CashOutRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "cash_out_requests" */
 export enum CashOutRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "transaction_hash" */
   CashOutRequestsConfirmationIdKey = 'cash_out_requests_confirmation_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   CashOutRequestsPkey = 'cash_out_requests_pkey'
 }
 
@@ -255,7 +281,7 @@ export type CashOutRequests_Order_By = {
   workerId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: CashOutRequests */
+/** primary key columns input for table: cash_out_requests */
 export type CashOutRequests_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -331,6 +357,28 @@ export type CashOutRequests_Stddev_Samp_Order_By = {
   amount?: InputMaybe<Order_By>;
 };
 
+/** Streaming cursor of the table "CashOutRequests" */
+export type CashOutRequests_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: CashOutRequests_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type CashOutRequests_Stream_Cursor_Value_Input = {
+  amount?: InputMaybe<Scalars['numeric']>;
+  cash_out_method?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  errorMessage?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  processed?: InputMaybe<Scalars['Boolean']>;
+  transactionHash?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  walletId?: InputMaybe<Scalars['uuid']>;
+  workerId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** aggregate sum on columns */
 export type CashOutRequests_Sum_Fields = {
   __typename?: 'CashOutRequests_sum_fields';
@@ -365,6 +413,14 @@ export enum CashOutRequests_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type CashOutRequests_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<CashOutRequests_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CashOutRequests_Set_Input>;
+  where: CashOutRequests_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type CashOutRequests_Var_Pop_Fields = {
@@ -439,7 +495,7 @@ export type CollectionTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "collection_type" */
 export enum CollectionTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   CollectionTypePkey = 'collection_type_pkey'
 }
 
@@ -485,7 +541,7 @@ export type CollectionTypes_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: CollectionTypes */
+/** primary key columns input for table: collection_type */
 export type CollectionTypes_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -504,6 +560,20 @@ export type CollectionTypes_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "CollectionTypes" */
+export type CollectionTypes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: CollectionTypes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type CollectionTypes_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "collection_type" */
 export enum CollectionTypes_Update_Column {
   /** column name */
@@ -511,6 +581,12 @@ export enum CollectionTypes_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type CollectionTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CollectionTypes_Set_Input>;
+  where: CollectionTypes_Bool_Exp;
+};
 
 /** columns and relationships of "customers" */
 export type Customers = {
@@ -605,9 +681,9 @@ export type Customers_Bool_Exp = {
 
 /** unique or primary key constraints on table "customers" */
 export enum Customers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   CustomersPkey = 'customers_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id" */
   CustomersUserIdKey = 'customers_user_id_key'
 }
 
@@ -702,7 +778,7 @@ export type Customers_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: Customers */
+/** primary key columns input for table: customers */
 export type Customers_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -733,6 +809,24 @@ export type Customers_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "Customers" */
+export type Customers_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Customers_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Customers_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  organizationId?: InputMaybe<Scalars['uuid']>;
+  publicKey?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "customers" */
 export enum Customers_Update_Column {
   /** column name */
@@ -748,6 +842,35 @@ export enum Customers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Customers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Customers_Set_Input>;
+  where: Customers_Bool_Exp;
+};
+
+export type DateTimeFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  contains?: InputMaybe<Scalars['DateTime']>;
+  containsi?: InputMaybe<Scalars['DateTime']>;
+  endsWith?: InputMaybe<Scalars['DateTime']>;
+  eq?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  ne?: InputMaybe<Scalars['DateTime']>;
+  not?: InputMaybe<DateTimeFilterInput>;
+  notContains?: InputMaybe<Scalars['DateTime']>;
+  notContainsi?: InputMaybe<Scalars['DateTime']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
+  startsWith?: InputMaybe<Scalars['DateTime']>;
+};
 
 /** columns and relationships of "etx_task_sessions" */
 export type EtxTaskSessions = {
@@ -814,9 +937,9 @@ export type EtxTaskSessions_Bool_Exp = {
 
 /** unique or primary key constraints on table "etx_task_sessions" */
 export enum EtxTaskSessions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id", "user_id" */
   EtxTaskSessionsIdUserIdKey = 'etx_task_sessions_id_user_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   EtxTaskSessionsPkey = 'etx_task_sessions_pkey'
 }
 
@@ -896,7 +1019,7 @@ export type EtxTaskSessions_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: EtxTaskSessions */
+/** primary key columns input for table: etx_task_sessions */
 export type EtxTaskSessions_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -927,6 +1050,24 @@ export type EtxTaskSessions_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "EtxTaskSessions" */
+export type EtxTaskSessions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: EtxTaskSessions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type EtxTaskSessions_Stream_Cursor_Value_Input = {
+  confirmed?: InputMaybe<Scalars['Boolean']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  exitReason?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "etx_task_sessions" */
 export enum EtxTaskSessions_Update_Column {
   /** column name */
@@ -942,6 +1083,18 @@ export enum EtxTaskSessions_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type EtxTaskSessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<EtxTaskSessions_Set_Input>;
+  where: EtxTaskSessions_Bool_Exp;
+};
+
+export type FileInfoInput = {
+  alternativeText?: InputMaybe<Scalars['String']>;
+  caption?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
 
 /** columns and relationships of "fireboa_cash_out_crypto_requests" */
 export type FireboaCashOutCryptoRequests = {
@@ -997,11 +1150,11 @@ export type FireboaCashOutCryptoRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_crypto_requests" */
 export enum FireboaCashOutCryptoRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fireboa_cash_out_request_id" */
   FireboaCashOutCryptoRequesFireboaCashOutRequestsIdKey = 'fireboa_cash_out_crypto_reques_fireboa_cash_out_requests_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutCryptoRequestsPkey = 'fireboa_cash_out_crypto_requests_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "transaction_hash" */
   FireboaCashOutCryptoRequestsTransactionHashKey = 'fireboa_cash_out_crypto_requests_transaction_hash_key'
 }
 
@@ -1074,7 +1227,7 @@ export type FireboaCashOutCryptoRequests_Order_By = {
   walletId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaCashOutCryptoRequests */
+/** primary key columns input for table: fireboa_cash_out_crypto_requests */
 export type FireboaCashOutCryptoRequests_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -1105,6 +1258,24 @@ export type FireboaCashOutCryptoRequests_Set_Input = {
   walletId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "FireboaCashOutCryptoRequests" */
+export type FireboaCashOutCryptoRequests_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaCashOutCryptoRequests_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaCashOutCryptoRequests_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fireboaCashOutRequestId?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  transactionHash?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  walletId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "fireboa_cash_out_crypto_requests" */
 export enum FireboaCashOutCryptoRequests_Update_Column {
   /** column name */
@@ -1120,6 +1291,12 @@ export enum FireboaCashOutCryptoRequests_Update_Column {
   /** column name */
   WalletId = 'walletId'
 }
+
+export type FireboaCashOutCryptoRequests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutCryptoRequests_Set_Input>;
+  where: FireboaCashOutCryptoRequests_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_gift_card_requests" */
 export type FireboaCashOutGiftCardRequests = {
@@ -1170,9 +1347,9 @@ export type FireboaCashOutGiftCardRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_gift_card_requests" */
 export enum FireboaCashOutGiftCardRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fireboa_cash_out_request_id" */
   FireboaCashOutGiftCardReqFireboaCashOutRequestsIdKey = 'fireboa_cash_out_gift_card_req_fireboa_cash_out_requests_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutGiftCardRequestsPkey = 'fireboa_cash_out_gift_card_requests_pkey'
 }
 
@@ -1239,7 +1416,7 @@ export type FireboaCashOutGiftCardRequests_Order_By = {
   updatedAt?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaCashOutGiftCardRequests */
+/** primary key columns input for table: fireboa_cash_out_gift_card_requests */
 export type FireboaCashOutGiftCardRequests_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -1267,6 +1444,23 @@ export type FireboaCashOutGiftCardRequests_Set_Input = {
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
 
+/** Streaming cursor of the table "FireboaCashOutGiftCardRequests" */
+export type FireboaCashOutGiftCardRequests_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaCashOutGiftCardRequests_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaCashOutGiftCardRequests_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fireboaCashOutRequestId?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  referralLink?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** update columns of table "fireboa_cash_out_gift_card_requests" */
 export enum FireboaCashOutGiftCardRequests_Update_Column {
   /** column name */
@@ -1280,6 +1474,12 @@ export enum FireboaCashOutGiftCardRequests_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type FireboaCashOutGiftCardRequests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutGiftCardRequests_Set_Input>;
+  where: FireboaCashOutGiftCardRequests_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_preferred_methods" */
 export type FireboaCashOutPreferredMethods = {
@@ -1347,7 +1547,7 @@ export type FireboaCashOutPreferredMethods_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_preferred_methods" */
 export enum FireboaCashOutPreferredMethods_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutPreferredMethodsPkey = 'fireboa_cash_out_preferred_methods_pkey'
 }
 
@@ -1427,7 +1627,7 @@ export type FireboaCashOutPreferredMethods_Order_By = {
   workerId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaCashOutPreferredMethods */
+/** primary key columns input for table: fireboa_cash_out_preferred_methods */
 export type FireboaCashOutPreferredMethods_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -1455,6 +1655,23 @@ export type FireboaCashOutPreferredMethods_Set_Input = {
   workerId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "FireboaCashOutPreferredMethods" */
+export type FireboaCashOutPreferredMethods_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaCashOutPreferredMethods_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaCashOutPreferredMethods_Stream_Cursor_Value_Input = {
+  cashOutMethod?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  workerId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "fireboa_cash_out_preferred_methods" */
 export enum FireboaCashOutPreferredMethods_Update_Column {
   /** column name */
@@ -1468,6 +1685,12 @@ export enum FireboaCashOutPreferredMethods_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type FireboaCashOutPreferredMethods_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutPreferredMethods_Set_Input>;
+  where: FireboaCashOutPreferredMethods_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_cash_out_requests" */
 export type FireboaCashOutRequests = {
@@ -1574,7 +1797,7 @@ export type FireboaCashOutRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_cash_out_requests" */
 export enum FireboaCashOutRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaCashOutRequestsPkey = 'fireboa_cash_out_requests_pkey'
 }
 
@@ -1684,7 +1907,7 @@ export type FireboaCashOutRequests_Order_By = {
   workerId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaCashOutRequests */
+/** primary key columns input for table: fireboa_cash_out_requests */
 export type FireboaCashOutRequests_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -1754,6 +1977,26 @@ export type FireboaCashOutRequests_Stddev_Samp_Order_By = {
   amountInCents?: InputMaybe<Order_By>;
 };
 
+/** Streaming cursor of the table "FireboaCashOutRequests" */
+export type FireboaCashOutRequests_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaCashOutRequests_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaCashOutRequests_Stream_Cursor_Value_Input = {
+  amountInCents?: InputMaybe<Scalars['numeric']>;
+  cashOutMethod?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  errorMessage?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  processed?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  workerId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** aggregate sum on columns */
 export type FireboaCashOutRequests_Sum_Fields = {
   __typename?: 'FireboaCashOutRequests_sum_fields';
@@ -1784,6 +2027,14 @@ export enum FireboaCashOutRequests_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type FireboaCashOutRequests_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<FireboaCashOutRequests_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaCashOutRequests_Set_Input>;
+  where: FireboaCashOutRequests_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type FireboaCashOutRequests_Var_Pop_Fields = {
@@ -1885,7 +2136,7 @@ export type FireboaModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_modules" */
 export enum FireboaModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ModulesPkey = 'modules_pkey'
 }
 
@@ -1942,7 +2193,7 @@ export type FireboaModules_Order_By = {
   reusable?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaModules */
+/** primary key columns input for table: fireboa_modules */
 export type FireboaModules_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -1964,6 +2215,21 @@ export type FireboaModules_Set_Input = {
   reusable?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Streaming cursor of the table "FireboaModules" */
+export type FireboaModules_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaModules_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaModules_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  resourceLocation?: InputMaybe<Scalars['String']>;
+  reusable?: InputMaybe<Scalars['Boolean']>;
+};
+
 /** update columns of table "fireboa_modules" */
 export enum FireboaModules_Update_Column {
   /** column name */
@@ -1973,6 +2239,12 @@ export enum FireboaModules_Update_Column {
   /** column name */
   Reusable = 'reusable'
 }
+
+export type FireboaModules_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaModules_Set_Input>;
+  where: FireboaModules_Bool_Exp;
+};
 
 /** columns and relationships of "fireboa_projects" */
 export type FireboaProjects = {
@@ -2205,7 +2477,7 @@ export type FireboaProjectsModulesUsers_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_modules_users" */
 export enum FireboaProjectsModulesUsers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id", "fireboa_project_module_id" */
   FireboaProjectModuleUserPkey = 'fireboa_project_module_user_pkey'
 }
 
@@ -2288,7 +2560,7 @@ export type FireboaProjectsModulesUsers_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaProjectsModulesUsers */
+/** primary key columns input for table: fireboa_projects_modules_users */
 export type FireboaProjectsModulesUsers_Pk_Columns_Input = {
   fireboaProjectModuleId: Scalars['uuid'];
   userId: Scalars['uuid'];
@@ -2322,6 +2594,23 @@ export type FireboaProjectsModulesUsers_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "FireboaProjectsModulesUsers" */
+export type FireboaProjectsModulesUsers_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaProjectsModulesUsers_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaProjectsModulesUsers_Stream_Cursor_Value_Input = {
+  configuration?: InputMaybe<Scalars['jsonb']>;
+  fireboaProjectModuleId?: InputMaybe<Scalars['uuid']>;
+  ineligibleAfterMentalHealthScreening?: InputMaybe<Scalars['Boolean']>;
+  isComplete?: InputMaybe<Scalars['Boolean']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "fireboa_projects_modules_users" */
 export enum FireboaProjectsModulesUsers_Update_Column {
   /** column name */
@@ -2335,6 +2624,22 @@ export enum FireboaProjectsModulesUsers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type FireboaProjectsModulesUsers_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<FireboaProjectsModulesUsers_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<FireboaProjectsModulesUsers_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<FireboaProjectsModulesUsers_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<FireboaProjectsModulesUsers_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<FireboaProjectsModulesUsers_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsModulesUsers_Set_Input>;
+  where: FireboaProjectsModulesUsers_Bool_Exp;
+};
 
 /** aggregated selection of "fireboa_projects_modules" */
 export type FireboaProjectsModules_Aggregate = {
@@ -2425,7 +2730,7 @@ export type FireboaProjectsModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_modules" */
 export enum FireboaProjectsModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaProjectModulePkey = 'fireboa_project_module_pkey'
 }
 
@@ -2546,7 +2851,7 @@ export type FireboaProjectsModules_Order_By = {
   visualJudgementModules_aggregate?: InputMaybe<VisualJudgementModules_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: FireboaProjectsModules */
+/** primary key columns input for table: fireboa_projects_modules */
 export type FireboaProjectsModules_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -2618,6 +2923,25 @@ export type FireboaProjectsModules_Stddev_Samp_Order_By = {
   completionAmountInCents?: InputMaybe<Order_By>;
 };
 
+/** Streaming cursor of the table "FireboaProjectsModules" */
+export type FireboaProjectsModules_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaProjectsModules_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaProjectsModules_Stream_Cursor_Value_Input = {
+  completionAmountInCents?: InputMaybe<Scalars['numeric']>;
+  completionCriteria?: InputMaybe<Scalars['String']>;
+  configurationSchema?: InputMaybe<Scalars['jsonb']>;
+  fireboaProjectId?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  instructions?: InputMaybe<Scalars['String']>;
+  moduleId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** aggregate sum on columns */
 export type FireboaProjectsModules_Sum_Fields = {
   __typename?: 'FireboaProjectsModules_sum_fields';
@@ -2646,6 +2970,24 @@ export enum FireboaProjectsModules_Update_Column {
   /** column name */
   ModuleId = 'moduleId'
 }
+
+export type FireboaProjectsModules_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<FireboaProjectsModules_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<FireboaProjectsModules_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<FireboaProjectsModules_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<FireboaProjectsModules_Delete_Key_Input>;
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<FireboaProjectsModules_Inc_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<FireboaProjectsModules_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsModules_Set_Input>;
+  where: FireboaProjectsModules_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type FireboaProjectsModules_Var_Pop_Fields = {
@@ -2683,7 +3025,7 @@ export type FireboaProjectsModules_Variance_Order_By = {
 /** columns and relationships of "fireboa_projects_users" */
 export type FireboaProjectsUsers = {
   __typename?: 'FireboaProjectsUsers';
-  currentState: Project_Statuses_Enum;
+  currentState: ProjectStatuses_Enum;
   /** An object relationship */
   fireboaProject: FireboaProjects;
   fireboaProjectId: Scalars['uuid'];
@@ -2733,7 +3075,7 @@ export type FireboaProjectsUsers_Bool_Exp = {
   _and?: InputMaybe<Array<FireboaProjectsUsers_Bool_Exp>>;
   _not?: InputMaybe<FireboaProjectsUsers_Bool_Exp>;
   _or?: InputMaybe<Array<FireboaProjectsUsers_Bool_Exp>>;
-  currentState?: InputMaybe<Project_Statuses_Enum_Comparison_Exp>;
+  currentState?: InputMaybe<ProjectStatuses_Enum_Comparison_Exp>;
   fireboaProject?: InputMaybe<FireboaProjects_Bool_Exp>;
   fireboaProjectId?: InputMaybe<Uuid_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -2742,13 +3084,13 @@ export type FireboaProjectsUsers_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects_users" */
 export enum FireboaProjectsUsers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id", "fireboa_project_id" */
   FireboaProjectUserPkey = 'fireboa_project_user_pkey'
 }
 
 /** input type for inserting data into table "fireboa_projects_users" */
 export type FireboaProjectsUsers_Insert_Input = {
-  currentState?: InputMaybe<Project_Statuses_Enum>;
+  currentState?: InputMaybe<ProjectStatuses_Enum>;
   fireboaProject?: InputMaybe<FireboaProjects_Obj_Rel_Insert_Input>;
   fireboaProjectId?: InputMaybe<Scalars['uuid']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -2806,7 +3148,7 @@ export type FireboaProjectsUsers_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaProjectsUsers */
+/** primary key columns input for table: fireboa_projects_users */
 export type FireboaProjectsUsers_Pk_Columns_Input = {
   fireboaProjectId: Scalars['uuid'];
   userId: Scalars['uuid'];
@@ -2824,7 +3166,22 @@ export enum FireboaProjectsUsers_Select_Column {
 
 /** input type for updating data in table "fireboa_projects_users" */
 export type FireboaProjectsUsers_Set_Input = {
-  currentState?: InputMaybe<Project_Statuses_Enum>;
+  currentState?: InputMaybe<ProjectStatuses_Enum>;
+  fireboaProjectId?: InputMaybe<Scalars['uuid']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "FireboaProjectsUsers" */
+export type FireboaProjectsUsers_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaProjectsUsers_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaProjectsUsers_Stream_Cursor_Value_Input = {
+  currentState?: InputMaybe<ProjectStatuses_Enum>;
   fireboaProjectId?: InputMaybe<Scalars['uuid']>;
   userId?: InputMaybe<Scalars['uuid']>;
 };
@@ -2838,6 +3195,12 @@ export enum FireboaProjectsUsers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type FireboaProjectsUsers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjectsUsers_Set_Input>;
+  where: FireboaProjectsUsers_Bool_Exp;
+};
 
 /** aggregated selection of "fireboa_projects" */
 export type FireboaProjects_Aggregate = {
@@ -2879,7 +3242,7 @@ export type FireboaProjects_Bool_Exp = {
 
 /** unique or primary key constraints on table "fireboa_projects" */
 export enum FireboaProjects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FireboaProjectsPkey = 'fireboa_projects_pkey'
 }
 
@@ -2950,7 +3313,7 @@ export type FireboaProjects_Order_By = {
   serializedStateChart?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FireboaProjects */
+/** primary key columns input for table: fireboa_projects */
 export type FireboaProjects_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -2984,6 +3347,25 @@ export type FireboaProjects_Set_Input = {
   serializedStateChart?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "FireboaProjects" */
+export type FireboaProjects_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FireboaProjects_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FireboaProjects_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  locked?: InputMaybe<Scalars['Boolean']>;
+  maximumCompletions?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  serializedStateChart?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "fireboa_projects" */
 export enum FireboaProjects_Update_Column {
   /** column name */
@@ -3001,6 +3383,35 @@ export enum FireboaProjects_Update_Column {
   /** column name */
   SerializedStateChart = 'serializedStateChart'
 }
+
+export type FireboaProjects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FireboaProjects_Set_Input>;
+  where: FireboaProjects_Bool_Exp;
+};
+
+export type FloatFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  contains?: InputMaybe<Scalars['Float']>;
+  containsi?: InputMaybe<Scalars['Float']>;
+  endsWith?: InputMaybe<Scalars['Float']>;
+  eq?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  ne?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<FloatFilterInput>;
+  notContains?: InputMaybe<Scalars['Float']>;
+  notContainsi?: InputMaybe<Scalars['Float']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  startsWith?: InputMaybe<Scalars['Float']>;
+};
 
 /** columns and relationships of "fraud_status_enum" */
 export type FraudStatusEnum = {
@@ -3042,7 +3453,7 @@ export type FraudStatusEnum_Bool_Exp = {
 
 /** unique or primary key constraints on table "fraud_status_enum" */
 export enum FraudStatusEnum_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "fraud_status" */
   FraudStatusEnumPkey = 'fraud_status_enum_pkey'
 }
 
@@ -3088,7 +3499,7 @@ export type FraudStatusEnum_Order_By = {
   fraudStatus?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: FraudStatusEnum */
+/** primary key columns input for table: fraud_status_enum */
 export type FraudStatusEnum_Pk_Columns_Input = {
   fraudStatus: Scalars['String'];
 };
@@ -3107,6 +3518,20 @@ export type FraudStatusEnum_Set_Input = {
   fraudStatus?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "FraudStatusEnum" */
+export type FraudStatusEnum_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FraudStatusEnum_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FraudStatusEnum_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  fraudStatus?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "fraud_status_enum" */
 export enum FraudStatusEnum_Update_Column {
   /** column name */
@@ -3114,6 +3539,73 @@ export enum FraudStatusEnum_Update_Column {
   /** column name */
   FraudStatus = 'fraudStatus'
 }
+
+export type FraudStatusEnum_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FraudStatusEnum_Set_Input>;
+  where: FraudStatusEnum_Bool_Exp;
+};
+
+export type GenericMorph = I18NLocale | StrapiModule | StrapiProject | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | VanaConnectFaq;
+
+export type I18NLocale = {
+  __typename?: 'I18NLocale';
+  code?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type I18NLocaleEntity = {
+  __typename?: 'I18NLocaleEntity';
+  attributes?: Maybe<I18NLocale>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type I18NLocaleEntityResponse = {
+  __typename?: 'I18NLocaleEntityResponse';
+  data?: Maybe<I18NLocaleEntity>;
+};
+
+export type I18NLocaleEntityResponseCollection = {
+  __typename?: 'I18NLocaleEntityResponseCollection';
+  data: Array<I18NLocaleEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type I18NLocaleFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>;
+  code?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<I18NLocaleFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type IdFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contains?: InputMaybe<Scalars['ID']>;
+  containsi?: InputMaybe<Scalars['ID']>;
+  endsWith?: InputMaybe<Scalars['ID']>;
+  eq?: InputMaybe<Scalars['ID']>;
+  gt?: InputMaybe<Scalars['ID']>;
+  gte?: InputMaybe<Scalars['ID']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  lt?: InputMaybe<Scalars['ID']>;
+  lte?: InputMaybe<Scalars['ID']>;
+  ne?: InputMaybe<Scalars['ID']>;
+  not?: InputMaybe<IdFilterInput>;
+  notContains?: InputMaybe<Scalars['ID']>;
+  notContainsi?: InputMaybe<Scalars['ID']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  startsWith?: InputMaybe<Scalars['ID']>;
+};
 
 /** the document type that the user supplied, verified by 3rd party */
 export type IdentitiesLegalIdTypeEnums = {
@@ -3155,9 +3647,27 @@ export type IdentitiesLegalIdTypeEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "identities_legal_id_type_enum" */
 export enum IdentitiesLegalIdTypeEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   IdentitiesLegalIdTypeEnumPkey = 'identities_legal_id_type_enum_pkey'
 }
+
+export enum IdentitiesLegalIdTypeEnums_Enum {
+  /** Drivers license document type. */
+  DrivingLicense = 'driving_license',
+  /** ID card document type. */
+  IdCard = 'id_card',
+  /** Passport document type. */
+  Passport = 'passport'
+}
+
+/** Boolean expression to compare columns of type "IdentitiesLegalIdTypeEnums_enum". All fields are combined with logical 'AND'. */
+export type IdentitiesLegalIdTypeEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
+  _in?: InputMaybe<Array<IdentitiesLegalIdTypeEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
+  _nin?: InputMaybe<Array<IdentitiesLegalIdTypeEnums_Enum>>;
+};
 
 /** input type for inserting data into table "identities_legal_id_type_enum" */
 export type IdentitiesLegalIdTypeEnums_Insert_Input = {
@@ -3208,7 +3718,7 @@ export type IdentitiesLegalIdTypeEnums_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: IdentitiesLegalIdTypeEnums */
+/** primary key columns input for table: identities_legal_id_type_enum */
 export type IdentitiesLegalIdTypeEnums_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -3227,6 +3737,20 @@ export type IdentitiesLegalIdTypeEnums_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "IdentitiesLegalIdTypeEnums" */
+export type IdentitiesLegalIdTypeEnums_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: IdentitiesLegalIdTypeEnums_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type IdentitiesLegalIdTypeEnums_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "identities_legal_id_type_enum" */
 export enum IdentitiesLegalIdTypeEnums_Update_Column {
   /** column name */
@@ -3234,6 +3758,12 @@ export enum IdentitiesLegalIdTypeEnums_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type IdentitiesLegalIdTypeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<IdentitiesLegalIdTypeEnums_Set_Input>;
+  where: IdentitiesLegalIdTypeEnums_Bool_Exp;
+};
 
 /** columns and relationships of "images" */
 export type Images = {
@@ -3305,9 +3835,9 @@ export type Images_Bool_Exp = {
 
 /** unique or primary key constraints on table "images" */
 export enum Images_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "resource_name" */
   ImagesResourceNameKey = 'images_resource_name_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModulesImagesPkey = 'visualJudgementModulesImages_pkey'
 }
 
@@ -3371,7 +3901,7 @@ export type Images_Order_By = {
   visualJudgementModuleImages_aggregate?: InputMaybe<VisualJudgementModuleImages_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: Images */
+/** primary key columns input for table: images */
 export type Images_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -3397,6 +3927,23 @@ export type Images_Set_Input = {
   url?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "Images" */
+export type Images_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Images_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Images_Stream_Cursor_Value_Input = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  /** This is a unique identifier, usually provided externally, which is common across all versions of a particular image. For example, this could be the S3 bucket name and key, without version; or this could be the bucket name and object name in GCS without the generation number. */
+  resourceName?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "images" */
 export enum Images_Update_Column {
   /** column name */
@@ -3409,6 +3956,35 @@ export enum Images_Update_Column {
   Url = 'url'
 }
 
+export type Images_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Images_Set_Input>;
+  where: Images_Bool_Exp;
+};
+
+export type IntFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  contains?: InputMaybe<Scalars['Int']>;
+  containsi?: InputMaybe<Scalars['Int']>;
+  endsWith?: InputMaybe<Scalars['Int']>;
+  eq?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  ne?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<IntFilterInput>;
+  notContains?: InputMaybe<Scalars['Int']>;
+  notContainsi?: InputMaybe<Scalars['Int']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  startsWith?: InputMaybe<Scalars['Int']>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']>;
@@ -3420,6 +3996,29 @@ export type Int_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['Int']>;
   _neq?: InputMaybe<Scalars['Int']>;
   _nin?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type JsonFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  contains?: InputMaybe<Scalars['JSON']>;
+  containsi?: InputMaybe<Scalars['JSON']>;
+  endsWith?: InputMaybe<Scalars['JSON']>;
+  eq?: InputMaybe<Scalars['JSON']>;
+  gt?: InputMaybe<Scalars['JSON']>;
+  gte?: InputMaybe<Scalars['JSON']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  lt?: InputMaybe<Scalars['JSON']>;
+  lte?: InputMaybe<Scalars['JSON']>;
+  ne?: InputMaybe<Scalars['JSON']>;
+  not?: InputMaybe<JsonFilterInput>;
+  notContains?: InputMaybe<Scalars['JSON']>;
+  notContainsi?: InputMaybe<Scalars['JSON']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
+  startsWith?: InputMaybe<Scalars['JSON']>;
 };
 
 /** columns and relationships of "module_instructions" */
@@ -3481,7 +4080,7 @@ export type ModuleInstructions_Bool_Exp = {
 
 /** unique or primary key constraints on table "module_instructions" */
 export enum ModuleInstructions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   DataServiceInstructionsPkey = 'data_service_instructions_pkey'
 }
 
@@ -3547,7 +4146,7 @@ export type ModuleInstructions_Order_By = {
   moduleId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: ModuleInstructions */
+/** primary key columns input for table: module_instructions */
 export type ModuleInstructions_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -3569,6 +4168,21 @@ export type ModuleInstructions_Set_Input = {
   moduleId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "ModuleInstructions" */
+export type ModuleInstructions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: ModuleInstructions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type ModuleInstructions_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  instructionsMarkdown?: InputMaybe<Scalars['String']>;
+  moduleId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "module_instructions" */
 export enum ModuleInstructions_Update_Column {
   /** column name */
@@ -3579,10 +4193,17 @@ export enum ModuleInstructions_Update_Column {
   ModuleId = 'moduleId'
 }
 
+export type ModuleInstructions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ModuleInstructions_Set_Input>;
+  where: ModuleInstructions_Bool_Exp;
+};
+
 /** columns and relationships of "modules" */
 export type Modules = {
   __typename?: 'Modules';
   description?: Maybe<Scalars['String']>;
+  faqs?: Maybe<VanaConnectFaqEntityResponseCollection>;
   iconURL: Scalars['String'];
   id: Scalars['uuid'];
   isActive: Scalars['Boolean'];
@@ -3600,6 +4221,15 @@ export type Modules = {
   usersModules: Array<UsersModules>;
   /** An aggregate relationship */
   usersModules_aggregate: UsersModules_Aggregate;
+};
+
+
+/** columns and relationships of "modules" */
+export type ModulesFaqsArgs = {
+  filters?: InputMaybe<VanaConnectFaqFiltersInput_Remote_Rel_Modulesfaqs>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -3702,9 +4332,9 @@ export type Modules_Bool_Exp = {
 
 /** unique or primary key constraints on table "modules" */
 export enum Modules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   DataServicesPkey = 'data_services_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   ModulesNameKey = 'modules_name_key'
 }
 
@@ -3777,7 +4407,7 @@ export type Modules_Order_By = {
   usersModules_aggregate?: InputMaybe<UsersModules_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: Modules */
+/** primary key columns input for table: modules */
 export type Modules_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -3808,6 +4438,24 @@ export type Modules_Set_Input = {
   urlToDownloadData?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "Modules" */
+export type Modules_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Modules_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Modules_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  iconURL?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  urlToDownloadData?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "modules" */
 export enum Modules_Update_Column {
   /** column name */
@@ -3823,6 +4471,27 @@ export enum Modules_Update_Column {
   /** column name */
   UrlToDownloadData = 'urlToDownloadData'
 }
+
+export type Modules_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Modules_Set_Input>;
+  where: Modules_Bool_Exp;
+};
+
+export type Pagination = {
+  __typename?: 'Pagination';
+  page: Scalars['Int'];
+  pageCount: Scalars['Int'];
+  pageSize: Scalars['Int'];
+  total: Scalars['Int'];
+};
+
+export type PaginationArg = {
+  limit?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+  pageSize?: InputMaybe<Scalars['Int']>;
+  start?: InputMaybe<Scalars['Int']>;
+};
 
 /** columns and relationships of "project_statuses" */
 export type ProjectStatuses = {
@@ -3864,9 +4533,24 @@ export type ProjectStatuses_Bool_Exp = {
 
 /** unique or primary key constraints on table "project_statuses" */
 export enum ProjectStatuses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   ProjectStatusesPkey = 'project_statuses_pkey'
 }
+
+export enum ProjectStatuses_Enum {
+  Compensated = 'COMPENSATED',
+  Complete = 'COMPLETE',
+  InProgress = 'IN_PROGRESS'
+}
+
+/** Boolean expression to compare columns of type "ProjectStatuses_enum". All fields are combined with logical 'AND'. */
+export type ProjectStatuses_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<ProjectStatuses_Enum>;
+  _in?: InputMaybe<Array<ProjectStatuses_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<ProjectStatuses_Enum>;
+  _nin?: InputMaybe<Array<ProjectStatuses_Enum>>;
+};
 
 /** input type for inserting data into table "project_statuses" */
 export type ProjectStatuses_Insert_Input = {
@@ -3910,7 +4594,7 @@ export type ProjectStatuses_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: ProjectStatuses */
+/** primary key columns input for table: project_statuses */
 export type ProjectStatuses_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -3929,6 +4613,20 @@ export type ProjectStatuses_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "ProjectStatuses" */
+export type ProjectStatuses_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: ProjectStatuses_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type ProjectStatuses_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "project_statuses" */
 export enum ProjectStatuses_Update_Column {
   /** column name */
@@ -3936,6 +4634,22 @@ export enum ProjectStatuses_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type ProjectStatuses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<ProjectStatuses_Set_Input>;
+  where: ProjectStatuses_Bool_Exp;
+};
+
+export enum PublicationState {
+  Live = 'LIVE',
+  Preview = 'PREVIEW'
+}
+
+export type ResponseCollectionMeta = {
+  __typename?: 'ResponseCollectionMeta';
+  pagination: Pagination;
+};
 
 /** columns and relationships of "sessions" */
 export type Sessions = {
@@ -4008,7 +4722,7 @@ export type Sessions_Bool_Exp = {
 
 /** unique or primary key constraints on table "sessions" */
 export enum Sessions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   SessionsPkey = 'sessions_pkey'
 }
 
@@ -4110,7 +4824,7 @@ export type Sessions_Order_By = {
   workerId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: Sessions */
+/** primary key columns input for table: sessions */
 export type Sessions_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -4150,6 +4864,27 @@ export type Sessions_Set_Input = {
   workerId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "Sessions" */
+export type Sessions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Sessions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Sessions_Stream_Cursor_Value_Input = {
+  clientIpAddress?: InputMaybe<Scalars['String']>;
+  clientUserAgent?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  expiresAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  lastActiveAt?: InputMaybe<Scalars['timestamptz']>;
+  removedAt?: InputMaybe<Scalars['timestamptz']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  workerId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "sessions" */
 export enum Sessions_Update_Column {
   /** column name */
@@ -4171,6 +4906,207 @@ export enum Sessions_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type Sessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Sessions_Set_Input>;
+  where: Sessions_Bool_Exp;
+};
+
+export type StrapiModule = {
+  __typename?: 'StrapiModule';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  iconURL?: Maybe<Scalars['String']>;
+  instructions?: Maybe<Scalars['String']>;
+  isActive?: Maybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  urlToDownloadData?: Maybe<Scalars['String']>;
+};
+
+export type StrapiModuleEntity = {
+  __typename?: 'StrapiModuleEntity';
+  attributes?: Maybe<StrapiModule>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type StrapiModuleEntityResponse = {
+  __typename?: 'StrapiModuleEntityResponse';
+  data?: Maybe<StrapiModuleEntity>;
+};
+
+export type StrapiModuleEntityResponseCollection = {
+  __typename?: 'StrapiModuleEntityResponseCollection';
+  data: Array<StrapiModuleEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type StrapiModuleFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<StrapiModuleFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  iconURL?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  instructions?: InputMaybe<StringFilterInput>;
+  isActive?: InputMaybe<BooleanFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<StrapiModuleFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<StrapiModuleFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  urlToDownloadData?: InputMaybe<StringFilterInput>;
+};
+
+export type StrapiModuleInput = {
+  description?: InputMaybe<Scalars['String']>;
+  iconURL?: InputMaybe<Scalars['String']>;
+  instructions?: InputMaybe<Scalars['String']>;
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  urlToDownloadData?: InputMaybe<Scalars['String']>;
+};
+
+export type StrapiProject = {
+  __typename?: 'StrapiProject';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  isActive?: Maybe<Scalars['Boolean']>;
+  longDescription?: Maybe<Scalars['String']>;
+  payoutPerUser?: Maybe<Scalars['Float']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  shortDescription?: Maybe<Scalars['String']>;
+  timeToCompleteInMinutes?: Maybe<Scalars['Int']>;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type StrapiProjectEntity = {
+  __typename?: 'StrapiProjectEntity';
+  attributes?: Maybe<StrapiProject>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type StrapiProjectEntityResponse = {
+  __typename?: 'StrapiProjectEntityResponse';
+  data?: Maybe<StrapiProjectEntity>;
+};
+
+export type StrapiProjectEntityResponseCollection = {
+  __typename?: 'StrapiProjectEntityResponseCollection';
+  data: Array<StrapiProjectEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type StrapiProjectFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<StrapiProjectFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  isActive?: InputMaybe<BooleanFilterInput>;
+  longDescription?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<StrapiProjectFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<StrapiProjectFiltersInput>>>;
+  payoutPerUser?: InputMaybe<FloatFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  shortDescription?: InputMaybe<StringFilterInput>;
+  timeToCompleteInMinutes?: InputMaybe<IntFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type StrapiProjectFiltersInput_Remote_Rel_Marketplace_ProjectsstrapiProject = {
+  and?: InputMaybe<Array<InputMaybe<StrapiProjectFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  isActive?: InputMaybe<BooleanFilterInput>;
+  longDescription?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<StrapiProjectFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<StrapiProjectFiltersInput>>>;
+  payoutPerUser?: InputMaybe<FloatFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  shortDescription?: InputMaybe<StringFilterInput>;
+  timeToCompleteInMinutes?: InputMaybe<IntFilterInput>;
+  title?: InputMaybe<StringFilterInput_Remote_Rel_Marketplace_ProjectsstrapiProject>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type StrapiProjectInput = {
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  longDescription?: InputMaybe<Scalars['String']>;
+  payoutPerUser?: InputMaybe<Scalars['Float']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  shortDescription?: InputMaybe<Scalars['String']>;
+  timeToCompleteInMinutes?: InputMaybe<Scalars['Int']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+export type StringFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  containsi?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  ne?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<StringFilterInput>;
+  notContains?: InputMaybe<Scalars['String']>;
+  notContainsi?: InputMaybe<Scalars['String']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type StringFilterInput_Remote_Rel_Marketplace_ProjectsstrapiProject = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  containsi?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  ne?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<StringFilterInput>;
+  notContains?: InputMaybe<Scalars['String']>;
+  notContainsi?: InputMaybe<Scalars['String']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type StringFilterInput_Remote_Rel_Modulesfaqs = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  between?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contains?: InputMaybe<Scalars['String']>;
+  containsi?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  ne?: InputMaybe<Scalars['String']>;
+  not?: InputMaybe<StringFilterInput>;
+  notContains?: InputMaybe<Scalars['String']>;
+  notContainsi?: InputMaybe<Scalars['String']>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  notNull?: InputMaybe<Scalars['Boolean']>;
+  null?: InputMaybe<Scalars['Boolean']>;
+  or?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  startsWith?: InputMaybe<Scalars['String']>;
+};
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
@@ -4245,9 +5181,33 @@ export type StripeIdentitySessionErrorCodeEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_identity_session_error_code_enum" */
 export enum StripeIdentitySessionErrorCodeEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   StripeIdentitySessionErrorCodeEnumPkey = 'stripe_identity_session_error_code_enum_pkey'
 }
+
+export enum StripeIdentitySessionErrorCodeEnums_Enum {
+  /** 	The provided identity document has expired. */
+  DocumentExpired = 'document_expired',
+  /** The provided identity document isn’t one of the session’s allowed document types. */
+  DocumentTypeNotSupported = 'document_type_not_supported',
+  /** Stripe couldn’t verify the provided identity document. */
+  DocumentUnverifiedOther = 'document_unverified_other',
+  /** 	The provided document didn’t contain enough data to match against the ID number. */
+  IdNumberInsufficientDocumentData = 'id_number_insufficient_document_data',
+  /** The information provided couldn’t be matched against global databases. */
+  IdNumberMismatch = 'id_number_mismatch',
+  /** Stripe couldn’t verify the provided ID number. */
+  IdNumberUnverifiedOther = 'id_number_unverified_other'
+}
+
+/** Boolean expression to compare columns of type "StripeIdentitySessionErrorCodeEnums_enum". All fields are combined with logical 'AND'. */
+export type StripeIdentitySessionErrorCodeEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
+  _in?: InputMaybe<Array<StripeIdentitySessionErrorCodeEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
+  _nin?: InputMaybe<Array<StripeIdentitySessionErrorCodeEnums_Enum>>;
+};
 
 /** input type for inserting data into table "stripe_identity_session_error_code_enum" */
 export type StripeIdentitySessionErrorCodeEnums_Insert_Input = {
@@ -4298,7 +5258,7 @@ export type StripeIdentitySessionErrorCodeEnums_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: StripeIdentitySessionErrorCodeEnums */
+/** primary key columns input for table: stripe_identity_session_error_code_enum */
 export type StripeIdentitySessionErrorCodeEnums_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -4317,6 +5277,20 @@ export type StripeIdentitySessionErrorCodeEnums_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "StripeIdentitySessionErrorCodeEnums" */
+export type StripeIdentitySessionErrorCodeEnums_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: StripeIdentitySessionErrorCodeEnums_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type StripeIdentitySessionErrorCodeEnums_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "stripe_identity_session_error_code_enum" */
 export enum StripeIdentitySessionErrorCodeEnums_Update_Column {
   /** column name */
@@ -4324,6 +5298,12 @@ export enum StripeIdentitySessionErrorCodeEnums_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type StripeIdentitySessionErrorCodeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Set_Input>;
+  where: StripeIdentitySessionErrorCodeEnums_Bool_Exp;
+};
 
 /** status of the initiated Stripe Identity verification session */
 export type StripeIdentitySessionStatusEnums = {
@@ -4365,9 +5345,35 @@ export type StripeIdentitySessionStatusEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_identity_session_status_enum" */
 export enum StripeIdentitySessionStatusEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   StripeIdentitySessionStatusEnumPkey = 'stripe_identity_session_status_enum_pkey'
 }
+
+export enum StripeIdentitySessionStatusEnums_Enum {
+  /** The session has been canceled and future submission attempts have been disabled.  */
+  Canceled = 'canceled',
+  /** The session was created. */
+  Created = 'created',
+  /** The user has not started a session. */
+  NotStarted = 'not_started',
+  /** The user has successfully submitted their information, and verification checks have started processing. */
+  Processing = 'processing',
+  /** The session was redacted. */
+  Redacted = 'redacted',
+  /** Processing of all the verification checks have completed, and at least one of the checks failed. */
+  RequiresInput = 'requires_input',
+  /** Processing of all the verification checks have completed, and they’re all successfully verified. */
+  Verified = 'verified'
+}
+
+/** Boolean expression to compare columns of type "StripeIdentitySessionStatusEnums_enum". All fields are combined with logical 'AND'. */
+export type StripeIdentitySessionStatusEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
+  _in?: InputMaybe<Array<StripeIdentitySessionStatusEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
+  _nin?: InputMaybe<Array<StripeIdentitySessionStatusEnums_Enum>>;
+};
 
 /** input type for inserting data into table "stripe_identity_session_status_enum" */
 export type StripeIdentitySessionStatusEnums_Insert_Input = {
@@ -4418,7 +5424,7 @@ export type StripeIdentitySessionStatusEnums_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: StripeIdentitySessionStatusEnums */
+/** primary key columns input for table: stripe_identity_session_status_enum */
 export type StripeIdentitySessionStatusEnums_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -4437,6 +5443,20 @@ export type StripeIdentitySessionStatusEnums_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "StripeIdentitySessionStatusEnums" */
+export type StripeIdentitySessionStatusEnums_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: StripeIdentitySessionStatusEnums_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type StripeIdentitySessionStatusEnums_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "stripe_identity_session_status_enum" */
 export enum StripeIdentitySessionStatusEnums_Update_Column {
   /** column name */
@@ -4444,6 +5464,12 @@ export enum StripeIdentitySessionStatusEnums_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type StripeIdentitySessionStatusEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionStatusEnums_Set_Input>;
+  where: StripeIdentitySessionStatusEnums_Bool_Exp;
+};
 
 /** type of verification session initiated */
 export type StripeIdentitySessionTypeEnums = {
@@ -4485,9 +5511,25 @@ export type StripeIdentitySessionTypeEnums_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_identity_session_type_enum" */
 export enum StripeIdentitySessionTypeEnums_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   StripeIdentitySessionTypeEnumPkey = 'stripe_identity_session_type_enum_pkey'
 }
+
+export enum StripeIdentitySessionTypeEnums_Enum {
+  /** Document check. */
+  Document = 'document',
+  /** ID number check. */
+  IdNumber = 'id_number'
+}
+
+/** Boolean expression to compare columns of type "StripeIdentitySessionTypeEnums_enum". All fields are combined with logical 'AND'. */
+export type StripeIdentitySessionTypeEnums_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
+  _in?: InputMaybe<Array<StripeIdentitySessionTypeEnums_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
+  _nin?: InputMaybe<Array<StripeIdentitySessionTypeEnums_Enum>>;
+};
 
 /** input type for inserting data into table "stripe_identity_session_type_enum" */
 export type StripeIdentitySessionTypeEnums_Insert_Input = {
@@ -4538,7 +5580,7 @@ export type StripeIdentitySessionTypeEnums_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: StripeIdentitySessionTypeEnums */
+/** primary key columns input for table: stripe_identity_session_type_enum */
 export type StripeIdentitySessionTypeEnums_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -4557,6 +5599,20 @@ export type StripeIdentitySessionTypeEnums_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "StripeIdentitySessionTypeEnums" */
+export type StripeIdentitySessionTypeEnums_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: StripeIdentitySessionTypeEnums_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type StripeIdentitySessionTypeEnums_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "stripe_identity_session_type_enum" */
 export enum StripeIdentitySessionTypeEnums_Update_Column {
   /** column name */
@@ -4564,6 +5620,12 @@ export enum StripeIdentitySessionTypeEnums_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type StripeIdentitySessionTypeEnums_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeIdentitySessionTypeEnums_Set_Input>;
+  where: StripeIdentitySessionTypeEnums_Bool_Exp;
+};
 
 /** All stripe identity verification sessions and statuses  */
 export type StripeVerificationSessions = {
@@ -4574,13 +5636,13 @@ export type StripeVerificationSessions = {
   /** unique ID for the initiated Stripe Identity verification session */
   sessionId: Scalars['String'];
   /** machine-readable error code if a check has failed */
-  sessionLastErrorCode?: Maybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
+  sessionLastErrorCode?: Maybe<StripeIdentitySessionErrorCodeEnums_Enum>;
   /** last error in human readable format */
   sessionLastErrorMessage?: Maybe<Scalars['String']>;
   /** status of the initiated Stripe Identity verification session */
-  sessionStatus: Stripe_Identity_Session_Status_Enum_Enum;
+  sessionStatus: StripeIdentitySessionStatusEnums_Enum;
   /** type of verification session initiated */
-  sessionType: Stripe_Identity_Session_Type_Enum_Enum;
+  sessionType: StripeIdentitySessionTypeEnums_Enum;
   /** An object relationship */
   stripeIdentitySessionErrorCodeEnum?: Maybe<StripeIdentitySessionErrorCodeEnums>;
   /** An object relationship */
@@ -4662,10 +5724,10 @@ export type StripeVerificationSessions_Bool_Exp = {
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   sessionId?: InputMaybe<String_Comparison_Exp>;
-  sessionLastErrorCode?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum_Comparison_Exp>;
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum_Comparison_Exp>;
   sessionLastErrorMessage?: InputMaybe<String_Comparison_Exp>;
-  sessionStatus?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum_Comparison_Exp>;
-  sessionType?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum_Comparison_Exp>;
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum_Comparison_Exp>;
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum_Comparison_Exp>;
   stripeIdentitySessionErrorCodeEnum?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Bool_Exp>;
   stripeIdentitySessionStatusEnum?: InputMaybe<StripeIdentitySessionStatusEnums_Bool_Exp>;
   stripeIdentitySessionTypeEnum?: InputMaybe<StripeIdentitySessionTypeEnums_Bool_Exp>;
@@ -4677,9 +5739,9 @@ export type StripeVerificationSessions_Bool_Exp = {
 
 /** unique or primary key constraints on table "stripe_verification_sessions" */
 export enum StripeVerificationSessions_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   StripeVerificationSessionsPkey = 'stripe_verification_sessions_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "session_id" */
   StripeVerificationSessionsSessionIdKey = 'stripe_verification_sessions_session_id_key'
 }
 
@@ -4691,13 +5753,13 @@ export type StripeVerificationSessions_Insert_Input = {
   /** unique ID for the initiated Stripe Identity verification session */
   sessionId?: InputMaybe<Scalars['String']>;
   /** machine-readable error code if a check has failed */
-  sessionLastErrorCode?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
   /** last error in human readable format */
   sessionLastErrorMessage?: InputMaybe<Scalars['String']>;
   /** status of the initiated Stripe Identity verification session */
-  sessionStatus?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
   /** type of verification session initiated */
-  sessionType?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
   stripeIdentitySessionErrorCodeEnum?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Obj_Rel_Insert_Input>;
   stripeIdentitySessionStatusEnum?: InputMaybe<StripeIdentitySessionStatusEnums_Obj_Rel_Insert_Input>;
   stripeIdentitySessionTypeEnum?: InputMaybe<StripeIdentitySessionTypeEnums_Obj_Rel_Insert_Input>;
@@ -4807,7 +5869,7 @@ export type StripeVerificationSessions_Order_By = {
   userIdentities_aggregate?: InputMaybe<UserIdentities_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: StripeVerificationSessions */
+/** primary key columns input for table: stripe_verification_sessions */
 export type StripeVerificationSessions_Pk_Columns_Input = {
   /** local uuid for the table */
   id: Scalars['uuid'];
@@ -4843,13 +5905,41 @@ export type StripeVerificationSessions_Set_Input = {
   /** unique ID for the initiated Stripe Identity verification session */
   sessionId?: InputMaybe<Scalars['String']>;
   /** machine-readable error code if a check has failed */
-  sessionLastErrorCode?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
   /** last error in human readable format */
   sessionLastErrorMessage?: InputMaybe<Scalars['String']>;
   /** status of the initiated Stripe Identity verification session */
-  sessionStatus?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
   /** type of verification session initiated */
-  sessionType?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  /** uuid of the participant of the session */
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "StripeVerificationSessions" */
+export type StripeVerificationSessions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: StripeVerificationSessions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type StripeVerificationSessions_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  /** local uuid for the table */
+  id?: InputMaybe<Scalars['uuid']>;
+  /** unique ID for the initiated Stripe Identity verification session */
+  sessionId?: InputMaybe<Scalars['String']>;
+  /** machine-readable error code if a check has failed */
+  sessionLastErrorCode?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Enum>;
+  /** last error in human readable format */
+  sessionLastErrorMessage?: InputMaybe<Scalars['String']>;
+  /** status of the initiated Stripe Identity verification session */
+  sessionStatus?: InputMaybe<StripeIdentitySessionStatusEnums_Enum>;
+  /** type of verification session initiated */
+  sessionType?: InputMaybe<StripeIdentitySessionTypeEnums_Enum>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   /** uuid of the participant of the session */
   userId?: InputMaybe<Scalars['uuid']>;
@@ -4876,6 +5966,12 @@ export enum StripeVerificationSessions_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type StripeVerificationSessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<StripeVerificationSessions_Set_Input>;
+  where: StripeVerificationSessions_Bool_Exp;
+};
 
 /** columns and relationships of "survey_responses" */
 export type SurveyResponses = {
@@ -4947,11 +6043,11 @@ export type SurveyResponses_Bool_Exp = {
 
 /** unique or primary key constraints on table "survey_responses" */
 export enum SurveyResponses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   SurveyResponsesPkey = 'survey_responses_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "qualtrics_response_id" */
   SurveyResponsesQualtricsResponseIdKey = 'survey_responses_qualtrics_response_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "survey_url", "user_id" */
   SurveyResponsesUserIdSurveyUrlKey = 'survey_responses_user_id_survey_url_key'
 }
 
@@ -5039,7 +6135,7 @@ export type SurveyResponses_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: SurveyResponses */
+/** primary key columns input for table: survey_responses */
 export type SurveyResponses_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -5073,6 +6169,25 @@ export type SurveyResponses_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "SurveyResponses" */
+export type SurveyResponses_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: SurveyResponses_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type SurveyResponses_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  passedValidation?: InputMaybe<Scalars['Boolean']>;
+  qualtricsResponseId?: InputMaybe<Scalars['String']>;
+  surveyUrl?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "survey_responses" */
 export enum SurveyResponses_Update_Column {
   /** column name */
@@ -5090,6 +6205,12 @@ export enum SurveyResponses_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type SurveyResponses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<SurveyResponses_Set_Input>;
+  where: SurveyResponses_Bool_Exp;
+};
 
 /** columns and relationships of "surveys" */
 export type Surveys = {
@@ -5183,9 +6304,9 @@ export type Surveys_Bool_Exp = {
 
 /** unique or primary key constraints on table "surveys" */
 export enum Surveys_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   SurveysPkey = 'surveys_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "survey_url" */
   SurveysSurveyUrlKey = 'surveys_survey_url_key'
 }
 
@@ -5284,7 +6405,7 @@ export type Surveys_Order_By = {
   updatedAt?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: Surveys */
+/** primary key columns input for table: surveys */
 export type Surveys_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -5318,6 +6439,25 @@ export type Surveys_Set_Input = {
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
 
+/** Streaming cursor of the table "Surveys" */
+export type Surveys_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Surveys_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Surveys_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fireboaProjectModuleId?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  surveyResponsesUrl?: InputMaybe<Scalars['String']>;
+  surveyUrl?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** update columns of table "surveys" */
 export enum Surveys_Update_Column {
   /** column name */
@@ -5336,6 +6476,90 @@ export enum Surveys_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Surveys_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Surveys_Set_Input>;
+  where: Surveys_Bool_Exp;
+};
+
+export type UploadFile = {
+  __typename?: 'UploadFile';
+  alternativeText?: Maybe<Scalars['String']>;
+  caption?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  ext?: Maybe<Scalars['String']>;
+  formats?: Maybe<Scalars['JSON']>;
+  hash: Scalars['String'];
+  height?: Maybe<Scalars['Int']>;
+  mime: Scalars['String'];
+  name: Scalars['String'];
+  previewUrl?: Maybe<Scalars['String']>;
+  provider: Scalars['String'];
+  provider_metadata?: Maybe<Scalars['JSON']>;
+  related?: Maybe<Array<Maybe<GenericMorph>>>;
+  size: Scalars['Float'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  url: Scalars['String'];
+  width?: Maybe<Scalars['Int']>;
+};
+
+export type UploadFileEntity = {
+  __typename?: 'UploadFileEntity';
+  attributes?: Maybe<UploadFile>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type UploadFileEntityResponse = {
+  __typename?: 'UploadFileEntityResponse';
+  data?: Maybe<UploadFileEntity>;
+};
+
+export type UploadFileEntityResponseCollection = {
+  __typename?: 'UploadFileEntityResponseCollection';
+  data: Array<UploadFileEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type UploadFileFiltersInput = {
+  alternativeText?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<UploadFileFiltersInput>>>;
+  caption?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  ext?: InputMaybe<StringFilterInput>;
+  formats?: InputMaybe<JsonFilterInput>;
+  hash?: InputMaybe<StringFilterInput>;
+  height?: InputMaybe<IntFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  mime?: InputMaybe<StringFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<UploadFileFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UploadFileFiltersInput>>>;
+  previewUrl?: InputMaybe<StringFilterInput>;
+  provider?: InputMaybe<StringFilterInput>;
+  provider_metadata?: InputMaybe<JsonFilterInput>;
+  size?: InputMaybe<FloatFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  url?: InputMaybe<StringFilterInput>;
+  width?: InputMaybe<IntFilterInput>;
+};
+
+export type UploadFileInput = {
+  alternativeText?: InputMaybe<Scalars['String']>;
+  caption?: InputMaybe<Scalars['String']>;
+  ext?: InputMaybe<Scalars['String']>;
+  formats?: InputMaybe<Scalars['JSON']>;
+  hash?: InputMaybe<Scalars['String']>;
+  height?: InputMaybe<Scalars['Int']>;
+  mime?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  previewUrl?: InputMaybe<Scalars['String']>;
+  provider?: InputMaybe<Scalars['String']>;
+  provider_metadata?: InputMaybe<Scalars['JSON']>;
+  size?: InputMaybe<Scalars['Float']>;
+  url?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Int']>;
+};
+
 /** A users legal information as verified by a 3rd party */
 export type UserIdentities = {
   __typename?: 'UserIdentities';
@@ -5353,7 +6577,7 @@ export type UserIdentities = {
   /** The type of id number supplied (includes country code as a prefix) */
   legalIdNumberType?: Maybe<Scalars['String']>;
   /** The document type that the user supplied, verified by 3rd party */
-  legalIdType: Identities_Legal_Id_Type_Enum_Enum;
+  legalIdType: IdentitiesLegalIdTypeEnums_Enum;
   /** Last name of user-supplied document, verified by 3rd party */
   legalLastName?: Maybe<Scalars['String']>;
   /** Local zip code from the document */
@@ -5417,7 +6641,7 @@ export type UserIdentities_Bool_Exp = {
   legalIdCountry?: InputMaybe<String_Comparison_Exp>;
   legalIdNumber?: InputMaybe<String_Comparison_Exp>;
   legalIdNumberType?: InputMaybe<String_Comparison_Exp>;
-  legalIdType?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum_Comparison_Exp>;
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum_Comparison_Exp>;
   legalLastName?: InputMaybe<String_Comparison_Exp>;
   legalZipCode?: InputMaybe<String_Comparison_Exp>;
   stripeVerificationSession?: InputMaybe<StripeVerificationSessions_Bool_Exp>;
@@ -5429,9 +6653,9 @@ export type UserIdentities_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_identities" */
 export enum UserIdentities_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "legal_id_country", "legal_id_number", "legal_id_type" */
   UserIdentitiesLegalIdNumberLegalIdTypeLegalIdCounKey = 'user_identities_legal_id_number_legal_id_type_legal_id_coun_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserIdentitiesPkey = 'user_identities_pkey'
 }
 
@@ -5450,7 +6674,7 @@ export type UserIdentities_Insert_Input = {
   /** The type of id number supplied (includes country code as a prefix) */
   legalIdNumberType?: InputMaybe<Scalars['String']>;
   /** The document type that the user supplied, verified by 3rd party */
-  legalIdType?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
   /** Last name of user-supplied document, verified by 3rd party */
   legalLastName?: InputMaybe<Scalars['String']>;
   /** Local zip code from the document */
@@ -5597,7 +6821,7 @@ export type UserIdentities_Order_By = {
   userID?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: UserIdentities */
+/** primary key columns input for table: user_identities */
 export type UserIdentities_Pk_Columns_Input = {
   /** Local uuid for the table */
   id: Scalars['uuid'];
@@ -5645,7 +6869,41 @@ export type UserIdentities_Set_Input = {
   /** The type of id number supplied (includes country code as a prefix) */
   legalIdNumberType?: InputMaybe<Scalars['String']>;
   /** The document type that the user supplied, verified by 3rd party */
-  legalIdType?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
+  /** Last name of user-supplied document, verified by 3rd party */
+  legalLastName?: InputMaybe<Scalars['String']>;
+  /** Local zip code from the document */
+  legalZipCode?: InputMaybe<Scalars['String']>;
+  /** Stripe source session ID that was used to build this information */
+  stripeVerificationSessionId?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  /** The uuid of user attached to this identity */
+  userID?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "UserIdentities" */
+export type UserIdentities_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: UserIdentities_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type UserIdentities_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  /** Local uuid for the table */
+  id?: InputMaybe<Scalars['uuid']>;
+  /** First name of user-supplied document, verified by 3rd party */
+  legalFirstName?: InputMaybe<Scalars['String']>;
+  /** Issuing country code */
+  legalIdCountry?: InputMaybe<Scalars['String']>;
+  /** ID number of user-supplied document, verified by 3rd party */
+  legalIdNumber?: InputMaybe<Scalars['String']>;
+  /** The type of id number supplied (includes country code as a prefix) */
+  legalIdNumberType?: InputMaybe<Scalars['String']>;
+  /** The document type that the user supplied, verified by 3rd party */
+  legalIdType?: InputMaybe<IdentitiesLegalIdTypeEnums_Enum>;
   /** Last name of user-supplied document, verified by 3rd party */
   legalLastName?: InputMaybe<Scalars['String']>;
   /** Local zip code from the document */
@@ -5684,6 +6942,12 @@ export enum UserIdentities_Update_Column {
   /** column name */
   UserId = 'userID'
 }
+
+export type UserIdentities_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserIdentities_Set_Input>;
+  where: UserIdentities_Bool_Exp;
+};
 
 /** columns and relationships of "user_module_progress_enum" */
 export type UserModuleStatus = {
@@ -5725,7 +6989,7 @@ export type UserModuleStatus_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_module_progress_enum" */
 export enum UserModuleStatus_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   UserModuleProgressEnumPkey = 'user_module_progress_enum_pkey'
 }
 
@@ -5771,7 +7035,7 @@ export type UserModuleStatus_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: UserModuleStatus */
+/** primary key columns input for table: user_module_progress_enum */
 export type UserModuleStatus_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -5790,6 +7054,20 @@ export type UserModuleStatus_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "UserModuleStatus" */
+export type UserModuleStatus_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: UserModuleStatus_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type UserModuleStatus_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "user_module_progress_enum" */
 export enum UserModuleStatus_Update_Column {
   /** column name */
@@ -5797,6 +7075,12 @@ export enum UserModuleStatus_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type UserModuleStatus_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserModuleStatus_Set_Input>;
+  where: UserModuleStatus_Bool_Exp;
+};
 
 /** columns and relationships of "user_referrals" */
 export type UserReferrals = {
@@ -5866,9 +7150,9 @@ export type UserReferrals_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_referrals" */
 export enum UserReferrals_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserReferralsPkey = 'user_referrals_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "referred_user_id" */
   UserReferralsReferredUserIdKey = 'user_referrals_referred_user_id_key'
 }
 
@@ -5957,7 +7241,7 @@ export type UserReferrals_Order_By = {
   updatedAt?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: UserReferrals */
+/** primary key columns input for table: user_referrals */
 export type UserReferrals_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -5988,6 +7272,24 @@ export type UserReferrals_Set_Input = {
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
 
+/** Streaming cursor of the table "UserReferrals" */
+export type UserReferrals_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: UserReferrals_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type UserReferrals_Stream_Cursor_Value_Input = {
+  compensationIsComplete?: InputMaybe<Scalars['Boolean']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  referredUserId?: InputMaybe<Scalars['uuid']>;
+  referrerId?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** update columns of table "user_referrals" */
 export enum UserReferrals_Update_Column {
   /** column name */
@@ -6003,6 +7305,12 @@ export enum UserReferrals_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type UserReferrals_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UserReferrals_Set_Input>;
+  where: UserReferrals_Bool_Exp;
+};
 
 /** columns and relationships of "users" */
 export type Users = {
@@ -6343,7 +7651,7 @@ export type UsersImages_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_images" */
 export enum UsersImages_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UsersImagesPkey = 'users_images_pkey'
 }
 
@@ -6407,7 +7715,7 @@ export type UsersImages_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: UsersImages */
+/** primary key columns input for table: users_images */
 export type UsersImages_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -6438,6 +7746,24 @@ export type UsersImages_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "UsersImages" */
+export type UsersImages_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: UsersImages_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type UsersImages_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  imageURL?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "users_images" */
 export enum UsersImages_Update_Column {
   /** column name */
@@ -6453,6 +7779,12 @@ export enum UsersImages_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type UsersImages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UsersImages_Set_Input>;
+  where: UsersImages_Bool_Exp;
+};
 
 /** columns and relationships of "users_modules" */
 export type UsersModules = {
@@ -6562,7 +7894,7 @@ export type UsersModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_modules" */
 export enum UsersModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserServiceDataPkey = 'user_service_data_pkey'
 }
 
@@ -6684,7 +8016,7 @@ export type UsersModules_Order_By = {
   userId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: UsersModules */
+/** primary key columns input for table: users_modules */
 export type UsersModules_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -6773,6 +8105,29 @@ export type UsersModules_Stddev_Samp_Order_By = {
   urlNumber?: InputMaybe<Order_By>;
 };
 
+/** Streaming cursor of the table "UsersModules" */
+export type UsersModules_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: UsersModules_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type UsersModules_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  fileName?: InputMaybe<Scalars['String']>;
+  fileSize?: InputMaybe<Scalars['bigint']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  moduleId?: InputMaybe<Scalars['uuid']>;
+  progress?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  /** A module's data can consist of multiple files */
+  urlNumber?: InputMaybe<Scalars['Int']>;
+  urlToData?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** aggregate sum on columns */
 export type UsersModules_Sum_Fields = {
   __typename?: 'UsersModules_sum_fields';
@@ -6811,6 +8166,14 @@ export enum UsersModules_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type UsersModules_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<UsersModules_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<UsersModules_Set_Input>;
+  where: UsersModules_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type UsersModules_Var_Pop_Fields = {
@@ -6855,6 +8218,220 @@ export type UsersModules_Variance_Order_By = {
   fileSize?: InputMaybe<Order_By>;
   /** A module's data can consist of multiple files */
   urlNumber?: InputMaybe<Order_By>;
+};
+
+export type UsersPermissionsCreateRolePayload = {
+  __typename?: 'UsersPermissionsCreateRolePayload';
+  ok: Scalars['Boolean'];
+};
+
+export type UsersPermissionsDeleteRolePayload = {
+  __typename?: 'UsersPermissionsDeleteRolePayload';
+  ok: Scalars['Boolean'];
+};
+
+export type UsersPermissionsLoginInput = {
+  identifier: Scalars['String'];
+  password: Scalars['String'];
+  provider?: Scalars['String'];
+};
+
+export type UsersPermissionsLoginPayload = {
+  __typename?: 'UsersPermissionsLoginPayload';
+  jwt?: Maybe<Scalars['String']>;
+  user: UsersPermissionsMe;
+};
+
+export type UsersPermissionsMe = {
+  __typename?: 'UsersPermissionsMe';
+  blocked?: Maybe<Scalars['Boolean']>;
+  confirmed?: Maybe<Scalars['Boolean']>;
+  email?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  role?: Maybe<UsersPermissionsMeRole>;
+  username: Scalars['String'];
+};
+
+export type UsersPermissionsMeRole = {
+  __typename?: 'UsersPermissionsMeRole';
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
+};
+
+export type UsersPermissionsPasswordPayload = {
+  __typename?: 'UsersPermissionsPasswordPayload';
+  ok: Scalars['Boolean'];
+};
+
+export type UsersPermissionsPermission = {
+  __typename?: 'UsersPermissionsPermission';
+  action: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  role?: Maybe<UsersPermissionsRoleEntityResponse>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UsersPermissionsPermissionEntity = {
+  __typename?: 'UsersPermissionsPermissionEntity';
+  attributes?: Maybe<UsersPermissionsPermission>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type UsersPermissionsPermissionFiltersInput = {
+  action?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<UsersPermissionsPermissionFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<UsersPermissionsPermissionFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UsersPermissionsPermissionFiltersInput>>>;
+  role?: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type UsersPermissionsPermissionRelationResponseCollection = {
+  __typename?: 'UsersPermissionsPermissionRelationResponseCollection';
+  data: Array<UsersPermissionsPermissionEntity>;
+};
+
+export type UsersPermissionsRegisterInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type UsersPermissionsRole = {
+  __typename?: 'UsersPermissionsRole';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  permissions?: Maybe<UsersPermissionsPermissionRelationResponseCollection>;
+  type?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  users?: Maybe<UsersPermissionsUserRelationResponseCollection>;
+};
+
+
+export type UsersPermissionsRolePermissionsArgs = {
+  filters?: InputMaybe<UsersPermissionsPermissionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type UsersPermissionsRoleUsersArgs = {
+  filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type UsersPermissionsRoleEntity = {
+  __typename?: 'UsersPermissionsRoleEntity';
+  attributes?: Maybe<UsersPermissionsRole>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type UsersPermissionsRoleEntityResponse = {
+  __typename?: 'UsersPermissionsRoleEntityResponse';
+  data?: Maybe<UsersPermissionsRoleEntity>;
+};
+
+export type UsersPermissionsRoleEntityResponseCollection = {
+  __typename?: 'UsersPermissionsRoleEntityResponseCollection';
+  data: Array<UsersPermissionsRoleEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type UsersPermissionsRoleFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<UsersPermissionsRoleFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UsersPermissionsRoleFiltersInput>>>;
+  permissions?: InputMaybe<UsersPermissionsPermissionFiltersInput>;
+  type?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  users?: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type UsersPermissionsRoleInput = {
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  permissions?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  type?: InputMaybe<Scalars['String']>;
+  users?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type UsersPermissionsUpdateRolePayload = {
+  __typename?: 'UsersPermissionsUpdateRolePayload';
+  ok: Scalars['Boolean'];
+};
+
+export type UsersPermissionsUser = {
+  __typename?: 'UsersPermissionsUser';
+  blocked?: Maybe<Scalars['Boolean']>;
+  confirmed?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  provider?: Maybe<Scalars['String']>;
+  role?: Maybe<UsersPermissionsRoleEntityResponse>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  username: Scalars['String'];
+};
+
+export type UsersPermissionsUserEntity = {
+  __typename?: 'UsersPermissionsUserEntity';
+  attributes?: Maybe<UsersPermissionsUser>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type UsersPermissionsUserEntityResponse = {
+  __typename?: 'UsersPermissionsUserEntityResponse';
+  data?: Maybe<UsersPermissionsUserEntity>;
+};
+
+export type UsersPermissionsUserEntityResponseCollection = {
+  __typename?: 'UsersPermissionsUserEntityResponseCollection';
+  data: Array<UsersPermissionsUserEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type UsersPermissionsUserFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
+  blocked?: InputMaybe<BooleanFilterInput>;
+  confirmationToken?: InputMaybe<StringFilterInput>;
+  confirmed?: InputMaybe<BooleanFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  email?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
+  password?: InputMaybe<StringFilterInput>;
+  provider?: InputMaybe<StringFilterInput>;
+  resetPasswordToken?: InputMaybe<StringFilterInput>;
+  role?: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  username?: InputMaybe<StringFilterInput>;
+};
+
+export type UsersPermissionsUserInput = {
+  blocked?: InputMaybe<Scalars['Boolean']>;
+  confirmationToken?: InputMaybe<Scalars['String']>;
+  confirmed?: InputMaybe<Scalars['Boolean']>;
+  email?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  provider?: InputMaybe<Scalars['String']>;
+  resetPasswordToken?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Scalars['ID']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+export type UsersPermissionsUserRelationResponseCollection = {
+  __typename?: 'UsersPermissionsUserRelationResponseCollection';
+  data: Array<UsersPermissionsUserEntity>;
 };
 
 /** aggregated selection of "users" */
@@ -6928,13 +8505,13 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "email_address" */
   UsersEmailAddressKey = 'users_email_address_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "external_id" */
   UsersExternalIdKey = 'users_externalId_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "phone_number" */
   UsersPhoneNumberKey = 'users_phone_number_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UsersPkey = 'users_pkey'
 }
 
@@ -7056,7 +8633,7 @@ export type Users_Order_By = {
   worker?: InputMaybe<Workers_Order_By>;
 };
 
-/** primary key columns input for table: Users */
+/** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -7121,6 +8698,29 @@ export type Users_Stddev_Samp_Fields = {
   fraudScore?: Maybe<Scalars['Float']>;
 };
 
+/** Streaming cursor of the table "Users" */
+export type Users_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Users_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Users_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  emailAddress?: InputMaybe<Scalars['String']>;
+  externalId?: InputMaybe<Scalars['String']>;
+  /** 0: not fraudulent; 1: unknown; 2: suspected fraudulent; 3: likely fraudulent; 4: confirmed fraudulent */
+  fraudScore?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  isSubscribedToNotifications?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  referralSource?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** aggregate sum on columns */
 export type Users_Sum_Fields = {
   __typename?: 'Users_sum_fields';
@@ -7152,6 +8752,14 @@ export enum Users_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Users_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Users_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Users_Var_Pop_Fields = {
   __typename?: 'Users_var_pop_fields';
@@ -7171,6 +8779,66 @@ export type Users_Variance_Fields = {
   __typename?: 'Users_variance_fields';
   /** 0: not fraudulent; 1: unknown; 2: suspected fraudulent; 3: likely fraudulent; 4: confirmed fraudulent */
   fraudScore?: Maybe<Scalars['Float']>;
+};
+
+export type VanaConnectFaq = {
+  __typename?: 'VanaConnectFaq';
+  answer?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  moduleName?: Maybe<Scalars['String']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  question?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type VanaConnectFaqEntity = {
+  __typename?: 'VanaConnectFaqEntity';
+  attributes?: Maybe<VanaConnectFaq>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type VanaConnectFaqEntityResponse = {
+  __typename?: 'VanaConnectFaqEntityResponse';
+  data?: Maybe<VanaConnectFaqEntity>;
+};
+
+export type VanaConnectFaqEntityResponseCollection = {
+  __typename?: 'VanaConnectFaqEntityResponseCollection';
+  data: Array<VanaConnectFaqEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type VanaConnectFaqFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<VanaConnectFaqFiltersInput>>>;
+  answer?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  moduleName?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<VanaConnectFaqFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<VanaConnectFaqFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  question?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type VanaConnectFaqFiltersInput_Remote_Rel_Modulesfaqs = {
+  and?: InputMaybe<Array<InputMaybe<VanaConnectFaqFiltersInput>>>;
+  answer?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  moduleName?: InputMaybe<StringFilterInput_Remote_Rel_Modulesfaqs>;
+  not?: InputMaybe<VanaConnectFaqFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<VanaConnectFaqFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  question?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type VanaConnectFaqInput = {
+  answer?: InputMaybe<Scalars['String']>;
+  moduleName?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  question?: InputMaybe<Scalars['String']>;
 };
 
 /** columns and relationships of "visual_judgement_module_responses" */
@@ -7243,9 +8911,9 @@ export type VisualJudgementModuleResponses_Bool_Exp = {
 
 /** unique or primary key constraints on table "visual_judgement_module_responses" */
 export enum VisualJudgementModuleResponses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModuleResponsesPkey = 'visual_judgement_module_responses_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "visual_judgement_module_image_id", "user_id" */
   VisualJudgementModuleResponsesVisualJudgementModuleImage = 'visual_judgement_module_responses_visual_judgement_module_image'
 }
 
@@ -7329,7 +8997,7 @@ export type VisualJudgementModuleResponses_Order_By = {
   visualJudgementModuleImageId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: VisualJudgementModuleResponses */
+/** primary key columns input for table: visual_judgement_module_responses */
 export type VisualJudgementModuleResponses_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -7363,6 +9031,25 @@ export type VisualJudgementModuleResponses_Set_Input = {
   visualJudgementModuleImageId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "VisualJudgementModuleResponses" */
+export type VisualJudgementModuleResponses_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: VisualJudgementModuleResponses_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type VisualJudgementModuleResponses_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  liked?: InputMaybe<Scalars['Boolean']>;
+  superLiked?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+  visualJudgementModuleImageId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "visual_judgement_module_responses" */
 export enum VisualJudgementModuleResponses_Update_Column {
   /** column name */
@@ -7380,6 +9067,12 @@ export enum VisualJudgementModuleResponses_Update_Column {
   /** column name */
   VisualJudgementModuleImageId = 'visualJudgementModuleImageId'
 }
+
+export type VisualJudgementModuleResponses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModuleResponses_Set_Input>;
+  where: VisualJudgementModuleResponses_Bool_Exp;
+};
 
 /** columns and relationships of "wallets" */
 export type Wallets = {
@@ -7475,7 +9168,7 @@ export type Wallets_Bool_Exp = {
 
 /** unique or primary key constraints on table "wallets" */
 export enum Wallets_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   WalletAddressesPkey = 'wallet_addresses_pkey'
 }
 
@@ -7572,7 +9265,7 @@ export type Wallets_Order_By = {
   workerId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: Wallets */
+/** primary key columns input for table: wallets */
 export type Wallets_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -7609,6 +9302,26 @@ export type Wallets_Set_Input = {
   workerId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "Wallets" */
+export type Wallets_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Wallets_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Wallets_Stream_Cursor_Value_Input = {
+  archived?: InputMaybe<Scalars['Boolean']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  current?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  walletAddress?: InputMaybe<Scalars['String']>;
+  walletType?: InputMaybe<Scalars['String']>;
+  workerId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "wallets" */
 export enum Wallets_Update_Column {
   /** column name */
@@ -7628,6 +9341,12 @@ export enum Wallets_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type Wallets_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Wallets_Set_Input>;
+  where: Wallets_Bool_Exp;
+};
 
 /** columns and relationships of "workers" */
 export type Workers = {
@@ -7843,9 +9562,9 @@ export type Workers_Bool_Exp = {
 
 /** unique or primary key constraints on table "workers" */
 export enum Workers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   WorkersPkey = 'workers_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id" */
   WorkersUserIdKey = 'workers_user_id_key'
 }
 
@@ -7964,7 +9683,7 @@ export type Workers_Order_By = {
   workersSpotify?: InputMaybe<WorkersSpotify_Order_By>;
 };
 
-/** primary key columns input for table: Workers */
+/** primary key columns input for table: workers */
 export type Workers_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -8046,6 +9765,34 @@ export type Workers_Stddev_Samp_Fields = {
   numIncompleteTasks?: Maybe<Scalars['Float']>;
 };
 
+/** Streaming cursor of the table "Workers" */
+export type Workers_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Workers_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Workers_Stream_Cursor_Value_Input = {
+  archived?: InputMaybe<Scalars['Boolean']>;
+  cashOutLockTimestamp?: InputMaybe<Scalars['timestamptz']>;
+  cashedOut?: InputMaybe<Scalars['Int']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  currentAddress?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  lastActive?: InputMaybe<Scalars['timestamptz']>;
+  lastTransactionHash?: InputMaybe<Scalars['String']>;
+  locked?: InputMaybe<Scalars['Boolean']>;
+  masterServicesAgreementAccepted?: InputMaybe<Scalars['Boolean']>;
+  mturkId?: InputMaybe<Scalars['String']>;
+  numIncompleteTasks?: InputMaybe<Scalars['Int']>;
+  projectRecommendationAccepted?: InputMaybe<Scalars['Boolean']>;
+  termsOfServiceAccepted?: InputMaybe<Scalars['Boolean']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** aggregate sum on columns */
 export type Workers_Sum_Fields = {
   __typename?: 'Workers_sum_fields';
@@ -8088,6 +9835,14 @@ export enum Workers_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Workers_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Workers_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Workers_Set_Input>;
+  where: Workers_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type Workers_Var_Pop_Fields = {
@@ -8188,7 +9943,7 @@ export type CashOutMethods_Bool_Exp = {
 
 /** unique or primary key constraints on table "cash_out_methods" */
 export enum CashOutMethods_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   CashOutMethodsPkey = 'cash_out_methods_pkey'
 }
 
@@ -8243,7 +9998,7 @@ export type CashOutMethods_Order_By = {
   name?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: cashOutMethods */
+/** primary key columns input for table: cash_out_methods */
 export type CashOutMethods_Pk_Columns_Input = {
   name: Scalars['String'];
 };
@@ -8262,12 +10017,40 @@ export type CashOutMethods_Set_Input = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "cashOutMethods" */
+export type CashOutMethods_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: CashOutMethods_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type CashOutMethods_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "cash_out_methods" */
 export enum CashOutMethods_Update_Column {
   /** column name */
   Description = 'description',
   /** column name */
   Name = 'name'
+}
+
+export type CashOutMethods_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<CashOutMethods_Set_Input>;
+  where: CashOutMethods_Bool_Exp;
+};
+
+/** ordering argument of a cursor */
+export enum Cursor_Ordering {
+  /** ascending ordering of the cursor */
+  Asc = 'ASC',
+  /** descending ordering of the cursor */
+  Desc = 'DESC'
 }
 
 /** columns and relationships of "data_types" */
@@ -8310,7 +10093,7 @@ export type DatatTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "data_types" */
 export enum DatatTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   DataTypesPkey = 'data_types_pkey'
 }
 
@@ -8356,7 +10139,7 @@ export type DatatTypes_Order_By = {
   name?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: datatTypes */
+/** primary key columns input for table: data_types */
 export type DatatTypes_Pk_Columns_Input = {
   name: Scalars['String'];
 };
@@ -8375,6 +10158,20 @@ export type DatatTypes_Set_Input = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "datatTypes" */
+export type DatatTypes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: DatatTypes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type DatatTypes_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "data_types" */
 export enum DatatTypes_Update_Column {
   /** column name */
@@ -8382,6 +10179,12 @@ export enum DatatTypes_Update_Column {
   /** column name */
   Name = 'name'
 }
+
+export type DatatTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<DatatTypes_Set_Input>;
+  where: DatatTypes_Bool_Exp;
+};
 
 /** columns and relationships of "feature_types" */
 export type FeatureTypes = {
@@ -8423,7 +10226,7 @@ export type FeatureTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "feature_types" */
 export enum FeatureTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   FeatureTypesPkey = 'feature_types_pkey'
 }
 
@@ -8469,7 +10272,7 @@ export type FeatureTypes_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: featureTypes */
+/** primary key columns input for table: feature_types */
 export type FeatureTypes_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -8488,6 +10291,20 @@ export type FeatureTypes_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "featureTypes" */
+export type FeatureTypes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: FeatureTypes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type FeatureTypes_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "feature_types" */
 export enum FeatureTypes_Update_Column {
   /** column name */
@@ -8495,6 +10312,12 @@ export enum FeatureTypes_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type FeatureTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<FeatureTypes_Set_Input>;
+  where: FeatureTypes_Bool_Exp;
+};
 
 /** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
 export type Float8_Comparison_Exp = {
@@ -8549,7 +10372,7 @@ export type Gender_Bool_Exp = {
 
 /** unique or primary key constraints on table "gender" */
 export enum Gender_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GenderPkey = 'gender_pkey'
 }
 
@@ -8614,6 +10437,20 @@ export type Gender_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "gender" */
+export type Gender_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Gender_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Gender_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "gender" */
 export enum Gender_Update_Column {
   /** column name */
@@ -8621,6 +10458,12 @@ export enum Gender_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type Gender_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Gender_Set_Input>;
+  where: Gender_Bool_Exp;
+};
 
 /** columns and relationships of "have_labeled_data_types" */
 export type HaveLabeledDataTypesEnum = {
@@ -8662,7 +10505,7 @@ export type HaveLabeledDataTypesEnum_Bool_Exp = {
 
 /** unique or primary key constraints on table "have_labeled_data_types" */
 export enum HaveLabeledDataTypesEnum_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   HaveLabeledDataTypesPkey = 'have_labeled_data_types_pkey'
 }
 
@@ -8708,7 +10551,7 @@ export type HaveLabeledDataTypesEnum_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: haveLabeledDataTypesEnum */
+/** primary key columns input for table: have_labeled_data_types */
 export type HaveLabeledDataTypesEnum_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -8727,6 +10570,20 @@ export type HaveLabeledDataTypesEnum_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "haveLabeledDataTypesEnum" */
+export type HaveLabeledDataTypesEnum_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: HaveLabeledDataTypesEnum_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type HaveLabeledDataTypesEnum_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "have_labeled_data_types" */
 export enum HaveLabeledDataTypesEnum_Update_Column {
   /** column name */
@@ -8735,22 +10592,10 @@ export enum HaveLabeledDataTypesEnum_Update_Column {
   Value = 'value'
 }
 
-export enum Identities_Legal_Id_Type_Enum_Enum {
-  /** Drivers license document type. */
-  DrivingLicense = 'driving_license',
-  /** ID card document type. */
-  IdCard = 'id_card',
-  /** Passport document type. */
-  Passport = 'passport'
-}
-
-/** Boolean expression to compare columns of type "identities_legal_id_type_enum_enum". All fields are combined with logical 'AND'. */
-export type Identities_Legal_Id_Type_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
-  _in?: InputMaybe<Array<Identities_Legal_Id_Type_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Identities_Legal_Id_Type_Enum_Enum>;
-  _nin?: InputMaybe<Array<Identities_Legal_Id_Type_Enum_Enum>>;
+export type HaveLabeledDataTypesEnum_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<HaveLabeledDataTypesEnum_Set_Input>;
+  where: HaveLabeledDataTypesEnum_Bool_Exp;
 };
 
 /** columns and relationships of "industry_types" */
@@ -8793,7 +10638,7 @@ export type Industry_Types_Bool_Exp = {
 
 /** unique or primary key constraints on table "industry_types" */
 export enum Industry_Types_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   IndustryTypesPkey = 'industry_types_pkey'
 }
 
@@ -8858,6 +10703,20 @@ export type Industry_Types_Set_Input = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "industry_types" */
+export type Industry_Types_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Industry_Types_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Industry_Types_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "industry_types" */
 export enum Industry_Types_Update_Column {
   /** column name */
@@ -8865,6 +10724,12 @@ export enum Industry_Types_Update_Column {
   /** column name */
   Name = 'name'
 }
+
+export type Industry_Types_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Industry_Types_Set_Input>;
+  where: Industry_Types_Bool_Exp;
+};
 
 export type Jsonb_Cast_Exp = {
   String?: InputMaybe<String_Comparison_Exp>;
@@ -8934,7 +10799,7 @@ export type LabellingPlatforms_Bool_Exp = {
 
 /** unique or primary key constraints on table "labelling_platforms" */
 export enum LabellingPlatforms_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   LabellingPlatformsPkey = 'labelling_platforms_pkey'
 }
 
@@ -8980,7 +10845,7 @@ export type LabellingPlatforms_Order_By = {
   value?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: labellingPlatforms */
+/** primary key columns input for table: labelling_platforms */
 export type LabellingPlatforms_Pk_Columns_Input = {
   value: Scalars['String'];
 };
@@ -8999,6 +10864,20 @@ export type LabellingPlatforms_Set_Input = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "labellingPlatforms" */
+export type LabellingPlatforms_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: LabellingPlatforms_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type LabellingPlatforms_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "labelling_platforms" */
 export enum LabellingPlatforms_Update_Column {
   /** column name */
@@ -9006,6 +10885,12 @@ export enum LabellingPlatforms_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type LabellingPlatforms_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<LabellingPlatforms_Set_Input>;
+  where: LabellingPlatforms_Bool_Exp;
+};
 
 /** columns and relationships of "managers" */
 export type Managers = {
@@ -9065,7 +10950,7 @@ export type Managers_Bool_Exp = {
 
 /** unique or primary key constraints on table "managers" */
 export enum Managers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ManagersPkey = 'managers_pkey'
 }
 
@@ -9160,6 +11045,22 @@ export type Managers_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "managers" */
+export type Managers_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Managers_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Managers_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "managers" */
 export enum Managers_Update_Column {
   /** column name */
@@ -9172,6 +11073,12 @@ export enum Managers_Update_Column {
   UserId = 'userId'
 }
 
+export type Managers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Managers_Set_Input>;
+  where: Managers_Bool_Exp;
+};
+
 /** Projects for the Vana Marketplace */
 export type Marketplace_Projects = {
   __typename?: 'marketplace_projects';
@@ -9180,6 +11087,7 @@ export type Marketplace_Projects = {
   modulesMarketplaceProjects: Array<Modules_Marketplace_Projects>;
   /** An aggregate relationship */
   modulesMarketplaceProjects_aggregate: Modules_Marketplace_Projects_Aggregate;
+  strapiProject?: Maybe<StrapiProjectEntityResponseCollection>;
   /** Title of Project. Must match title in Strapi Exactly */
   title: Scalars['String'];
   urlSlug: Scalars['String'];
@@ -9203,6 +11111,15 @@ export type Marketplace_ProjectsModulesMarketplaceProjects_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Modules_Marketplace_Projects_Order_By>>;
   where?: InputMaybe<Modules_Marketplace_Projects_Bool_Exp>;
+};
+
+
+/** Projects for the Vana Marketplace */
+export type Marketplace_ProjectsStrapiProjectArgs = {
+  filters?: InputMaybe<StrapiProjectFiltersInput_Remote_Rel_Marketplace_ProjectsstrapiProject>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 /** aggregated selection of "marketplace_projects" */
@@ -9240,11 +11157,11 @@ export type Marketplace_Projects_Bool_Exp = {
 
 /** unique or primary key constraints on table "marketplace_projects" */
 export enum Marketplace_Projects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   MarketplaceProjectsPkey = 'marketplace_projects_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "title" */
   MarketplaceProjectsTitleKey = 'marketplace_projects_title_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "url_slug" */
   MarketplaceProjectsUrlSlugKey = 'marketplace_projects_url_slug_key'
 }
 
@@ -9329,6 +11246,22 @@ export type Marketplace_Projects_Set_Input = {
   urlSlug?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "marketplace_projects" */
+export type Marketplace_Projects_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Marketplace_Projects_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Marketplace_Projects_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+  /** Title of Project. Must match title in Strapi Exactly */
+  title?: InputMaybe<Scalars['String']>;
+  urlSlug?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "marketplace_projects" */
 export enum Marketplace_Projects_Update_Column {
   /** column name */
@@ -9338,6 +11271,12 @@ export enum Marketplace_Projects_Update_Column {
   /** column name */
   UrlSlug = 'urlSlug'
 }
+
+export type Marketplace_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Marketplace_Projects_Set_Input>;
+  where: Marketplace_Projects_Bool_Exp;
+};
 
 /** Many-to-Many relationship between modules and marketplace projects. (moduleA, projectB) means moduleA is required to complete projectB */
 export type Modules_Marketplace_Projects = {
@@ -9399,7 +11338,7 @@ export type Modules_Marketplace_Projects_Bool_Exp = {
 
 /** unique or primary key constraints on table "modules_marketplace_projects" */
 export enum Modules_Marketplace_Projects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "project_id", "module_id" */
   ModulesMarketplaceProjectsPkey = 'modules_marketplace_projects_pkey'
 }
 
@@ -9481,6 +11420,20 @@ export type Modules_Marketplace_Projects_Set_Input = {
   projectId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "modules_marketplace_projects" */
+export type Modules_Marketplace_Projects_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Modules_Marketplace_Projects_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Modules_Marketplace_Projects_Stream_Cursor_Value_Input = {
+  moduleId?: InputMaybe<Scalars['uuid']>;
+  projectId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "modules_marketplace_projects" */
 export enum Modules_Marketplace_Projects_Update_Column {
   /** column name */
@@ -9488,6 +11441,12 @@ export enum Modules_Marketplace_Projects_Update_Column {
   /** column name */
   ProjectId = 'projectId'
 }
+
+export type Modules_Marketplace_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Modules_Marketplace_Projects_Set_Input>;
+  where: Modules_Marketplace_Projects_Bool_Exp;
+};
 
 /** mutation root */
 export type Mutation_Root = {
@@ -9696,6 +11655,14 @@ export type Mutation_Root = {
   createOneWorker?: Maybe<Workers>;
   /** insert a single row into the table: "workers_spotify" */
   createOneWorkerSpotify?: Maybe<WorkersSpotify>;
+  createStrapiModule?: Maybe<StrapiModuleEntityResponse>;
+  createStrapiProject?: Maybe<StrapiProjectEntityResponse>;
+  createUploadFile?: Maybe<UploadFileEntityResponse>;
+  /** Create a new role */
+  createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
+  /** Create a new user */
+  createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  createVanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
   /** delete data from the table: "cash_out_methods" */
   deleteManyCashOutMethods?: Maybe<CashOutMethods_Mutation_Response>;
   /** delete data from the table: "cash_out_requests" */
@@ -9900,6 +11867,14 @@ export type Mutation_Root = {
   deleteOneWorker?: Maybe<Workers>;
   /** delete single row from the table: "workers_spotify" */
   deleteOneWorkerSpotify?: Maybe<WorkersSpotify>;
+  deleteStrapiModule?: Maybe<StrapiModuleEntityResponse>;
+  deleteStrapiProject?: Maybe<StrapiProjectEntityResponse>;
+  deleteUploadFile?: Maybe<UploadFileEntityResponse>;
+  /** Delete an existing role */
+  deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
+  /** Update an existing user */
+  deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteVanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
   /** delete data from the table: "gender" */
   delete_gender?: Maybe<Gender_Mutation_Response>;
   /** delete single row from the table: "gender" */
@@ -9920,6 +11895,10 @@ export type Mutation_Root = {
   delete_user_ip_addresses?: Maybe<User_Ip_Addresses_Mutation_Response>;
   /** delete single row from the table: "user_ip_addresses" */
   delete_user_ip_addresses_by_pk?: Maybe<User_Ip_Addresses>;
+  /** Confirm an email users email address */
+  emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
+  /** Request a reset password token */
+  forgotPassword?: Maybe<UsersPermissionsPasswordPayload>;
   /** insert data into the table: "gender" */
   insert_gender?: Maybe<Gender_Mutation_Response>;
   /** insert a single row into the table: "gender" */
@@ -9940,6 +11919,14 @@ export type Mutation_Root = {
   insert_user_ip_addresses?: Maybe<User_Ip_Addresses_Mutation_Response>;
   /** insert a single row into the table: "user_ip_addresses" */
   insert_user_ip_addresses_one?: Maybe<User_Ip_Addresses>;
+  login: UsersPermissionsLoginPayload;
+  multipleUpload: Array<Maybe<UploadFileEntityResponse>>;
+  /** Register a user */
+  register: UsersPermissionsLoginPayload;
+  removeFile?: Maybe<UploadFileEntityResponse>;
+  /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
+  resetPassword?: Maybe<UsersPermissionsLoginPayload>;
+  updateFileInfo: UploadFileEntityResponse;
   /** update data of the table: "cash_out_methods" */
   updateManyCashOutMethods?: Maybe<CashOutMethods_Mutation_Response>;
   /** update data of the table: "cash_out_requests" */
@@ -10144,26 +12131,147 @@ export type Mutation_Root = {
   updateOneWorker?: Maybe<Workers>;
   /** update single row of the table: "workers_spotify" */
   updateOneWorkerSpotify?: Maybe<WorkersSpotify>;
+  updateStrapiModule?: Maybe<StrapiModuleEntityResponse>;
+  updateStrapiProject?: Maybe<StrapiProjectEntityResponse>;
+  updateUploadFile?: Maybe<UploadFileEntityResponse>;
+  /** Update an existing role */
+  updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
+  /** Update an existing user */
+  updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateVanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
+  /** update multiples rows of table: "cash_out_requests" */
+  update_CashOutRequests_many?: Maybe<Array<Maybe<CashOutRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "collection_type" */
+  update_CollectionTypes_many?: Maybe<Array<Maybe<CollectionTypes_Mutation_Response>>>;
+  /** update multiples rows of table: "customers" */
+  update_Customers_many?: Maybe<Array<Maybe<Customers_Mutation_Response>>>;
+  /** update multiples rows of table: "etx_task_sessions" */
+  update_EtxTaskSessions_many?: Maybe<Array<Maybe<EtxTaskSessions_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_crypto_requests" */
+  update_FireboaCashOutCryptoRequests_many?: Maybe<Array<Maybe<FireboaCashOutCryptoRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_gift_card_requests" */
+  update_FireboaCashOutGiftCardRequests_many?: Maybe<Array<Maybe<FireboaCashOutGiftCardRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_preferred_methods" */
+  update_FireboaCashOutPreferredMethods_many?: Maybe<Array<Maybe<FireboaCashOutPreferredMethods_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_cash_out_requests" */
+  update_FireboaCashOutRequests_many?: Maybe<Array<Maybe<FireboaCashOutRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_modules" */
+  update_FireboaModules_many?: Maybe<Array<Maybe<FireboaModules_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_modules_users" */
+  update_FireboaProjectsModulesUsers_many?: Maybe<Array<Maybe<FireboaProjectsModulesUsers_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_modules" */
+  update_FireboaProjectsModules_many?: Maybe<Array<Maybe<FireboaProjectsModules_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects_users" */
+  update_FireboaProjectsUsers_many?: Maybe<Array<Maybe<FireboaProjectsUsers_Mutation_Response>>>;
+  /** update multiples rows of table: "fireboa_projects" */
+  update_FireboaProjects_many?: Maybe<Array<Maybe<FireboaProjects_Mutation_Response>>>;
+  /** update multiples rows of table: "fraud_status_enum" */
+  update_FraudStatusEnum_many?: Maybe<Array<Maybe<FraudStatusEnum_Mutation_Response>>>;
+  /** update multiples rows of table: "identities_legal_id_type_enum" */
+  update_IdentitiesLegalIdTypeEnums_many?: Maybe<Array<Maybe<IdentitiesLegalIdTypeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "images" */
+  update_Images_many?: Maybe<Array<Maybe<Images_Mutation_Response>>>;
+  /** update multiples rows of table: "module_instructions" */
+  update_ModuleInstructions_many?: Maybe<Array<Maybe<ModuleInstructions_Mutation_Response>>>;
+  /** update multiples rows of table: "modules" */
+  update_Modules_many?: Maybe<Array<Maybe<Modules_Mutation_Response>>>;
+  /** update multiples rows of table: "project_statuses" */
+  update_ProjectStatuses_many?: Maybe<Array<Maybe<ProjectStatuses_Mutation_Response>>>;
+  /** update multiples rows of table: "sessions" */
+  update_Sessions_many?: Maybe<Array<Maybe<Sessions_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_error_code_enum" */
+  update_StripeIdentitySessionErrorCodeEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionErrorCodeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_status_enum" */
+  update_StripeIdentitySessionStatusEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionStatusEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_identity_session_type_enum" */
+  update_StripeIdentitySessionTypeEnums_many?: Maybe<Array<Maybe<StripeIdentitySessionTypeEnums_Mutation_Response>>>;
+  /** update multiples rows of table: "stripe_verification_sessions" */
+  update_StripeVerificationSessions_many?: Maybe<Array<Maybe<StripeVerificationSessions_Mutation_Response>>>;
+  /** update multiples rows of table: "survey_responses" */
+  update_SurveyResponses_many?: Maybe<Array<Maybe<SurveyResponses_Mutation_Response>>>;
+  /** update multiples rows of table: "surveys" */
+  update_Surveys_many?: Maybe<Array<Maybe<Surveys_Mutation_Response>>>;
+  /** update multiples rows of table: "user_identities" */
+  update_UserIdentities_many?: Maybe<Array<Maybe<UserIdentities_Mutation_Response>>>;
+  /** update multiples rows of table: "user_module_progress_enum" */
+  update_UserModuleStatus_many?: Maybe<Array<Maybe<UserModuleStatus_Mutation_Response>>>;
+  /** update multiples rows of table: "user_referrals" */
+  update_UserReferrals_many?: Maybe<Array<Maybe<UserReferrals_Mutation_Response>>>;
+  /** update multiples rows of table: "users_images" */
+  update_UsersImages_many?: Maybe<Array<Maybe<UsersImages_Mutation_Response>>>;
+  /** update multiples rows of table: "users_modules" */
+  update_UsersModules_many?: Maybe<Array<Maybe<UsersModules_Mutation_Response>>>;
+  /** update multiples rows of table: "users" */
+  update_Users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_module_responses" */
+  update_VisualJudgementModuleResponses_many?: Maybe<Array<Maybe<VisualJudgementModuleResponses_Mutation_Response>>>;
+  /** update multiples rows of table: "wallets" */
+  update_Wallets_many?: Maybe<Array<Maybe<Wallets_Mutation_Response>>>;
+  /** update multiples rows of table: "workers" */
+  update_Workers_many?: Maybe<Array<Maybe<Workers_Mutation_Response>>>;
+  /** update multiples rows of table: "cash_out_methods" */
+  update_cashOutMethods_many?: Maybe<Array<Maybe<CashOutMethods_Mutation_Response>>>;
+  /** update multiples rows of table: "data_types" */
+  update_datatTypes_many?: Maybe<Array<Maybe<DatatTypes_Mutation_Response>>>;
+  /** update multiples rows of table: "feature_types" */
+  update_featureTypes_many?: Maybe<Array<Maybe<FeatureTypes_Mutation_Response>>>;
   /** update data of the table: "gender" */
   update_gender?: Maybe<Gender_Mutation_Response>;
   /** update single row of the table: "gender" */
   update_gender_by_pk?: Maybe<Gender>;
+  /** update multiples rows of table: "gender" */
+  update_gender_many?: Maybe<Array<Maybe<Gender_Mutation_Response>>>;
+  /** update multiples rows of table: "have_labeled_data_types" */
+  update_haveLabeledDataTypesEnum_many?: Maybe<Array<Maybe<HaveLabeledDataTypesEnum_Mutation_Response>>>;
   /** update data of the table: "industry_types" */
   update_industry_types?: Maybe<Industry_Types_Mutation_Response>;
   /** update single row of the table: "industry_types" */
   update_industry_types_by_pk?: Maybe<Industry_Types>;
+  /** update multiples rows of table: "industry_types" */
+  update_industry_types_many?: Maybe<Array<Maybe<Industry_Types_Mutation_Response>>>;
+  /** update multiples rows of table: "labelling_platforms" */
+  update_labellingPlatforms_many?: Maybe<Array<Maybe<LabellingPlatforms_Mutation_Response>>>;
   /** update data of the table: "managers" */
   update_managers?: Maybe<Managers_Mutation_Response>;
   /** update single row of the table: "managers" */
   update_managers_by_pk?: Maybe<Managers>;
+  /** update multiples rows of table: "managers" */
+  update_managers_many?: Maybe<Array<Maybe<Managers_Mutation_Response>>>;
+  /** update multiples rows of table: "marketplace_projects" */
+  update_marketplace_projects_many?: Maybe<Array<Maybe<Marketplace_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "modules_marketplace_projects" */
+  update_modules_marketplace_projects_many?: Maybe<Array<Maybe<Modules_Marketplace_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "organizations_customers" */
+  update_organizationsCustomers_many?: Maybe<Array<Maybe<OrganizationsCustomers_Mutation_Response>>>;
+  /** update multiples rows of table: "organizations" */
+  update_organizations_many?: Maybe<Array<Maybe<Organizations_Mutation_Response>>>;
+  /** update multiples rows of table: "pricing_plans" */
+  update_pricingPlans_many?: Maybe<Array<Maybe<PricingPlans_Mutation_Response>>>;
+  /** update multiples rows of table: "spotify_state_types" */
+  update_spotifyStateTypes_many?: Maybe<Array<Maybe<SpotifyStateTypes_Mutation_Response>>>;
   /** update data of the table: "strapi" */
   update_strapi?: Maybe<Strapi_Mutation_Response>;
   /** update single row of the table: "strapi" */
   update_strapi_by_pk?: Maybe<Strapi>;
+  /** update multiples rows of table: "strapi" */
+  update_strapi_many?: Maybe<Array<Maybe<Strapi_Mutation_Response>>>;
   /** update data of the table: "user_ip_addresses" */
   update_user_ip_addresses?: Maybe<User_Ip_Addresses_Mutation_Response>;
   /** update single row of the table: "user_ip_addresses" */
   update_user_ip_addresses_by_pk?: Maybe<User_Ip_Addresses>;
+  /** update multiples rows of table: "user_ip_addresses" */
+  update_user_ip_addresses_many?: Maybe<Array<Maybe<User_Ip_Addresses_Mutation_Response>>>;
+  /** update multiples rows of table: "users_projects" */
+  update_users_projects_many?: Maybe<Array<Maybe<Users_Projects_Mutation_Response>>>;
+  /** update multiples rows of table: "users_supplementary" */
+  update_users_supplementary_many?: Maybe<Array<Maybe<Users_Supplementary_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_module_images" */
+  update_visualJudgementModuleImages_many?: Maybe<Array<Maybe<VisualJudgementModuleImages_Mutation_Response>>>;
+  /** update multiples rows of table: "visual_judgement_modules" */
+  update_visualJudgementModules_many?: Maybe<Array<Maybe<VisualJudgementModules_Mutation_Response>>>;
+  /** update multiples rows of table: "workers_spotify" */
+  update_workersSpotify_many?: Maybe<Array<Maybe<WorkersSpotify_Mutation_Response>>>;
+  upload: UploadFileEntityResponse;
 };
 
 
@@ -10882,6 +12990,42 @@ export type Mutation_RootCreateOneWorkerSpotifyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootCreateStrapiModuleArgs = {
+  data: StrapiModuleInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateStrapiProjectArgs = {
+  data: StrapiProjectInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateUploadFileArgs = {
+  data: UploadFileInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateUsersPermissionsRoleArgs = {
+  data: UsersPermissionsRoleInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateUsersPermissionsUserArgs = {
+  data: UsersPermissionsUserInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateVanaConnectFaqArgs = {
+  data: VanaConnectFaqInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootDeleteManyCashOutMethodsArgs = {
   where: CashOutMethods_Bool_Exp;
 };
@@ -11499,6 +13643,42 @@ export type Mutation_RootDeleteOneWorkerSpotifyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDeleteStrapiModuleArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteStrapiProjectArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteUploadFileArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteUsersPermissionsRoleArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteUsersPermissionsUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteVanaConnectFaqArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_GenderArgs = {
   where: Gender_Bool_Exp;
 };
@@ -11555,6 +13735,18 @@ export type Mutation_RootDelete_User_Ip_AddressesArgs = {
 /** mutation root */
 export type Mutation_RootDelete_User_Ip_Addresses_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootEmailConfirmationArgs = {
+  confirmation: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootForgotPasswordArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -11625,6 +13817,48 @@ export type Mutation_RootInsert_User_Ip_AddressesArgs = {
 export type Mutation_RootInsert_User_Ip_Addresses_OneArgs = {
   object: User_Ip_Addresses_Insert_Input;
   on_conflict?: InputMaybe<User_Ip_Addresses_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootLoginArgs = {
+  input: UsersPermissionsLoginInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootMultipleUploadArgs = {
+  field?: InputMaybe<Scalars['String']>;
+  files: Array<InputMaybe<Scalars['Upload']>>;
+  ref?: InputMaybe<Scalars['String']>;
+  refId?: InputMaybe<Scalars['ID']>;
+};
+
+
+/** mutation root */
+export type Mutation_RootRegisterArgs = {
+  input: UsersPermissionsRegisterInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootRemoveFileArgs = {
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootResetPasswordArgs = {
+  code: Scalars['String'];
+  password: Scalars['String'];
+  passwordConfirmation: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateFileInfoArgs = {
+  id: Scalars['ID'];
+  info?: InputMaybe<FileInfoInput>;
 };
 
 
@@ -12397,6 +14631,276 @@ export type Mutation_RootUpdateOneWorkerSpotifyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateStrapiModuleArgs = {
+  data: StrapiModuleInput;
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateStrapiProjectArgs = {
+  data: StrapiProjectInput;
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateUploadFileArgs = {
+  data: UploadFileInput;
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateUsersPermissionsRoleArgs = {
+  data: UsersPermissionsRoleInput;
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateUsersPermissionsUserArgs = {
+  data: UsersPermissionsUserInput;
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateVanaConnectFaqArgs = {
+  data: VanaConnectFaqInput;
+  id: Scalars['ID'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CashOutRequests_ManyArgs = {
+  updates: Array<CashOutRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CollectionTypes_ManyArgs = {
+  updates: Array<CollectionTypes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Customers_ManyArgs = {
+  updates: Array<Customers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_EtxTaskSessions_ManyArgs = {
+  updates: Array<EtxTaskSessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutCryptoRequests_ManyArgs = {
+  updates: Array<FireboaCashOutCryptoRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutGiftCardRequests_ManyArgs = {
+  updates: Array<FireboaCashOutGiftCardRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutPreferredMethods_ManyArgs = {
+  updates: Array<FireboaCashOutPreferredMethods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaCashOutRequests_ManyArgs = {
+  updates: Array<FireboaCashOutRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaModules_ManyArgs = {
+  updates: Array<FireboaModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsModulesUsers_ManyArgs = {
+  updates: Array<FireboaProjectsModulesUsers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsModules_ManyArgs = {
+  updates: Array<FireboaProjectsModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjectsUsers_ManyArgs = {
+  updates: Array<FireboaProjectsUsers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FireboaProjects_ManyArgs = {
+  updates: Array<FireboaProjects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FraudStatusEnum_ManyArgs = {
+  updates: Array<FraudStatusEnum_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_IdentitiesLegalIdTypeEnums_ManyArgs = {
+  updates: Array<IdentitiesLegalIdTypeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Images_ManyArgs = {
+  updates: Array<Images_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ModuleInstructions_ManyArgs = {
+  updates: Array<ModuleInstructions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Modules_ManyArgs = {
+  updates: Array<Modules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ProjectStatuses_ManyArgs = {
+  updates: Array<ProjectStatuses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sessions_ManyArgs = {
+  updates: Array<Sessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionErrorCodeEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionErrorCodeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionStatusEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionStatusEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeIdentitySessionTypeEnums_ManyArgs = {
+  updates: Array<StripeIdentitySessionTypeEnums_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_StripeVerificationSessions_ManyArgs = {
+  updates: Array<StripeVerificationSessions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SurveyResponses_ManyArgs = {
+  updates: Array<SurveyResponses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Surveys_ManyArgs = {
+  updates: Array<Surveys_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserIdentities_ManyArgs = {
+  updates: Array<UserIdentities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserModuleStatus_ManyArgs = {
+  updates: Array<UserModuleStatus_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UserReferrals_ManyArgs = {
+  updates: Array<UserReferrals_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersImages_ManyArgs = {
+  updates: Array<UsersImages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersModules_ManyArgs = {
+  updates: Array<UsersModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_ManyArgs = {
+  updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModuleResponses_ManyArgs = {
+  updates: Array<VisualJudgementModuleResponses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Wallets_ManyArgs = {
+  updates: Array<Wallets_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Workers_ManyArgs = {
+  updates: Array<Workers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_CashOutMethods_ManyArgs = {
+  updates: Array<CashOutMethods_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_DatatTypes_ManyArgs = {
+  updates: Array<DatatTypes_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_FeatureTypes_ManyArgs = {
+  updates: Array<FeatureTypes_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_GenderArgs = {
   _set?: InputMaybe<Gender_Set_Input>;
   where: Gender_Bool_Exp;
@@ -12407,6 +14911,18 @@ export type Mutation_RootUpdate_GenderArgs = {
 export type Mutation_RootUpdate_Gender_By_PkArgs = {
   _set?: InputMaybe<Gender_Set_Input>;
   pk_columns: Gender_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gender_ManyArgs = {
+  updates: Array<Gender_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_HaveLabeledDataTypesEnum_ManyArgs = {
+  updates: Array<HaveLabeledDataTypesEnum_Updates>;
 };
 
 
@@ -12425,6 +14941,18 @@ export type Mutation_RootUpdate_Industry_Types_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Industry_Types_ManyArgs = {
+  updates: Array<Industry_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_LabellingPlatforms_ManyArgs = {
+  updates: Array<LabellingPlatforms_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ManagersArgs = {
   _set?: InputMaybe<Managers_Set_Input>;
   where: Managers_Bool_Exp;
@@ -12435,6 +14963,48 @@ export type Mutation_RootUpdate_ManagersArgs = {
 export type Mutation_RootUpdate_Managers_By_PkArgs = {
   _set?: InputMaybe<Managers_Set_Input>;
   pk_columns: Managers_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Managers_ManyArgs = {
+  updates: Array<Managers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Marketplace_Projects_ManyArgs = {
+  updates: Array<Marketplace_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Modules_Marketplace_Projects_ManyArgs = {
+  updates: Array<Modules_Marketplace_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_OrganizationsCustomers_ManyArgs = {
+  updates: Array<OrganizationsCustomers_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organizations_ManyArgs = {
+  updates: Array<Organizations_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PricingPlans_ManyArgs = {
+  updates: Array<PricingPlans_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_SpotifyStateTypes_ManyArgs = {
+  updates: Array<SpotifyStateTypes_Updates>;
 };
 
 
@@ -12453,6 +15023,12 @@ export type Mutation_RootUpdate_Strapi_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Strapi_ManyArgs = {
+  updates: Array<Strapi_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_User_Ip_AddressesArgs = {
   _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
   where: User_Ip_Addresses_Bool_Exp;
@@ -12463,6 +15039,52 @@ export type Mutation_RootUpdate_User_Ip_AddressesArgs = {
 export type Mutation_RootUpdate_User_Ip_Addresses_By_PkArgs = {
   _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
   pk_columns: User_Ip_Addresses_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Ip_Addresses_ManyArgs = {
+  updates: Array<User_Ip_Addresses_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_Projects_ManyArgs = {
+  updates: Array<Users_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_Supplementary_ManyArgs = {
+  updates: Array<Users_Supplementary_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModuleImages_ManyArgs = {
+  updates: Array<VisualJudgementModuleImages_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_VisualJudgementModules_ManyArgs = {
+  updates: Array<VisualJudgementModules_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_WorkersSpotify_ManyArgs = {
+  updates: Array<WorkersSpotify_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUploadArgs = {
+  field?: InputMaybe<Scalars['String']>;
+  file: Scalars['Upload'];
+  info?: InputMaybe<FileInfoInput>;
+  ref?: InputMaybe<Scalars['String']>;
+  refId?: InputMaybe<Scalars['ID']>;
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
@@ -12583,7 +15205,7 @@ export type OrganizationsCustomers_Bool_Exp = {
 
 /** unique or primary key constraints on table "organizations_customers" */
 export enum OrganizationsCustomers_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "organization_id", "customer_id" */
   OrganizationsCustomersPkey = 'organizations_customers_pkey'
 }
 
@@ -12643,7 +15265,7 @@ export type OrganizationsCustomers_Order_By = {
   updatedAt?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: organizationsCustomers */
+/** primary key columns input for table: organizations_customers */
 export type OrganizationsCustomers_Pk_Columns_Input = {
   customerId: Scalars['uuid'];
   organizationId: Scalars['uuid'];
@@ -12672,6 +15294,23 @@ export type OrganizationsCustomers_Set_Input = {
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
 
+/** Streaming cursor of the table "organizationsCustomers" */
+export type OrganizationsCustomers_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: OrganizationsCustomers_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type OrganizationsCustomers_Stream_Cursor_Value_Input = {
+  billingAdmin?: InputMaybe<Scalars['Boolean']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  customerId?: InputMaybe<Scalars['uuid']>;
+  organizationId?: InputMaybe<Scalars['uuid']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** update columns of table "organizations_customers" */
 export enum OrganizationsCustomers_Update_Column {
   /** column name */
@@ -12685,6 +15324,12 @@ export enum OrganizationsCustomers_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type OrganizationsCustomers_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<OrganizationsCustomers_Set_Input>;
+  where: OrganizationsCustomers_Bool_Exp;
+};
 
 /** aggregated selection of "organizations" */
 export type Organizations_Aggregate = {
@@ -12739,7 +15384,7 @@ export type Organizations_Bool_Exp = {
 
 /** unique or primary key constraints on table "organizations" */
 export enum Organizations_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   OrganizationsPkey = 'organizations_pkey'
 }
 
@@ -12863,6 +15508,24 @@ export type Organizations_Set_Input = {
   technicalContactId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "organizations" */
+export type Organizations_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Organizations_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Organizations_Stream_Cursor_Value_Input = {
+  domain?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  slackChannel?: InputMaybe<Scalars['String']>;
+  stripeCustomerId?: InputMaybe<Scalars['String']>;
+  technicalContactId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "organizations" */
 export enum Organizations_Update_Column {
   /** column name */
@@ -12878,6 +15541,12 @@ export enum Organizations_Update_Column {
   /** column name */
   TechnicalContactId = 'technicalContactId'
 }
+
+export type Organizations_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Organizations_Set_Input>;
+  where: Organizations_Bool_Exp;
+};
 
 /** columns and relationships of "pricing_plans" */
 export type PricingPlans = {
@@ -12945,7 +15614,7 @@ export type PricingPlans_Bool_Exp = {
 
 /** unique or primary key constraints on table "pricing_plans" */
 export enum PricingPlans_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   PricingPlansPkey = 'pricing_plans_pkey'
 }
 
@@ -13018,7 +15687,7 @@ export type PricingPlans_Order_By = {
   updatedAt?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: pricingPlans */
+/** primary key columns input for table: pricing_plans */
 export type PricingPlans_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -13077,6 +15746,25 @@ export type PricingPlans_Stddev_Samp_Fields = {
   predictionLimit?: Maybe<Scalars['Float']>;
 };
 
+/** Streaming cursor of the table "pricingPlans" */
+export type PricingPlans_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: PricingPlans_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type PricingPlans_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  /** Price in cents */
+  monthlyPriceCents?: InputMaybe<Scalars['Int']>;
+  overageCharge?: InputMaybe<Scalars['float8']>;
+  predictionLimit?: InputMaybe<Scalars['Int']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** aggregate sum on columns */
 export type PricingPlans_Sum_Fields = {
   __typename?: 'pricingPlans_sum_fields';
@@ -13101,6 +15789,14 @@ export enum PricingPlans_Update_Column {
   /** column name */
   UpdatedAt = 'updatedAt'
 }
+
+export type PricingPlans_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<PricingPlans_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<PricingPlans_Set_Input>;
+  where: PricingPlans_Bool_Exp;
+};
 
 /** aggregate var_pop on columns */
 export type PricingPlans_Var_Pop_Fields = {
@@ -13127,21 +15823,6 @@ export type PricingPlans_Variance_Fields = {
   monthlyPriceCents?: Maybe<Scalars['Float']>;
   overageCharge?: Maybe<Scalars['Float']>;
   predictionLimit?: Maybe<Scalars['Float']>;
-};
-
-export enum Project_Statuses_Enum {
-  Compensated = 'COMPENSATED',
-  Complete = 'COMPLETE',
-  InProgress = 'IN_PROGRESS'
-}
-
-/** Boolean expression to compare columns of type "project_statuses_enum". All fields are combined with logical 'AND'. */
-export type Project_Statuses_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Project_Statuses_Enum>;
-  _in?: InputMaybe<Array<Project_Statuses_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Project_Statuses_Enum>;
-  _nin?: InputMaybe<Array<Project_Statuses_Enum>>;
 };
 
 export type Query_Root = {
@@ -13262,6 +15943,8 @@ export type Query_Root = {
   haveLabeledDataTypes: Array<HaveLabeledDataTypesEnum>;
   /** fetch aggregated fields from the table: "have_labeled_data_types" */
   haveLabeledDataTypesAggregate: HaveLabeledDataTypesEnum_Aggregate;
+  i18NLocale?: Maybe<I18NLocaleEntityResponse>;
+  i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   /** fetch data from the table: "identities_legal_id_type_enum" using primary key columns */
   identitiesLegalIdTypeEnum?: Maybe<IdentitiesLegalIdTypeEnums>;
   /** fetch data from the table: "identities_legal_id_type_enum" */
@@ -13298,6 +15981,7 @@ export type Query_Root = {
   marketplaceProjectsAggregate: Marketplace_Projects_Aggregate;
   /** fetch data from the table: "marketplace_projects" */
   martetplaceProjects: Array<Marketplace_Projects>;
+  me?: Maybe<UsersPermissionsMe>;
   /** fetch data from the table: "modules" using primary key columns */
   module?: Maybe<Modules>;
   /** fetch data from the table: "module_instructions" using primary key columns */
@@ -13354,6 +16038,10 @@ export type Query_Root = {
   spotifyStateTypesAggregate: SpotifyStateTypes_Aggregate;
   /** fetch data from the table: "strapi" */
   strapi: Array<Strapi>;
+  strapiModule?: Maybe<StrapiModuleEntityResponse>;
+  strapiModules?: Maybe<StrapiModuleEntityResponseCollection>;
+  strapiProject?: Maybe<StrapiProjectEntityResponse>;
+  strapiProjects?: Maybe<StrapiProjectEntityResponseCollection>;
   /** fetch aggregated fields from the table: "strapi" */
   strapi_aggregate: Strapi_Aggregate;
   /** fetch data from the table: "strapi" using primary key columns */
@@ -13392,6 +16080,8 @@ export type Query_Root = {
   surveyResponsesAggregate: SurveyResponses_Aggregate;
   /** fetch aggregated fields from the table: "surveys" */
   surveysAggregate: Surveys_Aggregate;
+  uploadFile?: Maybe<UploadFileEntityResponse>;
+  uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   /** fetch data from the table: "users" using primary key columns */
   user?: Maybe<Users>;
   /** An array relationship */
@@ -13438,6 +16128,10 @@ export type Query_Root = {
   usersModules: Array<UsersModules>;
   /** fetch aggregated fields from the table: "users_modules" */
   usersModulesAggregate: UsersModules_Aggregate;
+  usersPermissionsRole?: Maybe<UsersPermissionsRoleEntityResponse>;
+  usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
+  usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
+  usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
   /** An array relationship */
   usersProjects: Array<Users_Projects>;
   /** fetch aggregated fields from the table: "users_projects" */
@@ -13446,6 +16140,8 @@ export type Query_Root = {
   usersSupplementaries: Array<Users_Supplementary>;
   /** fetch aggregated fields from the table: "users_supplementary" */
   usersSupplementariesAggregate: Users_Supplementary_Aggregate;
+  vanaConnectFaq?: Maybe<VanaConnectFaqEntityResponse>;
+  vanaConnectFaqs?: Maybe<VanaConnectFaqEntityResponseCollection>;
   /** fetch data from the table: "visual_judgement_modules" using primary key columns */
   visualJudgementModule?: Maybe<VisualJudgementModules>;
   /** fetch data from the table: "visual_judgement_module_images" using primary key columns */
@@ -13933,6 +16629,18 @@ export type Query_RootHaveLabeledDataTypesAggregateArgs = {
 };
 
 
+export type Query_RootI18NLocaleArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootI18NLocalesArgs = {
+  filters?: InputMaybe<I18NLocaleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 export type Query_RootIdentitiesLegalIdTypeEnumArgs = {
   value: Scalars['String'];
 };
@@ -14289,6 +16997,32 @@ export type Query_RootStrapiArgs = {
 };
 
 
+export type Query_RootStrapiModuleArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootStrapiModulesArgs = {
+  filters?: InputMaybe<StrapiModuleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Query_RootStrapiProjectArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootStrapiProjectsArgs = {
+  filters?: InputMaybe<StrapiProjectFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 export type Query_RootStrapi_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Strapi_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -14429,6 +17163,18 @@ export type Query_RootSurveysAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Surveys_Order_By>>;
   where?: InputMaybe<Surveys_Bool_Exp>;
+};
+
+
+export type Query_RootUploadFileArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootUploadFilesArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -14604,6 +17350,30 @@ export type Query_RootUsersModulesAggregateArgs = {
 };
 
 
+export type Query_RootUsersPermissionsRoleArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootUsersPermissionsRolesArgs = {
+  filters?: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type Query_RootUsersPermissionsUserArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootUsersPermissionsUsersArgs = {
+  filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 export type Query_RootUsersProjectsArgs = {
   distinct_on?: InputMaybe<Array<Users_Projects_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -14637,6 +17407,19 @@ export type Query_RootUsersSupplementariesAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Users_Supplementary_Order_By>>;
   where?: InputMaybe<Users_Supplementary_Bool_Exp>;
+};
+
+
+export type Query_RootVanaConnectFaqArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type Query_RootVanaConnectFaqsArgs = {
+  filters?: InputMaybe<VanaConnectFaqFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -14817,9 +17600,26 @@ export type SpotifyStateTypes_Bool_Exp = {
 
 /** unique or primary key constraints on table "spotify_state_types" */
 export enum SpotifyStateTypes_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   SpotifyStateTypesPkey = 'spotify_state_types_pkey'
 }
+
+export enum SpotifyStateTypes_Enum {
+  Completed = 'COMPLETED',
+  DuplicateAccount = 'DUPLICATE_ACCOUNT',
+  InternalError = 'INTERNAL_ERROR',
+  NewAccount = 'NEW_ACCOUNT',
+  Started = 'STARTED'
+}
+
+/** Boolean expression to compare columns of type "spotifyStateTypes_enum". All fields are combined with logical 'AND'. */
+export type SpotifyStateTypes_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<SpotifyStateTypes_Enum>;
+  _in?: InputMaybe<Array<SpotifyStateTypes_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<SpotifyStateTypes_Enum>;
+  _nin?: InputMaybe<Array<SpotifyStateTypes_Enum>>;
+};
 
 /** input type for inserting data into table "spotify_state_types" */
 export type SpotifyStateTypes_Insert_Input = {
@@ -14863,7 +17663,7 @@ export type SpotifyStateTypes_Order_By = {
   name?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: spotifyStateTypes */
+/** primary key columns input for table: spotify_state_types */
 export type SpotifyStateTypes_Pk_Columns_Input = {
   name: Scalars['String'];
 };
@@ -14882,6 +17682,20 @@ export type SpotifyStateTypes_Set_Input = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "spotifyStateTypes" */
+export type SpotifyStateTypes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: SpotifyStateTypes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type SpotifyStateTypes_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "spotify_state_types" */
 export enum SpotifyStateTypes_Update_Column {
   /** column name */
@@ -14890,27 +17704,26 @@ export enum SpotifyStateTypes_Update_Column {
   Name = 'name'
 }
 
-export enum Spotify_State_Types_Enum {
-  Completed = 'COMPLETED',
-  DuplicateAccount = 'DUPLICATE_ACCOUNT',
-  InternalError = 'INTERNAL_ERROR',
-  NewAccount = 'NEW_ACCOUNT',
-  Started = 'STARTED'
-}
-
-/** Boolean expression to compare columns of type "spotify_state_types_enum". All fields are combined with logical 'AND'. */
-export type Spotify_State_Types_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Spotify_State_Types_Enum>;
-  _in?: InputMaybe<Array<Spotify_State_Types_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Spotify_State_Types_Enum>;
-  _nin?: InputMaybe<Array<Spotify_State_Types_Enum>>;
+export type SpotifyStateTypes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<SpotifyStateTypes_Set_Input>;
+  where: SpotifyStateTypes_Bool_Exp;
 };
 
 /** columns and relationships of "strapi" */
 export type Strapi = {
   __typename?: 'strapi';
   id: Scalars['uuid'];
+  vanaConnectFAQs?: Maybe<VanaConnectFaqEntityResponseCollection>;
+};
+
+
+/** columns and relationships of "strapi" */
+export type StrapiVanaConnectFaQsArgs = {
+  filters?: InputMaybe<VanaConnectFaqFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 /** aggregated selection of "strapi" */
@@ -14945,7 +17758,7 @@ export type Strapi_Bool_Exp = {
 
 /** unique or primary key constraints on table "strapi" */
 export enum Strapi_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   StrapiPkey = 'strapi_pkey'
 }
 
@@ -15003,88 +17816,113 @@ export type Strapi_Set_Input = {
   id?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "strapi" */
+export type Strapi_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Strapi_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Strapi_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "strapi" */
 export enum Strapi_Update_Column {
   /** column name */
   Id = 'id'
 }
 
-export enum Stripe_Identity_Session_Error_Code_Enum_Enum {
-  /** 	The provided identity document has expired. */
-  DocumentExpired = 'document_expired',
-  /** The provided identity document isn’t one of the session’s allowed document types. */
-  DocumentTypeNotSupported = 'document_type_not_supported',
-  /** Stripe couldn’t verify the provided identity document. */
-  DocumentUnverifiedOther = 'document_unverified_other',
-  /** 	The provided document didn’t contain enough data to match against the ID number. */
-  IdNumberInsufficientDocumentData = 'id_number_insufficient_document_data',
-  /** The information provided couldn’t be matched against global databases. */
-  IdNumberMismatch = 'id_number_mismatch',
-  /** Stripe couldn’t verify the provided ID number. */
-  IdNumberUnverifiedOther = 'id_number_unverified_other'
-}
-
-/** Boolean expression to compare columns of type "stripe_identity_session_error_code_enum_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Identity_Session_Error_Code_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
-  _in?: InputMaybe<Array<Stripe_Identity_Session_Error_Code_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Identity_Session_Error_Code_Enum_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Identity_Session_Error_Code_Enum_Enum>>;
-};
-
-export enum Stripe_Identity_Session_Status_Enum_Enum {
-  /** The session has been canceled and future submission attempts have been disabled.  */
-  Canceled = 'canceled',
-  /** The session was created. */
-  Created = 'created',
-  /** The user has not started a session. */
-  NotStarted = 'not_started',
-  /** The user has successfully submitted their information, and verification checks have started processing. */
-  Processing = 'processing',
-  /** The session was redacted. */
-  Redacted = 'redacted',
-  /** Processing of all the verification checks have completed, and at least one of the checks failed. */
-  RequiresInput = 'requires_input',
-  /** Processing of all the verification checks have completed, and they’re all successfully verified. */
-  Verified = 'verified'
-}
-
-/** Boolean expression to compare columns of type "stripe_identity_session_status_enum_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Identity_Session_Status_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
-  _in?: InputMaybe<Array<Stripe_Identity_Session_Status_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Identity_Session_Status_Enum_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Identity_Session_Status_Enum_Enum>>;
-};
-
-export enum Stripe_Identity_Session_Type_Enum_Enum {
-  /** Document check. */
-  Document = 'document',
-  /** ID number check. */
-  IdNumber = 'id_number'
-}
-
-/** Boolean expression to compare columns of type "stripe_identity_session_type_enum_enum". All fields are combined with logical 'AND'. */
-export type Stripe_Identity_Session_Type_Enum_Enum_Comparison_Exp = {
-  _eq?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
-  _in?: InputMaybe<Array<Stripe_Identity_Session_Type_Enum_Enum>>;
-  _is_null?: InputMaybe<Scalars['Boolean']>;
-  _neq?: InputMaybe<Stripe_Identity_Session_Type_Enum_Enum>;
-  _nin?: InputMaybe<Array<Stripe_Identity_Session_Type_Enum_Enum>>;
+export type Strapi_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Strapi_Set_Input>;
+  where: Strapi_Bool_Exp;
 };
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table in a streaming manner : "cash_out_requests" */
+  CashOutRequests_stream: Array<CashOutRequests>;
+  /** fetch data from the table in a streaming manner : "collection_type" */
+  CollectionTypes_stream: Array<CollectionTypes>;
+  /** fetch data from the table in a streaming manner : "customers" */
+  Customers_stream: Array<Customers>;
+  /** fetch data from the table in a streaming manner : "etx_task_sessions" */
+  EtxTaskSessions_stream: Array<EtxTaskSessions>;
+  /** fetch data from the table in a streaming manner : "fireboa_cash_out_crypto_requests" */
+  FireboaCashOutCryptoRequests_stream: Array<FireboaCashOutCryptoRequests>;
+  /** fetch data from the table in a streaming manner : "fireboa_cash_out_gift_card_requests" */
+  FireboaCashOutGiftCardRequests_stream: Array<FireboaCashOutGiftCardRequests>;
+  /** fetch data from the table in a streaming manner : "fireboa_cash_out_preferred_methods" */
+  FireboaCashOutPreferredMethods_stream: Array<FireboaCashOutPreferredMethods>;
+  /** fetch data from the table in a streaming manner : "fireboa_cash_out_requests" */
+  FireboaCashOutRequests_stream: Array<FireboaCashOutRequests>;
+  /** fetch data from the table in a streaming manner : "fireboa_modules" */
+  FireboaModules_stream: Array<FireboaModules>;
+  /** fetch data from the table in a streaming manner : "fireboa_projects_modules_users" */
+  FireboaProjectsModulesUsers_stream: Array<FireboaProjectsModulesUsers>;
+  /** fetch data from the table in a streaming manner : "fireboa_projects_modules" */
+  FireboaProjectsModules_stream: Array<FireboaProjectsModules>;
+  /** fetch data from the table in a streaming manner : "fireboa_projects_users" */
+  FireboaProjectsUsers_stream: Array<FireboaProjectsUsers>;
+  /** fetch data from the table in a streaming manner : "fireboa_projects" */
+  FireboaProjects_stream: Array<FireboaProjects>;
+  /** fetch data from the table in a streaming manner : "fraud_status_enum" */
+  FraudStatusEnum_stream: Array<FraudStatusEnum>;
+  /** fetch data from the table in a streaming manner : "identities_legal_id_type_enum" */
+  IdentitiesLegalIdTypeEnums_stream: Array<IdentitiesLegalIdTypeEnums>;
+  /** fetch data from the table in a streaming manner : "images" */
+  Images_stream: Array<Images>;
+  /** fetch data from the table in a streaming manner : "module_instructions" */
+  ModuleInstructions_stream: Array<ModuleInstructions>;
+  /** fetch data from the table in a streaming manner : "modules" */
+  Modules_stream: Array<Modules>;
+  /** fetch data from the table in a streaming manner : "project_statuses" */
+  ProjectStatuses_stream: Array<ProjectStatuses>;
+  /** fetch data from the table in a streaming manner : "sessions" */
+  Sessions_stream: Array<Sessions>;
+  /** fetch data from the table in a streaming manner : "stripe_identity_session_error_code_enum" */
+  StripeIdentitySessionErrorCodeEnums_stream: Array<StripeIdentitySessionErrorCodeEnums>;
+  /** fetch data from the table in a streaming manner : "stripe_identity_session_status_enum" */
+  StripeIdentitySessionStatusEnums_stream: Array<StripeIdentitySessionStatusEnums>;
+  /** fetch data from the table in a streaming manner : "stripe_identity_session_type_enum" */
+  StripeIdentitySessionTypeEnums_stream: Array<StripeIdentitySessionTypeEnums>;
+  /** fetch data from the table in a streaming manner : "stripe_verification_sessions" */
+  StripeVerificationSessions_stream: Array<StripeVerificationSessions>;
+  /** fetch data from the table in a streaming manner : "survey_responses" */
+  SurveyResponses_stream: Array<SurveyResponses>;
   /** fetch data from the table: "surveys" */
   Surveys: Array<Surveys>;
+  /** fetch data from the table in a streaming manner : "surveys" */
+  Surveys_stream: Array<Surveys>;
+  /** fetch data from the table in a streaming manner : "user_identities" */
+  UserIdentities_stream: Array<UserIdentities>;
+  /** fetch data from the table in a streaming manner : "user_module_progress_enum" */
+  UserModuleStatus_stream: Array<UserModuleStatus>;
+  /** fetch data from the table in a streaming manner : "user_referrals" */
+  UserReferrals_stream: Array<UserReferrals>;
+  /** fetch data from the table in a streaming manner : "users_images" */
+  UsersImages_stream: Array<UsersImages>;
+  /** fetch data from the table in a streaming manner : "users_modules" */
+  UsersModules_stream: Array<UsersModules>;
+  /** fetch data from the table in a streaming manner : "users" */
+  Users_stream: Array<Users>;
+  /** fetch data from the table in a streaming manner : "visual_judgement_module_responses" */
+  VisualJudgementModuleResponses_stream: Array<VisualJudgementModuleResponses>;
+  /** fetch data from the table in a streaming manner : "wallets" */
+  Wallets_stream: Array<Wallets>;
+  /** fetch data from the table in a streaming manner : "workers" */
+  Workers_stream: Array<Workers>;
   /** fetch data from the table: "cash_out_methods" using primary key columns */
   cashOutMethod?: Maybe<CashOutMethods>;
   /** fetch data from the table: "cash_out_methods" */
   cashOutMethods: Array<CashOutMethods>;
   /** fetch aggregated fields from the table: "cash_out_methods" */
   cashOutMethodsAggregate: CashOutMethods_Aggregate;
+  /** fetch data from the table in a streaming manner : "cash_out_methods" */
+  cashOutMethods_stream: Array<CashOutMethods>;
   /** fetch data from the table: "cash_out_requests" using primary key columns */
   cashOutRequest?: Maybe<CashOutRequests>;
   /** An array relationship */
@@ -15109,6 +17947,8 @@ export type Subscription_Root = {
   dataTypes: Array<DatatTypes>;
   /** fetch aggregated fields from the table: "data_types" */
   dataTypesAggregate: DatatTypes_Aggregate;
+  /** fetch data from the table in a streaming manner : "data_types" */
+  datatTypes_stream: Array<DatatTypes>;
   /** fetch data from the table: "etx_task_sessions" using primary key columns */
   etxTaskSession?: Maybe<EtxTaskSessions>;
   /** An array relationship */
@@ -15121,6 +17961,8 @@ export type Subscription_Root = {
   featureTypes: Array<FeatureTypes>;
   /** fetch aggregated fields from the table: "feature_types" */
   featureTypesAggregate: FeatureTypes_Aggregate;
+  /** fetch data from the table in a streaming manner : "feature_types" */
+  featureTypes_stream: Array<FeatureTypes>;
   /** fetch data from the table: "fireboa_cash_out_crypto_requests" using primary key columns */
   fireboaCashOutCryptoRequest?: Maybe<FireboaCashOutCryptoRequests>;
   /** fetch data from the table: "fireboa_cash_out_crypto_requests" */
@@ -15187,12 +18029,16 @@ export type Subscription_Root = {
   gender_aggregate: Gender_Aggregate;
   /** fetch data from the table: "gender" using primary key columns */
   gender_by_pk?: Maybe<Gender>;
+  /** fetch data from the table in a streaming manner : "gender" */
+  gender_stream: Array<Gender>;
   /** fetch data from the table: "have_labeled_data_types" using primary key columns */
   haveLabeledDataType?: Maybe<HaveLabeledDataTypesEnum>;
   /** fetch data from the table: "have_labeled_data_types" */
   haveLabeledDataTypes: Array<HaveLabeledDataTypesEnum>;
   /** fetch aggregated fields from the table: "have_labeled_data_types" */
   haveLabeledDataTypesAggregate: HaveLabeledDataTypesEnum_Aggregate;
+  /** fetch data from the table in a streaming manner : "have_labeled_data_types" */
+  haveLabeledDataTypesEnum_stream: Array<HaveLabeledDataTypesEnum>;
   /** fetch data from the table: "identities_legal_id_type_enum" using primary key columns */
   identitiesLegalIdTypeEnum?: Maybe<IdentitiesLegalIdTypeEnums>;
   /** fetch data from the table: "identities_legal_id_type_enum" */
@@ -15211,22 +18057,30 @@ export type Subscription_Root = {
   industry_types_aggregate: Industry_Types_Aggregate;
   /** fetch data from the table: "industry_types" using primary key columns */
   industry_types_by_pk?: Maybe<Industry_Types>;
+  /** fetch data from the table in a streaming manner : "industry_types" */
+  industry_types_stream: Array<Industry_Types>;
   /** fetch data from the table: "labelling_platforms" using primary key columns */
   labellingPlatform?: Maybe<LabellingPlatforms>;
   /** fetch data from the table: "labelling_platforms" */
   labellingPlatforms: Array<LabellingPlatforms>;
   /** fetch aggregated fields from the table: "labelling_platforms" */
   labellingPlatformsAggregate: LabellingPlatforms_Aggregate;
+  /** fetch data from the table in a streaming manner : "labelling_platforms" */
+  labellingPlatforms_stream: Array<LabellingPlatforms>;
   /** An array relationship */
   managers: Array<Managers>;
   /** An aggregate relationship */
   managers_aggregate: Managers_Aggregate;
   /** fetch data from the table: "managers" using primary key columns */
   managers_by_pk?: Maybe<Managers>;
+  /** fetch data from the table in a streaming manner : "managers" */
+  managers_stream: Array<Managers>;
   /** fetch data from the table: "marketplace_projects" using primary key columns */
   marketplaceProject?: Maybe<Marketplace_Projects>;
   /** fetch aggregated fields from the table: "marketplace_projects" */
   marketplaceProjectsAggregate: Marketplace_Projects_Aggregate;
+  /** fetch data from the table in a streaming manner : "marketplace_projects" */
+  marketplace_projects_stream: Array<Marketplace_Projects>;
   /** fetch data from the table: "marketplace_projects" */
   martetplaceProjects: Array<Marketplace_Projects>;
   /** fetch data from the table: "modules" using primary key columns */
@@ -15247,6 +18101,8 @@ export type Subscription_Root = {
   modulesMarketplaceProjects: Array<Modules_Marketplace_Projects>;
   /** fetch aggregated fields from the table: "modules_marketplace_projects" */
   modulesMarketplaceProjectsAggregate: Modules_Marketplace_Projects_Aggregate;
+  /** fetch data from the table in a streaming manner : "modules_marketplace_projects" */
+  modules_marketplace_projects_stream: Array<Modules_Marketplace_Projects>;
   /** fetch data from the table: "organizations" using primary key columns */
   organization?: Maybe<Organizations>;
   /** fetch data from the table: "organizations_customers" using primary key columns */
@@ -15259,12 +18115,18 @@ export type Subscription_Root = {
   organizationsCustomers: Array<OrganizationsCustomers>;
   /** fetch aggregated fields from the table: "organizations_customers" */
   organizationsCustomersAggregate: OrganizationsCustomers_Aggregate;
+  /** fetch data from the table in a streaming manner : "organizations_customers" */
+  organizationsCustomers_stream: Array<OrganizationsCustomers>;
+  /** fetch data from the table in a streaming manner : "organizations" */
+  organizations_stream: Array<Organizations>;
   /** fetch data from the table: "pricing_plans" using primary key columns */
   pricingPlan?: Maybe<PricingPlans>;
   /** fetch data from the table: "pricing_plans" */
   pricingPlans: Array<PricingPlans>;
   /** fetch aggregated fields from the table: "pricing_plans" */
   pricingPlansAggregate: PricingPlans_Aggregate;
+  /** fetch data from the table in a streaming manner : "pricing_plans" */
+  pricingPlans_stream: Array<PricingPlans>;
   /** fetch data from the table: "project_statuses" using primary key columns */
   projectStatus?: Maybe<ProjectStatuses>;
   /** fetch data from the table: "project_statuses" */
@@ -15283,12 +18145,16 @@ export type Subscription_Root = {
   spotifyStateTypes: Array<SpotifyStateTypes>;
   /** fetch aggregated fields from the table: "spotify_state_types" */
   spotifyStateTypesAggregate: SpotifyStateTypes_Aggregate;
+  /** fetch data from the table in a streaming manner : "spotify_state_types" */
+  spotifyStateTypes_stream: Array<SpotifyStateTypes>;
   /** fetch data from the table: "strapi" */
   strapi: Array<Strapi>;
   /** fetch aggregated fields from the table: "strapi" */
   strapi_aggregate: Strapi_Aggregate;
   /** fetch data from the table: "strapi" using primary key columns */
   strapi_by_pk?: Maybe<Strapi>;
+  /** fetch data from the table in a streaming manner : "strapi" */
+  strapi_stream: Array<Strapi>;
   /** fetch data from the table: "stripe_identity_session_error_code_enum" using primary key columns */
   stripeIdentitySessionErrorCodeEnum?: Maybe<StripeIdentitySessionErrorCodeEnums>;
   /** fetch data from the table: "stripe_identity_session_error_code_enum" */
@@ -15357,6 +18223,8 @@ export type Subscription_Root = {
   user_ip_addresses_aggregate: User_Ip_Addresses_Aggregate;
   /** fetch data from the table: "user_ip_addresses" using primary key columns */
   user_ip_addresses_by_pk?: Maybe<User_Ip_Addresses>;
+  /** fetch data from the table in a streaming manner : "user_ip_addresses" */
+  user_ip_addresses_stream: Array<User_Ip_Addresses>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -15377,6 +18245,10 @@ export type Subscription_Root = {
   usersSupplementaries: Array<Users_Supplementary>;
   /** fetch aggregated fields from the table: "users_supplementary" */
   usersSupplementariesAggregate: Users_Supplementary_Aggregate;
+  /** fetch data from the table in a streaming manner : "users_projects" */
+  users_projects_stream: Array<Users_Projects>;
+  /** fetch data from the table in a streaming manner : "users_supplementary" */
+  users_supplementary_stream: Array<Users_Supplementary>;
   /** fetch data from the table: "visual_judgement_modules" using primary key columns */
   visualJudgementModule?: Maybe<VisualJudgementModules>;
   /** fetch data from the table: "visual_judgement_module_images" using primary key columns */
@@ -15385,6 +18257,8 @@ export type Subscription_Root = {
   visualJudgementModuleImages: Array<VisualJudgementModuleImages>;
   /** fetch aggregated fields from the table: "visual_judgement_module_images" */
   visualJudgementModuleImagesAggregate: VisualJudgementModuleImages_Aggregate;
+  /** fetch data from the table in a streaming manner : "visual_judgement_module_images" */
+  visualJudgementModuleImages_stream: Array<VisualJudgementModuleImages>;
   /** fetch data from the table: "visual_judgement_module_responses" using primary key columns */
   visualJudgementModuleResponse?: Maybe<VisualJudgementModuleResponses>;
   /** An array relationship */
@@ -15395,6 +18269,8 @@ export type Subscription_Root = {
   visualJudgementModules: Array<VisualJudgementModules>;
   /** fetch aggregated fields from the table: "visual_judgement_modules" */
   visualJudgementModulesAggregate: VisualJudgementModules_Aggregate;
+  /** fetch data from the table in a streaming manner : "visual_judgement_modules" */
+  visualJudgementModules_stream: Array<VisualJudgementModules>;
   /** fetch data from the table: "wallets" using primary key columns */
   wallet?: Maybe<Wallets>;
   /** An array relationship */
@@ -15413,6 +18289,183 @@ export type Subscription_Root = {
   workersSpotify: Array<WorkersSpotify>;
   /** fetch aggregated fields from the table: "workers_spotify" */
   workersSpotifyAggregate: WorkersSpotify_Aggregate;
+  /** fetch data from the table in a streaming manner : "workers_spotify" */
+  workersSpotify_stream: Array<WorkersSpotify>;
+};
+
+
+export type Subscription_RootCashOutRequests_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<CashOutRequests_Stream_Cursor_Input>>;
+  where?: InputMaybe<CashOutRequests_Bool_Exp>;
+};
+
+
+export type Subscription_RootCollectionTypes_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<CollectionTypes_Stream_Cursor_Input>>;
+  where?: InputMaybe<CollectionTypes_Bool_Exp>;
+};
+
+
+export type Subscription_RootCustomers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Customers_Stream_Cursor_Input>>;
+  where?: InputMaybe<Customers_Bool_Exp>;
+};
+
+
+export type Subscription_RootEtxTaskSessions_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<EtxTaskSessions_Stream_Cursor_Input>>;
+  where?: InputMaybe<EtxTaskSessions_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaCashOutCryptoRequests_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaCashOutCryptoRequests_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaCashOutCryptoRequests_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaCashOutGiftCardRequests_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaCashOutGiftCardRequests_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaCashOutGiftCardRequests_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaCashOutPreferredMethods_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaCashOutPreferredMethods_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaCashOutPreferredMethods_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaCashOutRequests_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaCashOutRequests_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaCashOutRequests_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaModules_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaModules_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaModules_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaProjectsModulesUsers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaProjectsModulesUsers_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaProjectsModulesUsers_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaProjectsModules_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaProjectsModules_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaProjectsModules_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaProjectsUsers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaProjectsUsers_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaProjectsUsers_Bool_Exp>;
+};
+
+
+export type Subscription_RootFireboaProjects_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FireboaProjects_Stream_Cursor_Input>>;
+  where?: InputMaybe<FireboaProjects_Bool_Exp>;
+};
+
+
+export type Subscription_RootFraudStatusEnum_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FraudStatusEnum_Stream_Cursor_Input>>;
+  where?: InputMaybe<FraudStatusEnum_Bool_Exp>;
+};
+
+
+export type Subscription_RootIdentitiesLegalIdTypeEnums_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<IdentitiesLegalIdTypeEnums_Stream_Cursor_Input>>;
+  where?: InputMaybe<IdentitiesLegalIdTypeEnums_Bool_Exp>;
+};
+
+
+export type Subscription_RootImages_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Images_Stream_Cursor_Input>>;
+  where?: InputMaybe<Images_Bool_Exp>;
+};
+
+
+export type Subscription_RootModuleInstructions_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<ModuleInstructions_Stream_Cursor_Input>>;
+  where?: InputMaybe<ModuleInstructions_Bool_Exp>;
+};
+
+
+export type Subscription_RootModules_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Modules_Stream_Cursor_Input>>;
+  where?: InputMaybe<Modules_Bool_Exp>;
+};
+
+
+export type Subscription_RootProjectStatuses_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<ProjectStatuses_Stream_Cursor_Input>>;
+  where?: InputMaybe<ProjectStatuses_Bool_Exp>;
+};
+
+
+export type Subscription_RootSessions_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Sessions_Stream_Cursor_Input>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+
+export type Subscription_RootStripeIdentitySessionErrorCodeEnums_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<StripeIdentitySessionErrorCodeEnums_Stream_Cursor_Input>>;
+  where?: InputMaybe<StripeIdentitySessionErrorCodeEnums_Bool_Exp>;
+};
+
+
+export type Subscription_RootStripeIdentitySessionStatusEnums_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<StripeIdentitySessionStatusEnums_Stream_Cursor_Input>>;
+  where?: InputMaybe<StripeIdentitySessionStatusEnums_Bool_Exp>;
+};
+
+
+export type Subscription_RootStripeIdentitySessionTypeEnums_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<StripeIdentitySessionTypeEnums_Stream_Cursor_Input>>;
+  where?: InputMaybe<StripeIdentitySessionTypeEnums_Bool_Exp>;
+};
+
+
+export type Subscription_RootStripeVerificationSessions_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<StripeVerificationSessions_Stream_Cursor_Input>>;
+  where?: InputMaybe<StripeVerificationSessions_Bool_Exp>;
+};
+
+
+export type Subscription_RootSurveyResponses_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<SurveyResponses_Stream_Cursor_Input>>;
+  where?: InputMaybe<SurveyResponses_Bool_Exp>;
 };
 
 
@@ -15422,6 +18475,76 @@ export type Subscription_RootSurveysArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Surveys_Order_By>>;
   where?: InputMaybe<Surveys_Bool_Exp>;
+};
+
+
+export type Subscription_RootSurveys_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Surveys_Stream_Cursor_Input>>;
+  where?: InputMaybe<Surveys_Bool_Exp>;
+};
+
+
+export type Subscription_RootUserIdentities_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<UserIdentities_Stream_Cursor_Input>>;
+  where?: InputMaybe<UserIdentities_Bool_Exp>;
+};
+
+
+export type Subscription_RootUserModuleStatus_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<UserModuleStatus_Stream_Cursor_Input>>;
+  where?: InputMaybe<UserModuleStatus_Bool_Exp>;
+};
+
+
+export type Subscription_RootUserReferrals_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<UserReferrals_Stream_Cursor_Input>>;
+  where?: InputMaybe<UserReferrals_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsersImages_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<UsersImages_Stream_Cursor_Input>>;
+  where?: InputMaybe<UsersImages_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsersModules_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<UsersModules_Stream_Cursor_Input>>;
+  where?: InputMaybe<UsersModules_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootVisualJudgementModuleResponses_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<VisualJudgementModuleResponses_Stream_Cursor_Input>>;
+  where?: InputMaybe<VisualJudgementModuleResponses_Bool_Exp>;
+};
+
+
+export type Subscription_RootWallets_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Wallets_Stream_Cursor_Input>>;
+  where?: InputMaybe<Wallets_Bool_Exp>;
+};
+
+
+export type Subscription_RootWorkers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Workers_Stream_Cursor_Input>>;
+  where?: InputMaybe<Workers_Bool_Exp>;
 };
 
 
@@ -15444,6 +18567,13 @@ export type Subscription_RootCashOutMethodsAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<CashOutMethods_Order_By>>;
+  where?: InputMaybe<CashOutMethods_Bool_Exp>;
+};
+
+
+export type Subscription_RootCashOutMethods_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<CashOutMethods_Stream_Cursor_Input>>;
   where?: InputMaybe<CashOutMethods_Bool_Exp>;
 };
 
@@ -15540,6 +18670,13 @@ export type Subscription_RootDataTypesAggregateArgs = {
 };
 
 
+export type Subscription_RootDatatTypes_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<DatatTypes_Stream_Cursor_Input>>;
+  where?: InputMaybe<DatatTypes_Bool_Exp>;
+};
+
+
 export type Subscription_RootEtxTaskSessionArgs = {
   id: Scalars['uuid'];
 };
@@ -15582,6 +18719,13 @@ export type Subscription_RootFeatureTypesAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<FeatureTypes_Order_By>>;
+  where?: InputMaybe<FeatureTypes_Bool_Exp>;
+};
+
+
+export type Subscription_RootFeatureTypes_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<FeatureTypes_Stream_Cursor_Input>>;
   where?: InputMaybe<FeatureTypes_Bool_Exp>;
 };
 
@@ -15841,6 +18985,13 @@ export type Subscription_RootGender_By_PkArgs = {
 };
 
 
+export type Subscription_RootGender_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Gender_Stream_Cursor_Input>>;
+  where?: InputMaybe<Gender_Bool_Exp>;
+};
+
+
 export type Subscription_RootHaveLabeledDataTypeArgs = {
   value: Scalars['String'];
 };
@@ -15860,6 +19011,13 @@ export type Subscription_RootHaveLabeledDataTypesAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<HaveLabeledDataTypesEnum_Order_By>>;
+  where?: InputMaybe<HaveLabeledDataTypesEnum_Bool_Exp>;
+};
+
+
+export type Subscription_RootHaveLabeledDataTypesEnum_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<HaveLabeledDataTypesEnum_Stream_Cursor_Input>>;
   where?: InputMaybe<HaveLabeledDataTypesEnum_Bool_Exp>;
 };
 
@@ -15933,6 +19091,13 @@ export type Subscription_RootIndustry_Types_By_PkArgs = {
 };
 
 
+export type Subscription_RootIndustry_Types_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Industry_Types_Stream_Cursor_Input>>;
+  where?: InputMaybe<Industry_Types_Bool_Exp>;
+};
+
+
 export type Subscription_RootLabellingPlatformArgs = {
   value: Scalars['String'];
 };
@@ -15952,6 +19117,13 @@ export type Subscription_RootLabellingPlatformsAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<LabellingPlatforms_Order_By>>;
+  where?: InputMaybe<LabellingPlatforms_Bool_Exp>;
+};
+
+
+export type Subscription_RootLabellingPlatforms_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<LabellingPlatforms_Stream_Cursor_Input>>;
   where?: InputMaybe<LabellingPlatforms_Bool_Exp>;
 };
 
@@ -15979,6 +19151,13 @@ export type Subscription_RootManagers_By_PkArgs = {
 };
 
 
+export type Subscription_RootManagers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Managers_Stream_Cursor_Input>>;
+  where?: InputMaybe<Managers_Bool_Exp>;
+};
+
+
 export type Subscription_RootMarketplaceProjectArgs = {
   id: Scalars['uuid'];
 };
@@ -15989,6 +19168,13 @@ export type Subscription_RootMarketplaceProjectsAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Marketplace_Projects_Order_By>>;
+  where?: InputMaybe<Marketplace_Projects_Bool_Exp>;
+};
+
+
+export type Subscription_RootMarketplace_Projects_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Marketplace_Projects_Stream_Cursor_Input>>;
   where?: InputMaybe<Marketplace_Projects_Bool_Exp>;
 };
 
@@ -16072,6 +19258,13 @@ export type Subscription_RootModulesMarketplaceProjectsAggregateArgs = {
 };
 
 
+export type Subscription_RootModules_Marketplace_Projects_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Modules_Marketplace_Projects_Stream_Cursor_Input>>;
+  where?: InputMaybe<Modules_Marketplace_Projects_Bool_Exp>;
+};
+
+
 export type Subscription_RootOrganizationArgs = {
   id: Scalars['uuid'];
 };
@@ -16119,6 +19312,20 @@ export type Subscription_RootOrganizationsCustomersAggregateArgs = {
 };
 
 
+export type Subscription_RootOrganizationsCustomers_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<OrganizationsCustomers_Stream_Cursor_Input>>;
+  where?: InputMaybe<OrganizationsCustomers_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrganizations_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Organizations_Stream_Cursor_Input>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+
 export type Subscription_RootPricingPlanArgs = {
   id: Scalars['uuid'];
 };
@@ -16138,6 +19345,13 @@ export type Subscription_RootPricingPlansAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<PricingPlans_Order_By>>;
+  where?: InputMaybe<PricingPlans_Bool_Exp>;
+};
+
+
+export type Subscription_RootPricingPlans_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<PricingPlans_Stream_Cursor_Input>>;
   where?: InputMaybe<PricingPlans_Bool_Exp>;
 };
 
@@ -16211,6 +19425,13 @@ export type Subscription_RootSpotifyStateTypesAggregateArgs = {
 };
 
 
+export type Subscription_RootSpotifyStateTypes_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<SpotifyStateTypes_Stream_Cursor_Input>>;
+  where?: InputMaybe<SpotifyStateTypes_Bool_Exp>;
+};
+
+
 export type Subscription_RootStrapiArgs = {
   distinct_on?: InputMaybe<Array<Strapi_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -16231,6 +19452,13 @@ export type Subscription_RootStrapi_AggregateArgs = {
 
 export type Subscription_RootStrapi_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootStrapi_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Strapi_Stream_Cursor_Input>>;
+  where?: InputMaybe<Strapi_Bool_Exp>;
 };
 
 
@@ -16481,6 +19709,13 @@ export type Subscription_RootUser_Ip_Addresses_By_PkArgs = {
 };
 
 
+export type Subscription_RootUser_Ip_Addresses_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<User_Ip_Addresses_Stream_Cursor_Input>>;
+  where?: InputMaybe<User_Ip_Addresses_Bool_Exp>;
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -16571,6 +19806,20 @@ export type Subscription_RootUsersSupplementariesAggregateArgs = {
 };
 
 
+export type Subscription_RootUsers_Projects_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Users_Projects_Stream_Cursor_Input>>;
+  where?: InputMaybe<Users_Projects_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_Supplementary_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Users_Supplementary_Stream_Cursor_Input>>;
+  where?: InputMaybe<Users_Supplementary_Bool_Exp>;
+};
+
+
 export type Subscription_RootVisualJudgementModuleArgs = {
   id: Scalars['uuid'];
 };
@@ -16595,6 +19844,13 @@ export type Subscription_RootVisualJudgementModuleImagesAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<VisualJudgementModuleImages_Order_By>>;
+  where?: InputMaybe<VisualJudgementModuleImages_Bool_Exp>;
+};
+
+
+export type Subscription_RootVisualJudgementModuleImages_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<VisualJudgementModuleImages_Stream_Cursor_Input>>;
   where?: InputMaybe<VisualJudgementModuleImages_Bool_Exp>;
 };
 
@@ -16636,6 +19892,13 @@ export type Subscription_RootVisualJudgementModulesAggregateArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<VisualJudgementModules_Order_By>>;
+  where?: InputMaybe<VisualJudgementModules_Bool_Exp>;
+};
+
+
+export type Subscription_RootVisualJudgementModules_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<VisualJudgementModules_Stream_Cursor_Input>>;
   where?: InputMaybe<VisualJudgementModules_Bool_Exp>;
 };
 
@@ -16708,6 +19971,13 @@ export type Subscription_RootWorkersSpotifyAggregateArgs = {
   where?: InputMaybe<WorkersSpotify_Bool_Exp>;
 };
 
+
+export type Subscription_RootWorkersSpotify_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<WorkersSpotify_Stream_Cursor_Input>>;
+  where?: InputMaybe<WorkersSpotify_Bool_Exp>;
+};
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']>;
@@ -16767,9 +20037,9 @@ export type User_Ip_Addresses_Bool_Exp = {
 
 /** unique or primary key constraints on table "user_ip_addresses" */
 export enum User_Ip_Addresses_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserIpAddressesPkey = 'user_ip_addresses_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id", "ip_address" */
   UserIpAddressesUserIdIpAddressKey = 'user_ip_addresses_user_id_ip_address_key'
 }
 
@@ -16855,6 +20125,23 @@ export type User_Ip_Addresses_Set_Input = {
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "user_ip_addresses" */
+export type User_Ip_Addresses_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: User_Ip_Addresses_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type User_Ip_Addresses_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  ip_address?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "user_ip_addresses" */
 export enum User_Ip_Addresses_Update_Column {
   /** column name */
@@ -16868,6 +20155,12 @@ export enum User_Ip_Addresses_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+export type User_Ip_Addresses_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Ip_Addresses_Set_Input>;
+  where: User_Ip_Addresses_Bool_Exp;
+};
 
 /** columns and relationships of "users_projects" */
 export type Users_Projects = {
@@ -16931,7 +20224,7 @@ export type Users_Projects_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_projects" */
 export enum Users_Projects_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "project_id", "user_id" */
   UsersProjectsPkey = 'users_projects_pkey'
 }
 
@@ -17022,6 +20315,21 @@ export type Users_Projects_Set_Input = {
   userId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "users_projects" */
+export type Users_Projects_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Users_Projects_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Users_Projects_Stream_Cursor_Value_Input = {
+  projectId?: InputMaybe<Scalars['uuid']>;
+  status?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "users_projects" */
 export enum Users_Projects_Update_Column {
   /** column name */
@@ -17031,6 +20339,12 @@ export enum Users_Projects_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type Users_Projects_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Projects_Set_Input>;
+  where: Users_Projects_Bool_Exp;
+};
 
 /** Extra vault-data about a user */
 export type Users_Supplementary = {
@@ -17091,9 +20405,9 @@ export type Users_Supplementary_Bool_Exp = {
 
 /** unique or primary key constraints on table "users_supplementary" */
 export enum Users_Supplementary_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UsersSupplementaryPkey = 'users_supplementary_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id" */
   UsersSupplementaryUserIdKey = 'users_supplementary_user_id_key'
 }
 
@@ -17223,6 +20537,28 @@ export type Users_Supplementary_Set_Input = {
   walletType?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "users_supplementary" */
+export type Users_Supplementary_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Users_Supplementary_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Users_Supplementary_Stream_Cursor_Value_Input = {
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  publicKey?: InputMaybe<Scalars['String']>;
+  socialLoginMethod?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+  userSecret?: InputMaybe<Scalars['String']>;
+  walletAddress?: InputMaybe<Scalars['String']>;
+  walletChain?: InputMaybe<Scalars['String']>;
+  walletType?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "users_supplementary" */
 export enum Users_Supplementary_Update_Column {
   /** column name */
@@ -17246,6 +20582,12 @@ export enum Users_Supplementary_Update_Column {
   /** column name */
   WalletType = 'walletType'
 }
+
+export type Users_Supplementary_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Supplementary_Set_Input>;
+  where: Users_Supplementary_Bool_Exp;
+};
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -17362,9 +20704,9 @@ export type VisualJudgementModuleImages_Bool_Exp = {
 
 /** unique or primary key constraints on table "visual_judgement_module_images" */
 export enum VisualJudgementModuleImages_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "image_id" */
   VisualJudgementModuleImagesImageIdKey = 'visual_judgement_module_images_image_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModuleImagesPkey = 'visual_judgement_module_images_pkey'
 }
 
@@ -17460,7 +20802,7 @@ export type VisualJudgementModuleImages_Order_By = {
   visualJudgementModuleResponses_aggregate?: InputMaybe<VisualJudgementModuleResponses_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: visualJudgementModuleImages */
+/** primary key columns input for table: visual_judgement_module_images */
 export type VisualJudgementModuleImages_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -17493,6 +20835,23 @@ export type VisualJudgementModuleImages_Set_Input = {
   visualJudgementModuleId?: InputMaybe<Scalars['uuid']>;
 };
 
+/** Streaming cursor of the table "visualJudgementModuleImages" */
+export type VisualJudgementModuleImages_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: VisualJudgementModuleImages_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type VisualJudgementModuleImages_Stream_Cursor_Value_Input = {
+  configuration?: InputMaybe<Scalars['jsonb']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  imageId?: InputMaybe<Scalars['uuid']>;
+  isRequired?: InputMaybe<Scalars['Boolean']>;
+  visualJudgementModuleId?: InputMaybe<Scalars['uuid']>;
+};
+
 /** update columns of table "visual_judgement_module_images" */
 export enum VisualJudgementModuleImages_Update_Column {
   /** column name */
@@ -17506,6 +20865,22 @@ export enum VisualJudgementModuleImages_Update_Column {
   /** column name */
   VisualJudgementModuleId = 'visualJudgementModuleId'
 }
+
+export type VisualJudgementModuleImages_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<VisualJudgementModuleImages_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<VisualJudgementModuleImages_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<VisualJudgementModuleImages_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<VisualJudgementModuleImages_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<VisualJudgementModuleImages_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModuleImages_Set_Input>;
+  where: VisualJudgementModuleImages_Bool_Exp;
+};
 
 /** columns and relationships of "visual_judgement_modules" */
 export type VisualJudgementModules = {
@@ -17604,7 +20979,7 @@ export type VisualJudgementModules_Bool_Exp = {
 
 /** unique or primary key constraints on table "visual_judgement_modules" */
 export enum VisualJudgementModules_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   VisualJudgementModulesPkey = 'visual_judgement_modules_pkey'
 }
 
@@ -17696,7 +21071,7 @@ export type VisualJudgementModules_Order_By = {
   visualJudgementModuleImages_aggregate?: InputMaybe<VisualJudgementModuleImages_Aggregate_Order_By>;
 };
 
-/** primary key columns input for table: visualJudgementModules */
+/** primary key columns input for table: visual_judgement_modules */
 export type VisualJudgementModules_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
@@ -17726,6 +21101,22 @@ export type VisualJudgementModules_Set_Input = {
   instruction?: InputMaybe<Scalars['String']>;
 };
 
+/** Streaming cursor of the table "visualJudgementModules" */
+export type VisualJudgementModules_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: VisualJudgementModules_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type VisualJudgementModules_Stream_Cursor_Value_Input = {
+  configuration_schema?: InputMaybe<Scalars['jsonb']>;
+  fireboaProjectModuleId?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  instruction?: InputMaybe<Scalars['String']>;
+};
+
 /** update columns of table "visual_judgement_modules" */
 export enum VisualJudgementModules_Update_Column {
   /** column name */
@@ -17738,6 +21129,22 @@ export enum VisualJudgementModules_Update_Column {
   Instruction = 'instruction'
 }
 
+export type VisualJudgementModules_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<VisualJudgementModules_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<VisualJudgementModules_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<VisualJudgementModules_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<VisualJudgementModules_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<VisualJudgementModules_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<VisualJudgementModules_Set_Input>;
+  where: VisualJudgementModules_Bool_Exp;
+};
+
 /** columns and relationships of "workers_spotify" */
 export type WorkersSpotify = {
   __typename?: 'workersSpotify';
@@ -17746,7 +21153,7 @@ export type WorkersSpotify = {
   spotifyId?: Maybe<Scalars['String']>;
   spotifyRefreshToken?: Maybe<Scalars['String']>;
   spotifyVerifierCode?: Maybe<Scalars['String']>;
-  status: Spotify_State_Types_Enum;
+  status: SpotifyStateTypes_Enum;
   /** An object relationship */
   worker: Workers;
   workerId: Scalars['uuid'];
@@ -17784,16 +21191,16 @@ export type WorkersSpotify_Bool_Exp = {
   spotifyId?: InputMaybe<String_Comparison_Exp>;
   spotifyRefreshToken?: InputMaybe<String_Comparison_Exp>;
   spotifyVerifierCode?: InputMaybe<String_Comparison_Exp>;
-  status?: InputMaybe<Spotify_State_Types_Enum_Comparison_Exp>;
+  status?: InputMaybe<SpotifyStateTypes_Enum_Comparison_Exp>;
   worker?: InputMaybe<Workers_Bool_Exp>;
   workerId?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "workers_spotify" */
 export enum WorkersSpotify_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "worker_id" */
   WorkersSpotifyPkey = 'workers_spotify_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "spotify_id" */
   WorkersSpotifySpotifyIdKey = 'workers_spotify_spotify_id_key'
 }
 
@@ -17804,7 +21211,7 @@ export type WorkersSpotify_Insert_Input = {
   spotifyId?: InputMaybe<Scalars['String']>;
   spotifyRefreshToken?: InputMaybe<Scalars['String']>;
   spotifyVerifierCode?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Spotify_State_Types_Enum>;
+  status?: InputMaybe<SpotifyStateTypes_Enum>;
   worker?: InputMaybe<Workers_Obj_Rel_Insert_Input>;
   workerId?: InputMaybe<Scalars['uuid']>;
 };
@@ -17866,7 +21273,7 @@ export type WorkersSpotify_Order_By = {
   workerId?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: workersSpotify */
+/** primary key columns input for table: workers_spotify */
 export type WorkersSpotify_Pk_Columns_Input = {
   workerId: Scalars['uuid'];
 };
@@ -17896,7 +21303,26 @@ export type WorkersSpotify_Set_Input = {
   spotifyId?: InputMaybe<Scalars['String']>;
   spotifyRefreshToken?: InputMaybe<Scalars['String']>;
   spotifyVerifierCode?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Spotify_State_Types_Enum>;
+  status?: InputMaybe<SpotifyStateTypes_Enum>;
+  workerId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** Streaming cursor of the table "workersSpotify" */
+export type WorkersSpotify_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: WorkersSpotify_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type WorkersSpotify_Stream_Cursor_Value_Input = {
+  spotifyClientId?: InputMaybe<Scalars['String']>;
+  spotifyCodeChallenge?: InputMaybe<Scalars['String']>;
+  spotifyId?: InputMaybe<Scalars['String']>;
+  spotifyRefreshToken?: InputMaybe<Scalars['String']>;
+  spotifyVerifierCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<SpotifyStateTypes_Enum>;
   workerId?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -17917,6 +21343,12 @@ export enum WorkersSpotify_Update_Column {
   /** column name */
   WorkerId = 'workerId'
 }
+
+export type WorkersSpotify_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<WorkersSpotify_Set_Input>;
+  where: WorkersSpotify_Bool_Exp;
+};
 
 export type CreateUserMutationVariables = Exact<{
   name: Scalars['String'];
@@ -17958,7 +21390,7 @@ export type CreateUserSupplementaryMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserSupplementaryMutation = { __typename?: 'mutation_root', createOneUserSupplementary?: { __typename?: 'users_supplementary', user: { __typename?: 'Users', id: any, emailAddress: string, name: string, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null } } | null };
+export type CreateUserSupplementaryMutation = { __typename?: 'mutation_root', createOneUserSupplementary?: { __typename?: 'users_supplementary', user: { __typename?: 'Users', id: any, emailAddress: string, name: string, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', socialLoginMethod?: string | null, walletType?: string | null, publicKey?: string | null, userSecret?: string | null } | null } } | null };
 
 export type DeleteUserModulesMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -18015,7 +21447,7 @@ export type GetUserFromExternalIdOrEmailQueryVariables = Exact<{
 }>;
 
 
-export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', publicKey?: string | null, userSecret?: string | null } | null }> };
+export type GetUserFromExternalIdOrEmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'Users', name: string, emailAddress: string, id: any, externalId: string, userSupplementary?: { __typename?: 'users_supplementary', socialLoginMethod?: string | null, walletType?: string | null, publicKey?: string | null, userSecret?: string | null } | null }> };
 
 export type GetUserUuidFromExternalIdQueryVariables = Exact<{
   externalId: Scalars['String'];
@@ -18087,6 +21519,8 @@ export const CreateUserSupplementaryDocument = gql`
       name
       externalId
       userSupplementary {
+        socialLoginMethod
+        walletType
         publicKey
         userSecret
       }
@@ -18172,6 +21606,8 @@ export const GetUserFromExternalIdOrEmailDocument = gql`
     id
     externalId
     userSupplementary {
+      socialLoginMethod
+      walletType
       publicKey
       userSecret
     }

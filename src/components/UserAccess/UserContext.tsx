@@ -109,9 +109,15 @@ const UserProvider = ({ children }: UserProviderProps) => {
         },
         body: JSON.stringify({ idToken, loginType: loginTypeLocallyScoped }),
       });
-      const { user: userFromResponse, hasuraToken: hasuraTokenFromResponse } =
-        await loginResponse.json();
+      const {
+        user: userFromResponse,
+        hasuraToken: hasuraTokenFromResponse,
+        message: errorMessage,
+      } = await loginResponse.json();
 
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
       if (!userFromResponse || !hasuraTokenFromResponse) {
         throw new Error("Missing required Vana user properties");
       }
