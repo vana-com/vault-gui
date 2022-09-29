@@ -40,7 +40,6 @@ export default async (
         message: "User not authenticated via Web3Auth",
       } as LoginResponse);
     }
-    console.log(JSON.stringify(idTokenPayload, null, 2));
 
     // Extract user information
     if (idTokenPayload.wallets?.length > 0) {
