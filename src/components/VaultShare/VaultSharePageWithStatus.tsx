@@ -38,7 +38,7 @@ const VaultSharePageWithStatus = ({
       accessDomain={accessingDomain}
       heading={
         uiStatus === ShareUiStatus.USER_DOES_NOT_HAVE_MODULE_DATA
-          ? "Please add data to Vault"
+          ? "Add data to Vault"
           : "Grant Vault access"
       }
       lede={lede}
