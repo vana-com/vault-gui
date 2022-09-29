@@ -32,6 +32,7 @@ export default async (
       } as LoginResponse);
     }
 
+    // Validate ID token
     const idTokenPayload = (await getIdTokenPayload(idToken)) as any;
     if (!idTokenPayload) {
       return res.status(401).json({
@@ -40,6 +41,7 @@ export default async (
       } as LoginResponse);
     }
 
+    // Extract user information
     if (idTokenPayload.wallets?.length > 0) {
       const issuer = idTokenPayload.iss || idTokenPayload.issuer;
       let emailAddress;
@@ -49,6 +51,14 @@ export default async (
 
       if (issuer === config.ISSUER_OPENLOGIN) {
         // Social Login
+
+        if (idTokenPayload.aud !== config.WEB_3_AUTH_CLIENT_ID) {
+          return res.status(401).json({
+            success: false,
+            message: `Invalid audience '${idTokenPayload.aud}' in idToken`,
+          } as LoginResponse);
+        }
+
         publicKey = idTokenPayload.wallets[0].public_key;
         walletAddress = publicKeyToAddress(publicKey);
         emailAddress = idTokenPayload.email;
@@ -63,6 +73,7 @@ export default async (
       const externalId = walletAddress.toLowerCase();
       const hasuraJwt = await createHasuraJWT(idTokenPayload, externalId);
 
+      // Retrieve user
       const user = await getOrCreateUser(
         externalId,
         publicKey,
@@ -70,6 +81,14 @@ export default async (
         emailAddress,
         loginType,
       );
+
+      // Ensure the same wallet is returned for the user
+      if (externalId && user?.externalId && externalId !== user?.externalId) {
+        return res.status(401).json({
+          success: false,
+          message: `Mismatching wallet address. Did you mean to sign in with ${user?.userSupplementary?.socialLoginMethod}?`,
+        } as LoginResponse);
+      }
 
       return res
         .status(200)
