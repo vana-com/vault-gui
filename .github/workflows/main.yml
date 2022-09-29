@@ -1,6 +1,7 @@
 name: Cypress Tests
 
-on: push
+# Disable cypress tests until we have cypress tests
+# on: push
 
 jobs:
   install:
