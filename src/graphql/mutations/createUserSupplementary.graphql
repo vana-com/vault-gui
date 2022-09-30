@@ -8,15 +8,15 @@ mutation createUserSupplementary(
   $userSecret: String!
 ) {
   createOneUserSupplementary(
-    object:{
-    	userId: $userId
+    object: {
+      userId: $userId
       walletType: $walletType
       walletChain: $walletChain
       walletAddress: $walletAddress
       publicKey: $publicKey
       socialLoginMethod: $socialLoginMethod
       userSecret: $userSecret
-  	}
+    }
   ) {
     user {
       id
@@ -24,6 +24,8 @@ mutation createUserSupplementary(
       name
       externalId
       userSupplementary {
+        socialLoginMethod
+        walletType
         publicKey
         userSecret
       }
