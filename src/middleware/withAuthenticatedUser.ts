@@ -41,13 +41,11 @@ export const withAuthenticatedUser: Middleware = async (
     emailAddress: "",
   });
 
-  const { id: userId } = users && users[0];
-
-  if (!userId) {
-    // No id can be found for the user
+  // No users found
+  if (!users || users.length === 0) {
     return res
       .status(400)
-      .json({ error: "Invalid user", success: false } as ApiResponse);
+      .json({ error: "Unable to find a user", success: false } as ApiResponse);
   }
 
   req.body = { user: users[0], hasuraClient: sdk, ...req.body };

@@ -16,6 +16,8 @@ query getUserFromExternalIdOrEmail(
     id
     externalId
     userSupplementary {
+      socialLoginMethod
+      walletType
       publicKey
       userSecret
     }
