@@ -18,6 +18,7 @@ import {
   LayoutApp,
   UserProvider,
 } from "src/components";
+import config from "src/config";
 
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
@@ -55,7 +56,7 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
                       {/** Start of vanahelp Zendesk Widget script */}
                       <Script
                         id="ze-snippet"
-                        src="https://static.zdassets.com/ekr/snippet.js?key=ae33c673-67c2-4bb9-96a4-3b62821d9567"
+                        src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
                       />
                       {/** End of vanahelp Zendesk Widget script */}
                     </LayoutApp>
