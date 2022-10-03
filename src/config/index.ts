@@ -10,6 +10,8 @@ const generalConfig = {
   vanaVaultURL: "https://vault.vana.com",
   vanaExploreURL: "https://explore.vana.com",
 
+  ZENDESK_WIDGET_KEY: "ae33c673-67c2-4bb9-96a4-3b62821d9567",
+
   preSignedObjectURLTTLInMilliseconds: 10 * 60 * 1000, // Valid for 10 minutes
   maxFileUploadSize: 2147483648,
 
