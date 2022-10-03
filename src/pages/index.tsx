@@ -26,6 +26,7 @@ import {
 } from "src/components";
 import { navigationBreadcrumbs } from "src/data";
 import {
+  Modules,
   useGetModulesQuery,
   useGetUserModulesSubscription,
 } from "src/graphql/generated";
@@ -59,7 +60,7 @@ const HomePage: NextPage = () => {
     ? userModulesData.usersModules
     : [];
 
-  const notStoredModules = allModules?.filter(
+  const notStoredModules = (allModules as Modules[])?.filter(
     (module) =>
       !storedUsersModules.some(
         (storedModule) => module.id === storedModule.moduleId,
