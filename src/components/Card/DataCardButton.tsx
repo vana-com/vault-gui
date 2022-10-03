@@ -16,13 +16,13 @@ import {
   WithIcon,
 } from "src/components";
 import config from "src/config";
-import { Module } from "src/types";
-import { heapTrackServerSide } from "src/utils";
+import { Modules } from "src/graphql/generated";
+import { formatModuleNameForID, heapTrackServerSide } from "src/utils";
 
 const { HEAP_EVENTS } = config;
 
 interface Props {
-  module: Module;
+  module: Modules;
   showActionHover?: boolean;
   userId: string;
 }
@@ -30,7 +30,7 @@ interface Props {
 /* DataCardButton is very similar to DataCard with same card styles */
 const DataCardButton = ({ module, showActionHover, userId }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const link = `/store/${module.name.toLowerCase()}`;
+  const link = `/store/${formatModuleNameForID(module)}`;
 
   return (
     <NextLink passHref href={link}>

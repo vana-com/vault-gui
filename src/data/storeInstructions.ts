@@ -45,3 +45,17 @@ export const instagramStoreInstructions = `
 
 4. Wait for an email from Instagram with a download link. It usually arrives in a few minutes.
 `;
+
+export const netflixLightStoreInstructions = `
+1. Go to your [Netflix Account Page](https://www.netflix.com/youraccount)
+
+2. Expand your profile and click View
+
+    ![Netflix instructions {priority}{1036x539}](/images/netflix-light-instructions-1.png)
+
+3. Scroll to the bottom of your watch history, and click Download All
+
+    ![Netflix instructions {priority}{1092x142}](/images/netflix-light-instructions-2.png)
+
+4. A CSV file will be downloaded momentarily.
+`;

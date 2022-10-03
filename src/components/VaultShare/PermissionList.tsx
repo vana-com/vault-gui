@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
 import { Group, Stack, Text, useUserContext } from "src/components";
-import { capitalizeString } from "src/utils";
+import { capitalizeString, formatModuleNameForUI } from "src/utils";
 
 import { FocusStack } from "./Subelement";
 
@@ -50,7 +50,7 @@ const PermissionList = ({ permissionMap }: Props) => {
       {Object.keys(permissionMap).map((serviceName, index) => (
         <Stack tw="gap-0 relative" key={serviceName}>
           <PermissionHeader index={index}>
-            {capitalizeString(serviceName)}
+            {formatModuleNameForUI(serviceName)}
           </PermissionHeader>
           <Stack tw="px-insetHalf gap-2 py-[0.85em]">
             {permissionMap[serviceName]?.map((permission) => (
