@@ -2,7 +2,7 @@ import { Modules } from "src/graphql/generated";
 
 /**
  * Return the module's display name as an ID
- * (Netflix Light => netflix_light)
+ * (Netflix Viewing History => netflix_viewing_history)
  * @param module
  * @returns
  */

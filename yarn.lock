@@ -649,10 +649,10 @@
   dependencies:
     prettier "^2.2.1"
 
-"@corsali/userdata-extractor@0.3.0-beta5":
-  version "0.3.0-beta5"
-  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.3.0-beta5/1573abe95fc92d414fd0a1faef12542fbc5ce3e8#1573abe95fc92d414fd0a1faef12542fbc5ce3e8"
-  integrity sha512-wI2ossaWDGb5c5H2LEkFmOCRr4526EyYJJ8BVA0GKNnadkN/WWEjVWh9Yjs0MV+ZogQ1+WvyBlq+p5TolCd2qw==
+"@corsali/userdata-extractor@0.3.0-beta6":
+  version "0.3.0-beta6"
+  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.3.0-beta6/f985efa267e3607e3e0b0b9614e0b7a63e87f29a#f985efa267e3607e3e0b0b9614e0b7a63e87f29a"
+  integrity sha512-Fe4OBxrdgVSnL1q2d7YUCxCjr09qdhwMXBuZwrobw+RnDcEWtc+hyePjfLTFEpIdoBCJ3AYyRHnZcoRZdWq7mQ==
   dependencies:
     "@zip.js/zip.js" "2.4.21"
     axios "^0.27.2"

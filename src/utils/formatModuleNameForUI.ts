@@ -1,7 +1,7 @@
 /**
  * Capitalize the first letter in the of module name
- * (ex. google => Google, netflix_light => Netflix Light)
- * @param moduleNameAsId (ex: google, or netflix_light)
+ * (ex. google => Google, netflix_viewing_history => Netflix Viewing History)
+ * @param moduleNameAsId (ex: google, or netflix_viewing_history)
  * @returns
  */
 const formatModuleNameForUI = (moduleNameAsId: string) => {

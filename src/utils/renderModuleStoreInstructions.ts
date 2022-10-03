@@ -2,7 +2,7 @@ import {
   facebookStoreInstructions,
   googleStoreInstructions,
   instagramStoreInstructions,
-  netflixLightStoreInstructions,
+  netflixViewingHistoryStoreInstructions,
 } from "src/data";
 import { ModuleName } from "src/types";
 
@@ -16,8 +16,8 @@ export const renderModuleStoreInstructions = (
       return facebookStoreInstructions;
     case "instagram":
       return instagramStoreInstructions;
-    case "netflix light":
-      return netflixLightStoreInstructions;
+    case "netflix viewing history":
+      return netflixViewingHistoryStoreInstructions;
     default:
       return `Download instructions for ${moduleName} is unavailable.`;
   }
