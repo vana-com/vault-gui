@@ -12,14 +12,14 @@ import {
   Text,
 } from "src/components";
 import config from "src/config";
-import { Module } from "src/types";
+import { Modules } from "src/graphql/generated";
 import { heapTrackServerSide } from "src/utils";
 
 const { HEAP_EVENTS } = config;
 
 interface Props {
   userId: string;
-  modules: Module[] | undefined;
+  modules: Modules[] | undefined;
   children: React.ReactNode;
   buttonIsLarge?: boolean;
 }
@@ -74,7 +74,7 @@ const AddData = ({ userId, modules, children, buttonIsLarge }: Props) => (
       </Stack>
       <hr />
       <div tw="p-[1px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-insetHalf">
-        {modules?.map((module) => (
+        {modules?.map((module: Modules) => (
           <DataCardButton key={module.id} module={module} userId={userId} />
         ))}
       </div>

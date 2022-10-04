@@ -21828,7 +21828,7 @@ export type GetAllUserModulesLazyQueryHookResult = ReturnType<typeof useGetAllUs
 export type GetAllUserModulesQueryResult = Apollo.QueryResult<GetAllUserModulesQuery, GetAllUserModulesQueryVariables>;
 export const GetModuleDocument = gql`
     query getModule($name: String!) {
-  modules(where: {name: {_eq: $name}}) {
+  modules(where: {name: {_ilike: $name}}) {
     iconURL
     id
     name

@@ -20,10 +20,14 @@ import {
   VaultSharePageWithStatus,
 } from "src/components/VaultShare";
 import config from "src/config";
-import { useGetUserModulesSubscription } from "src/graphql/generated";
+import { Modules, useGetUserModulesSubscription } from "src/graphql/generated";
 import { ShareUiStatus } from "src/types";
 import * as DataPipeline from "src/types/DataPipeline";
-import { heapTrackServerSide, openInNewTab } from "src/utils";
+import {
+  formatModuleNameForID,
+  heapTrackServerSide,
+  openInNewTab,
+} from "src/utils";
 import { decryptFiles, fetchUserData } from "src/utils/dataQueryPipeline";
 
 const { HEAP_EVENTS } = config;
@@ -94,14 +98,18 @@ const SendPage: NextPage = () => {
   const requestedServices = Object.keys(permissionMap); // List of services to query, ex: ["instagram", "facebook"]
   const selectedModules = userModulesData
     ? userModulesData.usersModules.filter((userModule) =>
-        requestedServices.includes(userModule.module.name.toLowerCase()),
+        requestedServices.includes(
+          formatModuleNameForID(userModule.module as Modules),
+        ),
       )
     : [];
 
   // Returns an array of services that the user doesn't have data for
   const getMissingServices = (): string[] => {
     const hasModules =
-      selectedModules?.map((um) => um.module.name.toLowerCase()) ?? [];
+      selectedModules?.map((um) =>
+        formatModuleNameForID(um.module as Modules),
+      ) ?? [];
     return requestedServices.filter((s) => !hasModules.includes(s));
   };
   const missingServices = getMissingServices();

@@ -29,7 +29,8 @@ const generalConfig = {
   
   ###`,
 
-  zipFileMimeTypes: [
+  allowedUploadMimeTypes: [
+    "text/csv",
     "zip",
     "application/octet-stream",
     "application/zip",

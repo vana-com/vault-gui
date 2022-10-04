@@ -649,15 +649,16 @@
   dependencies:
     prettier "^2.2.1"
 
-"@corsali/userdata-extractor@0.2.1":
-  version "0.2.1"
-  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.2.1/b4bbf73ae330f72ccaa00d2cf54d7801b1996ae3#b4bbf73ae330f72ccaa00d2cf54d7801b1996ae3"
-  integrity sha512-raaPTAGPulODB5wXprlWa7FMJoASvPZP2cm9TeI5hfFL3ZpsFc1becefcDJ/EZb1Mg/XvcMte1oPHsna8lO3Fg==
+"@corsali/userdata-extractor@0.3.0":
+  version "0.3.0"
+  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.3.0/5aa8c529975db423ce74d19aef6fd8c90080fc6c#5aa8c529975db423ce74d19aef6fd8c90080fc6c"
+  integrity sha512-LOVPwkO71hwbQQI2jBNCi/30Ia7CaEWtNCgFMx51n3gh91Qmj4052RyIL2HL7Z2KLTidbqxcxko8lq+oNpp26g==
   dependencies:
     "@zip.js/zip.js" "2.4.21"
     axios "^0.27.2"
     jsonpath "^1.1.1"
     lodash.mapvalues "^4.6.0"
+    papaparse "^5.3.2"
     sql.js "^1.8.0"
 
 "@cspotcode/source-map-support@^0.8.0":
@@ -10361,6 +10362,11 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
+
+papaparse@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
+  integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
 
 param-case@^3.0.4:
   version "3.0.4"
