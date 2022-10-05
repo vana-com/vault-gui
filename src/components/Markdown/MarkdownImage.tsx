@@ -17,10 +17,9 @@ interface MarkdownImageProps {
 export const MarkdownImage = ({ image }: MarkdownImageProps) => {
   const metastring = image?.properties?.alt;
   const alt = metastring?.replace(/ *\{[^)]*\} */g, "");
-  const metaWidth = metastring?.match(/{([^}]+)x/);
-  const metaHeight = metastring?.match(/x([^}]+)}/);
-  const width = metaWidth ? metaWidth[1] : "768";
-  const height = metaHeight ? metaHeight[1] : "432";
+  const dimensions = metastring?.match(/[0-9]+x[0-9]+/)?.[0]?.split("x"); // Matches image dimensions (ex: 111x222)
+  const width = dimensions ? dimensions[0] : "768";
+  const height = dimensions ? dimensions[1] : "432";
   const isPriority = !!metastring?.toLowerCase().match("{priority}");
   const hasCaption = metastring?.toLowerCase().includes("{caption:");
   const caption = metastring?.match(/{caption: (.*?)}/)?.pop();
