@@ -2,3 +2,4 @@
 export * from "./deleteGCSObject";
 export * from "./getHasuraClient";
 export * from "./getOrCreateUser";
+export * from "./heapServerSide";
