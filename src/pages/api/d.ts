@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {
   addAccountPropsToCallInServer,
   trackEventToCallInServer,
-} from "src/utils/serverUtils";
+} from "src/utils";
 
 /**
  * Heap Tracking Endpoint. Server side events are more reliable than
