@@ -21,8 +21,13 @@ import {
 } from "src/components/VaultShare";
 import config from "src/config";
 import { Modules, useGetUserModulesSubscription } from "src/graphql/generated";
-import { ShareUiStatus } from "src/types";
-import * as DataPipeline from "src/types/DataPipeline";
+import {
+  SharePipelineProgress,
+  ShareStatus,
+  ShareUiStatus,
+  VaultMessage,
+  VaultMessageType,
+} from "src/types";
 import {
   formatModuleNameForID,
   heapTrackServerSide,
@@ -43,9 +48,9 @@ const SendPage: NextPage = () => {
   const { user, hasuraToken, walletProvider } = useUserContext();
   const [userHasAcceptedSharingRequest, setUserHasAcceptedSharingRequest] =
     useState(false);
-  const [shareStatus, setShareStatus] = useState(DataPipeline.Status.IDLE);
+  const [shareStatus, setShareStatus] = useState(ShareStatus.IDLE);
   const [updateStatus, setUpdateStatus] = useState(
-    DataPipeline.Stage.FETCH_DATA,
+    SharePipelineProgress.FETCH_DATA,
   );
   const [uiStatus, setUiStatus] = useState(
     ShareUiStatus.SHARE_REQUEST_RECEIVED,
@@ -63,8 +68,7 @@ const SendPage: NextPage = () => {
       try {
         const messageJson = JSON.parse(event.data);
         if (
-          messageJson?.messageType ===
-          DataPipeline.VaultMessageType.SHARE_REQUEST_INITIATED
+          messageJson?.messageType === VaultMessageType.SHARE_REQUEST_INITIATED
         ) {
           // New share request received
           const { appName, queries } = messageJson?.payload ?? {};
@@ -77,7 +81,7 @@ const SendPage: NextPage = () => {
           // Send acknowledge back to requestor
           window.opener.postMessage(
             JSON.stringify({
-              messageType: DataPipeline.VaultMessageType.SHARE_REQUEST_RECEIVED,
+              messageType: VaultMessageType.SHARE_REQUEST_RECEIVED,
             }),
             event.origin,
           );
@@ -144,7 +148,7 @@ const SendPage: NextPage = () => {
     try {
       heapTrackServerSide(user?.id, HEAP_EVENTS.SHARE_APPROVED);
       setUserHasAcceptedSharingRequest(true);
-      setShareStatus(DataPipeline.Status.PENDING);
+      setShareStatus(ShareStatus.PENDING);
       console.log("Starting the sharing process...");
 
       // Download all encrypted files
@@ -152,7 +156,7 @@ const SendPage: NextPage = () => {
         selectedModules,
         hasuraToken as string,
       );
-      setUpdateStatus(DataPipeline.Stage.FETCH_DATA);
+      setUpdateStatus(SharePipelineProgress.FETCH_DATA);
 
       // Ensure at least one encrypted file is available
       if (!serviceFilesEncrypted.length) {
@@ -175,33 +179,33 @@ const SendPage: NextPage = () => {
         serviceFilesEncrypted,
         signedSecret as string,
       );
-      setUpdateStatus(DataPipeline.Stage.DECRYPTED_DATA);
+      setUpdateStatus(SharePipelineProgress.DECRYPTED_DATA);
 
       // Structure data into a database
       const database: Database = await zipToSQLiteInstance(
         serviceFilesDecrypted,
       );
-      setUpdateStatus(DataPipeline.Stage.EXTRACTED_DATA);
+      setUpdateStatus(SharePipelineProgress.EXTRACTED_DATA);
 
       // Query database
       const queryResults = await database.runQuery(
         shareParams?.queries as string[],
       );
-      setUpdateStatus(DataPipeline.Stage.QUERY_DATA);
+      setUpdateStatus(SharePipelineProgress.QUERY_DATA);
 
       // Send results back to app
       sendPipelinePayload(queryResults);
     } catch (error: any) {
       console.error("Error sending data to application", error);
-      setShareStatus(DataPipeline.Status.REJECTED);
+      setShareStatus(ShareStatus.REJECTED);
       sendPipelineError(error.message);
     }
   };
 
   // Send any error messages back to requestor
   const sendPipelineError = (errorMessage: string) => {
-    const payloadToSend: DataPipeline.VaultMessage = {
-      messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_ERROR,
+    const payloadToSend: VaultMessage = {
+      messageType: VaultMessageType.SHARE_RESPONSE_ERROR,
       payload: errorMessage,
     };
     windowRef?.current?.opener?.postMessage(
@@ -214,11 +218,11 @@ const SendPage: NextPage = () => {
    * Send results from queried user data back to requesting app
    */
   const sendPipelinePayload = (payload: QueryResult[]) => {
-    setShareStatus(DataPipeline.Status.RESOLVED);
+    setShareStatus(ShareStatus.RESOLVED);
 
     // Construct the payload to be sent to the client
-    const payloadToSend: DataPipeline.VaultMessage = {
-      messageType: DataPipeline.VaultMessageType.SHARE_RESPONSE_SUCCESSFUL,
+    const payloadToSend: VaultMessage = {
+      messageType: VaultMessageType.SHARE_RESPONSE_SUCCESSFUL,
       payload,
       user: {
         id: user?.id,
@@ -301,7 +305,10 @@ const SendPage: NextPage = () => {
 
         {/* ACCEPTED, RUN QUERY */}
         {uiStatus === ShareUiStatus.USER_HAS_ACCEPTED && (
-          <SharingStatus status={shareStatus} stage={updateStatus} />
+          <SharingStatus
+            shareStatus={shareStatus}
+            shareProgress={updateStatus}
+          />
         )}
       </VaultSharePageWithStatus>
     </>

@@ -4,11 +4,10 @@ import tw from "twin.macro";
 import { Markdown, MarkdownWrapper, Stack, Text } from "src/components";
 import { ptBreadcrumbs } from "src/components/system/Styles";
 import { INSTRUCTIONS_INFORMATION } from "src/data";
-import { ModuleName } from "src/types";
 import { renderModuleStoreInstructions } from "src/utils";
 
 interface Props {
-  moduleName: ModuleName;
+  moduleName: string;
 }
 
 const StorageInstructions = ({ moduleName }: Props) => (

@@ -14,11 +14,10 @@ import {
   MarkdownWrapper,
   Text,
 } from "src/components";
-import { ModuleName } from "src/types";
 import { renderModuleStoreInstructions } from "src/utils";
 
 interface Props {
-  moduleName: ModuleName;
+  moduleName: string;
 }
 
 const StorageInstructionsCollapsible = ({ moduleName }: Props) => {
