@@ -3,10 +3,9 @@ import { Icon } from "@iconify/react";
 import tw from "twin.macro";
 
 import { Button, DialogDrawer, StorageInstructions } from "src/components";
-import { ModuleName } from "src/types";
 
 interface Props {
-  moduleName: ModuleName;
+  moduleName: string;
 }
 
 const StorageInstructionsModal = ({ moduleName }: Props) => (

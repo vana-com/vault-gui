@@ -6,7 +6,7 @@ import tw from "twin.macro";
 import { Group, Link, Stack, styledMotionDiv, Text } from "src/components";
 import { SharingUpdateStatus } from "src/components/VaultShare";
 import config from "src/config";
-import * as DataPipeline from "src/types/DataPipeline";
+import { SharePipelineProgress, ShareStatus } from "src/types/";
 
 import { FocusStack } from "./Subelement";
 
@@ -15,19 +15,20 @@ import { FocusStack } from "./Subelement";
  */
 
 interface Props {
-  status: DataPipeline.Status;
-  stage: DataPipeline.Stage;
+  shareStatus: ShareStatus;
+  shareProgress: SharePipelineProgress;
 }
 
-const SharingStatus = ({ status, stage }: Props) => {
-  console.log("status", status);
-  console.log("stage", stage);
+const SharingStatus = ({
+  shareStatus: status,
+  shareProgress: stage,
+}: Props) => {
+  console.log("Status", status, "Progress", stage);
 
   return (
     <FocusStack isCentered tw="relative">
       {/* IDLE OR PENDING */}
-      {(status === DataPipeline.Status.IDLE ||
-        status === DataPipeline.Status.PENDING) && (
+      {(status === ShareStatus.IDLE || status === ShareStatus.PENDING) && (
         <AnimatePresence>
           <motion.div
             initial={{ x: 540 }}
@@ -46,7 +47,7 @@ const SharingStatus = ({ status, stage }: Props) => {
       )}
 
       {/* REJECTED */}
-      {status === DataPipeline.Status.REJECTED && (
+      {status === ShareStatus.REJECTED && (
         <AnimatePresence>
           <motion.div
             initial={{ y: 20 }}
@@ -86,7 +87,7 @@ const SharingStatus = ({ status, stage }: Props) => {
       )}
 
       {/* RESOLVED */}
-      {status === DataPipeline.Status.RESOLVED && (
+      {status === ShareStatus.RESOLVED && (
         <AnimatePresence>
           <motion.div
             initial={{ y: 20 }}

@@ -5,14 +5,14 @@ enum VaultMessageType {
   SHARE_RESPONSE_ERROR = "SHARE_RESPONSE_ERROR",
 }
 
-enum Stage {
+enum SharePipelineProgress {
   FETCH_DATA = "FETCH_DATA",
   DECRYPTED_DATA = "DECRYPTED_DATA",
   EXTRACTED_DATA = "EXTRACTED_DATA",
   QUERY_DATA = "QUERY_DATA",
 }
 
-enum Status {
+enum ShareStatus {
   IDLE = "IDLE",
   PENDING = "PENDING",
   RESOLVED = "RESOLVED",
@@ -29,5 +29,5 @@ interface VaultMessage {
   };
 }
 
-export { Stage, Status, VaultMessageType };
+export { SharePipelineProgress, ShareStatus, VaultMessageType };
 export type { VaultMessage };

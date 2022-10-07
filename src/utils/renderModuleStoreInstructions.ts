@@ -1,14 +1,12 @@
 import {
+  amazonOrdersStoreInstructions,
   facebookStoreInstructions,
   googleStoreInstructions,
   instagramStoreInstructions,
   netflixViewingHistoryStoreInstructions,
 } from "src/data";
-import { ModuleName } from "src/types";
 
-export const renderModuleStoreInstructions = (
-  moduleName: ModuleName,
-): string => {
+export const renderModuleStoreInstructions = (moduleName: string): string => {
   switch (moduleName.toLowerCase()) {
     case "google":
       return googleStoreInstructions;
@@ -18,6 +16,8 @@ export const renderModuleStoreInstructions = (
       return instagramStoreInstructions;
     case "netflix viewing history":
       return netflixViewingHistoryStoreInstructions;
+    case "amazon orders":
+      return amazonOrdersStoreInstructions;
     default:
       return `Download instructions for ${moduleName} is unavailable.`;
   }

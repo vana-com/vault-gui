@@ -29,6 +29,7 @@ import {
   Modules,
   useGetModulesQuery,
   useGetUserModulesSubscription,
+  UsersModules,
 } from "src/graphql/generated";
 import { getLocalItem, setLocalItem } from "src/utils";
 
@@ -56,8 +57,8 @@ const HomePage: NextPage = () => {
       skip: !user?.id,
     });
 
-  const storedUsersModules = userModulesData?.usersModules
-    ? userModulesData.usersModules
+  const storedUsersModules: UsersModules[] = userModulesData?.usersModules
+    ? (userModulesData.usersModules as UsersModules[])
     : [];
 
   const notStoredModules = (allModules as Modules[])?.filter(

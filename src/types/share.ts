@@ -1,27 +1,3 @@
-import { ModuleName } from "./module";
-
-export interface ShareModule {
-  id: string;
-  dataModule: ModuleName;
-}
-
-// Purposely set to lowercase to match the normalizedServiceName
-// in src/pages/share/index
-export enum ShareService {
-  INSTAGRAM = "instagram",
-  // Provide a fallback for tests…
-  UNKNOWN = "unknown",
-}
-
-export type ShareServiceType = ShareService | string;
-
-export enum ShareKind {
-  INSTAGRAM_INTERESTS = "InstagramInterests",
-  INSTAGRAM_COMMENTS = "InstagramComments",
-  // Provide a fallback for tests…
-  UNKNOWN = "unknown",
-}
-
 export enum ShareUiStatus {
   SHARE_REQUEST_RECEIVED = "SHARE_REQUEST_RECEIVED",
   HASURA_IS_LOADING = "HASURA_IS_LOADING",

@@ -9,12 +9,12 @@ import {
   styledCardHover,
   styledCardHoverIcon,
 } from "src/components";
-import { ModuleObj } from "src/types";
+import { UsersModules } from "src/graphql/generated/sdk";
 
 import { DataCardDetails } from "./DataCardDetails";
 
 interface Props {
-  module: ModuleObj;
+  module: UsersModules;
 }
 
 /* DataCard is very similar to DataCardButton, uses the same card styles */

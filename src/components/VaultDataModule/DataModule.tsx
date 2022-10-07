@@ -12,14 +12,14 @@ import {
 } from "src/components";
 import { ptBreadcrumbs } from "src/components/system/Styles";
 import config from "src/config";
-import { ModuleObj } from "src/types";
+import { UsersModules } from "src/graphql/generated/sdk";
 import { getFileSizeString, heapTrackServerSide } from "src/utils";
 
 const { HEAP_EVENTS } = config;
 
 interface Props {
   userId: string;
-  module: ModuleObj;
+  module: UsersModules;
   handleDeleteModule: () => void;
   isDeleting: boolean;
 }

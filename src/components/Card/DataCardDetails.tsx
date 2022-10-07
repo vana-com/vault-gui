@@ -2,10 +2,10 @@
 import tw from "twin.macro";
 
 import { Stack, Text } from "src/components";
-import { ModuleObj } from "src/types";
+import { UsersModules } from "src/graphql/generated/sdk";
 
 interface Props {
-  module: ModuleObj;
+  module: UsersModules;
 }
 
 /* TODO: https://app.clickup.com/t/2tkbzz1 */

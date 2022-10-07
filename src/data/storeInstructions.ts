@@ -59,3 +59,17 @@ export const netflixViewingHistoryStoreInstructions = `
 
 4. A CSV file will be downloaded momentarily.
 `;
+
+export const amazonOrdersStoreInstructions = `
+1. Go to the [Amazon Order Reports](https://www.amazon.com/b2b/reports) page and log in.
+
+2. The report type should be *Items*, start date should be *01/01/2010*, and "Use Today" for end date. Hit Request Report.
+
+    ![Amazon orders instructions {priority}{1230x534}](/images/amazon-orders-instructions-1.png)
+
+3. Wait a minute for the report to be generated, and download the report.
+
+    ![Amazon orders instructions  {priority}{3330x284}](/images/amazon-orders-instructions-2.png)
+
+4. A CSV file will be downloaded.
+`;

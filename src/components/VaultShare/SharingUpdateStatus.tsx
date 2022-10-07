@@ -2,20 +2,19 @@
 import tw from "twin.macro";
 
 import { Stack, Text } from "src/components";
-import * as DataPipeline from "src/types/DataPipeline";
+import { SharePipelineProgress, ShareStatus } from "src/types";
 
 interface Props {
-  stage: DataPipeline.Stage;
-  status: DataPipeline.Status;
+  stage: SharePipelineProgress;
+  status: ShareStatus;
 }
 
 const SharingUpdateStatus = ({ stage, status }: Props) => {
   const requested =
-    status === DataPipeline.Status.IDLE ||
-    stage === DataPipeline.Stage.FETCH_DATA;
+    status === ShareStatus.IDLE || stage === SharePipelineProgress.FETCH_DATA;
   const decryptedOrExtracted =
-    stage === DataPipeline.Stage.DECRYPTED_DATA ||
-    stage === DataPipeline.Stage.EXTRACTED_DATA;
+    stage === SharePipelineProgress.DECRYPTED_DATA ||
+    stage === SharePipelineProgress.EXTRACTED_DATA;
 
   let heading;
   let lede;
@@ -33,7 +32,7 @@ const SharingUpdateStatus = ({ stage, status }: Props) => {
   }
 
   // Completed
-  if (stage === DataPipeline.Stage.QUERY_DATA) {
+  if (stage === SharePipelineProgress.QUERY_DATA) {
     heading = "Shared";
     lede = "Your data has been securely shared.";
   }
