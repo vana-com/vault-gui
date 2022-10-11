@@ -1,8 +1,0 @@
-{
-  "title": [
-    {
-      "pattern": "[A-Za-z].*\\s\\(CU-[0-9A-Za-z]{3,10}\\)",
-      "message": "A ClickUp story is required in the pull request title. Ex: Add X button to Y page (CU-123)"
-    }
-  ]
-}

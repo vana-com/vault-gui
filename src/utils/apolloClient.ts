@@ -14,11 +14,6 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import DebounceLink from "apollo-client-link-debounce-test";
 import QueueLink from "apollo-link-queue";
-import {
-  LocalStorageWrapper,
-  persistCache,
-  // persistCacheSync
-} from "apollo3-cache-persist";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import type { AppProps } from "next/app";
@@ -77,13 +72,14 @@ const createApolloClient = () => {
   if (ssrMode) {
     dataLink = httpLink;
   } else {
-    if (window.localStorage) {
-      persistCache({
-        cache,
-        storage: new LocalStorageWrapper(window.localStorage),
-        debug: true,
-      });
-    }
+    // Disable localStorage caching until we have a better caching strategy
+    // if (window.localStorage) {
+    //   persistCache({
+    //     cache,
+    //     storage: new LocalStorageWrapper(window.localStorage),
+    //     debug: true,
+    //   });
+    // }
 
     const webSocketLink = new WebSocketLink({
       uri: process.env.NEXT_PUBLIC_HASURA_GRAPHQL_WSS_URL as string,

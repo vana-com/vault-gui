@@ -21576,7 +21576,7 @@ export const GetAllUserModulesDocument = gql`
     `;
 export const GetModuleDocument = gql`
     query getModule($name: String!) {
-  modules(where: {name: {_eq: $name}}) {
+  modules(where: {name: {_ilike: $name}}) {
     iconURL
     id
     name

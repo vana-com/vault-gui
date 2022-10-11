@@ -26,19 +26,20 @@ import {
 } from "src/components";
 import { navigationBreadcrumbs } from "src/data";
 import {
+  Modules,
   useGetModulesQuery,
   useGetUserModulesSubscription,
+  UsersModules,
 } from "src/graphql/generated";
-import {
-  formatModuleNameFromQueryString,
-  getLocalItem,
-  setLocalItem,
-} from "src/utils";
+import { getLocalItem, setLocalItem } from "src/utils";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
   const { user, hasuraToken, isInitialAccountLogin } = useUserContext();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deletingModuleName, setDeletingModuleName] = useState<
+    string | undefined
+  >(undefined);
   const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
   const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -56,44 +57,46 @@ const HomePage: NextPage = () => {
       skip: !user?.id,
     });
 
-  const storedUsersModules = userModulesData?.usersModules
-    ? userModulesData.usersModules
+  const storedUsersModules: UsersModules[] = userModulesData?.usersModules
+    ? (userModulesData.usersModules as UsersModules[])
     : [];
 
-  const notStoredModules = allModules?.filter(
+  const notStoredModules = (allModules as Modules[])?.filter(
     (module) =>
       !storedUsersModules.some(
         (storedModule) => module.id === storedModule.moduleId,
       ),
   );
 
-  // Set the module name from query string
-  const { "module-name": moduleNameFromQuery } = router.query;
-  const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
-
   // Delete a user's data module
-  const deleteModule = async (moduleId: string) => {
+  const deleteModule = async (moduleId: string, moduleName: string) => {
     setIsDeleting(true);
+    setDeletingModuleName(moduleName);
 
-    const { success } = await (
-      await fetch(`/api/user-data/delete-modules`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${hasuraToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          usersModulesIds: [moduleId],
-        }),
-      })
-    ).json();
+    try {
+      const { success } = await (
+        await fetch(`/api/user-data/delete-modules`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${hasuraToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            usersModulesIds: [moduleId],
+          }),
+        })
+      ).json();
 
-    if (success) {
-      setShowDeleteSuccessToast(true);
-      setTimeout(() => router.push("/"), 250);
-    } else {
+      if (success) {
+        setShowDeleteSuccessToast(true);
+        setTimeout(() => router.push("/"), 250);
+      } else {
+        setShowDeleteFailureToast(true);
+      }
+    } catch (e) {
+      console.error(`Unable to delete module ${moduleName}`, e);
+    } finally {
       setIsDeleting(false);
-      setShowDeleteFailureToast(true);
     }
   };
 
@@ -176,12 +179,14 @@ const HomePage: NextPage = () => {
           {/* STORED MODULES */}
           {!hasNoStoredModules && (
             <LayoutCanvasGrid>
-              {storedUsersModules.map((module) => (
+              {storedUsersModules.map((userModule) => (
                 <DataModule
                   userId={user?.id}
-                  key={module.id}
-                  module={module}
-                  handleDeleteModule={async () => deleteModule(module.id)}
+                  key={userModule.id}
+                  module={userModule}
+                  handleDeleteModule={async () =>
+                    deleteModule(userModule.id, userModule.module.name)
+                  }
                   isDeleting={isDeleting}
                 />
               ))}
@@ -204,7 +209,7 @@ const HomePage: NextPage = () => {
           onOpenChange={setShowDeleteSuccessToast}
           variant="success"
           title="Success"
-          content={`Your ${moduleName} data has been permanently deleted`}
+          content={`Your ${deletingModuleName} data has been permanently deleted`}
         />
         <ToastDefault
           open={showDeleteFailureToast}

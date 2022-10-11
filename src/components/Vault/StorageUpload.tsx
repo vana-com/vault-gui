@@ -44,7 +44,7 @@ const StorageUpload = ({ moduleName, createUserModule }: Props) => {
 
   // Callback when a file is selected in the file picker
   const handleSelectFile = (file: File) => {
-    if (!config.zipFileMimeTypes.includes(file.type)) {
+    if (!config.allowedUploadMimeTypes.includes(file.type)) {
       // Trigger invalid file toast
       setShowInvalidFileToast(true);
       return;
@@ -79,7 +79,7 @@ const StorageUpload = ({ moduleName, createUserModule }: Props) => {
 
     // check that the new files are the correct format
     const validFileCheck = newFiles.every((file: File) => {
-      if (!config.zipFileMimeTypes.includes(file.type)) {
+      if (!config.allowedUploadMimeTypes.includes(file.type)) {
         return false;
       }
       return true;

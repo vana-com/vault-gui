@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 import { Button } from "src/components";
 import { FocusStack } from "src/components/VaultShare";
-import { capitalizeString } from "src/utils";
+import { formatModuleNameForUI } from "src/utils";
 
 interface Props {
   handleClick: () => void;
@@ -21,7 +21,7 @@ const NoModuleMessage = ({ handleClick, serviceName }: Props) => (
         tw="min-w-[220px]"
         onClick={handleClick}
       >
-        Add {capitalizeString(serviceName)} data
+        Add {formatModuleNameForUI(serviceName)} data
       </Button>
     </div>
   </FocusStack>

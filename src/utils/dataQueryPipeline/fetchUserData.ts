@@ -1,5 +1,7 @@
 import { ServiceFile } from "@corsali/userdata-extractor";
 
+import { formatModuleNameForID } from "src/utils";
+
 /**
  * Downloads the encrypted files specified in all the user modules provided
  * @param userModules
@@ -16,7 +18,7 @@ const fetchUserData = async (
       const downloadUrl = await fetchSignedUrl(hasuraToken, userModule.id);
       const encryptedFile = await fetchZipFromUrl(downloadUrl);
       serviceFiles.push({
-        serviceName: userModule.module.name.toLowerCase(),
+        serviceName: formatModuleNameForID(userModule.module),
         file: encryptedFile,
       });
     }),

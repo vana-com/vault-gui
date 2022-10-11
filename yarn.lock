@@ -649,15 +649,16 @@
   dependencies:
     prettier "^2.2.1"
 
-"@corsali/userdata-extractor@0.2.1":
-  version "0.2.1"
-  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.2.1/b4bbf73ae330f72ccaa00d2cf54d7801b1996ae3#b4bbf73ae330f72ccaa00d2cf54d7801b1996ae3"
-  integrity sha512-raaPTAGPulODB5wXprlWa7FMJoASvPZP2cm9TeI5hfFL3ZpsFc1becefcDJ/EZb1Mg/XvcMte1oPHsna8lO3Fg==
+"@corsali/userdata-extractor@0.3.1":
+  version "0.3.1"
+  resolved "https://npm.pkg.github.com/download/@corsali/userdata-extractor/0.3.1/01c518f2deab69e37c330f47a243dfefd62b243d#01c518f2deab69e37c330f47a243dfefd62b243d"
+  integrity sha512-wgjWh80cvONisuhEG54jkmuPbqxmMz32zNYTN9vFa2oEPD6NW58RdqkBwMS8i9lwRLr4546UbdrCWSe6X0sijQ==
   dependencies:
     "@zip.js/zip.js" "2.4.21"
     axios "^0.27.2"
     jsonpath "^1.1.1"
     lodash.mapvalues "^4.6.0"
+    papaparse "^5.3.2"
     sql.js "^1.8.0"
 
 "@cspotcode/source-map-support@^0.8.0":
@@ -698,6 +699,26 @@
   dependencies:
     debug "^3.1.0"
     lodash.once "^4.1.1"
+
+"@datadog/browser-core@4.20.0":
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.20.0.tgz#5428e7077da56f4ef9bbc23432a9b898cfdd3cfa"
+  integrity sha512-4jcqvsRnwvGhsn4jKxx/dYs8lrbh090lmJo311Q7oaBww1I7ZqKhuKqMSoh49Z+qQS0L/To2nelAm097zJx+OA==
+
+"@datadog/browser-rum-core@4.20.0":
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-rum-core/-/browser-rum-core-4.20.0.tgz#5668838d69fe12f7e639a4985646eedbc016ed86"
+  integrity sha512-hp4c3uCgFn74+QG+5sydNnamQfLvaCDitKjpugXZuXsm4G1cogEpTh2kXLtGbTgv6EHfKe10+qcynNcE3G56Nw==
+  dependencies:
+    "@datadog/browser-core" "4.20.0"
+
+"@datadog/browser-rum@^4.20.0":
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-rum/-/browser-rum-4.20.0.tgz#b7ec158c7533f98030a7230c8149100eaf3277dd"
+  integrity sha512-TtS50fox0DQ+YZpdhKEYohGtHa1PDRcne50FAaUAvfGOzYCZdlVEkB7oKI1Yx4FeI74duEdPptT3jT1jYiNXBg==
+  dependencies:
+    "@datadog/browser-core" "4.20.0"
+    "@datadog/browser-rum-core" "4.20.0"
 
 "@emotion/babel-plugin@^11.10.0", "@emotion/babel-plugin@^11.9.2":
   version "11.10.2"
@@ -10341,6 +10362,11 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
+
+papaparse@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
+  integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
 
 param-case@^3.0.4:
   version "3.0.4"

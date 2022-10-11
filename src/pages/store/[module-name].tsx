@@ -25,7 +25,7 @@ import {
   useCreateUserModuleMutation,
   useGetModuleQuery,
 } from "src/graphql/generated";
-import { formatModuleNameFromQueryString } from "src/utils";
+import { formatModuleNameForUI } from "src/utils";
 
 const VaultStoragePage: NextPage = () => {
   const router = useRouter();
@@ -35,12 +35,12 @@ const VaultStoragePage: NextPage = () => {
   // Extract consts from router.query
   const { "module-name": moduleNameFromQuery } = router.query;
 
-  const moduleName = formatModuleNameFromQueryString(moduleNameFromQuery);
+  const moduleName = formatModuleNameForUI(moduleNameFromQuery as string);
 
   const { data: { modules: [module] = [] } = {}, loading: isDataLoading } =
     useGetModuleQuery({
       variables: {
-        name: moduleName,
+        name: `%${moduleName}%`,
       },
     });
 
@@ -71,7 +71,7 @@ const VaultStoragePage: NextPage = () => {
     }
   }, [router, isDataLoading]);
 
-  // Programmtically setIsOpen once only on initial page load
+  // Programmatically setIsOpen once only on initial page load
   useEffect(() => {
     if (!isDataLoading) {
       setTimeout(() => setIsOpen(true), 500);

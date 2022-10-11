@@ -45,3 +45,31 @@ export const instagramStoreInstructions = `
 
 4. Wait for an email from Instagram with a download link. It usually arrives in a few minutes.
 `;
+
+export const netflixViewingHistoryStoreInstructions = `
+1. Go to your [Netflix Account Page](https://www.netflix.com/youraccount)
+
+2. Expand your profile and click View
+
+    ![Netflix instructions {priority}{1036x539}](/images/netflix-viewing-history-instructions-1.png)
+
+3. Scroll to the bottom of your watch history, and click Download All
+
+    ![Netflix instructions {priority}{1092x142}](/images/netflix-viewing-history-instructions-2.png)
+
+4. A CSV file will be downloaded momentarily.
+`;
+
+export const amazonOrdersStoreInstructions = `
+1. Go to the [Amazon Order Reports](https://www.amazon.com/b2b/reports) page and log in.
+
+2. The report type should be *Items*, start date should be *01/01/2010*, and "Use Today" for end date. Hit Request Report.
+
+    ![Amazon orders instructions {priority}{1230x534}](/images/amazon-orders-instructions-1.png)
+
+3. Wait a minute for the report to be generated, and download the report.
+
+    ![Amazon orders instructions  {priority}{3330x284}](/images/amazon-orders-instructions-2.png)
+
+4. A CSV file will be downloaded.
+`;
