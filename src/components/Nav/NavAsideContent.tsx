@@ -56,6 +56,22 @@ const NavAsideContent = ({ showTypeform }: Props) => {
                 css={styledNavLinkWithIcon}
               >
                 <WithIcon
+                  prefix={<Icon icon="heroicons-solid:cube" height="0.85em" />}
+                >
+                  My models
+                </WithIcon>
+              </Text>
+            </TooltipDefault>
+          </div>
+          <div css={styledNavLinkBox}>
+            <TooltipDefault label="Coming soon">
+              <Text
+                variant="base"
+                weight="medium"
+                tw="text-labelTertiary cursor-default"
+                css={styledNavLinkWithIcon}
+              >
+                <WithIcon
                   prefix={<Icon icon="heroicons-solid:clock" height="0.85em" />}
                 >
                   Access log
