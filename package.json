@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
-    "@corsali/userdata-extractor": "0.3.1-beta1",
+    "@corsali/userdata-extractor": "0.3.1",
     "@datadog/browser-rum": "^4.20.0",
     "@emotion/css": "^11.9.0",
     "@emotion/react": "^11.9.3",
