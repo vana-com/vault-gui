@@ -16,6 +16,7 @@ export * from "./identity/getHasuraTokenPayload";
 export * from "./identity/getIdTokenPayload";
 export * from "./identity/getJwtPayload";
 export * from "./identity/setWeb3AuthModalHeading";
+export * from "./identity/tiktokProvider";
 export * from "./localStorage";
 export * from "./openInNewTab";
 export * from "./renderModuleStoreInstructions";
