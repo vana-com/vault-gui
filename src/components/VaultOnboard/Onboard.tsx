@@ -64,9 +64,9 @@ const Onboard = ({ children }: Children) => {
   // For Tracking
   const trackOnboardingClick = (c: number) => {
     if (c === 1)
-      heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_ONBOARING_STAGE_TWO);
+      heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_ONBOARDING_STAGE_TWO);
     else if (c === 2)
-      heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_ONBOARING_STAGE_THREE);
+      heapTrackServerSide(user?.id, HEAP_EVENTS.CLICK_ONBOARDING_STAGE_THREE);
   };
 
   // TESTS
