@@ -21,7 +21,17 @@ const OnboardDialog = () => {
   return (
     <DialogModalControlled
       open={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={(_open) => {
+        setIsOpen(_open);
+
+        // If the user closes the modal (by clicking outside, using esc key) before completing
+        if (!_open && user) {
+          heapTrackServerSide(
+            user?.id,
+            HEAP_EVENTS.CLICK_ONBOARDING_EXIT_EARLY,
+          );
+        }
+      }}
       variant="onboard"
       placement="center"
       buttonNode={
