@@ -48,8 +48,8 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
         );
         const data = await client.grant({
           code: params.code,
-          redirect_uri: provider.callbackUrl,
-          params,
+          // redirect_uri: provider.callbackUrl,
+          // params,
           grant_type: "authorization_code",
           client_key: options.clientId,
           client_secret: options.clientSecret,
