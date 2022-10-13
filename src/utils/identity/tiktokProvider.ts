@@ -38,6 +38,14 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
     token: {
       url: "https://open-api.tiktok.com/oauth/access_token",
       request: async ({ checks, client, params, provider }) => {
+        console.log(
+          "tiktok provider - token request",
+          checks,
+          client,
+          params,
+          provider,
+          options,
+        );
         const data = await client.grant({
           code: params.code,
           redirect_uri: provider.callbackUrl,
@@ -56,6 +64,12 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
     userinfo: {
       url: "https://open-api.tiktok.com/oauth/userinfo",
       request: async ({ client, tokens }) => {
+        console.log(
+          "tiktok provider - userinfo request",
+          client,
+          tokens,
+          options,
+        );
         const tokenSet = tokens as TokenSet;
         const data = await client.userinfo<{ data: TikTokProfile }>(tokenSet, {
           method: "GET",
