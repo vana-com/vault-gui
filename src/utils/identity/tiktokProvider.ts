@@ -72,6 +72,7 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
         return { tokens };
       },
     },
+    // @ts-expect-error TikTokProfile isn't recognized as a valid Profile object
     userinfo: {
       url: "https://open.tiktokapis.com/v2/user/info/?fields=open_id,union_id,avatar_url,avatar_url_100,avatar_large_url,display_name,bio_description,profile_deep_link,is_verified,follower_count,following_count,likes_count",
       request: async ({ client, tokens }) => {
@@ -82,16 +83,27 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
           options,
         );
         const tokenSet = tokens as TokenSet;
-        const user = await client.userinfo<{ data: { user: TikTokProfile } }>(
-          tokenSet,
+
+        const response = await fetch(
+          `https://open.tiktokapis.com/v2/user/info/?fields=open_id,union_id,avatar_url,avatar_url_100,avatar_large_url,display_name,bio_description,profile_deep_link,is_verified,follower_count,following_count,likes_count`,
           {
-            method: "GET",
-            via: "header",
-            params: {
-              access_token: tokens.access_token,
+            headers: {
+              Authorization: `Bearer ${tokenSet.access_token}`,
             },
           },
         );
+        const user = (await response.json()).data.user as TikTokProfile;
+
+        // const user = await client.userinfo<{ data: { user: TikTokProfile } }>(
+        //   tokenSet,
+        //   {
+        //     method: "GET",
+        //     via: "header",
+        //     params: {
+        //       access_token: tokens.access_token,
+        //     },
+        //   },
+        // );
         console.log("tiktok provider - userinfo response", user);
         return user;
       },
