@@ -25,10 +25,11 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
     authorization: {
       params: {
         client_key: options.clientId,
-        scope: "user.info.basic",
+        scope: "user.info.basic,video.list",
         response_type: "code",
+        // redirect_uri: provider.callbackUrl,
       },
-      url: "https://open-api.tiktok.com/platform/oauth/connect",
+      url: "https://www.tiktok.com/auth/authorize/",
     },
     httpOptions: {
       // @ts-expect-error Testing to see if this works
@@ -48,8 +49,8 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
         );
         const data = await client.grant({
           code: params.code,
-          // redirect_uri: provider.callbackUrl,
-          // params,
+          redirect_uri: provider.callbackUrl,
+          params,
           grant_type: "authorization_code",
           client_key: options.clientId,
           client_secret: options.clientSecret,
