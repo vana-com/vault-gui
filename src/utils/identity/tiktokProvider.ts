@@ -47,16 +47,22 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
           provider,
           options,
         );
-        const data = await client.grant({
-          code: params.code,
-          redirect_uri: provider.callbackUrl,
-          params,
-          grant_type: "authorization_code",
-          client_key: options.clientId,
-          client_secret: options.clientSecret,
-          code_verifier: checks.code_verifier,
-        });
-        const tokens = data.data as TokenSetParameters;
+        const response = await fetch(
+          `https://open-api.tiktok.com/oauth/access_token/?client_key=${options.clientId}&client_secret=${options.clientSecret}&code=${params.code}&grant_type=authorization_code`,
+          { method: "POST" },
+        );
+        const tokens = (await response.json()).data as TokenSetParameters;
+
+        // const data = await client.grant({
+        //   code: params.code,
+        //   redirect_uri: provider.callbackUrl,
+        //   params,
+        //   grant_type: "authorization_code",
+        //   client_key: options.clientId,
+        //   client_secret: options.clientSecret,
+        //   code_verifier: checks.code_verifier,
+        // });
+        // const tokens = data.data as TokenSetParameters;
 
         return { tokens };
       },
