@@ -7,10 +7,15 @@ import { TokenSet, TokenSetParameters } from "openid-client";
 export interface TikTokProfile {
   avatar_large_url: string;
   avatar_url_100: string;
-  avatar_url_200: string;
   avatar_url: string;
+  bio_description: string;
   display_name: string;
+  follower_count: number;
+  following_count: number;
+  is_verified: boolean;
+  likes_count: number;
   open_id: string;
+  profile_deep_link: string;
   union_id: string;
 }
 
@@ -67,9 +72,8 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
         return { tokens };
       },
     },
-    // @ts-expect-error TikTokProfile isn't recognized as a valid Profile object
     userinfo: {
-      url: "https://open-api.tiktok.com/oauth/userinfo",
+      url: "https://open.tiktokapis.com/v2/user/info/?fields=open_id,union_id,avatar_url,avatar_url_100,avatar_large_url,display_name,bio_description,profile_deep_link,is_verified,follower_count,following_count,likes_count",
       request: async ({ client, tokens }) => {
         console.log(
           "tiktok provider - userinfo request",
@@ -78,15 +82,18 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
           options,
         );
         const tokenSet = tokens as TokenSet;
-        const data = await client.userinfo<{ data: TikTokProfile }>(tokenSet, {
-          method: "GET",
-          params: {
-            access_token: tokens.access_token,
-            open_id: tokens.open_id,
+        const user = await client.userinfo<{ data: { user: TikTokProfile } }>(
+          tokenSet,
+          {
+            method: "GET",
+            via: "header",
+            params: {
+              Authorization: `Bearer ${tokens.access_token}`,
+            },
           },
-        });
-
-        return data.data;
+        );
+        console.log("tiktok provider - userinfo response", user);
+        return user;
       },
     },
     profile(tikTokData) {
