@@ -88,7 +88,7 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
             method: "GET",
             via: "header",
             params: {
-              Authorization: `Bearer ${tokens.access_token}`,
+              access_token: tokens.access_token,
             },
           },
         );
