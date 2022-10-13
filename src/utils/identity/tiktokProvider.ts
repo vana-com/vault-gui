@@ -31,7 +31,8 @@ export default function TikTok<P extends Record<string, any> = TikTokProfile>(
       url: "https://open-api.tiktok.com/platform/oauth/connect",
     },
     httpOptions: {
-      // followRedirect: true,
+      // @ts-expect-error Testing to see if this works
+      followRedirect: true,
       timeout: 6000,
     },
     token: {
