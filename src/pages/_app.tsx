@@ -8,8 +8,9 @@ import * as Toast from "@radix-ui/react-toast";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
-import Script from "next/script";
 import { ThemeProvider } from "next-themes";
+import { useEffect } from "react";
+import Zendesk, { ZendeskAPI } from "react-zendesk";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -43,6 +44,21 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
   });
   datadogRum.startSessionReplayRecording();
 
+  useEffect(() => {
+    const hideZendesk = config.routesToHideZendeskWidget.some((path) =>
+      router.pathname.startsWith(path),
+    );
+    console.log("hideZendesk", hideZendesk);
+
+    if (hideZendesk) {
+      ZendeskAPI("webWidget", "hide");
+    }
+
+    return () => {
+      ZendeskAPI("webWidget", "show");
+    };
+  }, []);
+
   return (
     <ApolloProvider client={client}>
       <CacheProvider value={cache}>
@@ -55,14 +71,11 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
                   <AppHook>
                     <LayoutApp renderNavMobile>
                       <Component {...pageProps} />
-                      {!config.routesToHideZendeskWidget.some((path) =>
-                        router.pathname.startsWith(path),
-                      ) && (
-                        <Script
-                          id="ze-snippet"
-                          src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
-                        />
-                      )}
+                      <Zendesk
+                        defer
+                        zendeskKey={config.ZENDESK_WIDGET_KEY}
+                        onLoaded={() => console.log("ZE is loaded")}
+                      />
                     </LayoutApp>
                   </AppHook>
                 </AuthenticatedLayout>
