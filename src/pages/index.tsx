@@ -131,7 +131,7 @@ const HomePage: NextPage = () => {
         >
           <Group tw="gap-3">
             {!hasNoStoredModules && <OnboardDialog />}
-            {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
+            {storedUsersModules.length > 0 && notStoredModules.length > 0 && (
               <AddData userId={user?.id} modules={notStoredModules}>
                 Add data
               </AddData>

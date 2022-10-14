@@ -1,6 +1,9 @@
 import { Icon } from "@iconify/react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
+import { BuiltInProviderType } from "next-auth/providers";
+import { getProviders, signIn } from "next-auth/react";
+import { ClientSafeProvider, LiteralUnion } from "next-auth/react/types";
 import { useEffect, useState } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -27,7 +30,14 @@ import {
 } from "src/graphql/generated";
 import { formatModuleNameForUI } from "src/utils";
 
-const VaultStoragePage: NextPage = () => {
+type Props = {
+  providers: Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  > | null;
+};
+
+const VaultStoragePage: NextPage<Props> = ({ providers }: Props) => {
   const router = useRouter();
   const { user } = useUserContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -122,6 +132,24 @@ const VaultStoragePage: NextPage = () => {
             moduleName={moduleName}
             createUserModule={createUserModuleCallback}
           />
+
+          {/* Sign in with social provider */}
+          {providers &&
+            Object.values(providers)
+              .filter((provider) => provider.id === moduleName.toLowerCase())
+              .map((provider) => (
+                <div key={provider.name}>
+                  <Button
+                    onClick={() => signIn(provider.id)}
+                    variant="solid"
+                    size="xl"
+                    tw="md:w-full font-semibold mt-2"
+                    suffix={<Icon icon="carbon:key" height="1.2em" />}
+                  >
+                    Sign in with {moduleName}
+                  </Button>
+                </div>
+              ))}
         </LayoutCanvas>
       </LayoutPage>
     </>
@@ -129,3 +157,10 @@ const VaultStoragePage: NextPage = () => {
 };
 
 export default VaultStoragePage;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const providers = await getProviders();
+  return {
+    props: { providers },
+  };
+};

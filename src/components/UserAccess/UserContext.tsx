@@ -266,7 +266,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
         // OpenLogin adapter
         let openLoginAdapter;
-        if (window.location.origin.endsWith(config.vercelDomain)) {
+        if (
+          window.location.origin.endsWith(config.vercelDomain) ||
+          window.location.origin.endsWith("ngrok.io")
+        ) {
+          // TODO: remove ngrok
           // Attempt to whitelist origin in Web3Auth manually for Vercel preview builds
           const res = await fetch(`/api/auth/sign-origin`, { method: "POST" }); // Use POST to send Origin header automatically
           const { origin, signature } = await res.json();

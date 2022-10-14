@@ -3,9 +3,9 @@ import log from "loglevel";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import config from "src/config/";
-import serverConfig from "src/config/server";
+// import serverConfig from "src/config/server";
 
-const ALLOWED_ORIGINS = [serverConfig.vercelPreviewUrlRegex];
+// const ALLOWED_ORIGINS = [serverConfig.vercelPreviewUrlRegex];
 
 /**
  * Creates a signature for any of the whitelisted origins above for Web3Auth
@@ -23,23 +23,24 @@ export default async (
     });
   }
 
-  if (ALLOWED_ORIGINS.some((o) => o.test(origin))) {
-    try {
-      const signature = await whitelistUrl(
-        config.WEB_3_AUTH_CLIENT_ID,
-        config.WEB_3_AUTH_CLIENT_SECRET,
-        origin,
-      );
-      return res.status(200).json({ origin, signature });
-    } catch (error) {
-      log.error(error);
-      return res
-        .status(500)
-        .json({ message: "Error getting signature for origin" });
-    }
-  } else {
+  // TODO: re-enable this
+  // if (ALLOWED_ORIGINS.some((o) => o.test(origin))) {
+  try {
+    const signature = await whitelistUrl(
+      config.WEB_3_AUTH_CLIENT_ID,
+      config.WEB_3_AUTH_CLIENT_SECRET,
+      origin,
+    );
+    return res.status(200).json({ origin, signature });
+  } catch (error) {
+    log.error(error);
     return res
       .status(500)
-      .json({ message: `Unable to create signature for origin ${origin}` });
+      .json({ message: "Error getting signature for origin" });
   }
+  // } else {
+  //   return res
+  //     .status(500)
+  //     .json({ message: `Unable to create signature for origin ${origin}` });
+  // }
 };
