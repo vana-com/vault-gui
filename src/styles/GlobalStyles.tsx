@@ -162,6 +162,11 @@ const stylesBase = css`
   iframe[title="Message from company"] {
     color-scheme: auto;
   }
+  /* Hide ZenDesk widget on the Share page */
+  .page-share iframe[title="Message from company"],
+  .page-share iframe[title="Button to launch messaging window"] {
+    display: none;
+  }
 `;
 
 const GlobalStyles = () => (
