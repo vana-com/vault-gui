@@ -156,6 +156,12 @@ const stylesBase = css`
   .w3ajs-wallet-connect.w3a-wallet-connect {
     display: none !important;
   }
+
+  /* Fix Zendesk widget white border */
+  iframe[title="Number of unread messages"],
+  iframe[title="Message from company"] {
+    color-scheme: auto;
+  }
 `;
 
 const GlobalStyles = () => (
