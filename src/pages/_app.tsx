@@ -10,6 +10,7 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
+import { useEffect } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -27,6 +28,18 @@ import { useApollo } from "../utils/apolloClient";
 const NextApp = ({ Component, pageProps }: AppProps) => {
   const client = useApollo(pageProps);
   const router = useRouter();
+
+  // Add a page class to the body. Useful for things like hiding the ZE chat widget on the Share page
+  useEffect(() => {
+    const pathName = router.pathname.replaceAll("/", "");
+    // add class to body element
+    document.body.classList.add(`page-${pathName}`);
+
+    // clean-up
+    return () => {
+      document.body.classList.remove(`page-${pathName}`);
+    };
+  }, []);
 
   // Datadog RUM initialization
   datadogRum.init({
