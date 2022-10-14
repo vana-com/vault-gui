@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import NextLink from "next/link";
+import { Fragment } from "react";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -25,12 +26,12 @@ const NavBreadcrumb = ({ children, crumbs }: Props) => (
       {crumbs &&
         crumbs.length > 0 &&
         crumbs.map((crumb) => (
-          <>
+          <Fragment key={crumb.label}>
             <Icon icon="heroicons-solid:chevron-right" height="0.8em" />
             <Text variant="note" weight="medium">
               {crumb.label}
             </Text>
-          </>
+          </Fragment>
         ))}
     </Group>
 
