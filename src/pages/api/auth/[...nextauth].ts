@@ -38,7 +38,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           credentials,
         );
         // return true;
-        return `/store/${account?.provider}`;
+        return `/store/${account?.provider}?token=${account?.access_token}`;
       },
       async redirect({ url, baseUrl }) {
         console.log("next-auth: redirect", url, baseUrl);

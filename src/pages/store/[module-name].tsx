@@ -43,7 +43,8 @@ const VaultStoragePage: NextPage<Props> = ({ providers }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Extract consts from router.query
-  const { "module-name": moduleNameFromQuery } = router.query;
+  const { "module-name": moduleNameFromQuery, token: moduleAccessToken } =
+    router.query;
 
   const moduleName = formatModuleNameForUI(moduleNameFromQuery as string);
 
@@ -73,6 +74,55 @@ const VaultStoragePage: NextPage<Props> = ({ providers }: Props) => {
       },
     });
   };
+
+  // Get tiktok data. TODO: generalize this in userdata-extractor. This is only a PoC!
+  useEffect(() => {
+    if (moduleAccessToken && moduleName === "Tiktok") {
+      router.replace(`/store/${moduleNameFromQuery}`, undefined, {
+        shallow: true,
+      });
+
+      // User information
+      fetch(
+        "/api/proxy?url=https://open.tiktokapis.com/v2/user/info/?fields=open_id,union_id,avatar_url,avatar_url_100,avatar_large_url,display_name,bio_description,profile_deep_link,is_verified,follower_count,following_count,likes_count",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            requestMethod: "GET",
+            requestHeaders: {
+              "content-type": "application/json",
+              authorization: `Bearer ${moduleAccessToken}`,
+            },
+          }),
+        },
+      )
+        .then((response) => response.json())
+        .then((userInfo) => console.log("Tiktok User Info", userInfo));
+
+      // Video information
+      fetch(
+        "/api/proxy?url=https://open.tiktokapis.com/v2/video/list/?fields=cover_image_url,id,title",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            requestMethod: "POST",
+            requestHeaders: {
+              "content-type": "application/json",
+              authorization: `Bearer ${moduleAccessToken}`,
+            },
+          }),
+        },
+      )
+        .then((response) => response.json())
+        .then((videos) => console.log("Tiktok Video List", videos));
+    }
+  }, []);
 
   // If the module doesn't exist, redirect
   useEffect(() => {
