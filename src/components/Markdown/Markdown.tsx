@@ -1,9 +1,7 @@
 import NextLink from "next/link";
 import ReactMarkdown from "react-markdown";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
 
-import { Link, MarkdownImage, Text } from "src/components";
+import { Link, MarkdownImage } from "src/components";
 
 /* 
   TODO LATER: 
@@ -20,20 +18,20 @@ export const Markdown = ({ children }: { children: string }) => {
         return <MarkdownImage image={image} />;
       }
 
-      return <Text as="p">{paragraph.children}</Text>;
+      return <p>{paragraph.children}</p>;
     },
     li: (li: { children?: boolean }) => (
-      <li tw="flex items-start">
-        <div tw="rounded mr-3 bg-current h-[6px] w-[6px] transform translate-y-[0.55em]" />
+      <li className="flex items-start">
+        <div className="rounded mr-3 bg-current h-[6px] w-[6px] transform translate-y-[0.55em]" />
         {/* ReactMarkdown will always render a p tag at li.children */}
-        <div tw="flex-1">{li.children}</div>
+        <div className="flex-1">{li.children}</div>
       </li>
     ),
     ol: (ol: { children?: boolean }) => (
-      <ol tw="pl-3 flex flex-col gap-0.5">{ol.children}</ol>
+      <ol className="pl-3 flex flex-col gap-0.5">{ol.children}</ol>
     ),
     ul: (ul: { children?: boolean }) => (
-      <ul tw="pl-3 flex flex-col gap-0.5">{ul.children}</ul>
+      <ul className="pl-3 flex flex-col gap-0.5">{ul.children}</ul>
     ),
     a: (anchor: { href: string; children: Array<any> }) => {
       if (anchor.href.match("http")) {
@@ -57,13 +55,9 @@ export const Markdown = ({ children }: { children: string }) => {
       );
     },
     h3: (props: any) => (
-      <Text
-        as="h3"
-        variant="title1"
-        tw="mt-3 first:mt-0"
-        {...props}
-        color="current"
-      />
+      // variant="title1"
+      // eslint-disable-next-line jsx-a11y/heading-has-content
+      <h3 className="mt-3 text-current first:mt-0" {...props} />
     ),
   };
 

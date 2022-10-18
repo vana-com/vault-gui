@@ -1,6 +1,4 @@
 import Image from "next/image";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
 
 /* Adapted from: https://github.com/amirardalan/amirardalan.com/blob/82387d88549d8793b2f057830524bfe047549602/components/Markdown.tsx#L196 */
 
@@ -25,8 +23,8 @@ export const MarkdownImage = ({ image }: MarkdownImageProps) => {
   const caption = metastring?.match(/{caption: (.*?)}/)?.pop();
 
   return (
-    <div tw="pt-2 pb-2 text-[0]">
-      <div tw="border border-separatorLight">
+    <div className="pt-2 pb-2 text-[0]">
+      <div className="border border-separatorLight">
         <Image
           src={image.properties.src}
           width={width}
@@ -35,7 +33,7 @@ export const MarkdownImage = ({ image }: MarkdownImageProps) => {
           priority={isPriority}
         />
         {hasCaption ? (
-          <div tw="pt-1" aria-label={caption}>
+          <div className="pt-1" aria-label={caption}>
             {caption}
           </div>
         ) : null}

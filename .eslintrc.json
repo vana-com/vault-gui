@@ -6,5 +6,12 @@
   "rules": {
     "no-console": 0,
     "react/no-unknown-property": ["error", { "ignore": ["css", "tw"] }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".tsx"]
+      }
+    }
   }
 }

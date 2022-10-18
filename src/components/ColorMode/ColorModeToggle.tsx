@@ -1,11 +1,6 @@
-// import { ColorModeContext, Theme } from './ColorModeContext'
 import { useTheme } from "next-themes";
-import React from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
 
 export const ColorModeToggle = () => {
-  // const { theme, setTheme }: Theme = React.useContext(ColorModeContext)
   const { theme, setTheme } = useTheme();
 
   function isDark() {
@@ -16,10 +11,10 @@ export const ColorModeToggle = () => {
     <button
       aria-label="Toggle Dark Mode"
       type="button"
-      tw="focus:outline-none fill-current text-label hover:text-labelSecondary bg-backgroundElevated p-3 rounded-lg"
+      className="p-3 rounded-lg fill-current focus:outline-none text-label hover:text-labelSecondary bg-backgroundElevated"
       onClick={() => setTheme(isDark() ? "light" : "dark")}
     >
-      <div tw="w-4 h-4">{isDark() ? <Moon /> : <Sun />}</div>
+      <div className="w-4 h-4">{isDark() ? <Moon /> : <Sun />}</div>
     </button>
   );
 };

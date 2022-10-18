@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  compiler: {
-    emotion: true,
+  swcMinify: true,
+  experimental: {
+    images: {
+      allowFutureImage: true,
+    },
   },
   // The pre-commit hook takes care of linting
   eslint: {

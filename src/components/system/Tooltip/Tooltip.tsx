@@ -1,60 +1,53 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import React from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import clsx from "clsx";
 
-import * as styles from "./Tooltip.css";
+import { RadixComponentWithTriggerProps } from "src/types";
 
-// Exports
-// TooltipPrimitive.Provider is set in `_app`
-export const Tooltip = TooltipPrimitive.Root;
-export const TooltipTrigger = TooltipPrimitive.Trigger;
-export const TooltipArrow = TooltipPrimitive.Arrow;
+export interface TooltipProps
+  extends RadixComponentWithTriggerProps,
+    TooltipPrimitive.TooltipContentProps,
+    TooltipPrimitive.TooltipProps {}
 
-interface ContentProps {
-  children: React.ReactNode;
-  [key: string]: any;
-}
-
-function Content({ children, ...props }: ContentProps) {
-  return (
+const Tooltip = ({
+  children,
+  triggerNode,
+  side = "bottom",
+  align = "end",
+  sideOffset = 0,
+  contentClassName,
+  delayDuration = 700,
+  key,
+}: TooltipProps) => (
+  <TooltipPrimitive.Root delayDuration={delayDuration}>
+    <TooltipPrimitive.Trigger asChild>
+      {/* NB! The trigger child MUST be an HTML element, not a Component */}
+      <span className="hover:cursor-pointer">{triggerNode}</span>
+    </TooltipPrimitive.Trigger>
     <TooltipPrimitive.Portal>
-      <TooltipPrimitive.Content css={styles.styledTooltipContent} {...props}>
-        {children}
-        <TooltipArrow css={styles.styledTooltipArrow} />
+      <TooltipPrimitive.Content
+        key={key}
+        side={side}
+        sideOffset={sideOffset}
+        align={align}
+        sticky="always"
+        className={clsx(
+          "radix-side-top:animate-slide-down-fade",
+          "radix-side-right:animate-slide-left-fade",
+          "radix-side-bottom:animate-slide-up-fade",
+          "radix-side-left:animate-slide-right-fade",
+          "inline-flex items-center rounded-md px-4 py-2.5",
+          "bg-stone-800",
+          "max-w-[300px] z-50",
+          contentClassName,
+        )}
+      >
+        <TooltipPrimitive.Arrow className="fill-current" />
+        <span className="block font-sans text-xs leading-normal text-white">
+          {children}
+        </span>
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
-  );
-}
-
-export const TooltipContent = Content;
-
-interface Props {
-  children: React.ReactNode;
-  label: string;
-  align?: string;
-  side?: string;
-  sideOffset?: number;
-}
-
-const TooltipDefault = ({
-  children,
-  label,
-  align = "start",
-  side,
-  sideOffset = 5,
-}: Props) => (
-  <Tooltip>
-    <TooltipTrigger asChild>
-      {/* <IconButton>
-          <PlusIcon />
-        </IconButton> */}
-      {children}
-    </TooltipTrigger>
-    <TooltipContent align={align} side={side} sideOffset={sideOffset}>
-      {label}
-    </TooltipContent>
-  </Tooltip>
+  </TooltipPrimitive.Root>
 );
 
-export { TooltipDefault };
+export { Tooltip };

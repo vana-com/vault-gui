@@ -18,7 +18,6 @@ export * from "./identity/getJwtPayload";
 export * from "./identity/setWeb3AuthModalHeading";
 export * from "./localStorage";
 export * from "./openInNewTab";
-export * from "./renderModuleStoreInstructions";
 export * from "./setLoginPath";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";

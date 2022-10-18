@@ -1,28 +1,22 @@
-import "../styles/fonts.css";
+import "src/styles/globals.css";
 
 import { ApolloProvider } from "@apollo/client";
 import { datadogRum } from "@datadog/browser-rum";
-import { cache } from "@emotion/css";
-import { CacheProvider } from "@emotion/react";
-import * as Toast from "@radix-ui/react-toast";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
 
-import {
-  AppHook,
-  AuthenticatedLayout,
-  LayoutApp,
-  UserProvider,
-} from "src/components";
+// import { AppHook } from "src/components";
 import config from "src/config";
 
-import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
+
+/* 
+  TODO: 
+  re-add in UserProvider, AuthenticatedLayout & LayoutApp components once we have design in place
+ */
 
 const NextApp = ({ Component, pageProps }: AppProps) => {
   const client = useApollo(pageProps);
@@ -45,32 +39,20 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ApolloProvider client={client}>
-      <CacheProvider value={cache}>
-        <ThemeProvider attribute="class">
-          <GlobalStyles />
-          <Toast.Provider swipeDirection="right">
-            <Tooltip.Provider delayDuration={300}>
-              <UserProvider>
-                <AuthenticatedLayout>
-                  <AppHook>
-                    <LayoutApp renderNavMobile>
-                      <Component {...pageProps} />
-                      {!config.routesToHideZendeskWidget.some((path) =>
-                        router.pathname.startsWith(path),
-                      ) && (
-                        <Script
-                          id="ze-snippet"
-                          src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
-                        />
-                      )}
-                    </LayoutApp>
-                  </AppHook>
-                </AuthenticatedLayout>
-              </UserProvider>
-            </Tooltip.Provider>
-          </Toast.Provider>
-        </ThemeProvider>
-      </CacheProvider>
+      <ThemeProvider attribute="class">
+        <Tooltip.Provider delayDuration={300}>
+          {/* <AppHook> */}
+          <Component {...pageProps} />
+          {!config.routesToHideZendeskWidget.some((path) =>
+            router.pathname.startsWith(path),
+          ) && (
+            <Script
+              id="ze-snippet"
+              src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
+            />
+          )}
+        </Tooltip.Provider>
+      </ThemeProvider>
     </ApolloProvider>
   );
 };

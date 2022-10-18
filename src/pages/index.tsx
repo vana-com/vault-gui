@@ -1,227 +1,85 @@
+import { Icon } from "@iconify/react";
+import clsx from "clsx";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tw from "twin.macro";
+import Link from "next/link";
+import useMeasure from "react-use-measure";
 
-import {
-  AddData,
-  Center,
-  DataModule,
-  Group,
-  LayoutCanvas,
-  LayoutCanvasGrid,
-  LayoutCanvasPattern,
-  LayoutLoading,
-  LayoutPage,
-  NavBreadcrumb,
-  NavHeader,
-  NavHeaderRule,
-  OnboardDialog,
-  OnboardDialogControlled,
-  Stack,
-  TitleAndMetaTags,
-  ToastDefault,
-  useUserContext,
-} from "src/components";
-import { navigationBreadcrumbs } from "src/data";
-import {
-  Modules,
-  useGetModulesQuery,
-  useGetUserModulesSubscription,
-  UsersModules,
-} from "src/graphql/generated";
-import { getLocalItem, setLocalItem } from "src/utils";
+import { CanvasGrid, FooterBadge, TitleAndMetaTags } from "src/components";
 
-const HomePage: NextPage = () => {
-  const router = useRouter();
-  const { user, hasuraToken, isInitialAccountLogin } = useUserContext();
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [deletingModuleName, setDeletingModuleName] = useState<
-    string | undefined
-  >(undefined);
-  const [showDeleteSuccessToast, setShowDeleteSuccessToast] = useState(false);
-  const [showDeleteFailureToast, setShowDeleteFailureToast] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
-  const setHasSeenOnboarding = () => {
-    setLocalItem("has-seen-onboarding", "true");
-  };
-  const hasSeenOnboarding = getLocalItem("has-seen-onboarding") === "true";
+const Home: NextPage = () => {
+  // consider that knowing bounds is only possible *after* the view renders
+  // so you'll get zero values on the first run and be informed later
+  const [ref, bounds] = useMeasure();
+  const screenHeight = bounds.height;
 
-  const { data: { modules: allModules } = {}, loading: isModulesLoading } =
-    useGetModulesQuery();
-
-  const { data: userModulesData, loading: isUserModulesDataLoading } =
-    useGetUserModulesSubscription({
-      variables: { userId: user?.id },
-      skip: !user?.id,
-    });
-
-  const storedUsersModules: UsersModules[] = userModulesData?.usersModules
-    ? (userModulesData.usersModules as UsersModules[])
-    : [];
-
-  const notStoredModules = (allModules as Modules[])?.filter(
-    (module) =>
-      !storedUsersModules.some(
-        (storedModule) => module.id === storedModule.moduleId,
-      ),
-  );
-
-  // Delete a user's data module
-  const deleteModule = async (moduleId: string, moduleName: string) => {
-    setIsDeleting(true);
-    setDeletingModuleName(moduleName);
-
-    try {
-      const { success } = await (
-        await fetch(`/api/user-data/delete-modules`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${hasuraToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            usersModulesIds: [moduleId],
-          }),
-        })
-      ).json();
-
-      if (success) {
-        setShowDeleteSuccessToast(true);
-        setTimeout(() => router.push("/"), 250);
-      } else {
-        setShowDeleteFailureToast(true);
-      }
-    } catch (e) {
-      console.error(`Unable to delete module ${moduleName}`, e);
-    } finally {
-      setIsDeleting(false);
-    }
-  };
-
-  // Programmatically setShowOnboarding based on isInitialAccountLogin
-  useEffect(() => {
-    if (isInitialAccountLogin) {
-      setTimeout(() => setShowOnboarding(true), 750);
-    }
-  }, [isInitialAccountLogin]);
-
-  // Data state: hasura data is loading
-  const isHasuraLoading = isModulesLoading || isUserModulesDataLoading;
-
-  if (isHasuraLoading) return <LayoutLoading />;
-
-  // Data state: has no modules
-  const hasNoStoredModules = storedUsersModules.length === 0;
+  // Intersection observer to toggle the filters location
+  // const { ref, inView } = useInView();
 
   // TESTS
-  // console.log("storedUsersModules", storedUsersModules);
-  // console.log("hasNoModules", hasNoModules);
-  // console.log("navigationBreadcrumbs[0]", navigationBreadcrumbs[0]);
+  console.log(bounds);
 
   return (
     <>
-      <TitleAndMetaTags color="black" title="Vault | Vana" />
+      <TitleAndMetaTags
+        color="black"
+        title="The Collective | Vana"
+        description="Discover projects you can earn and learn from with your Vana Vault"
+      />
 
-      <LayoutPage>
-        {/* BREADCRUMB: show OnboardDialog if has modules */}
-        <NavBreadcrumb
-          crumbs={hasNoStoredModules ? [navigationBreadcrumbs[0]] : undefined}
-        >
-          <Group tw="gap-3">
-            {!hasNoStoredModules && <OnboardDialog />}
-            {storedUsersModules.length > 0 && storedUsersModules.length < 3 && (
-              <AddData userId={user?.id} modules={notStoredModules}>
-                Add data
-              </AddData>
-            )}
-          </Group>
-        </NavBreadcrumb>
-
-        {/* HEADER: show OnboardDialog if hasNoModules */}
-        {hasNoStoredModules ? (
-          <NavHeader heading="What data do you want to add?">
-            <OnboardDialog />
-          </NavHeader>
-        ) : (
-          <NavHeaderRule />
-        )}
-
+      <div
+        ref={ref}
+        className={clsx("relative min-h-screen bg-black")}
+        style={{ height: `${screenHeight}px` }}
+      >
         {/* CANVAS */}
-        <LayoutCanvas>
-          <LayoutCanvasPattern />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="transform scale-[1.07]">
+            <div className="grid grid-cols-4 gap-[3px]">
+              <CanvasGrid />
+              <CanvasGrid />
+            </div>
+          </div>
+        </div>
 
-          {/* NO STORED MODULES: ADD A MODULE */}
-          {hasNoStoredModules && (
-            <Center tw="min-h-[300px] relative">
-              <Stack tw="gap-5 items-center">
-                <AddData
-                  userId={user?.id}
-                  buttonIsLarge
-                  modules={notStoredModules}
-                >
-                  Start adding data
-                </AddData>
-                {/* TODO: add incentive copy as part of onboarding */}
-                {/* <Text
-                  variant="note"
-                  tw="text-labelSecondary flex items-center gap-1"
-                >
-                  <WithIcon prefix={<Icon icon="carbon:idea" />}>
-                    Add a tip here to incentivize users to add data
-                  </WithIcon>
-                </Text> */}
-              </Stack>
-            </Center>
-          )}
-
-          {/* STORED MODULES */}
-          {!hasNoStoredModules && (
-            <LayoutCanvasGrid>
-              {storedUsersModules.map((userModule) => (
-                <DataModule
-                  userId={user?.id}
-                  key={userModule.id}
-                  module={userModule}
-                  handleDeleteModule={async () =>
-                    deleteModule(userModule.id, userModule.module.name)
-                  }
-                  isDeleting={isDeleting}
-                />
-              ))}
-            </LayoutCanvasGrid>
-          )}
-        </LayoutCanvas>
-
-        {/* AUTOMATED ONBOARDING on isInitialAccountLogin only. Only renders to the DOM when conditions are met, has no internal state nor trigger. */}
-        {!hasSeenOnboarding && (
-          <OnboardDialogControlled
-            showOnboarding={showOnboarding}
-            setShowOnboarding={setShowOnboarding}
-            setHasSeenOnboarding={setHasSeenOnboarding}
+        {/* MASK */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className={clsx(
+              "absolute -inset-[12vw]",
+              "bg-black/30",
+              // from-cyan-800/50
+              "after:absolute after:content-[''] after:inset-0 after:bg-gradient-radial after:to-black after:from-black/10",
+              "after:blur-[10px]",
+              // after:z-[-1]
+            )}
           />
-        )}
+        </div>
 
-        {/* MODULE DELETION STATUS TOASTS */}
-        <ToastDefault
-          open={showDeleteSuccessToast}
-          onOpenChange={setShowDeleteSuccessToast}
-          variant="success"
-          title="Success"
-          content={`Your ${deletingModuleName} data has been permanently deleted`}
-        />
-        <ToastDefault
-          open={showDeleteFailureToast}
-          onOpenChange={setShowDeleteFailureToast}
-          duration={12000}
-          variant="error"
-          title="Error"
-          content="Please reload the page and try again"
-        />
-      </LayoutPage>
+        {/* CTA */}
+        <div className="absolute left-0 top-0 w-full h-[66vh] flex items-center justify-center">
+          <div className="text-center px-inset">
+            <div className="flex flex-col gap-w12">
+              <h1 className="font-display text-[9vh] font-light leading-[0.925] tracking-[-0.02em] text-white">
+                You are
+                <br />a work
+                <br />
+                of art
+              </h1>
+              <Link href="/generate" passHref>
+                <span className="text-white border border-white rounded-sm Button hover:cursor-pointer">
+                  <span>Create your gallery</span>
+                  <Icon icon="carbon:arrow-right" />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* FOOTER LOGO */}
+        <FooterBadge screenHeight={screenHeight} />
+      </div>
     </>
   );
 };
 
-export default HomePage;
+export default Home;

@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900; /* Range of weights supported */
+    font-display: optional;
+    src: url(/fonts/inter-var-latin.woff2) format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+      U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: "Sans";
+    src: url("/fonts/TestUntitledSans-Light.otf") format("woff");
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sans";
+    src: url("/fonts/TestUntitledSans-Regular.otf") format("woff");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sans";
+    src: url("/fonts/TestUntitledSans-Medium.otf") format("woff");
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sans";
+    src: url("/fonts/TestUntitledSans-Bold.otf") format("woff");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sans";
+    src: url("/fonts/TestUntitledSans-Black.otf") format("woff");
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sharif";
+    src: url("/fonts/Wulkan-Display-Light.otf") format("woff");
+    src: url("/fonts/GT-Super-Text-Book-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sharif";
+    src: url("/fonts/Wulkan-Display-Regular.otf") format("woff");
+    src: url("/fonts/GT-Super-Text-Regular-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sharif";
+    src: url("/fonts/Wulkan-Display-Medium.otf") format("woff");
+    src: url("/fonts/GT-Super-Text-Medium-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sharif";
+    src: url("/fonts/Wulkan-Display-SemiBold.otf") format("woff");
+    src: url("/fonts/GT-Super-Text-Medium-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sharif";
+    src: url("/fonts/Wulkan-Display-Bold.otf") format("woff");
+    src: url("/fonts/GT-Super-Text-Bold-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Sharif";
+    src: url("/fonts/Wulkan-Display-Black.otf") format("woff");
+    src: url("/fonts/GT-Super-Text-Super-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Display";
+    src: url("/fonts/GT-Super-Display-Light-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Display";
+    src: url("/fonts/GT-Super-Display-Bold-Trial.otf") format("woff");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+  }
+  body {
+    font-size: 16px;
+    @apply text-stone-900 font-normal;
+    /* @apply relative min-h-screen before:absolute before:content-[''] before:inset-0 before:top-2/3 before:bg-gradient-to-t before:from-blueCrayola-500/10; */
+  }
+}
+
+@layer components {
+  .Container {
+    @apply mx-auto max-w-canvasWidth px-inset;
+  }
+  @screen md {
+    .Container {
+      @apply px-insetDouble;
+    }
+  }
+  .hr {
+    @apply border-stone-300 dark:border-stone-500;
+  }
+  .hr-vertical {
+    /* add a height when used within a flex parent */
+    @apply w-px border-l;
+  }
+  /* button */
+  .Button {
+    @apply relative inline-flex items-center justify-center gap-1.5;
+    @apply select-none whitespace-nowrap align-middle outline-none;
+    @apply h-inputH w-auto;
+    /* @apply border border-black; */
+    /* outline: transparent solid 2px; */
+    /* outline-offset: 2px; */
+    /* min-width: 216px; */
+  }
+  /* link */
+  .link,
+  .link-block a:not(.Button) {
+    @apply relative underline underline-offset-[0.25em];
+    @apply decoration-[0.025em];
+    @apply decoration-black/30 dark:decoration-white/40;
+    @apply hover:decoration-black hover:dark:decoration-white hover:decoration-[0.05em];
+    @apply hover:text-black hover:dark:text-white;
+  }
+  /* https://stackoverflow.com/a/40991531 */
+  .loading {
+    @apply block text-left;
+  }
+  .loading::after {
+    @apply inline-block content-[''];
+    animation: dotty steps(1, end) 1.5s infinite;
+  }
+  @keyframes dotty {
+    0% {
+      content: "";
+    }
+    25% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    75% {
+      content: "...";
+    }
+    100% {
+      content: "";
+    }
+  }
+  .vana-logotype-clip {
+    clip-path: url(#vana-logotype-clip);
+  }
+}
+
+@layer utilities {
+  .fill-forwards {
+    animation-fill-mode: forwards;
+  }
+  .Text-meta {
+    @apply text-ssm font-medium tracking-wider uppercase;
+  }
+  .Text-lg {
+    @apply font-normal leading-snug font-heading text-lg;
+  }
+}

@@ -5,7 +5,21 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const colors = require('tailwindcss/colors')
 
-const sans = ['ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','sans-serif'];
+const sans = [
+  "ui-sans-serif",
+  "system-ui",
+  "-apple-system",
+  "BlinkMacSystemFont",
+  "sans-serif",
+];
+const serif = [
+  "ui-serif",
+  "Georgia",
+  "Cambria",
+  '"Times New Roman"',
+  "Times",
+  "serif",
+];
 
 // screens
 // sm: '640px',
@@ -16,72 +30,13 @@ const sans = ['ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','
 
 module.exports = {
   darkMode: 'class',
+   content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)',
-        primaryTint: 'var(--primaryTint)',
-        primaryShade: 'var(--primaryShade)',
-        newPrimary: '#0061fe',
-        accent: 'var(--accent)',
-        newAccent: '#dbff00',
-        label: 'var(--label)',
-        labelSecondary: 'var(--labelSecondary)',
-        labelTertiary: 'var(--labelTertiary)',
-        labelQuaternary: 'var(--labelQuaternary)',
-        labelInverse: 'var(--labelInverse)',
-        labelWhite: 'var(--labelWhite)',
-        fill: 'var(--fill)',
-        fillSecondary: 'var(--fillSecondary)',
-        fillElevated: 'var(--fillElevated)',
-        background: 'var(--background)',
-        backgroundElevated: 'var(--backgroundElevated)',
-        backgroundTertiary: 'var(--backgroundTertiary)',
-        backgroundScrim: 'var(--backgroundScrim)',
-        neutral: 'var(--neutral)',
-        neutralDark: 'var(--neutralDark)',
-        separator: 'var(--separator)',
-        separatorLight: 'var(--separatorLight)',
-        hover: 'var(--hover)',
-        error: 'var(--error)',
-        success: 'var(--success)',
-        gray: {
-          10: 'var(--gray10)',
-          15: "var(--gray15)",
-          20: 'var(--gray20)',
-          30: 'var(--gray30)',
-          40: 'var(--gray40)',
-          55: 'var(--gray50)', // avoid clash with TW gray-50
-          60: 'var(--gray60)',
-          70: 'var(--gray70)',
-          80: 'var(--gray80)',
-          90: 'var(--gray90)',
-          100: 'var(--gray100)',
-        },
-        whites: {
-          10: 'var(--white10)',
-          20: 'var(--white20)',
-          30: 'var(--white30)',
-          40: 'var(--white40)',
-          50: 'var(--white50)',
-          60: 'var(--white60)',
-          70: 'var(--white70)',
-          80: 'var(--white80)',
-          90: 'var(--white90)',
-          100: 'var(--white100)',
-        },
-        primarys: {
-          10: 'var(--orange10)',
-          20: 'var(--orange20)',
-          30: 'var(--orange30)',
-          40: 'var(--orange40)',
-          50: 'var(--orange50)',
-          60: 'var(--orange60)',
-          70: 'var(--orange70)',
-          80: 'var(--orange80)',
-          90: 'var(--orange90)',
-          100: 'var(--orange100)',
-        },
         // https://coolors.co/ff5351
         orangeRed: {
           500: "#ff5351",
@@ -112,8 +67,9 @@ module.exports = {
         standalone: { raw: '(display-mode:standalone)' },
       },
       fontFamily: {
-        heading: ['Sans', ...sans],
-        sans: ['Inter',...sans],
+        sans: ['Sans', ...sans],
+        serif: ['Sharif', ...serif],
+        display: ['Display', ...serif],
         mono: ['IBM Plex Mono','SFMono-Regular','ui-monospace','monospace'],
       },
       fontSize: {
@@ -143,6 +99,9 @@ module.exports = {
         navLinkH: "clamp(36px, 2.0620rem + 0.7264vw, 42px)",
         rowItem: "clamp(38px, 2.1870rem + 0.7264vw, 44px)",
         asideW: "210px",
+        inputH: "clamp(2.5rem, 2vw, 3rem)",
+        inputLgH: "clamp(3rem, 2vw, 3.375rem)",
+        inputXlH: "clamp(3.5rem, 3vw, 4.5rem)",
         insetHalf: "clamp(0.75rem, 0.9988rem + 0.9370vw, 1.125rem)",
         insetAlmost: "clamp(1.25rem, 0.9988rem + 1.3370vw, 1.75rem)",
         inset: "clamp(1.5rem, 0.9988rem + 1.9370vw, 2.25rem)",
@@ -164,12 +123,132 @@ module.exports = {
       },
       maxWidth: {
         canvasWidth: "1284px",
-      }
+        // canvasWidth: "1180px",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
+      boxShadow: {
+        slider: "0 0 0 5px rgba(0, 0, 0, 0.3)",
+      },
+      keyframes: {
+        // Dropdown menu
+        "scale-in": {
+          "0%": { opacity: 0, transform: "scale(0)" },
+          "100%": { opacity: 1, transform: "scale(1)" },
+        },
+        "slide-down": {
+          "0%": { opacity: 0, transform: "translateY(-10px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        "slide-up": {
+          "0%": { opacity: 0, transform: "translateY(10px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        // Tooltip
+        "slide-up-fade": {
+          "0%": { opacity: 0, transform: "translateY(2px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        "slide-right-fade": {
+          "0%": { opacity: 0, transform: "translateX(-2px)" },
+          "100%": { opacity: 1, transform: "translateX(0)" },
+        },
+        "slide-down-fade": {
+          "0%": { opacity: 0, transform: "translateY(-2px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        "slide-left-fade": {
+          "0%": { opacity: 0, transform: "translateX(2px)" },
+          "100%": { opacity: 1, transform: "translateX(0)" },
+        },
+        // Navigation menu
+        "enter-from-right": {
+          "0%": { transform: "translateX(200px)", opacity: 0 },
+          "100%": { transform: "translateX(0)", opacity: 1 },
+        },
+        "enter-from-left": {
+          "0%": { transform: "translateX(-200px)", opacity: 0 },
+          "100%": { transform: "translateX(0)", opacity: 1 },
+        },
+        "exit-to-right": {
+          "0%": { transform: "translateX(0)", opacity: 1 },
+          "100%": { transform: "translateX(200px)", opacity: 0 },
+        },
+        "exit-to-left": {
+          "0%": { transform: "translateX(0)", opacity: 1 },
+          "100%": { transform: "translateX(-200px)", opacity: 0 },
+        },
+        "scale-in-content": {
+          "0%": { transform: "rotateX(-30deg) scale(0.9)", opacity: 0 },
+          "100%": { transform: "rotateX(0deg) scale(1)", opacity: 1 },
+        },
+        "scale-out-content": {
+          "0%": { transform: "rotateX(0deg) scale(1)", opacity: 1 },
+          "100%": { transform: "rotateX(-10deg) scale(0.95)", opacity: 0 },
+        },
+        "fade-in": {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        "fade-out": {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
+        // Toast
+        "toast-hide": {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
+        "toast-slide-in-right": {
+          "0%": { transform: `translateX(calc(100% + 1rem))` },
+          "100%": { transform: "translateX(0)" },
+        },
+        "toast-slide-in-bottom": {
+          "0%": { transform: `translateY(calc(100% + 1rem))` },
+          "100%": { transform: "translateY(0)" },
+        },
+        "toast-swipe-out": {
+          "0%": { transform: "translateX(var(--radix-toast-swipe-end-x))" },
+          "100%": {
+            transform: `translateX(calc(100% + 1rem))`,
+          },
+        },
+      },
+      animation: {
+        // Dropdown menu
+        "scale-in": "scale-in 0.2s ease-in-out",
+        "slide-down": "slide-down 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-up": "slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+        // Tooltip
+        "slide-up-fade": "slide-up-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-right-fade":
+          "slide-right-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-down-fade": "slide-down-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-left-fade": "slide-left-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        // Navigation menu
+        "enter-from-right": "enter-from-right 0.25s ease",
+        "enter-from-left": "enter-from-left 0.25s ease",
+        "exit-to-right": "exit-to-right 0.25s ease",
+        "exit-to-left": "exit-to-left 0.25s ease",
+        "scale-in-content": "scale-in-content 0.2s ease",
+        "scale-out-content": "scale-out-content 0.2s ease",
+        "fade-in": "fade-in 0.2s ease",
+        "fade-out": "fade-out 0.2s ease",
+        // Toast
+        "toast-hide": "toast-hide 100ms ease-in forwards",
+        "toast-slide-in-right":
+          "toast-slide-in-right 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "toast-slide-in-bottom":
+          "toast-slide-in-bottom 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "toast-swipe-out": "toast-swipe-out 100ms ease-out forwards",
+      },
     },
     borderColor: ({ theme }) => ({
       ...theme('colors'),
       DEFAULT: theme('colors.separator', 'currentColor'),
     }),
   },
-  plugins: [],
+  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+  plugins: [require("tailwindcss-radix")()],
 }
