@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { Exhibit } from "src/types/exhibit";
 import { readGCSDirectory } from "src/utils/serverUtils";
 
 export default async (
@@ -19,19 +20,11 @@ export default async (
   const galleryId = `gallery-${id}`;
   const key = `${userEmail}/${galleryId}/${exhibitName}`;
 
-  const [files] = await readGCSDirectory(key);
+  const exhibit = await getExhibit(key);
 
-  const images = files.map((f) => f.name);
-
-  const response = {
-    name: formatExhibitName(exhibitName as string),
-    galleryId,
-    images,
-  };
-
-  console.log(JSON.stringify(response, null, 2));
+  console.log(JSON.stringify(exhibit, null, 2));
   res.setHeader("Cache-Control", "public, max-age=3600");
-  return res.status(200).json(response);
+  return res.status(200).json(exhibit);
 };
 
 const formatExhibitName = (exhibitName: string) => {
@@ -44,4 +37,16 @@ const formatExhibitName = (exhibitName: string) => {
 
   name = name.replace("-", " ");
   return name.charAt(0).toUpperCase() + name.slice(1);
+};
+
+export const getExhibit = async (exhibitKey: string): Promise<Exhibit> => {
+  const [files] = await readGCSDirectory(exhibitKey);
+  const exhibitName = exhibitKey.split("/").pop();
+
+  const images = files.map((f) => f.name);
+
+  return {
+    name: formatExhibitName(exhibitName as string),
+    images,
+  };
 };
