@@ -4,17 +4,15 @@ type ProgressEvent = { loaded: number; total: number };
 type ProgressHandler = (progressEvent: ProgressEvent) => void;
 
 /**
- * Uploads a file to GCS or S3 for a particular module (ex. A user's Google data stored in a zip file)
- * @param file file(s)
- * @param moduleName module that the data will be attached to
- * @param externalId Wallet address of the user uploading data
+ * Uploads a file to GCS
+ * @param file file
  * @param progressHandler function to get upload progress events
  * @returns uploadSuccessful @bool uploadURL: @string
  */
 const uploadFile = async (
   file: File,
-  moduleName: string,
-  hasuraToken: string,
+  timestamp: number,
+  userEmail: string,
   progressHandler: ProgressHandler,
 ) => {
   const fileName = encodeURIComponent(file.name);
@@ -25,12 +23,12 @@ const uploadFile = async (
     const res = await fetch(`/api/user-data/upload-url`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${hasuraToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         fileName,
-        moduleName,
+        timestamp,
+        userEmail,
       }),
     });
     const { fullFileName, url, fields } = await res.json();
@@ -56,7 +54,7 @@ const uploadFile = async (
       uploadFileSize: fileSize,
     };
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.error("Unable to upload file", error);
     return { uploadSuccessful: false, uploadURL: null };
   }
 };

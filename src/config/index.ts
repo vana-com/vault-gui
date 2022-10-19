@@ -29,14 +29,7 @@ const generalConfig = {
   
   ###`,
 
-  allowedUploadMimeTypes: [
-    "text/csv",
-    "zip",
-    "application/octet-stream",
-    "application/zip",
-    "application/x-zip",
-    "application/x-zip-compressed",
-  ],
+  allowedUploadMimeTypes: ["image/jpeg", "image/png"],
 
   /**
    * Stripe

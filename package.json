@@ -1,10 +1,10 @@
 {
-  "name": "vault-gui",
+  "name": "ingenium-gui",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 5000",
-    "doppler-dev": "doppler setup --project vault-gui --config dev && doppler run -- yarn dev",
+    "doppler-dev": "doppler setup --project ingenium-gui --config dev && doppler run -- yarn dev",
     "build": "next build",
     "start": "next start -p 5000",
     "start:ci": "next build && next start -p 5000",
