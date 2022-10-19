@@ -131,11 +131,11 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
     <>
       <div
         style={{
-          background: "lightgray",
-          minHeight: 300,
-          borderRadius: 5,
+          border: "1px solid black",
+          minHeight: 100,
           margin: "0 auto",
           width: "100%",
+          textAlign: "center",
         }}
         onDrop={onDropFile}
         onDragOver={(event) => {
@@ -148,13 +148,12 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
 
         {/* STEP 1: DROP */}
         <Button
-          variant="contrast"
-          size="xl"
+          style={{ width: "calc(100% - 10px)", margin: "5px 0" }}
           disabled={filesToUpload.length >= maxFiles}
           onClick={openFileDialog}
         >
-          <Icon icon="carbon:upload" height="1.75em" />
-          <div>Drop images here. Upload 8-10 images of yourself.</div>
+          <Icon icon="carbon:add" height="1.75em" />
+          <div>Add images</div>
         </Button>
 
         {/* STEP 2: CONFIRM */}
@@ -169,7 +168,7 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
             }}
           >
             {filesToUpload.map((fileToUpload, i) => (
-              <div key={fileToUpload.name} style={{ display: "relative" }}>
+              <div key={fileToUpload.name} style={{ position: "relative" }}>
                 {/* Image preview */}
                 <Image
                   objectFit="cover"
@@ -185,6 +184,11 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
 
                 {/* Delete image button */}
                 <Button
+                  style={{
+                    position: "absolute",
+                    bottom: "12px",
+                    right: "6px",
+                  }}
                   aria-label="Remove file to upload"
                   variant="icon"
                   type="reset"
@@ -212,6 +216,7 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
           !isValidEmail(userEmail)
         }
       >
+        <Icon icon="carbon:upload" height="1.75em" />
         Upload
       </Button>
     </>

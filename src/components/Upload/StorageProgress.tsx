@@ -3,7 +3,7 @@ interface Props {
 }
 
 const StorageProgress = ({ storeProgress }: Props) => (
-  <div>{storeProgress}%</div>
+  <div>{storeProgress ?? 0}%</div>
 );
 
 export { StorageProgress };
