@@ -1,4 +1,4 @@
-# Vault Gui
+# Ingenium Gui
 
 ## Guide to Running Locally
 
@@ -7,8 +7,8 @@
 3. Setup Doppler using the
    [doppler setup document](https://vana.slab.com/posts/doppler-setup-71xn4xeu)
 4. Run `yarn install`
-5. Run the reset script to setup all local Docker infra: `./scripts/reset-vault-gui-completely-including-data`
-   OR run the container with `./scripts/dc-start-vault-gui`
+5. Run the reset script to setup all local Docker infra: `./scripts/reset-ingenium-gui-completely-including-data`
+   OR run the container with `./scripts/dc-start-ingenium-gui`
 7. Visit localhost:5000
 
 ## Linting
@@ -73,15 +73,15 @@ try is clearing all the cached data.
 
 ## Development
 
-[development-vault.vana.com](http://development-vault.vana.com/)
+[development-ingenium.vana.com](http://development-ingenium.vana.com/)
 
 ## Staging
 
-[staging-vault.vana.com](http://staging-vault.vana.com/)
+[staging-ingenium.vana.com](http://staging-ingenium.vana.com/)
 
 ## Production
 
-[vault.vana.com](http://vault.vana.com/)
+[ingenium.vana.com](http://ingenium.vana.com/)
 
 # 🕸 Web Framework
 
@@ -202,4 +202,4 @@ commit 3A6D13E
 
 # 📘 Further Reading
 
-[vault-gui design doc](https://vana.slab.com/posts/vault-gui-bgtyeo0m)
+[ingenium-gui design doc](https://vana.slab.com/posts/ingenium-gui-bgtyeo0m)
