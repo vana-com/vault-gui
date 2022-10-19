@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import config from "src/config";
 import serverConfig from "src/config/server";
 import { Exhibit } from "src/types/exhibit";
-import { readGCSDirectory } from "src/utils/serverUtils";
+import { decrypt, readGCSDirectory } from "src/utils/serverUtils";
 
 export default async (
   req: NextApiRequest,
@@ -21,7 +21,8 @@ export default async (
   console.log("exhibit-name", exhibitName);
 
   const galleryId = `gallery-${id}`;
-  const key = `${userEmail}/${galleryId}/${exhibitName}`;
+  const decryptedUserEmail = decrypt(userEmail as string);
+  const key = `${decryptedUserEmail}/${galleryId}/${exhibitName}`;
 
   const exhibit = await getExhibit(key);
 
