@@ -12,7 +12,7 @@ const googleStorage = new Storage({
 });
 
 const userDataBucket = googleStorage.bucket(
-  process.env.GCP_USER_DATA_BUCKET_NAME || "",
+  process.env.GCP_DATA_COLLECTIVE_BUCKET_NAME || "",
 );
 
 const vercelPreviewUrlRegex =
