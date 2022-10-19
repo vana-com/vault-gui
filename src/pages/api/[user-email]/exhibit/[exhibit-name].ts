@@ -10,19 +10,13 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const {
-    "user-email": userEmail,
-    "exhibit-name": exhibitName,
-    id,
-  } = req.query;
+  const { "user-email": userEmail, "exhibit-name": exhibitName } = req.query;
 
-  console.log("id:", id);
   console.log("user-email:", userEmail);
   console.log("exhibit-name", exhibitName);
 
-  const galleryId = `gallery-${id}`;
   const decryptedUserEmail = decrypt(userEmail as string);
-  const key = `${decryptedUserEmail}/${galleryId}/exhibit-${exhibitName}`;
+  const key = `${decryptedUserEmail}/exhibit-${exhibitName}`;
 
   const exhibit = await getExhibit(key);
 

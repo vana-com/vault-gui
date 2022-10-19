@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Exhibit } from "src/types/exhibit";
 import { decrypt, readGCSDirectory } from "src/utils/serverUtils";
 
-import { getExhibit } from "./[id]/exhibit/[exhibit-name]";
+import { getExhibit } from "./exhibit/[exhibit-name]";
 
 export default async (
   req: NextApiRequest,
@@ -17,17 +17,14 @@ export default async (
   const decryptedUserEmail = decrypt(userEmail as string);
   console.log("decryptedUserEmail:", decryptedUserEmail);
 
-  const galleryId = `gallery-${id}`;
-  const keyPrefix = `${decryptedUserEmail}/${galleryId}`;
-
-  const [files] = await readGCSDirectory(keyPrefix);
+  const [files] = await readGCSDirectory(decryptedUserEmail);
 
   const fileNames = files.map((file) => file.name);
   const exhibits = getExhibitNames(fileNames);
-  const exhibitKeys = createExhibitKeys(exhibits, keyPrefix);
+  const exhibitKeys = createExhibitKeys(exhibits, decryptedUserEmail);
 
   const response = {
-    id: galleryId,
+    id: userEmail,
     exhibits: await getExhibits(exhibitKeys),
   };
 
@@ -38,12 +35,17 @@ export default async (
 
 const getExhibitNames = (files: string[]): string[] => {
   const exhibits: string[] = [];
+
   files.forEach((f) => {
     const splitFiles = f.split("/");
-    exhibits.push(splitFiles[2]);
+    exhibits.push(splitFiles[1]);
   });
+
   const exhibitsSet = new Set(exhibits);
-  return Array.from(exhibitsSet);
+  const exhibitsArr = Array.from(exhibitsSet);
+  return exhibitsArr.filter(
+    (name: string) => !name.startsWith("uploaded-image"),
+  );
 };
 
 const getExhibits = async (exhibitKeys: string[]): Promise<Exhibit[]> =>
