@@ -22,10 +22,11 @@ export default async (
   const fileNames = files.map((file) => file.name);
   const exhibits = getExhibitNames(fileNames);
   const exhibitKeys = createExhibitKeys(exhibits, decryptedUserEmail);
+  const exhibitArr = await getExhibits(exhibitKeys);
 
   const response = {
     id: userEmail,
-    exhibits: await getExhibits(exhibitKeys),
+    exhibits: sortExhibitsUpdatedDesc(exhibitArr),
   };
 
   console.log(JSON.stringify(response, null, 2));
@@ -53,3 +54,9 @@ const getExhibits = async (exhibitKeys: string[]): Promise<Exhibit[]> =>
 
 const createExhibitKeys = (exhibits: string[], keyPrefix: string): string[] =>
   exhibits.map((exhibit: string) => `${keyPrefix}/exhibits/${exhibit}`);
+
+const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
+  exhibits.sort(
+    (a: Exhibit, b: Exhibit) =>
+      Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt)),
+  );
