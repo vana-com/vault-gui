@@ -4,24 +4,19 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import config from "src/config";
 import serverConfig from "src/config/server";
 import { Exhibit } from "src/types/exhibit";
-import { readGCSDirectory } from "src/utils/serverUtils";
+import { decrypt, readGCSDirectory } from "src/utils/serverUtils";
 
 export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const {
-    "user-email": userEmail,
-    "exhibit-name": exhibitName,
-    id,
-  } = req.query;
+  const { "user-email": userEmail, "exhibit-name": exhibitName } = req.query;
 
-  console.log("id:", id);
   console.log("user-email:", userEmail);
   console.log("exhibit-name", exhibitName);
 
-  const galleryId = `gallery-${id}`;
-  const key = `${userEmail}/${galleryId}/${exhibitName}`;
+  const decryptedUserEmail = decrypt(userEmail as string);
+  const key = `${decryptedUserEmail}/exhibit-${exhibitName}`;
 
   const exhibit = await getExhibit(key);
 
@@ -39,7 +34,11 @@ const formatExhibitName = (exhibitName: string) => {
   }
 
   name = name.replace("-", " ");
-  return name.charAt(0).toUpperCase() + name.slice(1);
+  const splitName = name.split(" ");
+  const titleCaseName = splitName.map(
+    (word: string) => word.charAt(0).toUpperCase() + word.slice(1),
+  );
+  return titleCaseName.join(" ");
 };
 
 const getSignedUrl = async (fileName: string) => {
