@@ -33,8 +33,8 @@ const UploadPage: NextPage = () => {
                 Create your gallery
               </h1>
               <p>
-                To create your gallery, we need your email and 8-10 portraits of
-                you.
+                To create your gallery, we need your 8-10 portraits of you. Take
+                selfies from different angles if you need more portraits
               </p>
 
               {/* Email input */}
