@@ -18,7 +18,7 @@ const ExhbitPage: NextPage = () => {
 
   // If the view query is set, directly set that as the view & open the modal
   const [showModal, setShowModal] = useState<boolean>(
-    !(viewQuery as unknown as number),
+    (viewQuery as unknown) !== undefined,
   );
   const [viewing, setViewing] = useState<number>(
     (viewQuery as unknown as number) ?? -1,
