@@ -63,8 +63,11 @@ interface GalleryPageProps {
 const GalleryPage: NextPage<GalleryPageProps> = ({ gallery }) => {
   const router = useRouter();
 
-  const { "user-email-hash": userEmailHash, "gallery-id": galleryId } =
-    router.query;
+  const { "user-email-hash": userEmailHash } = router.query;
+
+  // DONT MODIFY BELOW
+
+  // DONT MODIFY ABOVE
 
   return (
     <>
@@ -76,7 +79,7 @@ const GalleryPage: NextPage<GalleryPageProps> = ({ gallery }) => {
             className="bg-slate-100 rounded-xl p-8 m-2 dark:bg-slate-800"
             onClick={() =>
               router.push(
-                `/${userEmailHash}/gallery/${galleryId}/exhibit/${exhibit.name.toLowerCase()}`,
+                `/${userEmailHash}/exhibit/${exhibit.name.toLowerCase()}`,
               )
             }
           >

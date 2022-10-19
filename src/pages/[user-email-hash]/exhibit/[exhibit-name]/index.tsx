@@ -4,11 +4,8 @@ import { useState } from "react";
 import { Exhibit } from "src/types";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const {
-    "user-email-hash": userEmailHash,
-    "gallery-id": galleryId,
-    "exhibit-name": exhibitName,
-  } = context.query;
+  const { "user-email-hash": userEmailHash, "exhibit-name": exhibitName } =
+    context.query;
 
   /** 
   const res = await fetch(`/api/user-${userEmailHash}/gallery/${galleryId}/exhibit/${exhibitName}`);
@@ -54,6 +51,10 @@ const ExhbitPage: NextPage<ExhbitPageProps> = ({ exhibit }) => {
   const areImagesMine = false;
   const [showImageGalleryModal, setShowImageGalleryModal] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
+
+  // DONT MODIFY BELOW
+
+  // DONT MODIFY ABOVE
 
   if (showImageGalleryModal) {
     return (
