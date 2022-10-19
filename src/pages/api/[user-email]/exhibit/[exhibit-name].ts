@@ -13,7 +13,7 @@ export default async (
   const { "user-email": userEmail, "exhibit-name": exhibitName } = req.query;
 
   console.log("user-email:", userEmail);
-  console.log("exhibit-name", exhibitName);
+  console.log("exhibit:", exhibitName);
 
   const decryptedUserEmail = decrypt(userEmail as string);
   const key = `${decryptedUserEmail}/exhibits/${exhibitName}`;
