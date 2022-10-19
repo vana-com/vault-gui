@@ -16,7 +16,7 @@ export default async (
   console.log("exhibit-name", exhibitName);
 
   const decryptedUserEmail = decrypt(userEmail as string);
-  const key = `${decryptedUserEmail}/exhibit-${exhibitName}`;
+  const key = `${decryptedUserEmail}/exhibits/${exhibitName}`;
 
   const exhibit = await getExhibit(key);
 
@@ -57,10 +57,18 @@ const getSignedUrl = async (fileName: string) => {
 };
 
 export const getExhibit = async (exhibitKey: string): Promise<Exhibit> => {
-  const [files] = await readGCSDirectory(exhibitKey);
+  const [files, metadata] = await readGCSDirectory(exhibitKey);
+
+  const { items } = metadata;
+
+  // Get array of booleans for files with file size > 0
+  const isNonZeroSize = items.map((item: any) => Number(item.size) > 0);
   const exhibitName = exhibitKey.split("/").pop();
 
-  const fileNames = files.map((f) => f.name);
+  // Filter out files with file size 0
+  const fileNames = files
+    .map((f) => f.name)
+    .filter((_, idx) => isNonZeroSize[idx]);
   const images = await Promise.all(
     fileNames.map(async (fileName: string) => getSignedUrl(fileName)),
   );
