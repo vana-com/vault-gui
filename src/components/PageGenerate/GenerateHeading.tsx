@@ -53,7 +53,7 @@ const GenerateHeadingSuccess = ({
       <br />
       with our guild
     </h1>
-    <p>Takes about an hour. Can&apos;t wait?</p>
+    <p>We will email you when it is ready!</p>
     {children}
     <p className="font-serif text-lg font-light pt-w12 text-stone-400">
       In the meantime…

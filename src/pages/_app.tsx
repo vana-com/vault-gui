@@ -27,7 +27,7 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
     applicationId: process.env.NEXT_PUBLIC_DATADOG_APP_ID as string,
     clientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN as string,
     site: "datadoghq.com",
-    service: "vault-gui",
+    service: "ingenium-gui",
     env: process.env.NEXT_PUBLIC_ENV as string,
     version: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA as string,
     sampleRate: 100,

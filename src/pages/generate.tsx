@@ -11,7 +11,6 @@ import {
   GenerateHeadingSharing,
   GenerateHeadingStart,
   GenerateHeadingSuccess,
-  StorageUpload,
   TitleAndMetaTags,
 } from "src/components";
 import { GenerateProgressEnum } from "src/types";
@@ -47,7 +46,7 @@ const GeneratePage: NextPage = () => {
     <>
       <TitleAndMetaTags
         color="black"
-        title="The Collective | Vana"
+        title="Ingenium | Vana"
         description="Discover projects you can earn and learn from with your Vana Vault"
       />
 
@@ -65,22 +64,6 @@ const GeneratePage: NextPage = () => {
                     onClick={() =>
                       setState(GenerateProgressEnum.SHARING_IN_PROGRESS)
                     }
-                  />
-
-                  <StorageUpload
-                    minFiles={8}
-                    maxFiles={10}
-                    userEmail={emailAddress}
-                  />
-
-                  <input
-                    type="email"
-                    value={emailAddress}
-                    placeholder="Email"
-                    required
-                    onChange={(event) => {
-                      setEmailAddress(event.target.value);
-                    }}
                   />
                 </>
               )}

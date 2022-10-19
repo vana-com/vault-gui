@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { Button } from "src/components";
@@ -16,10 +17,16 @@ type Props = {
 };
 
 const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
+  const router = useRouter();
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<Array<number>>([]);
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
+
+  const isValidEmail = (email: string): boolean => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
 
   /**
    * Callback when a file is selected in the file picker
@@ -104,11 +111,12 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
 
       if (successfulUpload) {
         console.log("All files uploaded successfully");
+        setTimeout(() => router.push("/thank-you"), 500);
+      } else {
+        console.error("Unable to upload one or more files");
       }
-
-      // setTimeout(() => router.push("/"), 500);
     } catch (error: any) {
-      console.error("Unable to encrypt and upload user data", error);
+      console.error("Unable to upload user data", error);
     } finally {
       setIsDataUploading(false);
     }
@@ -200,7 +208,8 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
         disabled={
           filesToUpload.length < minFiles ||
           filesToUpload.length > maxFiles ||
-          isDataUploading
+          isDataUploading ||
+          !isValidEmail(userEmail)
         }
       >
         Upload
