@@ -63,6 +63,8 @@ export const getExhibit = async (exhibitKey: string): Promise<Exhibit> => {
 
   // Get array of booleans for files with file size > 0
   const isNonZeroSize = items.map((item: any) => Number(item.size) > 0);
+
+  const updatedAt = getMaxUpdatedTime(items);
   const exhibitName = exhibitKey.split("/").pop();
 
   // Filter out files with file size 0
@@ -75,6 +77,12 @@ export const getExhibit = async (exhibitKey: string): Promise<Exhibit> => {
 
   return {
     name: formatExhibitName(exhibitName as string),
+    updatedAt,
     images,
   };
 };
+
+const getMaxUpdatedTime = (items: any[]) =>
+  items
+    .map((i) => i.updated)
+    .reduce((a, b) => (new Date(a) > new Date(b) ? a : b));
