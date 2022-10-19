@@ -22,7 +22,7 @@ export default async (
 
   const galleryId = `gallery-${id}`;
   const decryptedUserEmail = decrypt(userEmail as string);
-  const key = `${decryptedUserEmail}/${galleryId}/${exhibitName}`;
+  const key = `${decryptedUserEmail}/${galleryId}/exhibit-${exhibitName}`;
 
   const exhibit = await getExhibit(key);
 
@@ -40,7 +40,11 @@ const formatExhibitName = (exhibitName: string) => {
   }
 
   name = name.replace("-", " ");
-  return name.charAt(0).toUpperCase() + name.slice(1);
+  const splitName = name.split(" ");
+  const titleCaseName = splitName.map(
+    (word: string) => word.charAt(0).toUpperCase() + word.slice(1),
+  );
+  return titleCaseName.join(" ");
 };
 
 const getSignedUrl = async (fileName: string) => {
