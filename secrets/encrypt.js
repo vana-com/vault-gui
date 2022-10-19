@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const crypto = require("crypto");
-const path = require("path");
-require("dotenv").config({ path: path.resolve(__dirname, "../.env.local") });
 
 /**
  * Utility to encrypt a string, to be used in local secrets store

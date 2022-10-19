@@ -11,6 +11,7 @@ import {
   GenerateHeadingSharing,
   GenerateHeadingStart,
   GenerateHeadingSuccess,
+  StorageUpload,
   TitleAndMetaTags,
 } from "src/components";
 import { GenerateProgressEnum } from "src/types";
@@ -59,11 +60,29 @@ const GeneratePage: NextPage = () => {
           <div className="bg-white px-inset py-w8">
             <div className="sticky flex flex-col gap-w6">
               {state === GenerateProgressEnum.START && (
-                <GenerateHeadingStart
-                  onClick={() =>
-                    setState(GenerateProgressEnum.SHARING_IN_PROGRESS)
-                  }
-                />
+                <>
+                  <GenerateHeadingStart
+                    onClick={() =>
+                      setState(GenerateProgressEnum.SHARING_IN_PROGRESS)
+                    }
+                  />
+
+                  <StorageUpload
+                    minFiles={8}
+                    maxFiles={10}
+                    userEmail={emailAddress}
+                  />
+
+                  <input
+                    type="email"
+                    value={emailAddress}
+                    placeholder="Email"
+                    required
+                    onChange={(event) => {
+                      setEmailAddress(event.target.value);
+                    }}
+                  />
+                </>
               )}
               {state === GenerateProgressEnum.SHARING_IN_PROGRESS && (
                 <GenerateHeadingSharing />
