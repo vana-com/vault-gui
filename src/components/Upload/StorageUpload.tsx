@@ -18,7 +18,7 @@ type Props = {
 const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(5); // Start at 5%
+  const [uploadProgress, setUploadProgress] = useState<Array<number>>([]);
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
 
   /**
@@ -71,7 +71,7 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
   };
 
   // Callback to handle upload progress
-  const handleUploadProgress = (event: any) => {
+  const handleUploadProgress = (event: any, fileIndex: number) => {
     const { loaded, total } = event;
 
     const progress =
@@ -80,20 +80,21 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
         : 15; // Default to 15% if somehow values don't exist
 
     // Default starting pos is 5% so don't jump back down to <5%
-    setUploadProgress(Math.max(progress, 5));
+    uploadProgress[fileIndex] = Math.max(progress, 5);
+    setUploadProgress(uploadProgress);
   };
 
   /**
    * Handles all image uploading to Google Cloud Storage
    */
   const uploadFiles = async () => {
-    console.log("uploading files");
     setIsDataUploading(true);
+    setUploadProgress(Array(filesToUpload.length).fill(5));
     try {
       // Upload files to object store (S3 or GCS)
       const timestamp = new Date().getTime();
-      const uploadPromises = filesToUpload.map((file) =>
-        uploadFile(file, timestamp, userEmail, handleUploadProgress),
+      const uploadPromises = filesToUpload.map((file, index) =>
+        uploadFile(file, index, timestamp, userEmail, handleUploadProgress),
       );
 
       const uploadResults = await Promise.all(uploadPromises);
@@ -138,20 +139,18 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
         <FileInput onChange={onSelectFiles} />
 
         {/* STEP 1: DROP */}
-        {!isDataUploading && filesToUpload.length === 0 && (
-          <Button
-            variant="contrast"
-            size="xl"
-            disabled={isDataUploading}
-            onClick={openFileDialog}
-          >
-            <Icon icon="carbon:upload" height="1.75em" />
-            <div>Drop images here. Upload 8-10 images of yourself.</div>
-          </Button>
-        )}
+        <Button
+          variant="contrast"
+          size="xl"
+          disabled={filesToUpload.length >= maxFiles}
+          onClick={openFileDialog}
+        >
+          <Icon icon="carbon:upload" height="1.75em" />
+          <div>Drop images here. Upload 8-10 images of yourself.</div>
+        </Button>
 
         {/* STEP 2: CONFIRM */}
-        {!isDataUploading && !!filesToUpload.length && (
+        {!!filesToUpload.length && (
           <div
             style={{
               display: "grid",
@@ -171,6 +170,11 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
                   src={URL.createObjectURL(fileToUpload)}
                 />
 
+                {/* upload progress for each file */}
+                {isDataUploading && (
+                  <StorageProgress storeProgress={uploadProgress[i]} />
+                )}
+
                 {/* Delete image button */}
                 <Button
                   aria-label="Remove file to upload"
@@ -188,9 +192,6 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
             ))}
           </div>
         )}
-
-        {/* STEP 3: UPLOAD */}
-        {isDataUploading && <StorageProgress storeProgress={uploadProgress} />}
       </div>
 
       {/* Upload button */}

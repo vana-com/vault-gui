@@ -9,6 +9,7 @@ export * from "./Markdown";
 export * from "./PageGenerate";
 export * from "./PageHome";
 export * from "./TitleAndMetaTags";
+export * from "./Upload";
 
 // SYSTEM
 export * from "./system";

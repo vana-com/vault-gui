@@ -1,7 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 type ProgressEvent = { loaded: number; total: number };
-type ProgressHandler = (progressEvent: ProgressEvent) => void;
+type ProgressHandler = (
+  progressEvent: ProgressEvent,
+  fileIndex: number,
+) => void;
 
 /**
  * Uploads a file to GCS
@@ -11,6 +14,7 @@ type ProgressHandler = (progressEvent: ProgressEvent) => void;
  */
 const uploadFile = async (
   file: File,
+  fileIndex: number,
   timestamp: number,
   userEmail: string,
   progressHandler: ProgressHandler,
@@ -40,7 +44,8 @@ const uploadFile = async (
 
     // Use axois to send the file data, as fetch has no "onUploadProgress" handler
     const config: AxiosRequestConfig = {
-      onUploadProgress: (progressEvent) => progressHandler(progressEvent),
+      onUploadProgress: (progressEvent) =>
+        progressHandler(progressEvent, fileIndex),
     };
     const upload = await axios.postForm(url, formData, config);
 
