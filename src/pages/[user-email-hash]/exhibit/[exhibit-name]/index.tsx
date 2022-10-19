@@ -98,19 +98,31 @@ const ExhbitPage: NextPage = () => {
                 className="border-solid border-2 p-2"
                 onClick={() => {
                   console.log("share this image");
+
+                  // copy link to clipboard??
                 }}
               >
                 Share this image
               </button>
-              <button
-                type="button"
-                className="border-solid border-2 p-2"
-                onClick={() => {
-                  console.log("save this image");
-                }}
+              {/* We wrap this bttn in <a> as we need it for a file download */}
+              <a
+                href={exhibit.images[viewing]}
+                download="your_sweet_ai_image.png"
+                target="_blank"
+                rel="noreferrer"
               >
-                Save this image
-              </button>
+                <button
+                  type="button"
+                  className="border-solid border-2 p-2"
+                  onClick={() => {
+                    console.log("save this image");
+
+                    // save image
+                  }}
+                >
+                  Save this image
+                </button>
+              </a>
             </div>
           </>
         </Dialog>
