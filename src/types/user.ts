@@ -3,4 +3,5 @@ export interface User {
   emailHash: string;
   exhibits: string[];
   needToGenerateImages: boolean;
+  gcsBucketUrl: string;
 }
