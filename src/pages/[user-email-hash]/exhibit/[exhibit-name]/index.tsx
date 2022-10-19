@@ -1,60 +1,34 @@
 import { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Exhibit } from "src/types";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { "user-email-hash": userEmailHash, "exhibit-name": exhibitName } =
-    context.query;
-
-  /** 
-  const res = await fetch(`/api/user-${userEmailHash}/gallery/${galleryId}/exhibit/${exhibitName}`);
-  if (res.status > 399) {
-    return {
-      notFound: true,
-    };
-  }
-  const data = await res.json();*/
-
-  return {
-    props: {
-      exhibit: {
-        name: "Test",
-        images: [
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-          "https://pbs.twimg.com/profile_images/1285655593592791040/HtwPZgej_400x400.jpg",
-        ],
-      },
-    },
-  };
-};
-
-interface ExhbitPageProps {
-  exhibit: Exhibit;
-}
-
-const ExhbitPage: NextPage<ExhbitPageProps> = ({ exhibit }) => {
+const ExhbitPage: NextPage = () => {
   const router = useRouter();
+  const { "user-email-hash": userEmailHash, "exhibit-name": exhibitName } =
+    router.query;
 
   const areImagesMine = false;
   const [showImageGalleryModal, setShowImageGalleryModal] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
 
-  // DONT MODIFY BELOW
+  const [exhibit, setExhibit] = useState<Exhibit | null>(null);
 
-  // DONT MODIFY ABOVE
+  useEffect(() => {
+    const fetchExhibit = async () => {
+      const res = await fetch(`/api/${userEmailHash}/exhibit/${exhibitName}`);
+      if (res.status < 399) {
+        const data = await res.json();
+
+        setExhibit(data);
+      }
+    };
+    fetchExhibit();
+  }, []);
+
+  if (!exhibit) {
+    return <p>Loading...</p>;
+  }
 
   if (showImageGalleryModal) {
     return (
