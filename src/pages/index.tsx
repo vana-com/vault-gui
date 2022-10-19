@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     <>
       <TitleAndMetaTags
         color="black"
-        title="The Collective | Vana"
+        title="Ingenium | Vana"
         description="Discover projects you can earn and learn from with your Vana Vault"
       />
 
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                 <br />
                 of art
               </h1>
-              <Link href="/generate" passHref>
+              <Link href="/upload" passHref>
                 <span className="text-white border border-white rounded-sm Button hover:cursor-pointer">
                   <span>Create your gallery</span>
                   <Icon icon="carbon:arrow-right" />
