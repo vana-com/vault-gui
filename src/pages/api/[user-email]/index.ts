@@ -9,15 +9,15 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { "user-email": userEmail, id } = req.query;
+  const { "user-email": userEmail } = req.query;
 
-  console.log("id:", id);
   console.log("user-email:", userEmail);
 
   const decryptedUserEmail = decrypt(userEmail as string);
+  const keyPrefix = `${decryptedUserEmail}/exhibits`;
   console.log("decryptedUserEmail:", decryptedUserEmail);
 
-  const [files] = await readGCSDirectory(decryptedUserEmail);
+  const [files] = await readGCSDirectory(keyPrefix);
 
   const fileNames = files.map((file) => file.name);
   const exhibits = getExhibitNames(fileNames);
@@ -38,18 +38,18 @@ const getExhibitNames = (files: string[]): string[] => {
 
   files.forEach((f) => {
     const splitFiles = f.split("/");
-    exhibits.push(splitFiles[1]);
+    const exhibit = splitFiles[2];
+    if (exhibit.length > 0) {
+      exhibits.push(exhibit);
+    }
   });
 
   const exhibitsSet = new Set(exhibits);
-  const exhibitsArr = Array.from(exhibitsSet);
-  return exhibitsArr.filter(
-    (name: string) => !name.startsWith("uploaded-image"),
-  );
+  return Array.from(exhibitsSet);
 };
 
 const getExhibits = async (exhibitKeys: string[]): Promise<Exhibit[]> =>
   Promise.all(exhibitKeys.map(async (key: string) => getExhibit(key)));
 
 const createExhibitKeys = (exhibits: string[], keyPrefix: string): string[] =>
-  exhibits.map((exhibit: string) => `${keyPrefix}/${exhibit}`);
+  exhibits.map((exhibit: string) => `${keyPrefix}/exhibits/${exhibit}`);
