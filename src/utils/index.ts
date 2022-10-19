@@ -4,7 +4,6 @@ export * from "./encryptAndUploadUserDataFile";
 export * from "./encryptFileChaCha20Poly1305";
 export * from "./formatModuleNameForID";
 export * from "./formatModuleNameForUI";
-export * from "./generateUserDataObjectName";
 export * from "./getAbbreviatedFileName";
 export * from "./getFileSizeString";
 export * from "./getSecret";
