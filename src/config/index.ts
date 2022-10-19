@@ -35,6 +35,8 @@ const generalConfig = {
    * Stripe
    */
   stripeAPIVersion: "2020-08-27", // DO NOT CHANGE unless you have considered the consequences
+
+  adminPassword: "barack-obama-cactus",
 };
 
 export default {
