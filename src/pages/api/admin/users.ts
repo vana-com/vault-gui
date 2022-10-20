@@ -10,26 +10,32 @@ export default async (
 ): Promise<void> => {
   const userEmails = await getUserEmails();
 
-  const userResponse = await getUsersResponse(userEmails);
+  const usersResponse = await getUsersResponse(userEmails);
 
-  console.log(JSON.stringify(userResponse, null, 2));
+  console.log(JSON.stringify(usersResponse, null, 2));
   res.setHeader("Cache-Control", "public, max-age=3600");
-  return res.status(200).json(userResponse);
+  return res.status(200).json(usersResponse);
 };
 
 const getUserEmails = async () => {
   const [files] = await readGCSDirectory();
+
   const usersFileNames = files.map((f) => f.name.split("/")[0]);
-  const info = files.map((f) => f.publicUrl());
-  console.log("info:", info);
   const usersSet = new Set(usersFileNames);
-  const users = Array.from(usersSet);
-  console.log(users);
-  return users;
+  return Array.from(usersSet);
 };
 
-const getUsersResponse = async (userEmails: string[]): Promise<User[]> =>
-  Promise.all(
+const getStorageBucketName = async (): Promise<string> => {
+  const [files] = await readGCSDirectory();
+  return files[0].bucket.id as string;
+};
+
+const formatGCSBucketUrl = (bucket: string, userEmail: string) =>
+  `https://console.cloud.google.com/storage/browser/${bucket}/${userEmail}`;
+
+const getUsersResponse = async (userEmails: string[]): Promise<User[]> => {
+  const bucket = await getStorageBucketName();
+  return Promise.all(
     userEmails.map(async (userEmail: string) => {
       const gallery = await getUserGallery(userEmail);
       return {
@@ -37,7 +43,8 @@ const getUsersResponse = async (userEmails: string[]): Promise<User[]> =>
         emailHash: gallery.userId,
         exhibitNames: gallery.exhibits.map((e: Exhibit) => e.name),
         needToGenerateImages: gallery.exhibits.length === 0,
-        gcsBucketUrl: "",
+        gcsBucketUrl: formatGCSBucketUrl(bucket, userEmail),
       };
     }),
   );
+};
