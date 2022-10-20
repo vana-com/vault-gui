@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { getUserGallery } from "src/pages/api/[user-email]/index";
+import { getUserGallery } from "src/pages/api/user/[user-email]/index";
 import { Exhibit, User } from "src/types";
 import { readGCSDirectory } from "src/utils/serverUtils";
 

@@ -1,19 +1,21 @@
-import { Test } from "mocha";
-import { NextPage, GetServerSideProps } from "next";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
 import { Gallery } from "src/types";
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
 
-  const { "user-email-hash": userEmailHash } = router.query;
+  const { userEmailHash } = router.query;
 
   const [gallery, setGallery] = useState<Gallery | null>(null);
 
   useEffect(() => {
     const fetchGallery = async () => {
-      const res = await fetch(`/api/${userEmailHash}/`);
+      const res = await fetch(`/api/user/${userEmailHash}/`);
       if (res.status < 399) {
         const data = await res.json();
 
@@ -21,7 +23,7 @@ const GalleryPage: NextPage = () => {
       }
     };
     fetchGallery();
-  }, []);
+  }, [router.asPath]);
 
   return (
     <>
@@ -34,9 +36,10 @@ const GalleryPage: NextPage = () => {
           {gallery.exhibits.map((exhibit) => (
             <figure
               className="bg-slate-100 rounded-xl p-8 m-2 dark:bg-slate-800"
+              key={exhibit.name}
               onClick={() =>
                 router.push(
-                  `/${userEmailHash}/exhibit/${exhibit.name.toLowerCase()}`,
+                  `/user/${userEmailHash}/exhibit/${exhibit.name.toLowerCase()}`,
                 )
               }
             >
