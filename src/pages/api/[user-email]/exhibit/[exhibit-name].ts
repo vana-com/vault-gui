@@ -18,11 +18,17 @@ export default async (
   const decryptedUserEmail = decrypt(userEmail as string);
   const key = `${decryptedUserEmail}/exhibits/${exhibitName}`;
 
-  const exhibit = await getExhibit(key);
+  try {
+    const exhibit = await getExhibit(key);
 
-  console.log(JSON.stringify(exhibit, null, 2));
-  res.setHeader("Cache-Control", "public, max-age=3600");
-  return res.status(200).json(exhibit);
+    console.log(JSON.stringify(exhibit, null, 2));
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    return res.status(200).json(exhibit);
+  } catch (error) {
+    console.error(error);
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    return res.status(404).json({ message: "404 Not Found" });
+  }
 };
 
 const formatExhibitName = (exhibitName: string) => {
@@ -58,6 +64,10 @@ const getSignedUrl = async (fileName: string) => {
 
 export const getExhibit = async (exhibitKey: string): Promise<Exhibit> => {
   const [files, metadata] = await readGCSDirectory(exhibitKey);
+
+  if (files.length === 0) {
+    throw new Error("Exhibit not found or has no images");
+  }
 
   const { items } = metadata;
 
