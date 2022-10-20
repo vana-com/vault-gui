@@ -1,9 +1,7 @@
-import { Exhibit } from "./exhibit";
-
 export interface User {
   email: string;
   emailHash: string;
-  exhibits: Exhibit[];
+  exhibitNames: string[];
   needToGenerateImages: boolean;
   gcsBucketUrl: string;
 }
