@@ -13,12 +13,18 @@ export default async (
 
   console.log("encrypted-email:", encryptedUserEmail);
 
-  const userEmail = decrypt(encryptedUserEmail as string);
-  const response = await getUserGallery(userEmail);
+  try {
+    const userEmail = decrypt(encryptedUserEmail as string);
+    const response = await getUserGallery(userEmail);
 
-  console.log(JSON.stringify(response, null, 2));
-  res.setHeader("Cache-Control", "public, max-age=3600");
-  return res.status(200).json(response);
+    console.log(JSON.stringify(response, null, 2));
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    return res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    return res.status(404).json({ message: "404 Not Found" });
+  }
 };
 
 const getExhibitNames = (files: string[]): string[] => {
