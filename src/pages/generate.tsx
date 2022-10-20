@@ -46,7 +46,7 @@ const GeneratePage: NextPage = () => {
     <>
       <TitleAndMetaTags
         color="black"
-        title="Ingenium | Vana"
+        title="Portrait | Vana"
         description="Discover projects you can earn and learn from with your Vana Vault"
       />
 

@@ -10,7 +10,7 @@ const FooterBadge = ({ screenHeight }: { screenHeight: number }) => (
       <div className="inline-flex px-5 py-1.5 bg-white  rounded-md">
         <div className="flex flex-col gap-1">
           <div className="font-display text-2xl font-bold text-center tracking-[-0.01em]">
-            <span className="-ml-[0.17em]">Ingenium</span>
+            <span className="-ml-[0.17em]">Portrait</span>
           </div>
           <div className="flex justify-center gap-2 font-serif text-sm tracking-[0.02em]">
             <Link href="/terms-of-service" passHref>

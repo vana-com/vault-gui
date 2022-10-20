@@ -7,9 +7,10 @@
 3. Setup Doppler using the
    [doppler setup document](https://vana.slab.com/posts/doppler-setup-71xn4xeu)
 4. Run `yarn install`
-5. Run the reset script to setup all local Docker infra: `./scripts/reset-ingenium-gui-completely-including-data`
-   OR run the container with `./scripts/dc-start-ingenium-gui`
-7. Visit localhost:5000
+5. Run the reset script to setup all local Docker infra:
+   `./scripts/reset-ingenium-gui-completely-including-data` OR run the container
+   with `./scripts/dc-start-ingenium-gui`
+6. Visit localhost:5000
 
 ## Linting
 
@@ -73,15 +74,15 @@ try is clearing all the cached data.
 
 ## Development
 
-[development-ingenium.vana.com](http://development-ingenium.vana.com/)
+[development-portrait.vana.com](http://development-portrait.vana.com/)
 
 ## Staging
 
-[staging-ingenium.vana.com](http://staging-ingenium.vana.com/)
+[staging-portrait.vana.com](http://staging-portrait.vana.com/)
 
 ## Production
 
-[ingenium.vana.com](http://ingenium.vana.com/)
+[portrait.vana.com](http://portrait.vana.com/)
 
 # 🕸 Web Framework
 
