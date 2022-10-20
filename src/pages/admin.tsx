@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
+
 import config from "src/config";
 import { User } from "src/types";
 
@@ -47,20 +48,20 @@ const AdminPage: NextPage = () => {
     <div>
       <p>Users who need to generate images</p>
       {userWithoutGeneratedImages.map((user) => (
-        <div>
+        <div key={user.emailHash}>
           <div>{user.email}</div>
           <div>{user.emailHash}</div>
-          <div>{user.exhibits.length}</div>
+          <div>{user.exhibitNames.length}</div>
           <div>{user.gcsBucketUrl}</div>
           <div>{user.needToGenerateImages}</div>
         </div>
       ))}
       <p>Users who already have generated images</p>
       {userWithGeneratedImages.map((user) => (
-        <div>
+        <div key={user.emailHash}>
           <div>{user.email}</div>
           <div>{user.emailHash}</div>
-          <div>{user.exhibits.length}</div>
+          <div>{user.exhibitNames.length}</div>
           <div>{user.gcsBucketUrl}</div>
           <div>{user.needToGenerateImages}</div>
         </div>
