@@ -1,7 +1,7 @@
 export interface User {
   email: string;
   emailHash: string;
-  exhibits: string[];
+  exhibitNames: string[];
   needToGenerateImages: boolean;
   gcsBucketUrl: string;
 }

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { Exhibit } from "src/types/exhibit";
-import { decrypt, readGCSDirectory } from "src/utils/serverUtils";
+import { decrypt, encrypt, readGCSDirectory } from "src/utils/serverUtils";
 
 import { getExhibit } from "./exhibit/[exhibit-name]";
 
@@ -9,25 +9,12 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { "user-email": userEmail } = req.query;
+  const { "user-email": encryptedUserEmail } = req.query;
 
-  console.log("user-email:", userEmail);
+  console.log("encrypted-email:", encryptedUserEmail);
 
-  const decryptedUserEmail = decrypt(userEmail as string);
-  const keyPrefix = `${decryptedUserEmail}/exhibits`;
-  console.log("decryptedUserEmail:", decryptedUserEmail);
-
-  const [files] = await readGCSDirectory(keyPrefix);
-
-  const fileNames = files.map((file) => file.name);
-  const exhibits = getExhibitNames(fileNames);
-  const exhibitKeys = createExhibitKeys(exhibits, decryptedUserEmail);
-  const exhibitArr = await getExhibits(exhibitKeys);
-
-  const response = {
-    id: userEmail,
-    exhibits: sortExhibitsUpdatedDesc(exhibitArr),
-  };
+  const userEmail = decrypt(encryptedUserEmail as string);
+  const response = await getUserGallery(userEmail);
 
   console.log(JSON.stringify(response, null, 2));
   res.setHeader("Cache-Control", "public, max-age=3600");
@@ -60,3 +47,20 @@ const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
     (a: Exhibit, b: Exhibit) =>
       Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt)),
   );
+
+export const getUserGallery = async (userEmail: string) => {
+  const keyPrefix = `${userEmail}/exhibits`;
+  console.log("userEmail:", userEmail);
+
+  const [files] = await readGCSDirectory(keyPrefix);
+
+  const fileNames = files.map((file) => file.name);
+  const exhibits = getExhibitNames(fileNames);
+  const exhibitKeys = createExhibitKeys(exhibits, userEmail);
+  const exhibitArr = await getExhibits(exhibitKeys);
+
+  return {
+    userId: encrypt(userEmail),
+    exhibits: sortExhibitsUpdatedDesc(exhibitArr),
+  };
+};

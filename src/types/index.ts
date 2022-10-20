@@ -1,4 +1,5 @@
 export * from "./exhibit";
+export * from "./exhibit";
 export * from "./gallery";
 export * from "./generate";
 export * from "./radix";
