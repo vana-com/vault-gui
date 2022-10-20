@@ -14,7 +14,7 @@ export default async (
   console.log("encrypted-email:", encryptedUserEmail);
 
   const userEmail = decrypt(encryptedUserEmail as string);
-  const response = await getUserExhibits(userEmail);
+  const response = await getUserGallery(userEmail);
 
   console.log(JSON.stringify(response, null, 2));
   res.setHeader("Cache-Control", "public, max-age=3600");
@@ -48,7 +48,7 @@ const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
       Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt)),
   );
 
-export const getUserExhibits = async (userEmail: string) => {
+export const getUserGallery = async (userEmail: string) => {
   const keyPrefix = `${userEmail}/exhibits`;
   console.log("userEmail:", userEmail);
 
@@ -60,7 +60,7 @@ export const getUserExhibits = async (userEmail: string) => {
   const exhibitArr = await getExhibits(exhibitKeys);
 
   return {
-    id: encrypt(userEmail),
+    userId: encrypt(userEmail),
     exhibits: sortExhibitsUpdatedDesc(exhibitArr),
   };
 };
