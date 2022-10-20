@@ -15,11 +15,7 @@ const GeneratePage: NextPage = () => {
 
   return (
     <>
-      <TitleAndMetaTags
-        color="black"
-        title="Thank you | Vana"
-        description="Discover projects you can earn and learn from with your Vana Vault"
-      />
+      <TitleAndMetaTags color="black" title="Thank you | Vana" />
 
       <div
         ref={ref}

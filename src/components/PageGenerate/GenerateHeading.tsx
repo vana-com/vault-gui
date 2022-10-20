@@ -49,14 +49,13 @@ const GenerateHeadingSuccess = ({
 }) => (
   <>
     <h1 className="font-display text-[4.5vh] font-light leading-[1.1] tracking-[-0.01em]">
-      Your portrait is
-      <br />
-      with our guild
+      Your masterpiece is being crafted
     </h1>
-    <p>We will email you when it is ready</p>
+    <p>We will email you when it is ready in a couple of hours</p>
     {children}
     <p className="font-serif text-lg font-light pt-w12 text-stone-400">
-      In the meantime…
+      In the meantime, visit the galleries of the creative team behind this
+      project
     </p>
   </>
 );
