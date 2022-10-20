@@ -51,6 +51,7 @@ const AdminPage: NextPage = () => {
           <div>{user.email}</div>
           <div>{user.emailHash}</div>
           <div>{user.exhibits.length}</div>
+          <div>{user.gcsBucketUrl}</div>
           <div>{user.needToGenerateImages}</div>
         </div>
       ))}
@@ -60,6 +61,7 @@ const AdminPage: NextPage = () => {
           <div>{user.email}</div>
           <div>{user.emailHash}</div>
           <div>{user.exhibits.length}</div>
+          <div>{user.gcsBucketUrl}</div>
           <div>{user.needToGenerateImages}</div>
         </div>
       ))}
