@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                 <br />
                 of art
               </h1>
-              <Link href="/upload" passHref>
+              <Link href="/create" passHref>
                 <span className="text-white border border-white rounded-sm Button hover:cursor-pointer">
                   <span>Create your gallery</span>
                   <Icon icon="carbon:arrow-right" />

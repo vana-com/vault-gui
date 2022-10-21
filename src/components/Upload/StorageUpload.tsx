@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "src/components";
 import config from "src/config";
@@ -111,7 +111,7 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
 
       if (successfulUpload) {
         console.log("All files uploaded successfully");
-        setTimeout(() => router.push("/thank-you"), 500);
+        setTimeout(() => router.push("/generating"), 500);
       } else {
         console.error("Unable to upload one or more files");
       }
@@ -126,6 +126,55 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
   useEffect(() => {
     // empty on purpose, just tracking uploadProgress
   }, [uploadProgress]);
+
+  // useMemo prevents image flickering on state change
+  const imagesPreview = useMemo(() => (
+      <div
+        style={{
+          display: "grid",
+          maxWidth: "800px",
+          margin: "0 auto",
+          gap: "1rem",
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+        }}
+      >
+        {filesToUpload?.map((fileToUpload, i) => (
+          <div key={fileToUpload.name} style={{ position: "relative" }}>
+            {/* Image preview */}
+            <Image
+              objectFit="cover"
+              width="150px"
+              height="150px"
+              src={URL.createObjectURL(fileToUpload)}
+            />
+
+            {/* upload progress for each file */}
+            {isDataUploading && (
+              <StorageProgress storeProgress={uploadProgress[i]} />
+            )}
+
+            {/* Delete image button */}
+            <Button
+              style={{
+                position: "absolute",
+                bottom: "12px",
+                right: "6px",
+              }}
+              aria-label="Remove file to upload"
+              variant="icon"
+              type="reset"
+              onClick={() => {
+                const copyFilesToUpload = [...filesToUpload];
+                copyFilesToUpload.splice(i, 1);
+                setFilesToUpload(copyFilesToUpload);
+              }}
+            >
+              <Icon icon="carbon:close-filled" />
+            </Button>
+          </div>
+        ))}
+      </div>
+    ), [filesToUpload]);
 
   return (
     <>
@@ -157,53 +206,7 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
         </Button>
 
         {/* STEP 2: CONFIRM */}
-        {!!filesToUpload.length && (
-          <div
-            style={{
-              display: "grid",
-              maxWidth: "800px",
-              margin: "0 auto",
-              gap: "1rem",
-              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-            }}
-          >
-            {filesToUpload.map((fileToUpload, i) => (
-              <div key={fileToUpload.name} style={{ position: "relative" }}>
-                {/* Image preview */}
-                <Image
-                  objectFit="cover"
-                  width="150px"
-                  height="150px"
-                  src={URL.createObjectURL(fileToUpload)}
-                />
-
-                {/* upload progress for each file */}
-                {isDataUploading && (
-                  <StorageProgress storeProgress={uploadProgress[i]} />
-                )}
-
-                {/* Delete image button */}
-                <Button
-                  style={{
-                    position: "absolute",
-                    bottom: "12px",
-                    right: "6px",
-                  }}
-                  aria-label="Remove file to upload"
-                  variant="icon"
-                  type="reset"
-                  onClick={() => {
-                    const copyFilesToUpload = [...filesToUpload];
-                    copyFilesToUpload.splice(i, 1);
-                    setFilesToUpload(copyFilesToUpload);
-                  }}
-                >
-                  <Icon icon="carbon:close-filled" />
-                </Button>
-              </div>
-            ))}
-          </div>
-        )}
+        {!!filesToUpload.length && imagesPreview}
       </div>
 
       {/* Upload button */}

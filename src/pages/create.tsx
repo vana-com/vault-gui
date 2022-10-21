@@ -6,11 +6,13 @@ import useMeasure from "react-use-measure";
 // import { useInView } from "react-intersection-observer";
 import { FooterBadge, TitleAndMetaTags } from "src/components";
 import { StorageUpload } from "src/components/Upload";
+import { useDeviceDetect } from "src/hooks";
 
 const UploadPage: NextPage = () => {
   const [ref, bounds] = useMeasure();
   const screenHeight = bounds.height;
   const [emailAddress, setEmailAddress] = useState<string>("");
+  const { isMobileUserAgent: isMobile } = useDeviceDetect();
 
   return (
     <>
@@ -22,10 +24,10 @@ const UploadPage: NextPage = () => {
 
       <div
         ref={ref}
-        className={clsx("relative min-h-screen bg-white")}
+        className={clsx("flex min-h-screen bg-white place-content-center")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="py-[30vh]">
+        <div className="py-[20vh] max-w-xl">
           <div className="bg-white px-inset py-w8">
             <div className="sticky flex flex-col gap-w6">
               {/* Instructions */}
@@ -36,6 +38,17 @@ const UploadPage: NextPage = () => {
                 To create your gallery, we need your 8-10 portraits of you. Take
                 selfies from different angles if you need more portraits
               </p>
+              {(isMobile || true) && (
+                <button
+                  type="button"
+                  className="border-2 p-2 self-center"
+                  onClick={() =>
+                    window.alert("TODO: Implement opening camera on mobile")
+                  }
+                >
+                  Take Selfies
+                </button>
+              )}
 
               {/* Email input */}
               <input
@@ -47,7 +60,7 @@ const UploadPage: NextPage = () => {
                   setEmailAddress(event.target.value);
                 }}
                 className={clsx(
-                  "w-full px-4 h-[40px] text-sm inline-flex  shadow-sm  placeholder-stone-400",
+                  "w-full px-4 h-[40px] text-sm inline-flex  shadow-sm  placeholder-stone-400 border-2 rounded-lg",
                   // disabled
                   "disabled:bg-stone-50 disabled:text-stone-500 disabled:border-stone-200 disabled:shadow-none",
                   // focus
