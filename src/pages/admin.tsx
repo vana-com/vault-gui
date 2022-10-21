@@ -45,27 +45,59 @@ const AdminPage: NextPage = () => {
   );
 
   return (
-    <div>
-      <p>Users who need to generate images</p>
-      {userWithoutGeneratedImages.map((user) => (
-        <div key={user.emailHash}>
-          <div>{user.email}</div>
-          <div>{user.emailHash}</div>
-          <div>{user.exhibitNames.length}</div>
-          <div>{user.gcsBucketUrl}</div>
-          <div>{user.needToGenerateImages}</div>
+    <div className="ml-10 mt-10">
+      <div className="max-w-2xl">
+        <h2 className="text-lg font-bold mb-4">
+          Users who need to generate images
+        </h2>
+        <table className="table-auto">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Email Hash</th>
+              <th>Num Exhibits</th>
+              <th>GCS URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userWithoutGeneratedImages.map((user) => (
+              <tr key={user.emailHash}>
+                <td>{user.email}</td>
+                <td>{user.emailHash}</td>
+                <td>{user.exhibitNames.length}</td>
+                <td>{user.gcsBucketUrl}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div className="max-w-2xl mt-20">
+          <h2 className="text-lg font-bold mb-4">
+            Users who need to generate images
+          </h2>
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Email Hash</th>
+                <th>Num Exhibits</th>
+                <th>GCS URL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userWithGeneratedImages.map((user) => (
+                <tr key={user.emailHash}>
+                  <td>{user.email}</td>
+                  <td>{user.emailHash}</td>
+                  <td>{user.exhibitNames.length}</td>
+                  <td>{user.gcsBucketUrl}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      ))}
-      <p>Users who already have generated images</p>
-      {userWithGeneratedImages.map((user) => (
-        <div key={user.emailHash}>
-          <div>{user.email}</div>
-          <div>{user.emailHash}</div>
-          <div>{user.exhibitNames.length}</div>
-          <div>{user.gcsBucketUrl}</div>
-          <div>{user.needToGenerateImages}</div>
-        </div>
-      ))}
+      </div>
     </div>
   );
 };
