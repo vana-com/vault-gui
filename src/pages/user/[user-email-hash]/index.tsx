@@ -35,28 +35,41 @@ const GalleryPage: NextPage = () => {
       {!gallery ? (
         <p>Loading...</p>
       ) : (
-        <div className="columns-2">
-          {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
-          {gallery.exhibits.map((exhibit) => (
-            <figure
-              className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800"
-              key={exhibit.name}
-              onClick={() =>
-                router.push(
-                  `/user/${userEmailHash}/exhibit/${nameToPathName(
-                    exhibit.name,
-                  )}`,
-                )
-              }
-            >
-              <img
-                className="w-full"
-                src={exhibit.images[0]}
-                alt={exhibit.name}
-              />
-              <p>{exhibit.name}</p>
-            </figure>
-          ))}
+        <div>
+          <div className="columns-2">
+            {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
+            {gallery.exhibits.map((exhibit) => (
+              <figure
+                className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800 cursor-pointer"
+                key={exhibit.name}
+                onClick={() =>
+                  router.push(
+                    `/user/${userEmailHash}/exhibit/${nameToPathName(
+                      exhibit.name,
+                    )}`,
+                  )
+                }
+              >
+                <img
+                  className="w-full"
+                  src={exhibit.images[0]}
+                  alt={exhibit.name}
+                />
+                <p>{exhibit.name}</p>
+              </figure>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="border-solid border-2 p-2 mt-4"
+            onClick={() => {
+              console.log("share this gallery");
+
+              // copy link to clipboard??
+            }}
+          >
+            Share Gallery
+          </button>
         </div>
       )}
     </>

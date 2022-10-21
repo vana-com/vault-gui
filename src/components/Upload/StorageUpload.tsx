@@ -128,7 +128,8 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
   }, [uploadProgress]);
 
   // useMemo prevents image flickering on state change
-  const imagesPreview = useMemo(() => (
+  const imagesPreview = useMemo(
+    () => (
       <div
         style={{
           display: "grid",
@@ -174,7 +175,9 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
           </div>
         ))}
       </div>
-    ), [filesToUpload]);
+    ),
+    [filesToUpload, uploadProgress],
+  );
 
   return (
     <>

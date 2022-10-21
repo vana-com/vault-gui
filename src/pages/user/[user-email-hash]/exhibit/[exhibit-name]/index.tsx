@@ -73,7 +73,7 @@ const ExhbitPage: NextPage = () => {
               // copy link to clipboard??
             }}
           >
-            Share this image
+            Share Image
           </button>
           {/* We wrap this bttn in <a> as we need it for a file download */}
           {/* <a
@@ -84,14 +84,14 @@ const ExhbitPage: NextPage = () => {
           > */}
           <button
             type="button"
-            className="border-solid border-2 p-2"
+            className="border-solid border-2 p-2 ml-8"
             onClick={() => {
               console.log("save this image");
 
               downloadImage(exhibit.images[viewing], "your_sweet_ai_image.png");
             }}
           >
-            Save this image
+            Download
           </button>
           {/* </a> */}
         </div>
@@ -107,20 +107,14 @@ const ExhbitPage: NextPage = () => {
         {exhibit.images.map((imageUrl, i) => (
           <figure
             key={imageUrl}
-            className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800"
+            className="bg-slate-100 rounded-xl p-2 m-2 cursor-pointer"
             onClick={() => {
               console.log("clickyy");
               setShowModal(true);
               setViewing(i);
             }}
           >
-            <Image
-              className="w-full"
-              src={imageUrl}
-              alt={exhibit.name}
-              width={250}
-              height={250}
-            />
+            <Image src={imageUrl} alt={exhibit.name} width={250} height={250} />
           </figure>
         ))}
       </div>
@@ -132,17 +126,16 @@ const ExhbitPage: NextPage = () => {
             console.log("Shared");
           }}
         >
-          Share this gallery
+          Share {exhibit.name} Images
         </button>
         <button
           type="button"
           className="border-solid border-2 p-2"
           onClick={() => {
-            console.log("Create one like this");
-            // router.
+            router.push("/");
           }}
         >
-          Create one like this
+          Create a new gallery
         </button>
       </div>
     </>
