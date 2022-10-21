@@ -4,7 +4,7 @@ import { useState } from "react";
 import useMeasure from "react-use-measure";
 
 // import { useInView } from "react-intersection-observer";
-import { FooterBadge, TitleAndMetaTags } from "src/components";
+import { TitleAndMetaTags } from "src/components";
 import { StorageUpload } from "src/components/Upload";
 import { useDeviceDetect } from "src/hooks";
 
@@ -27,7 +27,7 @@ const UploadPage: NextPage = () => {
         className={clsx("flex min-h-screen bg-white place-content-center")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="py-[20vh] max-w-xl">
+        <div className="pt-[20vh] mb-20 max-w-xl">
           <div className="bg-white px-inset py-w8">
             <div className="sticky flex flex-col gap-w6">
               {/* Instructions */}
@@ -78,9 +78,6 @@ const UploadPage: NextPage = () => {
             </div>
           </div>
         </div>
-
-        {/* FOOTER LOGO */}
-        <FooterBadge screenHeight={screenHeight} />
       </div>
     </>
   );

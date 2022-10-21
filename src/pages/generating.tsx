@@ -21,33 +21,39 @@ const GeneratePage: NextPage = () => {
 
   useEffect(() => {
     const fetchGallery = async () => {
-      const vanaTeamEmailHashes = [
-        config.kahtafEmailHash,
-        config.annaEmailHash,
-        config.artEmailHash,
-      ];
+      if (!galleries) {
+        const vanaTeamEmailHashes = [
+          config.kahtafEmailHash,
+          config.annaEmailHash,
+          config.artEmailHash,
+        ];
 
-      const galleryPromises = vanaTeamEmailHashes.map((emailHash) =>
-        fetch(`/api/user/${emailHash}`),
-      );
+        const galleryPromises = vanaTeamEmailHashes.map((emailHash) =>
+          fetch(`/api/user/${emailHash}`),
+        );
 
-      const responses = await Promise.all(galleryPromises);
+        const responses = await Promise.all(galleryPromises);
 
-      const galleriesData = [];
+        const galleriesData = [];
 
-      for (let i = 0; i < responses.length; i++) {
-        const res = responses[i];
-        if (res.status < 399) {
-          // eslint-disable-next-line no-await-in-loop
-          const data = await res.json();
-          galleriesData.push(data);
+        for (let i = 0; i < responses.length; i++) {
+          const res = responses[i];
+          console.log("res.stat", res.status);
+
+          if (res.status < 399) {
+            // eslint-disable-next-line no-await-in-loop
+            const data = await res.json();
+            galleriesData.push(data);
+          }
         }
-      }
 
-      setGalleries(galleriesData);
+        setGalleries(galleriesData);
+      }
     };
     fetchGallery();
-  }, []);
+  }, [router.asPath]);
+
+  console.log("galleries", galleries);
 
   if (!galleries) {
     return <p>Loading...</p>;

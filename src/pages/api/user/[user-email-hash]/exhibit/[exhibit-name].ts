@@ -39,12 +39,13 @@ const formatExhibitName = (exhibitName: string) => {
   } else {
     name = exhibitName;
   }
-
-  name = name.replace("-", " ");
+  name = name.replace(/-/g, " ");
   const splitName = name.split(" ");
   const titleCaseName = splitName.map(
     (word: string) => word.charAt(0).toUpperCase() + word.slice(1),
   );
+
+  console.log("titleCaseName", titleCaseName);
   return titleCaseName.join(" ");
 };
 

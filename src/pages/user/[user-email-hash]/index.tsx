@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { Gallery } from "src/types";
+import { nameToPathName } from "src/utils";
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
@@ -26,6 +27,8 @@ const GalleryPage: NextPage = () => {
     fetchGallery();
   }, [router.asPath]);
 
+  console.log("gallery", gallery);
+
   return (
     <>
       <h1 className="m-8">Your Masterpiece</h1>
@@ -40,7 +43,9 @@ const GalleryPage: NextPage = () => {
               key={exhibit.name}
               onClick={() =>
                 router.push(
-                  `/user/${userEmailHash}/exhibit/${exhibit.name.toLowerCase()}`,
+                  `/user/${userEmailHash}/exhibit/${nameToPathName(
+                    exhibit.name,
+                  )}`,
                 )
               }
             >

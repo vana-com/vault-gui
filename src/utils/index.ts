@@ -14,6 +14,7 @@ export * from "./identity/getIdTokenPayload";
 export * from "./identity/getJwtPayload";
 export * from "./identity/setWeb3AuthModalHeading";
 export * from "./localStorage";
+export * from "./nameToPathName";
 export * from "./openInNewTab";
 export * from "./setLoginPath";
 export * from "./sortByCreatedAt";
