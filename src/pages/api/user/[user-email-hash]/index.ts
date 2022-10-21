@@ -9,20 +9,18 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { "user-email": encryptedUserEmail } = req.query;
-
-  console.log("encrypted-email:", encryptedUserEmail);
+  const { "user-email-hash": userEmailHash } = req.query;
 
   try {
-    const userEmail = decrypt(encryptedUserEmail as string);
+    const userEmail = decrypt(userEmailHash as string);
     const response = await getUserGallery(userEmail);
 
     console.log(JSON.stringify(response, null, 2));
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "public, max-age=600");
     return res.status(200).json(response);
   } catch (error) {
     console.error(error);
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "public, max-age=600");
     return res.status(404).json({ message: "404 Not Found" });
   }
 };
@@ -66,7 +64,7 @@ export const getUserGallery = async (userEmail: string) => {
   const exhibitArr = await getExhibits(exhibitKeys);
 
   return {
-    userId: encrypt(userEmail),
+    userHash: encrypt(userEmail),
     exhibits: sortExhibitsUpdatedDesc(exhibitArr),
   };
 };

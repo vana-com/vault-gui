@@ -9,13 +9,14 @@ import { Gallery } from "src/types";
 const GalleryPage: NextPage = () => {
   const router = useRouter();
 
-  const { userEmailHash } = router.query;
+  const { "user-email-hash": userEmailHash } = router.query;
 
   const [gallery, setGallery] = useState<Gallery | null>(null);
 
   useEffect(() => {
     const fetchGallery = async () => {
       const res = await fetch(`/api/user/${userEmailHash}/`);
+      console.log("res.status", res.status);
       if (res.status < 399) {
         const data = await res.json();
 

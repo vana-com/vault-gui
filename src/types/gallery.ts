@@ -1,7 +1,7 @@
 import { Exhibit } from "./exhibit";
 
 interface Gallery {
-  id: string;
+  userHash: string;
   exhibits: Exhibit[];
 }
 

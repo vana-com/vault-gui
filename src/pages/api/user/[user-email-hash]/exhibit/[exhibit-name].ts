@@ -10,23 +10,24 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { "user-email": userEmail, "exhibit-name": exhibitName } = req.query;
+  const { "user-email-hash": userEmailHash, "exhibit-name": exhibitName } =
+    req.query;
 
-  console.log("user-email:", userEmail);
+  console.log("user-email:", userEmailHash);
   console.log("exhibit:", exhibitName);
 
-  const decryptedUserEmail = decrypt(userEmail as string);
+  const decryptedUserEmail = decrypt(userEmailHash as string);
   const key = `${decryptedUserEmail}/exhibits/${exhibitName}`;
 
   try {
     const exhibit = await getExhibit(key);
 
     console.log(JSON.stringify(exhibit, null, 2));
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "public, max-age=600");
     return res.status(200).json(exhibit);
   } catch (error) {
     console.error(error);
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "public, max-age=600");
     return res.status(404).json({ message: "404 Not Found" });
   }
 };

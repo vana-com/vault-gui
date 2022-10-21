@@ -37,6 +37,16 @@ const generalConfig = {
   stripeAPIVersion: "2020-08-27", // DO NOT CHANGE unless you have considered the consequences
 
   adminPassword: "barack-obama-cactus",
+
+  // Email: kahtaf@generating-page.com
+  kahtafEmailHash:
+    "314e2646e4da5f61774e4007d385232e2c5eb46f706a53f90f323c1403e32fe1",
+  // Email: anna@generating-page.com
+  annaEmailHash:
+    "823052d590e9672111d0b501a09d1d8cee75a59562a9628198e2816a07ec745e",
+  // Email: art@generating-page.com
+  artEmailHash:
+    "b5a97e6fc2e860ef7bfd7628491279e4b4dd19d100a8ce24a967303141c4b68a",
 };
 
 export default {

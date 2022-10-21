@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { getUserGallery } from "src/pages/api/user/[user-email]/index";
+import { getUserGallery } from "src/pages/api/user/[user-email-hash]/index";
 import { Exhibit, User } from "src/types";
 import { readGCSDirectory } from "src/utils/serverUtils";
 
@@ -40,7 +40,7 @@ const getUsersResponse = async (userEmails: string[]): Promise<User[]> => {
       const gallery = await getUserGallery(userEmail);
       return {
         email: userEmail,
-        emailHash: gallery.userId,
+        emailHash: gallery.userHash,
         exhibitNames: gallery.exhibits.map((e: Exhibit) => e.name),
         needToGenerateImages: gallery.exhibits.length === 0,
         gcsBucketUrl: formatGCSBucketUrl(bucket, userEmail),

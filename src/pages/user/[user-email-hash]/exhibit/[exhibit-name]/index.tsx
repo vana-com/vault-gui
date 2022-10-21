@@ -9,7 +9,11 @@ import { Exhibit } from "src/types";
 
 const ExhbitPage: NextPage = () => {
   const router = useRouter();
-  const { userEmailHash, exhibitName, view: viewQuery } = router.query;
+  const {
+    "user-email-hash": userEmailHash,
+    "exhibit-name": exhibitName,
+    view: viewQuery,
+  } = router.query;
 
   // If the view query is set, directly set that as the view & open the modal
   const [showModal, setShowModal] = useState<boolean>(
