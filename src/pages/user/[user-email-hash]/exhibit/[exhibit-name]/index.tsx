@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { NextPage } from "next";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -62,7 +61,7 @@ const ExhbitPage: NextPage = () => {
     return (
       <div>
         <p className="text-white">beep boop -- im a dialog </p>
-        <Image
+        <img
           className="w-full"
           src={exhibit.images[viewing ?? 0]}
           alt={exhibit.name}
@@ -125,7 +124,7 @@ const ExhbitPage: NextPage = () => {
               setViewing(i);
             }}
           >
-            <Image src={imageUrl} alt={exhibit.name} width={250} height={250} />
+            <img src={imageUrl} alt={exhibit.name} width={250} height={250} />
           </figure>
         ))}
       </div>
