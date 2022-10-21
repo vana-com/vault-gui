@@ -85,7 +85,7 @@ const GeneratePage: NextPage = () => {
           {galleries.map((gallery) => (
             <button
               type="button"
-              className="bg-slate-100 rounded-xl p-8 m-2 dark:bg-slate-800"
+              className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800 max-w-md"
               key={gallery.userHash}
               onClick={() => router.push(`/user/${gallery.userHash}/`)}
             >

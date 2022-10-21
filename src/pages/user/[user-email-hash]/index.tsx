@@ -39,7 +39,7 @@ const GalleryPage: NextPage = () => {
           {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
           {gallery.exhibits.map((exhibit) => (
             <figure
-              className="bg-slate-100 rounded-xl p-8 m-2 dark:bg-slate-800"
+              className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800"
               key={exhibit.name}
               onClick={() =>
                 router.push(

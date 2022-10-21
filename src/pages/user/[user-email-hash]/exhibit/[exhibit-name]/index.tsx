@@ -107,7 +107,7 @@ const ExhbitPage: NextPage = () => {
         {exhibit.images.map((imageUrl, i) => (
           <figure
             key={imageUrl}
-            className="bg-slate-100 rounded-xl p-4 m-1 dark:bg-slate-800"
+            className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800"
             onClick={() => {
               console.log("clickyy");
               setShowModal(true);
