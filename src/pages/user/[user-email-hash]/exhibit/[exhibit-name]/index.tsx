@@ -134,6 +134,9 @@ const ExhbitPage: NextPage = () => {
           className="border-solid border-2 p-2"
           onClick={() => {
             console.log("Shared");
+
+            const path = `${config.appBaseUrl}/user/${userEmailHash}/exhibit/${exhibitName}`;
+            copyToClipboard(path);
           }}
         >
           Share {exhibit.name} Images
