@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import config from "src/config";
 import { Gallery } from "src/types";
-import { nameToPathName } from "src/utils";
+import { copyToClipboard, nameToPathName } from "src/utils";
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
@@ -50,10 +52,12 @@ const GalleryPage: NextPage = () => {
                   )
                 }
               >
-                <img
+                <Image
                   className="w-full"
                   src={exhibit.images[0]}
                   alt={exhibit.name}
+                  height={512}
+                  width={512}
                 />
                 <p>{exhibit.name}</p>
               </figure>
@@ -65,7 +69,8 @@ const GalleryPage: NextPage = () => {
             onClick={() => {
               console.log("share this gallery");
 
-              // copy link to clipboard??
+              const path = `${config.appBaseUrl}/user/${userEmailHash}`;
+              copyToClipboard(path);
             }}
           >
             Share Gallery

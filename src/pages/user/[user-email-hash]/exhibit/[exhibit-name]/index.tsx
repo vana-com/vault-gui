@@ -5,7 +5,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import config from "src/config";
 import { Exhibit } from "src/types";
+import { copyToClipboard } from "src/utils";
 
 const ExhbitPage: NextPage = () => {
   const router = useRouter();
@@ -16,12 +18,8 @@ const ExhbitPage: NextPage = () => {
   } = router.query;
 
   // If the view query is set, directly set that as the view & open the modal
-  const [showModal, setShowModal] = useState<boolean>(
-    (viewQuery as unknown) !== undefined,
-  );
-  const [viewing, setViewing] = useState<number>(
-    (viewQuery as unknown as number) ?? -1,
-  );
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [viewing, setViewing] = useState<number>(-1);
   const [exhibit, setExhibit] = useState<Exhibit | null>(null);
 
   const downloadImage = (imageUrl: string, fileName: string) => {
@@ -35,6 +33,12 @@ const ExhbitPage: NextPage = () => {
 
   // Wait until path params are accessable
   useEffect(() => {
+    // set viewing & modal
+    const viewingPage = parseInt((viewQuery as unknown as string) ?? "-1", 10);
+    if (viewingPage !== -1) {
+      setViewing(viewingPage);
+    }
+
     const fetchExhibit = async () => {
       const res = await fetch(
         `/api/user/${userEmailHash}/exhibit/${exhibitName}`,
@@ -46,6 +50,8 @@ const ExhbitPage: NextPage = () => {
       }
     };
     fetchExhibit();
+
+    console.log("viewing", viewing);
   }, [router.asPath]);
 
   if (!exhibit) {
@@ -70,7 +76,12 @@ const ExhbitPage: NextPage = () => {
             onClick={() => {
               console.log("share this image");
 
-              // copy link to clipboard??
+              const path = `${
+                config.appBaseUrl
+              }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
+                viewing ?? 0
+              }`;
+              copyToClipboard(path);
             }}
           >
             Share Image

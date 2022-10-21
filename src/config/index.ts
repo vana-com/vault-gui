@@ -2,6 +2,7 @@ import heapConfig from "./heap";
 import web3AuthConfig from "./web3auth";
 
 const generalConfig = {
+  appBaseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000",
   vanaSupportEmail: "support@vana.com",
   vanaBetaFeedback: "https://4eyuszgyknu.typeform.com/vanarocks",
   vanaSupportedAppsFeedback: "https://4eyuszgyknu.typeform.com/vanadata",

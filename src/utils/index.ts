@@ -1,5 +1,6 @@
 export * from "./apolloClient";
 export * from "./capitalizeString";
+export * from "./clipboard";
 export * from "./formatModuleNameForID";
 export * from "./formatModuleNameForUI";
 export * from "./getAbbreviatedFileName";
