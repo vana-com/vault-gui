@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import Link from "next/link";
 import useMeasure from "react-use-measure";
@@ -34,15 +35,14 @@ const Home: NextPage = () => {
         {/* CANVAS */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="transform scale-[1.07]">
-            <div className="grid grid-cols-4 gap-[3px]">
-              <CanvasGrid />
+            <div className="grid grid-cols-4 gap-[1rem]">
               <CanvasGrid />
             </div>
           </div>
         </div>
 
         {/* MASK */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
             className={clsx(
               "absolute -inset-[12vw]",
@@ -56,27 +56,38 @@ const Home: NextPage = () => {
         </div>
 
         {/* CTA */}
-        <div className="absolute left-0 top-0 w-full h-[66vh] flex items-center justify-center">
-          <div className="text-center px-inset">
-            <div className="flex flex-col gap-w12">
-              <h1 className="font-display text-[9vh] font-light leading-[0.925] tracking-[-0.02em] text-white">
-                You are
-                <br />a work
-                <br />
-                of art
+        <div className="absolute left-0 top-0 w-full h-[100vh] flex items-center justify-center pointer-events-none">
+          <div className="text-center px-inset pointer-events-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 1, translateY: 5 }}
+              animate={{ opacity: 1, scale: 1, translateY: 0 }}
+              transition={{ duration: 1, delay: 1 }}
+              className="flex flex-col gap-y-8"
+            >
+              <h1
+                className="font-display text-[9vh] font-light leading-[0.925] tracking-[-0.02em] text-white"
+                style={{ textShadow: "1px 2px 4px rgba(0,0,0,.5)" }}
+              >
+                You are a work of art
               </h1>
               <Link href="/create" passHref>
-                <span className="text-white border border-white rounded-sm Button hover:cursor-pointer">
+                <span className="text-white border border-white rounded-sm backdrop-blur-sm Button hover:cursor-pointer">
                   <span>Create your gallery</span>
                   <Icon icon="carbon:arrow-right" />
                 </span>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* FOOTER LOGO */}
-        <FooterBadge screenHeight={screenHeight} />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.5 }}
+        >
+          <FooterBadge screenHeight={screenHeight} />
+        </motion.div>
       </div>
     </>
   );

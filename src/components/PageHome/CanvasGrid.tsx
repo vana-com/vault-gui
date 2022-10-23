@@ -1,22 +1,35 @@
-import NextImage from "next/future/image";
+import { useEffect, useState } from "react";
 
 import { gallery } from "src/data";
 
-const CanvasGrid = () => (
-  <>
-    {gallery.map((img) => (
-      <div key={img.src} className="relative overflow-hidden aspect-square">
-        <NextImage
-          priority
-          className="absolute inset-0 object-cover w-full h-auto transform scale-105"
-          src={img.src}
-          alt={img.title}
-          height={1000}
-          width={1000}
-        />
-      </div>
-    ))}
-  </>
-);
+import RotatingImage from "./RotatingImage";
+
+const CanvasGrid = () => {
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setImagesLoaded(true);
+    }, 0);
+  }, []);
+
+  return (
+    <>
+      {gallery.map((img, index) => (
+        <div
+          key={img.src}
+          className={`relative transform transition h-full opacity-${
+            imagesLoaded ? 1 : 0
+          }`}
+          style={{
+            transition: `opacity 1000ms ease ${index * 100}ms`,
+          }}
+        >
+          <RotatingImage src={img.src} />
+        </div>
+      ))}
+    </>
+  );
+};
 
 export { CanvasGrid };
