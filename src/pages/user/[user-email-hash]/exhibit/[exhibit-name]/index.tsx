@@ -22,14 +22,8 @@ const ExhibitPage: NextPage = () => {
   const [viewing, setViewing] = useState<number>(-1);
   const [exhibit, setExhibit] = useState<Exhibit | null>(null);
 
-  const downloadImage = (imageUrl: string, fileName: string) => {
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const downloadUrl = (rawImageUrl: string): string =>
+    `/api/utils/dl?url=${encodeURIComponent(rawImageUrl)}`;
 
   // Wait until path params are accessable
   useEffect(() => {
@@ -92,24 +86,22 @@ const ExhibitPage: NextPage = () => {
             Share Image
           </button>
           {/* We wrap this bttn in <a> as we need it for a file download */}
-          {/* <a
-            href={exhibit.images[viewing]}
-            download="your_sweet_ai_image.png"
+          <a
+            href={downloadUrl(exhibit.images[viewing])}
+            download="vana_portrait.png"
             target="_blank"
             rel="noreferrer"
-          > */}
-          <button
-            type="button"
-            className="border-solid border-2 p-2 ml-8"
-            onClick={() => {
-              console.log("save this image");
-
-              downloadImage(exhibit.images[viewing], "your_sweet_image.png");
-            }}
           >
-            Download
-          </button>
-          {/* </a> */}
+            <button
+              type="button"
+              className="border-solid border-2 p-2 ml-8"
+              onClick={() => {
+                console.log("save this image");
+              }}
+            >
+              Download
+            </button>
+          </a>
         </div>
       </div>
     );
