@@ -24,27 +24,28 @@ const GeneratePage: NextPage = () => {
     const fetchGallery = async () => {
       if (!galleries) {
         const vanaTeamEmailHashes = [
-          config.kahtafEmailHash,
           config.annaEmailHash,
           config.artEmailHash,
+          config.kahtafEmailHash,
         ];
 
         const galleryPromises = vanaTeamEmailHashes.map((emailHash) =>
           fetch(`/api/user/${emailHash}`),
         );
 
-        const responses = await Promise.all(galleryPromises);
-
         const galleriesData = [];
 
-        for (let i = 0; i < responses.length; i++) {
-          const res = responses[i];
-          console.log("res.stat", res.status);
+        for (let i = 0; i < galleryPromises.length; i++) {
+          const galleryPromise = galleryPromises[i];
+          const res = await galleryPromise;
 
           if (res.status < 399) {
             // eslint-disable-next-line no-await-in-loop
             const data = await res.json();
             galleriesData.push(data);
+            // Call setGalleries for each image so that the images can load before
+            // all gallery network requests are made.
+            setGalleries([...galleriesData]);
           }
         }
 
