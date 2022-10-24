@@ -57,7 +57,6 @@ const ExhibitPage: NextPage = () => {
   if (showModal) {
     return (
       <div>
-        <p className="text-white">beep boop -- im a dialog </p>
         <Image
           className="w-full"
           src={exhibit.images[viewing ?? 0]}
