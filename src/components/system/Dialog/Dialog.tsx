@@ -10,11 +10,13 @@ interface Props
   extends RadixComponentWithTriggerProps,
     DialogPrimitive.DialogContentProps {
   overlayClassName?: string;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 const Dialog = ({
   children,
   triggerNode,
+  onOpenChange,
   overlayClassName = "max-w-md",
   contentClassName = "max-w-md",
 }: Props) => {
@@ -22,7 +24,14 @@ const Dialog = ({
   // const hey = true;
 
   return (
-    <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen} defaultOpen>
+    <DialogPrimitive.Root
+      open={isOpen}
+      onOpenChange={(opened) => {
+        setIsOpen(opened);
+        onOpenChange?.(opened);
+      }}
+      defaultOpen
+    >
       <DialogPrimitive.Trigger asChild>{triggerNode}</DialogPrimitive.Trigger>
       <Transition.Root show={isOpen}>
         <Transition.Child

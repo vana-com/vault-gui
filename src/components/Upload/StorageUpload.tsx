@@ -14,9 +14,15 @@ type Props = {
   maxFiles: number;
   minFiles: number;
   userEmail: string;
+  capturedImage: File | null;
 };
 
-const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
+const StorageUpload = ({
+  maxFiles,
+  minFiles,
+  userEmail,
+  capturedImage,
+}: Props) => {
   const router = useRouter();
   const { FileInput, openFileDialog } = useFileDropzone();
   const [isDataUploading, setIsDataUploading] = useState(false);
@@ -126,6 +132,13 @@ const StorageUpload = ({ maxFiles, minFiles, userEmail }: Props) => {
   useEffect(() => {
     // empty on purpose, just tracking uploadProgress
   }, [uploadProgress]);
+
+  // Add new selfie images to file list
+  useEffect(() => {
+    if (capturedImage) {
+      onFileReceived([capturedImage]);
+    }
+  }, [capturedImage]);
 
   // useMemo prevents image flickering on state change
   const imagesPreview = useMemo(

@@ -5,6 +5,7 @@ import useMeasure from "react-use-measure";
 
 // import { useInView } from "react-intersection-observer";
 import { TitleAndMetaTags } from "src/components";
+import { SelfieButton } from "src/components/Selfie";
 import { StorageUpload } from "src/components/Upload";
 import { useDeviceDetect } from "src/hooks";
 
@@ -12,6 +13,7 @@ const UploadPage: NextPage = () => {
   const [ref, bounds] = useMeasure();
   const screenHeight = bounds.height;
   const [emailAddress, setEmailAddress] = useState<string>("");
+  const [capturedImage, setCapturedImage] = useState<File | null>(null);
   const { isMobileUserAgent: isMobile } = useDeviceDetect();
 
   return (
@@ -38,16 +40,10 @@ const UploadPage: NextPage = () => {
                 To create your gallery, we need your 8-10 portraits of you. Take
                 selfies from different angles if you need more portraits
               </p>
-              {(isMobile || true) && (
-                <button
-                  type="button"
-                  className="border-2 p-2 self-center"
-                  onClick={() =>
-                    window.alert("TODO: Implement opening camera on mobile")
-                  }
-                >
-                  Take Selfies
-                </button>
+              {isMobile && (
+                <SelfieButton
+                  onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
+                />
               )}
 
               {/* Email input */}
@@ -74,6 +70,7 @@ const UploadPage: NextPage = () => {
                 minFiles={8}
                 maxFiles={10}
                 userEmail={emailAddress}
+                capturedImage={capturedImage}
               />
             </div>
           </div>
