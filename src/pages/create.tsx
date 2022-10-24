@@ -53,7 +53,7 @@ const UploadPage: NextPage = () => {
           {/* INPUTS */}
           <div className="sticky top-0 pt-w12 pb-w72">
             {/* Email input */}
-            {/* <input
+            <input
               type="email"
               value={emailAddress}
               placeholder="Enter your email here"
@@ -70,7 +70,7 @@ const UploadPage: NextPage = () => {
                 // invalid …invalid:border-rose-500
                 "focus:invalid:text-rose-600 focus:invalid:border-rose-500 focus:invalid:ring-rose-500",
               )}
-            /> */}
+            />
 
             <StorageUpload minFiles={8} maxFiles={10} userEmail={emailAddress}>
               {(isMobile || true) && (
