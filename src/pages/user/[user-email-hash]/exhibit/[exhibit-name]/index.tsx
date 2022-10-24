@@ -34,9 +34,10 @@ const ExhibitPage: NextPage = () => {
   // Wait until path params are accessable
   useEffect(() => {
     // set viewing & modal
-    const viewingPage = parseInt((viewQuery as unknown as string) ?? "-1", 10);
+    const viewingPage = parseInt((viewQuery as string) ?? "-1", 10);
     if (viewingPage !== -1) {
       setViewing(viewingPage);
+      setShowModal(true);
     }
 
     const fetchExhibit = async () => {
@@ -69,6 +70,7 @@ const ExhibitPage: NextPage = () => {
           alt={exhibit.name}
           width={250}
           height={250}
+          loader={({ src }) => src}
         />
         <div className="flex">
           <button
@@ -100,7 +102,7 @@ const ExhibitPage: NextPage = () => {
             onClick={() => {
               console.log("save this image");
 
-              downloadImage(exhibit.images[viewing], "your_sweet_ai_image.png");
+              downloadImage(exhibit.images[viewing], "your_sweet_image.png");
             }}
           >
             Download
