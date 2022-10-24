@@ -13,6 +13,7 @@ const nextConfig = {
   },
   images: {
     domains: ["storage.googleapis.com"],
+    formats: ["image/webp"], 
   },
   webpack: (config, { isServer: _isServer }) => {
     if (!_isServer) {
