@@ -18,7 +18,23 @@ const ExhibitPage: NextPage = () => {
   } = router.query;
 
   // If the view query is set, directly set that as the view & open the modal
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal, setShowModalInternal] = useState<boolean>(false);
+  const setShowModal = (
+    showModal: boolean,
+    viewingPageIndex: number | undefined,
+  ) => {
+    if (showModal) {
+      router.replace({
+        query: { ...router.query, view: viewingPageIndex },
+      });
+    } else {
+      router.replace({
+        query: { ...router.query, view: undefined },
+      });
+    }
+
+    setShowModalInternal(showModal);
+  };
   const [viewing, setViewing] = useState<number>(-1);
   const [exhibit, setExhibit] = useState<Exhibit | null>(null);
 
@@ -31,7 +47,7 @@ const ExhibitPage: NextPage = () => {
     const viewingPage = parseInt((viewQuery as string) ?? "-1", 10);
     if (viewingPage !== -1) {
       setViewing(viewingPage);
-      setShowModal(true);
+      setShowModal(true, viewingPage);
     }
 
     const fetchExhibit = async () => {
@@ -117,7 +133,7 @@ const ExhibitPage: NextPage = () => {
             className="bg-slate-100 rounded-xl p-2 m-2 cursor-pointer"
             onClick={() => {
               console.log("clickyy");
-              setShowModal(true);
+              setShowModal(true, i);
               setViewing(i);
             }}
           >
