@@ -1,7 +1,8 @@
+import { Icon } from "@iconify/react";
 import { useRef, useState } from "react";
 import useMeasure from "react-use-measure";
 
-import { Dialog } from "src/components";
+import { Button, Dialog } from "src/components";
 
 type Props = {
   onImageCaptured?: (image: File) => void;
@@ -81,9 +82,10 @@ const SelfieButton = ({ onImageCaptured }: Props) => {
         }
       }}
       triggerNode={
-        <button className="border-2 p-2 self-center" type="button">
-          <span>Take Selfie</span>
-        </button>
+        <Button className="!text-stone-900 !dark:text-stone-100 sticky top-0 ">
+          <Icon icon="carbon:camera" />
+          <span>Take selfies</span>
+        </Button>
       }
     >
       <div ref={containerRef}>

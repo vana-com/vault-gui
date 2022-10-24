@@ -1,11 +1,9 @@
-import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 import {
-  Button,
   LayoutWithHeight,
   SelfieButton,
   TitleAndMetaTags,
@@ -85,20 +83,9 @@ const UploadPage: NextPage = () => {
               capturedImage={capturedImage}
             >
               {isMobile && (
-                <div>
-                  <Button
-                    className="!text-stone-900 !dark:text-stone-100 sticky top-0 "
-                    onClick={() =>
-                      window.alert("TODO: Implement opening camera on mobile")
-                    }
-                  >
-                    <Icon icon="carbon:camera" />
-                    <span>Take selfies</span>
-                  </Button>
-                  <SelfieButton
-                    onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
-                  />
-                </div>
+                <SelfieButton
+                  onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
+                />
               )}
             </StorageUpload>
           </div>

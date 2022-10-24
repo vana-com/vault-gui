@@ -9,6 +9,7 @@ export * from "./Logo";
 export * from "./Markdown";
 export * from "./PageGenerate";
 export * from "./PageHome";
+export * from "./Selfie";
 export * from "./TitleAndMetaTags";
 export * from "./Upload";
 
