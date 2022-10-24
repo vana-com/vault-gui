@@ -3,9 +3,15 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useEffect } from "react";
 import useMeasure from "react-use-measure";
 
-import { CanvasGrid, FooterBadge, TitleAndMetaTags } from "src/components";
+import {
+  Button,
+  CanvasGrid,
+  FooterBadge,
+  TitleAndMetaTags,
+} from "src/components";
 
 const Home: NextPage = () => {
   // consider that knowing bounds is only possible *after* the view renders
@@ -15,6 +21,14 @@ const Home: NextPage = () => {
 
   // Intersection observer to toggle the filters location
   // const { ref, inView } = useInView();
+
+  useEffect(() => {
+    document.body.classList.add("bg-black");
+
+    return () => {
+      document.body.classList.remove("bg-black");
+    };
+  }, []);
 
   // TESTS
   console.log(bounds);
@@ -29,13 +43,13 @@ const Home: NextPage = () => {
 
       <div
         ref={ref}
-        className={clsx("relative min-h-screen bg-black")}
+        className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
         {/* CANVAS */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="transform scale-[1.07]">
-            <div className="grid grid-cols-4 gap-[1rem]">
+            <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-[3px] md:gap-4">
               <CanvasGrid />
             </div>
           </div>
@@ -56,25 +70,22 @@ const Home: NextPage = () => {
         </div>
 
         {/* CTA */}
-        <div className="absolute left-0 top-0 w-full h-[100vh] flex items-center justify-center pointer-events-none">
-          <div className="text-center px-inset pointer-events-auto">
+        <div className="absolute inset-0 flex items-center justify-center h-[70vh] pointer-events-none">
+          <div className="text-center pointer-events-auto px-inset">
             <motion.div
               initial={{ opacity: 0, scale: 1, translateY: 5 }}
               animate={{ opacity: 1, scale: 1, translateY: 0 }}
               transition={{ duration: 1, delay: 1 }}
-              className="flex flex-col gap-y-8"
+              className="flex flex-col gap-6"
             >
-              <h1
-                className="font-display text-[9vh] font-light leading-[0.925] tracking-[-0.02em] text-white"
-                style={{ textShadow: "1px 2px 4px rgba(0,0,0,.5)" }}
-              >
+              <h1 className="Text-display Text-display--shadow text-[9vh]">
                 You are a work of art
               </h1>
               <Link href="/create" passHref>
-                <span className="text-white border border-white rounded-sm backdrop-blur-sm Button hover:cursor-pointer">
+                <Button className="">
                   <span>Create your gallery</span>
                   <Icon icon="carbon:arrow-right" />
-                </span>
+                </Button>
               </Link>
             </motion.div>
           </div>
