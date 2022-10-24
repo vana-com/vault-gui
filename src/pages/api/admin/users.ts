@@ -13,7 +13,6 @@ export default async (
   const usersResponse = await getUsersResponse(userEmails);
 
   console.log(JSON.stringify(usersResponse, null, 2));
-  res.setHeader("Cache-Control", "public, max-age=3600");
   return res.status(200).json(usersResponse);
 };
 
