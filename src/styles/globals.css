@@ -112,14 +112,14 @@
   }
   body {
     font-size: 16px;
-    @apply text-stone-900 font-normal;
+    @apply text-stone-900 font-normal text-md;
     /* @apply relative min-h-screen before:absolute before:content-[''] before:inset-0 before:top-2/3 before:bg-gradient-to-t before:from-blueCrayola-500/10; */
   }
 }
 
 @layer components {
   .Container {
-    @apply mx-auto max-w-canvasWidth px-inset;
+    @apply mx-auto max-w-canvasWidth w-full px-inset;
   }
   @screen md {
     .Container {
@@ -190,6 +190,15 @@
     @apply text-ssm font-medium tracking-wider uppercase;
   }
   .Text-lg {
-    @apply font-normal leading-snug font-heading text-lg;
+    @apply font-normal leading-snug text-lg;
+  }
+  .Text-display {
+    /* text-[9vh] */
+    @apply font-display font-light leading-[0.925] tracking-[-0.02em];
+    text-shadow: "1px 2px 4px rgba(0,0,0,.5)";
+  }
+  .Text-display--shadow {
+    @apply text-white shadow-lg;
+    text-shadow: "1px 2px 4px rgba(0,0,0,.5)";
   }
 }

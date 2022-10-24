@@ -51,24 +51,22 @@ function Image({ src }: { src: string }) {
 
   return (
     <div
-      className="hover-listener h-full"
+      className="h-full hover-listener RotatingImage"
       ref={ref}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
       <animated.div
-        className="rotatable h-full"
+        className="relative h-full overflow-hidden rounded-sm aspect-square"
         style={{ transform: props.xys.to(trans) }}
       >
-        <div className="styled-image-container aspect-square">
-          <NextImage
-            priority
-            className="absolute inset-0 object-cover w-full h-auto rounded-sm aspect-square overflow-hidden"
-            src={src}
-            height={1000}
-            width={1000}
-          />
-        </div>
+        <NextImage
+          priority
+          className="absolute inset-0 object-cover w-full h-auto"
+          src={src}
+          height={1000}
+          width={1000}
+        />
       </animated.div>
     </div>
   );
