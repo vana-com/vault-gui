@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
@@ -89,10 +90,11 @@ const GeneratePage: NextPage = () => {
               key={gallery.userHash}
               onClick={() => router.push(`/user/${gallery.userHash}/`)}
             >
-              <img
+              <Image
                 className="w-full"
                 src={gallery.exhibits[0].images[0]}
                 alt="Vana Team Member"
+                loader={({ src }) => src}
               />
             </button>
           ))}

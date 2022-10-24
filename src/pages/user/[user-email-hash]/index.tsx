@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -52,12 +53,13 @@ const GalleryPage: NextPage = () => {
                   )
                 }
               >
-                <img
+                <Image
                   className="w-full"
                   src={exhibit.images[0]}
                   alt={exhibit.name}
                   height={512}
                   width={512}
+                  loader={({ src }) => src}
                 />
                 <p>{exhibit.name}</p>
               </figure>
