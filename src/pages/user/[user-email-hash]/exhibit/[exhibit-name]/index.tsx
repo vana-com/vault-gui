@@ -71,6 +71,8 @@ const ExhibitPage: NextPage = () => {
           width={250}
           height={250}
           loader={({ src }) => src}
+          placeholder="blur"
+          blurDataURL="https://storage.googleapis.com/corsali-gui-assets/person.png"
         />
         <div className="flex">
           <button
@@ -134,6 +136,8 @@ const ExhibitPage: NextPage = () => {
               width={250}
               height={250}
               loader={({ src }) => src}
+              placeholder="blur"
+              blurDataURL="https://storage.googleapis.com/corsali-gui-assets/person.png"
             />
           </figure>
         ))}
