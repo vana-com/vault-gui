@@ -61,7 +61,7 @@ const GalleryPage: NextPage = () => {
                   width={512}
                   loader={({ src }) => src}
                   placeholder="blur"
-                  blurDataURL="https://storage.googleapis.com/corsali-gui-assets/person.png"
+                  blurDataURL={config.portraitBlurDataURL}
                 />
                 <p>{exhibit.name}</p>
               </figure>

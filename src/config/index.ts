@@ -48,6 +48,9 @@ const generalConfig = {
   // Email: art@generating-page.com
   artEmailHash:
     "b5a97e6fc2e860ef7bfd7628491279e4b4dd19d100a8ce24a967303141c4b68a",
+
+  portraitBlurDataURL:
+    "https://storage.googleapis.com/corsali-gui-assets/person.png",
 };
 
 export default {

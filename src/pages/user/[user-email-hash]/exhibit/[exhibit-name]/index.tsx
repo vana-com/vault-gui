@@ -72,7 +72,7 @@ const ExhibitPage: NextPage = () => {
           height={250}
           loader={({ src }) => src}
           placeholder="blur"
-          blurDataURL="https://storage.googleapis.com/corsali-gui-assets/person.png"
+          blurDataURL={config.portraitBlurDataURL}
         />
         <div className="flex">
           <button
@@ -137,7 +137,7 @@ const ExhibitPage: NextPage = () => {
               height={250}
               loader={({ src }) => src}
               placeholder="blur"
-              blurDataURL="https://storage.googleapis.com/corsali-gui-assets/person.png"
+              blurDataURL={config.portraitBlurDataURL}
             />
           </figure>
         ))}
