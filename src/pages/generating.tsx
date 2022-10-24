@@ -94,6 +94,8 @@ const GeneratePage: NextPage = () => {
                 className="w-full"
                 src={gallery.exhibits[0].images[0]}
                 alt="Vana Team Member"
+                width={250}
+                height={250}
                 loader={({ src }) => src}
               />
             </button>
