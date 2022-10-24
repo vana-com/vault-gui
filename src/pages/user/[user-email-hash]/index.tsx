@@ -17,12 +17,13 @@ const GalleryPage: NextPage = () => {
 
   useEffect(() => {
     const fetchGallery = async () => {
-      const res = await fetch(`/api/user/${userEmailHash}/`);
-      console.log("res.status", res.status);
-      if (res.status < 399) {
-        const data = await res.json();
-
-        setGallery(data);
+      if (userEmailHash) {
+        const res = await fetch(`/api/user/${userEmailHash}/`);
+        console.log("res.status", res.status);
+        if (res.status < 399) {
+          const data = await res.json();
+          setGallery(data);
+        }
       }
     };
     fetchGallery();

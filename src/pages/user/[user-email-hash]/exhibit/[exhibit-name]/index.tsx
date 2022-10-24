@@ -8,7 +8,7 @@ import config from "src/config";
 import { Exhibit } from "src/types";
 import { copyToClipboard } from "src/utils";
 
-const ExhbitPage: NextPage = () => {
+const ExhibitPage: NextPage = () => {
   const router = useRouter();
   const {
     "user-email-hash": userEmailHash,
@@ -39,13 +39,14 @@ const ExhbitPage: NextPage = () => {
     }
 
     const fetchExhibit = async () => {
-      const res = await fetch(
-        `/api/user/${userEmailHash}/exhibit/${exhibitName}`,
-      );
-      if (res.status < 399) {
-        const data = await res.json();
-
-        setExhibit(data);
+      if (userEmailHash) {
+        const res = await fetch(
+          `/api/user/${userEmailHash}/exhibit/${exhibitName}`,
+        );
+        if (res.status < 399) {
+          const data = await res.json();
+          setExhibit(data);
+        }
       }
     };
     fetchExhibit();
@@ -155,4 +156,4 @@ const ExhbitPage: NextPage = () => {
   );
 };
 
-export default ExhbitPage;
+export default ExhibitPage;

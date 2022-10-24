@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
-    "@corsali/userdata-extractor": "0.3.1",
     "@datadog/browser-rum": "^4.20.0",
     "@google-cloud/storage": "^6.2.3",
     "@headlessui/react": "^1.7.3",
