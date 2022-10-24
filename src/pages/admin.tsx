@@ -74,7 +74,7 @@ const AdminPage: NextPage = () => {
       <div>
         <div className="max-w-2xl mt-20">
           <h2 className="text-lg font-bold mb-4">
-            Users who need to generate images
+            Users with generated images
           </h2>
           <table className="table-auto">
             <thead>
