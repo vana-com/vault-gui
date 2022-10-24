@@ -11,9 +11,19 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       ref={ref}
       {...props}
       className={clsx(
-        "relative inline-flex gap-1.5 select-none items-center justify-center rounded-md px-4 h-[40px] text-sm font-medium",
-        // default color
-        "bg-blueCrayola-500 text-white dark:bg-blueCrayola-500 dark:text-stone-100",
+        "relative inline-flex items-center justify-center gap-1.5",
+        "select-none whitespace-nowrap align-middle outline-none",
+        "h-inputH w-auto",
+        "rounded-none px-4 h-[40px]",
+        // typography: inherit body size
+        "font-normal",
+        // bg
+        // "bg-blueCrayola-500 dark:bg-blueCrayola-500",
+        "backdrop-blur-sm",
+        // text
+        "text-white dark:text-stone-100",
+        // border
+        "border border-current",
         // IX states
         "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75",
         "disabled:opacity-50 disabled:cursor-not-allowed",
@@ -27,7 +37,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         className,
       )}
     >
-      <span className="relative inline-flex gap-1.5 select-none items-center justify-center">
+      <span className="relative inline-flex gap-1.5 select-none items-center justify-center transform -translate-y-[0.05em]">
         {children}
       </span>
     </button>

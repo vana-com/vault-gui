@@ -5,7 +5,7 @@ const FooterBadge = ({ screenHeight }: { screenHeight: number }) => (
     className="fixed w-full shadow-xl"
     style={{ top: `${screenHeight - 132}px` }}
   >
-    <div className="flex justify-center m-inset mb-insetDouble">
+    <div className="flex justify-center mx-inset mb-insetDouble">
       {/* outline outline-1 outline-offset-4 */}
       <div className="inline-flex px-5 py-1.5 bg-white  rounded-md">
         <div className="flex flex-col gap-1">

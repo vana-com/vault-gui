@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import Image from "next/image";
+import Image from "next/future/image";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
@@ -14,6 +14,7 @@ type Props = {
   maxFiles: number;
   minFiles: number;
   userEmail: string;
+  children: React.ReactNode;
   capturedImage: File | null;
 };
 
@@ -21,6 +22,7 @@ const StorageUpload = ({
   maxFiles,
   minFiles,
   userEmail,
+  children,
   capturedImage,
 }: Props) => {
   const router = useRouter();
@@ -143,22 +145,14 @@ const StorageUpload = ({
   // useMemo prevents image flickering on state change
   const imagesPreview = useMemo(
     () => (
-      <div
-        style={{
-          display: "grid",
-          maxWidth: "800px",
-          margin: "0 auto",
-          gap: "1rem",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-        }}
-      >
+      <div className="grid grid-cols-2 gap-[5px]">
         {filesToUpload?.map((fileToUpload, i) => (
-          <div key={fileToUpload.name} style={{ position: "relative" }}>
+          <div key={fileToUpload.name} className="relative aspect-square">
             {/* Image preview */}
             <Image
-              objectFit="cover"
-              width="150px"
-              height="150px"
+              className="object-cover aspect-square"
+              width="200"
+              height="200"
               src={URL.createObjectURL(fileToUpload)}
             />
 
@@ -168,23 +162,20 @@ const StorageUpload = ({
             )}
 
             {/* Delete image button */}
-            <Button
-              style={{
-                position: "absolute",
-                bottom: "12px",
-                right: "6px",
-              }}
-              aria-label="Remove file to upload"
-              variant="icon"
-              type="reset"
-              onClick={() => {
-                const copyFilesToUpload = [...filesToUpload];
-                copyFilesToUpload.splice(i, 1);
-                setFilesToUpload(copyFilesToUpload);
-              }}
-            >
-              <Icon icon="carbon:close-filled" />
-            </Button>
+            <div className="absolute bottom-0 right-0">
+              <Button
+                aria-label="Remove file to upload"
+                variant="icon"
+                type="reset"
+                onClick={() => {
+                  const copyFilesToUpload = [...filesToUpload];
+                  copyFilesToUpload.splice(i, 1);
+                  setFilesToUpload(copyFilesToUpload);
+                }}
+              >
+                <Icon icon="carbon:close-filled" />
+              </Button>
+            </div>
           </div>
         ))}
       </div>
@@ -194,31 +185,29 @@ const StorageUpload = ({
 
   return (
     <>
+      {/* p-2 mx-auto text-center border */}
       <div
-        style={{
-          border: "1px solid black",
-          minHeight: 100,
-          margin: "0 auto",
-          width: "100%",
-          textAlign: "center",
-        }}
+        className="flex flex-col w-full gap-2"
         onDrop={onDropFile}
         onDragOver={(event) => {
           // Prevent default behavior (prevent file from being opened)
           event.preventDefault();
         }}
       >
+        {/* SELFIE CHILD */}
+        {children}
+
         {/* FILE INPUT */}
         <FileInput onChange={onSelectFiles} />
 
         {/* STEP 1: DROP */}
         <Button
-          style={{ width: "calc(100% - 10px)", margin: "5px 0" }}
+          className="!w-full text-white bg-black"
           disabled={filesToUpload.length >= maxFiles}
           onClick={openFileDialog}
         >
-          <Icon icon="carbon:add" height="1.75em" />
-          <div>Add images</div>
+          <Icon icon="carbon:add" height="1em" />
+          <span>Add images</span>
         </Button>
 
         {/* STEP 2: CONFIRM */}
@@ -226,18 +215,19 @@ const StorageUpload = ({
       </div>
 
       {/* Upload button */}
-      <Button
-        onClick={uploadFiles}
-        disabled={
-          filesToUpload.length < minFiles ||
-          filesToUpload.length > maxFiles ||
-          isDataUploading ||
-          !isValidEmail(userEmail)
-        }
-      >
-        <Icon icon="carbon:upload" height="1.75em" />
-        Upload
-      </Button>
+      {filesToUpload.length < minFiles ||
+        (filesToUpload.length > maxFiles && (
+          <div className="pt-w12">
+            <Button
+              className="!w-full text-white bg-black"
+              onClick={uploadFiles}
+              disabled={isDataUploading || !isValidEmail(userEmail)}
+            >
+              <Icon icon="carbon:upload" height="1em" />
+              <span>Upload</span>
+            </Button>
+          </div>
+        ))}
     </>
   );
 };
