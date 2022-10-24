@@ -6,7 +6,7 @@ interface Props {
   className?: string;
 }
 
-const MeasureLayout = ({ children, className }: Props) => {
+const LayoutWithHeight = ({ children, className }: Props) => {
   // consider that knowing bounds is only possible *after* the view renders
   // so you'll get zero values on the first run and be informed later
   const [ref, bounds] = useMeasure();
@@ -26,4 +26,4 @@ const MeasureLayout = ({ children, className }: Props) => {
   );
 };
 
-export { MeasureLayout };
+export { LayoutWithHeight };
