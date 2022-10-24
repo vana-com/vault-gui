@@ -57,6 +57,9 @@ module.exports = {
           50: 'var(--error50)',
           60: 'var(--error60)',
         },
+        blackShadow: {
+          50: 'rgb(0 0 0 / 0.04)',
+        },
         successes: colors.emerald,
       },
       // borderColor: {

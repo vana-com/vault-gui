@@ -1,24 +1,25 @@
+import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
+import useMeasure from "react-use-measure";
 
-import {
-  LayoutWithHeight,
-  SelfieButton,
-  TitleAndMetaTags,
-} from "src/components";
+import { Button, Input, SelfieButton, TitleAndMetaTags } from "src/components";
 import { StorageUpload } from "src/components/Upload";
 import { useDeviceDetect } from "src/hooks";
 
 const UploadPage: NextPage = () => {
-  // const [ref, bounds] = useMeasure();
-  // const screenHeight = bounds.height;
+  const [ref, bounds] = useMeasure();
+  const screenHeight = bounds.height;
+
+  const [capturedImage, setCapturedImage] = useState<File | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [emailAddress, setEmailAddress] = useState<string>("");
-  const [capturedImage, setCapturedImage] = useState<File | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [portraitsReady, setPortraitsReady] = useState<boolean>(false);
   const { isMobileUserAgent: isMobile } = useDeviceDetect();
-  const { ref, inView } = useInView({
+  const { ref: viewRef, inView } = useInView({
     threshold: 0,
   });
 
@@ -30,12 +31,16 @@ const UploadPage: NextPage = () => {
         description="Discover projects you can earn and learn from with your Vana Vault"
       />
 
-      <LayoutWithHeight>
+      <div
+        ref={ref}
+        className={clsx("relative min-h-screen")}
+        style={{ height: `${screenHeight}px` }}
+      >
         <div className="pt-[20vh] mb-[20vh] Container">
           {/* INSTRUCTIONS */}
           <div className="sticky top-0 z-10 flex flex-col py-3 bg-white gap-w6 scroll-mt-w12">
             {/* our inView ref */}
-            <div ref={ref} className="absolute -top-[1vh]" />
+            <div ref={viewRef} className="absolute -top-[1vh]" />
             <h1
               className={clsx(
                 "Text-display",
@@ -57,24 +62,6 @@ const UploadPage: NextPage = () => {
           {/* INPUTS */}
           <div className="sticky top-0 pt-w12 pb-w72">
             {/* Email input */}
-            <input
-              type="email"
-              value={emailAddress}
-              placeholder="Enter your email here"
-              required
-              onChange={(event) => {
-                setEmailAddress(event.target.value);
-              }}
-              className={clsx(
-                "w-full px-4 h-[40px] text-sm inline-flex shadow-sm  placeholder-stone-400 border-2 rounded-lg",
-                // disabled
-                "disabled:bg-stone-50 disabled:text-stone-500 disabled:border-stone-200 disabled:shadow-none",
-                // focus
-                "focus:outline-none focus:border-blueCrayola-500 focus:ring-1 focus:ring-blueCrayola-500",
-                // invalid …invalid:border-rose-500
-                "focus:invalid:text-rose-600 focus:invalid:border-rose-500 focus:invalid:ring-rose-500",
-              )}
-            />
 
             <StorageUpload
               minFiles={8}
@@ -90,7 +77,46 @@ const UploadPage: NextPage = () => {
             </StorageUpload>
           </div>
         </div>
-      </LayoutWithHeight>
+
+        {/* EMAIL */}
+        {portraitsReady && (
+          <>
+            <div
+              className="fixed w-full h-[48px] bg-gradient-to-t from-blackShadow-50"
+              style={{ top: `${screenHeight - 148}px` }}
+            />
+            <div
+              className="fixed bottom-0 w-full bg-white"
+              style={{ top: `${screenHeight - 100}px` }}
+            >
+              <div className="Container pt-insetHalf">
+                <form
+                  action=""
+                  className="flex justify-between w-full text-black border border-black/10"
+                >
+                  <Input
+                    type="email"
+                    value={emailAddress}
+                    placeholder="Enter your email here"
+                    required
+                    onChange={(event) => {
+                      setEmailAddress(event.target.value);
+                    }}
+                    className={clsx("text-black border-transparent")}
+                  />
+                  <Button
+                    disabled={!emailAddress}
+                    className={clsx("!text-black !border-transparent")}
+                  >
+                    <span>Next</span>
+                    <Icon icon="carbon:arrow-right" />
+                  </Button>
+                </form>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };

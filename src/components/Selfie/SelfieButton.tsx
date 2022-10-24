@@ -82,9 +82,9 @@ const SelfieButton = ({ onImageCaptured }: Props) => {
         }
       }}
       triggerNode={
-        <Button className="!text-stone-900 !dark:text-stone-100 sticky top-0 ">
-          <Icon icon="carbon:camera" />
-          <span>Take selfies</span>
+        <Button className="!text-stone-900 !dark:text-stone-100 border-black">
+          <Icon icon="carbon:camera" height="1.25em" />
+          <span className="transform -translate-y-[0.05em]">Take selfies</span>
         </Button>
       }
     >

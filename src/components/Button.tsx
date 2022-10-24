@@ -37,9 +37,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         className,
       )}
     >
-      <span className="relative inline-flex gap-1.5 select-none items-center justify-center transform -translate-y-[0.05em]">
-        {children}
-      </span>
+      {children}
     </button>
   ),
 );

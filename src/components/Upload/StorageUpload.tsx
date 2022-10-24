@@ -20,6 +20,7 @@ type Props = {
 
 const StorageUpload = ({
   maxFiles,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   minFiles,
   userEmail,
   children,
@@ -162,8 +163,9 @@ const StorageUpload = ({
             )}
 
             {/* Delete image button */}
-            <div className="absolute bottom-0 right-0">
+            <div className="absolute bottom-0 w-full">
               <Button
+                className="!w-full text-white bg-black !text-sm !h-[32px] !border-black"
                 aria-label="Remove file to upload"
                 variant="icon"
                 type="reset"
@@ -173,6 +175,7 @@ const StorageUpload = ({
                   setFilesToUpload(copyFilesToUpload);
                 }}
               >
+                <span className="transform -translate-y-[0.05em]">Remove</span>
                 <Icon icon="carbon:close-filled" />
               </Button>
             </div>
@@ -185,7 +188,6 @@ const StorageUpload = ({
 
   return (
     <>
-      {/* p-2 mx-auto text-center border */}
       <div
         className="flex flex-col w-full gap-2"
         onDrop={onDropFile}
@@ -194,11 +196,11 @@ const StorageUpload = ({
           event.preventDefault();
         }}
       >
-        {/* SELFIE CHILD */}
-        {children}
-
         {/* FILE INPUT */}
         <FileInput onChange={onSelectFiles} />
+
+        {/* STEP 2: CONFIRM */}
+        {!!filesToUpload.length && imagesPreview}
 
         {/* STEP 1: DROP */}
         <Button
@@ -206,28 +208,29 @@ const StorageUpload = ({
           disabled={filesToUpload.length >= maxFiles}
           onClick={openFileDialog}
         >
-          <Icon icon="carbon:add" height="1em" />
-          <span>Add images</span>
+          <Icon icon="carbon:add" height="1.25em" />
+          <span className="transform -translate-y-[0.05em]">Add images</span>
         </Button>
 
-        {/* STEP 2: CONFIRM */}
-        {!!filesToUpload.length && imagesPreview}
+        {/* SELFIE CHILD */}
+        {children}
       </div>
 
       {/* Upload button */}
-      {filesToUpload.length < minFiles ||
-        (filesToUpload.length > maxFiles && (
-          <div className="pt-w12">
-            <Button
-              className="!w-full text-white bg-black"
-              onClick={uploadFiles}
-              disabled={isDataUploading || !isValidEmail(userEmail)}
-            >
-              <Icon icon="carbon:upload" height="1em" />
-              <span>Upload</span>
-            </Button>
-          </div>
-        ))}
+      {/* filesToUpload.length < minFiles ||
+              filesToUpload.length > maxFiles || */}
+      {filesToUpload.length > 0 && (
+        <div className="pt-w12">
+          <Button
+            className="!w-full text-white bg-black"
+            onClick={uploadFiles}
+            disabled={isDataUploading || !isValidEmail(userEmail)}
+          >
+            <Icon icon="carbon:upload" height="1em" />
+            <span>Upload</span>
+          </Button>
+        </div>
+      )}
     </>
   );
 };
