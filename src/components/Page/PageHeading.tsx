@@ -8,7 +8,7 @@ interface Props {
 }
 
 const PageHeading = ({ inView, children, heading, viewRefNode }: Props) => (
-  <div className="sticky top-0 z-10 flex flex-col py-3 bg-white gap-w6 scroll-mt-w12">
+  <div className="sticky top-0 z-10 flex flex-col gap-2 py-3 bg-white lg:gap-w6 scroll-mt-w12">
     {/* our inView ref */}
     {viewRefNode}
     <h1
