@@ -6,7 +6,6 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Script from "next/script";
-import { ThemeProvider } from "next-themes";
 
 // import { AppHook } from "src/components";
 import config from "src/config";
@@ -39,20 +38,18 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider attribute="class">
-        <Tooltip.Provider delayDuration={300}>
-          {/* <AppHook> */}
-          <Component {...pageProps} />
-          {!config.routesToHideZendeskWidget.some((path) =>
-            router.pathname.startsWith(path),
-          ) && (
-            <Script
-              id="ze-snippet"
-              src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
-            />
-          )}
-        </Tooltip.Provider>
-      </ThemeProvider>
+      <Tooltip.Provider delayDuration={300}>
+        {/* <AppHook> */}
+        <Component {...pageProps} />
+        {!config.routesToHideZendeskWidget.some((path) =>
+          router.pathname.startsWith(path),
+        ) && (
+          <Script
+            id="ze-snippet"
+            src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
+          />
+        )}
+      </Tooltip.Provider>
     </ApolloProvider>
   );
 };
