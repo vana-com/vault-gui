@@ -5,7 +5,13 @@ import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useMeasure from "react-use-measure";
 
-import { Button, Input, SelfieButton, TitleAndMetaTags } from "src/components";
+import {
+  Button,
+  Input,
+  PageHeading,
+  SelfieButton,
+  TitleAndMetaTags,
+} from "src/components";
 import { StorageUpload } from "src/components/Upload";
 import { useDeviceDetect } from "src/hooks";
 
@@ -38,26 +44,18 @@ const UploadPage: NextPage = () => {
       >
         <div className="pt-[20vh] mb-[20vh] Container">
           {/* INSTRUCTIONS */}
-          <div className="sticky top-0 z-10 flex flex-col py-3 bg-white gap-w6 scroll-mt-w12">
-            {/* our inView ref */}
-            <div ref={viewRef} className="absolute -top-[1vh]" />
-            <h1
-              className={clsx(
-                "Text-display",
-                inView ? "text-[4.5vh]" : "text-[3.5vh]",
-              )}
-            >
-              Create your gallery
-            </h1>
-            <div>
-              <p>
-                Select 8-10 portraits of you.{" "}
-                <span className="text-stone-400">
-                  Add from your photos or take selfies with your phone.
-                </span>
-              </p>
-            </div>
-          </div>
+          <PageHeading
+            inView={inView}
+            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
+            heading="Create your gallery"
+          >
+            <p>
+              Select 8-10 portraits of you.{" "}
+              <span className="text-stone-400">
+                Add from your photos or take selfies with your phone.
+              </span>
+            </p>
+          </PageHeading>
 
           {/* INPUTS */}
           <div className="sticky top-0 pt-w12 pb-w72">

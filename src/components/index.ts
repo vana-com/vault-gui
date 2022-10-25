@@ -8,6 +8,7 @@ export * from "./Link";
 export * from "./LoadingDots";
 export * from "./Logo";
 export * from "./Markdown";
+export * from "./Page";
 export * from "./PageGenerate";
 export * from "./PageHome";
 export * from "./Selfie";
