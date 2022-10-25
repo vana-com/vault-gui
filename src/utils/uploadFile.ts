@@ -44,8 +44,10 @@ const uploadFile = async (
 
     // Use axois to send the file data, as fetch has no "onUploadProgress" handler
     const config: AxiosRequestConfig = {
-      onUploadProgress: (progressEvent) =>
-        progressHandler(progressEvent, fileIndex),
+      onUploadProgress: (progressEvent) => {
+        console.log("axios progress", fileIndex, progressEvent);
+        progressHandler(progressEvent, fileIndex);
+      },
     };
     const upload = await axios.postForm(url, formData, config);
 

@@ -133,7 +133,7 @@ const StorageUpload = ({
         ))}
       </div>
     ),
-    [filesToUpload, uploadProgress],
+    [filesToUpload, ...uploadProgress],
   );
 
   return (

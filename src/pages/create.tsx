@@ -29,7 +29,9 @@ const UploadPage: NextPage = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
   const [isDataUploading, setIsDataUploading] = useState(false);
 
-  const [uploadProgress, setUploadProgress] = useState<Array<number>>([]);
+  const [uploadProgress, setUploadProgress] = useState<Array<number>>(
+    Array(MAX_FILES).fill(0),
+  );
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
 
@@ -45,6 +47,7 @@ const UploadPage: NextPage = () => {
   // Callback to handle upload progress
   const handleUploadProgress = (event: any, fileIndex: number) => {
     const { loaded, total } = event;
+    console.log(fileIndex, loaded, total);
 
     const progress =
       total || loaded
@@ -53,6 +56,7 @@ const UploadPage: NextPage = () => {
 
     // Default starting pos is 5% so don't jump back down to <5%
     uploadProgress[fileIndex] = Math.max(progress, 5);
+    console.log(uploadProgress);
     setUploadProgress(uploadProgress);
   };
 
@@ -61,7 +65,7 @@ const UploadPage: NextPage = () => {
    */
   const uploadFiles = async () => {
     setIsDataUploading(true);
-    setUploadProgress(Array(filesToUpload.length).fill(5));
+    setUploadProgress(Array(MAX_FILES).fill(0));
     try {
       // Upload files to object store (S3 or GCS)
       const timestamp = new Date().getTime();
