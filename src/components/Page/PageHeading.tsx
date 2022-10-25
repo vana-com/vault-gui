@@ -17,7 +17,7 @@ const PageHeading = ({
 }: Props) => (
   <div
     className={clsx(
-      "flex flex-col gap-2 py-3 bg-white lg:gap-w6 scroll-mt-w12",
+      "flex flex-col gap-3 py-3 bg-white lg:gap-w6 scroll-mt-w12",
       !hideSticky && "sticky top-0 z-10",
     )}
   >
