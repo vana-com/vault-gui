@@ -62,10 +62,7 @@ const ExhibitPage: NextPage = () => {
   const downloadUrl = (rawImageUrl: string): string =>
     `/api/utils/dl?url=${encodeURIComponent(rawImageUrl)}`;
 
-  const shareLink = async () => {
-    const link = `${
-      config.appBaseUrl
-    }/user/${userEmailHash}/exhibit/${exhibitName}?view=${viewing ?? 0}`;
+  const shareLink = async (link: string) => {
     console.log("sharing link:", link);
 
     try {
@@ -153,7 +150,11 @@ const ExhibitPage: NextPage = () => {
                 <Button
                   size="sm"
                   className="!text-stone-500 transform translate-y-[-0.2em]"
-                  onClick={(_: any) => shareLink()}
+                  onClick={(_: any) =>
+                    shareLink(
+                      `${config.appBaseUrl}/user/${userEmailHash}/exhibit/${exhibitName}/`,
+                    )
+                  }
                 >
                   <Icon icon="carbon:arrow-up" height="1.0em" />
                   <span className="transform translate-y-[-0.015em]">
