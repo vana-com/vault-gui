@@ -6,16 +6,20 @@ interface NavigatorData {
 }
 
 const _navigator = (): Navigator => {
-  if (navigator && navigator.canShare()) return navigator;
-  throw new Error("Could not access navigator");
+  if (!window.navigator) throw new Error("No _navigator in current context");
+  else return window.navigator;
 };
 
 const share = async (data: NavigatorData): Promise<boolean> => {
   console.log("Attempting to share data...");
   try {
     const nav = _navigator();
-    await nav.share(data);
 
+    // Make sure the client supports the data we want to send
+    if (!nav.canShare(data))
+      throw new Error("Could not share provided data type");
+
+    await nav.share(data);
     return true;
   } catch (error) {
     console.log("Could not share data:", error);

@@ -1,8 +1,8 @@
 const CLIPBOARD_PERMISSION = "clipboard-write" as PermissionName;
 
 const _navigator = () => {
-  if (!navigator) throw new Error("No _navigator in current context");
-  else return navigator;
+  if (!window.navigator) throw new Error("No _navigator in current context");
+  else return window.navigator;
 };
 
 const checkPermission = async (): Promise<boolean> => {
