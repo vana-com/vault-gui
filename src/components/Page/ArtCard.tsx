@@ -5,6 +5,7 @@ interface Props {
   imageAlt: string;
   size?: number;
   children?: React.ReactNode;
+  buttonOnClick?: () => void;
   // TODO: update with Next Image props
   [x: string]: any;
 }
@@ -14,9 +15,10 @@ const ArtCard = ({
   imageAlt,
   size = 280,
   children,
+  buttonOnClick,
   ...props
 }: Props) => (
-  <button type="button" className="w-full">
+  <button type="button" className="w-full" onClick={buttonOnClick}>
     <div className="overflow-hidden bg-stone-50 aspect-square rounded-xl">
       <Image
         className="object-cover w-full aspect-square"

@@ -1,10 +1,21 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { Icon } from "@iconify/react";
+import clsx from "clsx";
 import { NextPage } from "next";
 import Image from "next/future/image";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import useMeasure from "react-use-measure";
 
+import {
+  ArtCard,
+  FooterBadge,
+  PageHeading,
+  TitleAndMetaTags,
+} from "src/components";
 import config from "src/config";
 import { Exhibit } from "src/types";
 import { copyToClipboard } from "src/utils";
@@ -20,6 +31,7 @@ const ExhibitPage: NextPage = () => {
   // If the view query is set, directly set that as the view & open the modal
   const [showModal, setShowModalInternal] = useState<boolean>(false);
   const setShowModal = (
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     showModal: boolean,
     viewingPageIndex: number | undefined,
   ) => {
@@ -37,6 +49,13 @@ const ExhibitPage: NextPage = () => {
   };
   const [viewing, setViewing] = useState<number>(-1);
   const [exhibit, setExhibit] = useState<Exhibit | null>(null);
+
+  const [ref, bounds] = useMeasure();
+  const screenHeight = bounds.height;
+
+  const { ref: viewRef, inView } = useInView({
+    threshold: 0,
+  });
 
   const downloadUrl = (rawImageUrl: string): string =>
     `/api/utils/dl?url=${encodeURIComponent(rawImageUrl)}`;
@@ -107,7 +126,7 @@ const ExhibitPage: NextPage = () => {
         <div className="flex">
           <button
             type="button"
-            className="border-solid border-2 p-2"
+            className="p-2 border-2 border-solid"
             onClick={() => {
               console.log("share this image");
 
@@ -130,7 +149,7 @@ const ExhibitPage: NextPage = () => {
           >
             <button
               type="button"
-              className="border-solid border-2 p-2 ml-8"
+              className="p-2 ml-8 border-2 border-solid"
               onClick={() => {
                 console.log("save this image");
               }}
@@ -145,35 +164,60 @@ const ExhibitPage: NextPage = () => {
 
   return (
     <>
-      <h1 className="m-8">These images in the style of {exhibit.name} </h1>
-      <div className="columns-3">
-        {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
-        {exhibit.images.map((imageUrl, i) => (
-          <figure
-            key={imageUrl}
-            className="bg-slate-100 rounded-xl p-2 m-2 cursor-pointer"
-            onClick={() => {
-              console.log("clickyy");
-              setShowModal(true, i);
-              setViewing(i);
-            }}
+      <TitleAndMetaTags color="black" title={`Your ${exhibit.name} | Vana`} />
+
+      <div
+        ref={ref}
+        className={clsx("relative min-h-screen")}
+        style={{ height: `${screenHeight}px` }}
+      >
+        <div className="pt-[20vh] mb-[20vh] Container">
+          <PageHeading
+            inView={inView}
+            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
+            heading={
+              <NextLink href={`/user/${userEmailHash}`}>
+                <button type="button" className="flex items-center gap-1 -ml-3">
+                  <Icon icon="carbon:arrow-left" height="0.5em" />
+                  <span>{exhibit.name}</span>
+                </button>
+              </NextLink>
+            }
           >
-            <Image
-              src={imageUrl}
-              alt={exhibit.name}
-              width={250}
-              height={250}
-              loader={({ src }) => src}
-              placeholder="blur"
-              blurDataURL={config.portraitBlurDataURL}
-            />
-          </figure>
-        ))}
+            <p className="text-stone-400">
+              {exhibit.name} images from Gallery {userEmailHash?.slice(-7)}.
+              {/* TODO: add share button here… */}
+            </p>
+          </PageHeading>
+
+          <div className="pt-w12 pb-w72">
+            <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-insetHalf">
+              {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
+              {exhibit.images.map((imageUrl, i) => (
+                <ArtCard
+                  key={imageUrl}
+                  imageSrc={imageUrl}
+                  imageAlt={exhibit.name}
+                  placeholder="blur"
+                  blurDataURL={config.portraitBlurDataURL}
+                  buttonOnClick={() => {
+                    console.log("clickyy");
+                    setShowModal(true, i);
+                    setViewing(i);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* FOOTER LOGO */}
+        <FooterBadge screenHeight={screenHeight} blackTheme />
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <button
           type="button"
-          className="border-solid border-2 p-2"
+          className="p-2 border-2 border-solid"
           onClick={() => {
             console.log("Shared");
 
@@ -185,14 +229,14 @@ const ExhibitPage: NextPage = () => {
         </button>
         <button
           type="button"
-          className="border-solid border-2 p-2"
+          className="p-2 border-2 border-solid"
           onClick={() => {
             router.push("/");
           }}
         >
           Create a new gallery
         </button>
-      </div>
+      </div> */}
     </>
   );
 };

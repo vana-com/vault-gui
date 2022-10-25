@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useMeasure from "react-use-measure";
 
 import { Button, Dialog } from "src/components";
@@ -57,12 +57,10 @@ const SelfieButton = ({ onImageCaptured }: Props) => {
       })
       .then((stream) => {
         setVideoStream(stream);
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
       })
       .catch((err) => {
-        console.error("Unable to start camera", err);
+        setVideoStream(null);
+        console.error("Unable to start camera:", err);
       });
   };
 
@@ -71,6 +69,13 @@ const SelfieButton = ({ onImageCaptured }: Props) => {
       track.stop();
     });
   };
+
+  // Set video stream whenever it's available
+  useEffect(() => {
+    if (videoRef.current && videoStream) {
+      videoRef.current.srcObject = videoStream;
+    }
+  }, [videoStream]);
 
   return (
     <Dialog
@@ -89,18 +94,35 @@ const SelfieButton = ({ onImageCaptured }: Props) => {
       }
     >
       <div ref={containerRef}>
-        <h1 className="p-3">Take a selfie</h1>
+        <h1 className="p-3 text-dark">Take a selfie</h1>
 
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <video
-          ref={videoRef}
-          width={containerBounds.width}
-          height={containerBounds.height}
-          autoPlay
-        />
-        <button type="button" onClick={captureImage}>
-          Capture
-        </button>
+        {/* Camera not available */}
+        {!videoStream && (
+          <div className="w-full p-2 flex text-dark justify-center items-center">
+            <Icon icon="carbon:camera" height="1.25em" />
+            <p className="ml-2">Loading camera stream</p>
+          </div>
+        )}
+
+        {videoStream && (
+          <>
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            <video
+              ref={videoRef}
+              width={containerBounds.width}
+              height={containerBounds.height}
+              autoPlay
+            />
+            <Button
+              className="!w-full text-white bg-black"
+              disabled={!videoStream}
+              onClick={captureImage}
+            >
+              <Icon icon="carbon:camera" height="1.25em" />
+              <span className="transform -translate-y-[0.05em]">Capture</span>
+            </Button>
+          </>
+        )}
       </div>
     </Dialog>
   );

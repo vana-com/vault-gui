@@ -95,6 +95,7 @@ const GalleryPage: NextPage = () => {
           >
             <p className="text-stone-400">
               Generated Monday October 24, 2022
+              {/* TODO: add share button here… */}
               {/* <span className="text-stone-400">
                 In the meantime, visit the galleries of the creative team behind
                 this project.
