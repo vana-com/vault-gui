@@ -136,7 +136,9 @@ const UploadPage: NextPage = () => {
                   onChange={(event) => {
                     setEmailAddress(event.target.value);
                   }}
-                  className={clsx("!text-black !border-transparent")}
+                  className={clsx(
+                    "flex-1 !px-2.5 !text-black !border-transparent",
+                  )}
                 />
                 <Button
                   type="submit"
@@ -146,7 +148,7 @@ const UploadPage: NextPage = () => {
                     filesToUpload.length < MIN_FILES ||
                     filesToUpload.length > MAX_FILES
                   }
-                  className={clsx("!text-black !border-transparent")}
+                  className={clsx("!px-2.5 !text-black !border-transparent")}
                 >
                   <span>Submit</span>
                   {/* <Icon icon="carbon:arrow-right" /> */}
