@@ -4,4 +4,6 @@ const blobify = async (url: string) => {
   return blob;
 };
 
-export { blobify };
+const fileify = (blob: Blob, filename: string) => new File([blob], filename);
+
+export { blobify, fileify };
