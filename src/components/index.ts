@@ -12,6 +12,7 @@ export * from "./Page";
 export * from "./PageGenerate";
 export * from "./PageHome";
 export * from "./Selfie";
+export * from "./Spinner";
 export * from "./TitleAndMetaTags";
 export * from "./Upload";
 
