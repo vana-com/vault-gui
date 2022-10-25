@@ -15,7 +15,7 @@ import {
 } from "src/components";
 import { StorageUpload } from "src/components/Upload";
 import { useDeviceDetect } from "src/hooks";
-import { validateEmail, uploadFile } from "src/utils";
+import { uploadFile, validateEmail } from "src/utils";
 
 const UploadPage: NextPage = () => {
   const router = useRouter();
