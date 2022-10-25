@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "src/components";
 import config from "src/config";
-import { uploadFile } from "src/utils";
 
 import { useFileDropzone } from "./FileDropzone";
 import { StorageProgress } from "./index";
@@ -13,29 +12,28 @@ import { StorageProgress } from "./index";
 type Props = {
   maxFiles: number;
   minFiles: number;
-  userEmail: string;
   children: React.ReactNode;
   capturedImage: File | null;
+  uploadProgress: Array<number>;
+  filesToUpload: Array<File>;
+  setFilesToUpload: (files: Array<File>) => void;
+  isDataUploading: boolean;
 };
 
 const StorageUpload = ({
   maxFiles,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   minFiles,
-  userEmail,
+  uploadProgress,
   children,
+  isDataUploading,
   capturedImage,
+  filesToUpload,
+  setFilesToUpload,
 }: Props) => {
-  const router = useRouter();
   const { FileInput, openFileDialog } = useFileDropzone();
-  const [isDataUploading, setIsDataUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<Array<number>>([]);
-  const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
 
-  const isValidEmail = (email: string): boolean => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  };
+  console.log("isDataUploading", isDataUploading);
 
   /**
    * Callback when a file is selected in the file picker
@@ -86,62 +84,14 @@ const StorageUpload = ({
     }
   };
 
-  // Callback to handle upload progress
-  const handleUploadProgress = (event: any, fileIndex: number) => {
-    const { loaded, total } = event;
-
-    const progress =
-      total || loaded
-        ? Math.floor((loaded / (total || 1)) * 100) // Prevent divide by 0
-        : 15; // Default to 15% if somehow values don't exist
-
-    // Default starting pos is 5% so don't jump back down to <5%
-    uploadProgress[fileIndex] = Math.max(progress, 5);
-    setUploadProgress(uploadProgress);
-  };
-
-  /**
-   * Handles all image uploading to Google Cloud Storage
-   */
-  const uploadFiles = async () => {
-    setIsDataUploading(true);
-    setUploadProgress(Array(filesToUpload.length).fill(5));
-    try {
-      // Upload files to object store (S3 or GCS)
-      const timestamp = new Date().getTime();
-      const uploadPromises = filesToUpload.map((file, index) =>
-        uploadFile(file, index, timestamp, userEmail, handleUploadProgress),
-      );
-
-      const uploadResults = await Promise.all(uploadPromises);
-      const successfulUpload = uploadResults.every(
-        (result) => result?.uploadSuccessful,
-      );
-
-      if (successfulUpload) {
-        console.log("All files uploaded successfully");
-        setTimeout(() => router.push("/generating"), 500);
-      } else {
-        console.error("Unable to upload one or more files");
-      }
-    } catch (error: any) {
-      console.error("Unable to upload user data", error);
-    } finally {
-      setIsDataUploading(false);
-    }
-  };
-
-  // track the upload progress
-  useEffect(() => {
-    // empty on purpose, just tracking uploadProgress
-  }, [uploadProgress]);
-
   // Add new selfie images to file list
   useEffect(() => {
     if (capturedImage) {
       onFileReceived([capturedImage]);
     }
   }, [capturedImage]);
+
+  console.log("uploadProgress", uploadProgress);
 
   // useMemo prevents image flickering on state change
   const imagesPreview = useMemo(
@@ -158,27 +108,28 @@ const StorageUpload = ({
             />
 
             {/* upload progress for each file */}
-            {isDataUploading && (
+            {isDataUploading ? (
               <StorageProgress storeProgress={uploadProgress[i]} />
+            ) : (
+              <div className="absolute bottom-0 w-full">
+                <Button
+                  className="!w-full text-white bg-black !text-sm !h-[32px] !border-black"
+                  aria-label="Remove file to upload"
+                  variant="icon"
+                  type="reset"
+                  onClick={() => {
+                    const copyFilesToUpload = [...filesToUpload];
+                    copyFilesToUpload.splice(i, 1);
+                    setFilesToUpload(copyFilesToUpload);
+                  }}
+                >
+                  <span className="transform -translate-y-[0.05em]">
+                    Remove
+                  </span>
+                  <Icon icon="carbon:close-filled" />
+                </Button>
+              </div>
             )}
-
-            {/* Delete image button */}
-            <div className="absolute bottom-0 w-full">
-              <Button
-                className="!w-full text-white bg-black !text-sm !h-[32px] !border-black"
-                aria-label="Remove file to upload"
-                variant="icon"
-                type="reset"
-                onClick={() => {
-                  const copyFilesToUpload = [...filesToUpload];
-                  copyFilesToUpload.splice(i, 1);
-                  setFilesToUpload(copyFilesToUpload);
-                }}
-              >
-                <span className="transform -translate-y-[0.05em]">Remove</span>
-                <Icon icon="carbon:close-filled" />
-              </Button>
-            </div>
           </div>
         ))}
       </div>
@@ -215,22 +166,6 @@ const StorageUpload = ({
         {/* SELFIE CHILD */}
         {children}
       </div>
-
-      {/* Upload button */}
-      {/* filesToUpload.length < minFiles ||
-              filesToUpload.length > maxFiles || */}
-      {filesToUpload.length > 0 && (
-        <div className="pt-w12">
-          <Button
-            className="!w-full text-white bg-black"
-            onClick={uploadFiles}
-            disabled={isDataUploading || !isValidEmail(userEmail)}
-          >
-            <Icon icon="carbon:upload" height="1em" />
-            <span>Upload</span>
-          </Button>
-        </div>
-      )}
     </>
   );
 };
