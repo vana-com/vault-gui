@@ -106,7 +106,7 @@ const GeneratePage: NextPage = () => {
           >
             <p>
               Sit tight. Your artwork is coming to life. You will receive an
-              email once it is ready.
+              email once it is ready.{" "}
               <span className="text-stone-400">
                 In the meantime, meet the creative team behind this project.
               </span>
