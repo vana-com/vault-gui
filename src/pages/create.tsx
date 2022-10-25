@@ -115,7 +115,7 @@ const UploadPage: NextPage = () => {
           >
             <p>
               Create your digital self portrait.{" "}
-              <span className="text-stone-400">
+              <span className="text-stone-500">
                 Upload {MIN_FILES} images showing your face or take some
                 pictures of your face from different angles.{" "}
               </span>
