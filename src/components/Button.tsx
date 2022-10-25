@@ -2,12 +2,17 @@ import clsx from "clsx";
 import React from "react";
 
 type Props = Omit<React.ComponentProps<"button">, "className"> &
-  Record<string, unknown> & { className?: string };
+  Record<string, unknown> & {
+    className?: string;
+    type?: "button" | "submit" | "reset";
+    size?: "sm" | "lg";
+  };
 
 const Button = React.forwardRef<HTMLButtonElement, Props>(
-  ({ children, className, ...props }, ref) => (
+  ({ children, type = "button", className, size = "lg", ...props }, ref) => (
     <button
-      type="button"
+      // eslint-disable-next-line react/button-has-type
+      type={type}
       ref={ref}
       {...props}
       className={clsx(
@@ -17,14 +22,14 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         "w-auto",
         "rounded-none",
         // size
-        "px-4 h-[40px]",
+        size === "lg" && "px-4 h-[40px]",
+        size === "sm" && "px-2.5 h-[27px] text-sm",
         // typography: inherit body size
-        "font-normal",
-        // bg
-        // "bg-blueCrayola-500 dark:bg-blueCrayola-500",
-        "backdrop-blur-sm",
+        "font-sans font-normal",
         // color
         "text-white dark:text-stone-100",
+        // bg
+        "backdrop-blur-sm",
         // border
         "border border-current",
         // IX states
