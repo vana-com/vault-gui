@@ -20,7 +20,7 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Exhibit } from "src/types";
-import { copyToClipboard } from "src/utils";
+import { copyToClipboard, share } from "src/utils";
 
 const ExhibitPage: NextPage = () => {
   const router = useRouter();
@@ -61,6 +61,39 @@ const ExhibitPage: NextPage = () => {
 
   const downloadUrl = (rawImageUrl: string): string =>
     `/api/utils/dl?url=${encodeURIComponent(rawImageUrl)}`;
+
+  const shareLink = async () => {
+    const link = `${
+      config.appBaseUrl
+    }/user/${userEmailHash}/exhibit/${exhibitName}?view=${viewing ?? 0}`;
+    console.log("sharing link:", link);
+
+    try {
+      const didShare = await share({
+        link,
+      });
+
+      // Fallback
+      if (!didShare) {
+        try {
+          await copyToClipboard(link);
+        } catch (error) {
+          console.log(
+            "Something went wrong while copying the clipboard:",
+            error,
+          );
+          throw error;
+        }
+      }
+    } catch (error) {
+      console.log(
+        "Something went wrong while attempting the sharing flow:",
+        error,
+      );
+
+      await copyToClipboard(link);
+    }
+  };
 
   // Wait until path params are accessable
   useEffect(() => {
@@ -169,7 +202,10 @@ const ExhibitPage: NextPage = () => {
                     </span>
                   </button>
                 </NextLink>
-                <Button className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5">
+                <Button
+                  className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5"
+                  onClick={(_: any) => shareLink()}
+                >
                   <Icon icon="carbon:arrow-up" height="1.0em" />
                   <span className="transform translate-y-[-0.015em]">
                     Share
