@@ -20,7 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       {...props}
       className={clsx(
         "relative inline-flex items-center justify-center gap-1.5",
-        "select-none whitespace-nowrap align-middle outline-none",
+        "whitespace-nowrap align-middle outline-none",
         "h-inputH w-auto",
         "rounded-none px-4 h-[40px]",
         // typography: inherit body size
@@ -38,4 +38,5 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ),
 );
 
+Input.displayName = "Input";
 export { Input };
