@@ -83,7 +83,12 @@ const GeneratePage: NextPage = () => {
           <PageHeading
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
-            heading="Your masterpiece is being crafted"
+            heading={
+              <>
+                Your masterpiece{" "}
+                <span className="mobile:table">is being crafted</span>
+              </>
+            }
           >
             <p>
               Sit tight. Your artwork is coming to life. You will receive an

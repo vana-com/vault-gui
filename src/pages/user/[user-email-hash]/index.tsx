@@ -76,7 +76,7 @@ const GalleryPage: NextPage = () => {
                     <span>Gallery {userEmailHash?.slice(-4)}</span>
                   </button>
                 </NextLink>
-                <Button className="!text-stone-500 text-sm font-sans !h-[27px]">
+                <Button className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5">
                   <Icon icon="carbon:arrow-up" height="1.0em" />
                   <span className="transform translate-y-[-0.015em]">
                     Share

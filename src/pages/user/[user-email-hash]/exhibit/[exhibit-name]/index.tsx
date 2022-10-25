@@ -12,6 +12,7 @@ import useMeasure from "react-use-measure";
 
 import {
   ArtCard,
+  Button,
   FooterBadge,
   PageHeading,
   Spinner,
@@ -156,17 +157,35 @@ const ExhibitPage: NextPage = () => {
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
             heading={
-              <NextLink href={`/user/${userEmailHash}`}>
-                <button type="button" className="flex items-center gap-1 -ml-3">
-                  <Icon icon="carbon:arrow-left" height="0.5em" />
-                  <span>{exhibit.name}</span>
-                </button>
-              </NextLink>
+              <div className="flex items-baseline justify-between">
+                <NextLink href="/generating">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 -ml-3"
+                  >
+                    <Icon icon="carbon:arrow-left" height="0.5em" />
+                    <span className="w-[240px] truncate text-left">
+                      {exhibit.name}
+                    </span>
+                  </button>
+                </NextLink>
+                <Button className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5">
+                  <Icon icon="carbon:arrow-up" height="1.0em" />
+                  <span className="transform translate-y-[-0.015em]">
+                    Share
+                  </span>
+                </Button>
+              </div>
             }
           >
             <p className="text-stone-400">
-              {exhibit.name} images from Gallery {userEmailHash?.slice(-4)}.
-              {/* TODO: add share button here… */}
+              {exhibit.name} images from{" "}
+              <NextLink href={`/user/${userEmailHash}`}>
+                <button type="button" className="link">
+                  Gallery {userEmailHash?.slice(-4)}
+                </button>
+              </NextLink>
+              .
             </p>
           </PageHeading>
 
