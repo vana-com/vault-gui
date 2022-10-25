@@ -21,7 +21,9 @@ const MAX_FILES = 10;
 
 const UploadPage: NextPage = () => {
   const router = useRouter();
-  const [ref, bounds] = useMeasure();
+  const [ref, bounds] = useMeasure({
+    scroll: true,
+  });
   const screenHeight = bounds.height;
 
   const [capturedImage, setCapturedImage] = useState<File | null>(null);
