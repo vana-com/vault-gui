@@ -14,8 +14,10 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { StorageUpload } from "src/components/Upload";
-import { useDeviceDetect } from "src/hooks";
-import { validateEmail, uploadFile } from "src/utils";
+import { uploadFile, validateEmail } from "src/utils";
+
+const MIN_FILES = 8;
+const MAX_FILES = 10;
 
 const UploadPage: NextPage = () => {
   const router = useRouter();
@@ -36,7 +38,6 @@ const UploadPage: NextPage = () => {
     // empty on purpose, just tracking uploadProgress
   }, [uploadProgress]);
 
-  const { isMobileUserAgent: isMobile } = useDeviceDetect();
   const { ref: viewRef, inView } = useInView({
     threshold: 0,
   });
@@ -110,8 +111,8 @@ const UploadPage: NextPage = () => {
             <p>
               Create your digital self portrait.{" "}
               <span className="text-stone-400">
-                Upload 8 images showing your face or take some pictures of your
-                face from different angles.{" "}
+                Upload {MIN_FILES} images showing your face or take some
+                pictures of your face from different angles.{" "}
               </span>
             </p>
           </PageHeading>
@@ -121,27 +122,25 @@ const UploadPage: NextPage = () => {
             {/* Email input */}
 
             <StorageUpload
-              minFiles={8}
-              maxFiles={10}
+              minFiles={MIN_FILES}
+              maxFiles={MAX_FILES}
               capturedImage={capturedImage}
               uploadProgress={uploadProgress}
               filesToUpload={filesToUpload}
               setFilesToUpload={setFilesToUpload}
               isDataUploading={isDataUploading}
             >
-              {isMobile && (
-                <SelfieButton
-                  onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
-                  videoStream={videoStream}
-                  setVideoStream={setVideoStream}
-                />
-              )}
+              <SelfieButton
+                onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
+                videoStream={videoStream}
+                setVideoStream={setVideoStream}
+              />
             </StorageUpload>
           </div>
         </div>
 
         {/* EMAIL */}
-        {filesToUpload.length >= 8 && (
+        {filesToUpload.length >= MIN_FILES && (
           <>
             <div
               className="fixed w-full h-[48px] bg-gradient-to-t from-blackShadow-50"
@@ -168,7 +167,12 @@ const UploadPage: NextPage = () => {
                   />
                   <Button
                     onClick={uploadFiles}
-                    disabled={isDataUploading || !validateEmail(emailAddress)}
+                    disabled={
+                      isDataUploading ||
+                      !validateEmail(emailAddress) ||
+                      filesToUpload.length < MIN_FILES ||
+                      filesToUpload.length > MAX_FILES
+                    }
                     className={clsx("!text-black !border-transparent")}
                   >
                     <span>Submit</span>

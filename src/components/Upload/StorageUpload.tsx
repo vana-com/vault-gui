@@ -1,7 +1,6 @@
 import { Icon } from "@iconify/react";
 import Image from "next/future/image";
-import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 
 import { Button } from "src/components";
 import config from "src/config";
@@ -32,8 +31,6 @@ const StorageUpload = ({
   setFilesToUpload,
 }: Props) => {
   const { FileInput, openFileDialog } = useFileDropzone();
-
-  console.log("isDataUploading", isDataUploading);
 
   /**
    * Callback when a file is selected in the file picker
@@ -79,8 +76,12 @@ const StorageUpload = ({
 
     if (!validFileCheck) {
       console.error("Invalid files. Please upload JPG or PNG files only.");
-    } else {
+    } else if (filesToUpload.length + files.length <= maxFiles) {
       setFilesToUpload([...filesToUpload, ...files]);
+    } else {
+      console.error(
+        `Invalid number of files. Please only upload ${minFiles} - ${maxFiles} files.`,
+      );
     }
   };
 
@@ -90,8 +91,6 @@ const StorageUpload = ({
       onFileReceived([capturedImage]);
     }
   }, [capturedImage]);
-
-  console.log("uploadProgress", uploadProgress);
 
   // useMemo prevents image flickering on state change
   const imagesPreview = useMemo(
