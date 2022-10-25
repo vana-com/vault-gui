@@ -35,6 +35,7 @@ const GalleryPage: NextPage = () => {
 
   const shareLink = async () => {
     const link = `${config.appBaseUrl}/user/${userEmailHash}/`;
+    console.log("sharing link:", link);
 
     try {
       const didShare = await share({
