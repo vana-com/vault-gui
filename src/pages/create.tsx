@@ -166,11 +166,7 @@ const UploadPage: NextPage = () => {
               setFilesToUpload={setFilesToUpload}
               isDataUploading={isDataUploading}
             >
-              <SelfieButton
-                onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
-                videoStream={videoStream}
-                setVideoStream={setVideoStream}
-              />
+              {null}
             </StorageUpload>
           </div>
         </div>
