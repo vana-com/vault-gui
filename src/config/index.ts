@@ -48,6 +48,15 @@ const generalConfig = {
   //Email: ellie@generating-page.com
   ellieEmailHash:
     "04af22fe77f4839d3d34fe0520e554cf754aa8e7a421dbc4eea0923d0af13756",
+  //Email: colin@generating-page.com
+  colinEmailHash:
+    "f5f30e71aa3f12b8491e7455fa6bcdc0e9d95e0c6fc12e1611ee8ad6a59d3a5d",
+  //Email: colin@generating-page.com
+  phoebeEmailHash:
+    "295f2a49f8b92e051ce7f14386da27d95c39f07641a0d365999f47178244d320",
+  //Email: zach@generating-page.com
+  zachEmailHash:
+    "22673a90a00dcbe611747561a616642ed9745b256b5ff573ed5cce51f3088cbb",
 
   portraitBlurDataURL:
     "https://storage.googleapis.com/corsali-gui-assets/person.png",

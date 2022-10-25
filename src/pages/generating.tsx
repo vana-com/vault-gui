@@ -29,7 +29,14 @@ const GeneratePage: NextPage = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       if (!galleries) {
-        const vanaTeamEmailHashes = [config.annaEmailHash, config.artEmailHash];
+        const vanaTeamEmailHashes = [
+          config.artEmailHash,
+          config.phoebeEmailHash,
+          config.colinEmailHash,
+          config.ellieEmailHash,
+          config.zachEmailHash,
+          config.annaEmailHash,
+        ];
 
         const galleryPromises = vanaTeamEmailHashes.map((emailHash) =>
           fetch(`/api/user/${emailHash}`),
