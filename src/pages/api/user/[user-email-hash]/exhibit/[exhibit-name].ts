@@ -83,6 +83,7 @@ export const getExhibit = async (exhibitKey: string): Promise<Exhibit> => {
   const fileNames = files
     .map((f) => f.name)
     .filter((_, idx) => isNonZeroSize[idx]);
+  fileNames.sort();
   const images = await Promise.all(
     fileNames.map(async (fileName: string) => getSignedUrl(fileName)),
   );
