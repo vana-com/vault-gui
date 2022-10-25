@@ -20,3 +20,4 @@ export * from "./openInNewTab";
 export * from "./setLoginPath";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";
+export * from "./validateEmail";
