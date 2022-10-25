@@ -121,38 +121,36 @@ const UploadPage: NextPage = () => {
               </span>
             </p>
             {/* EMAIL */}
-            {filesToUpload.length >= MIN_FILES && (
-              <div className="">
-                <form
-                  action=""
-                  className="flex justify-between w-full text-black border border-black/10"
+            <div className="">
+              <form
+                action=""
+                className="flex justify-between w-full text-black border border-black/10"
+              >
+                <Input
+                  type="email"
+                  value={emailAddress}
+                  placeholder="Enter your email"
+                  required
+                  onChange={(event) => {
+                    setEmailAddress(event.target.value);
+                  }}
+                  className={clsx("!text-black !border-transparent")}
+                />
+                <Button
+                  onClick={uploadFiles}
+                  disabled={
+                    isDataUploading ||
+                    !validateEmail(emailAddress) ||
+                    filesToUpload.length < MIN_FILES ||
+                    filesToUpload.length > MAX_FILES
+                  }
+                  className={clsx("!text-black !border-transparent")}
                 >
-                  <Input
-                    type="email"
-                    value={emailAddress}
-                    placeholder="Enter your email"
-                    required
-                    onChange={(event) => {
-                      setEmailAddress(event.target.value);
-                    }}
-                    className={clsx("!text-black !border-transparent")}
-                  />
-                  <Button
-                    onClick={uploadFiles}
-                    disabled={
-                      isDataUploading ||
-                      !validateEmail(emailAddress) ||
-                      filesToUpload.length < MIN_FILES ||
-                      filesToUpload.length > MAX_FILES
-                    }
-                    className={clsx("!text-black !border-transparent")}
-                  >
-                    <span>Submit</span>
-                    {/* <Icon icon="carbon:arrow-right" /> */}
-                  </Button>
-                </form>
-              </div>
-            )}
+                  <span>Submit</span>
+                  {/* <Icon icon="carbon:arrow-right" /> */}
+                </Button>
+              </form>
+            </div>
           </PageHeading>
 
           {/* INPUTS */}
