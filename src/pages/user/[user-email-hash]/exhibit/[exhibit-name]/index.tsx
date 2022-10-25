@@ -21,7 +21,7 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Exhibit } from "src/types";
-import { copyToClipboard, share } from "src/utils";
+import { blobify, copyToClipboard, fileify, share } from "src/utils";
 
 const ExhibitPage: NextPage = () => {
   const router = useRouter();
@@ -89,6 +89,40 @@ const ExhibitPage: NextPage = () => {
       );
 
       await copyToClipboard(link);
+    }
+  };
+
+  const shareFile = async (imageUrl: string, fallbackLink: string) => {
+    console.log("file link:", imageUrl);
+    const blob = await blobify(imageUrl);
+    const fileToShare = fileify(blob, "my_awesome_vana_portrait.png");
+
+    const files = [fileToShare];
+
+    try {
+      const didShare = await share({
+        files,
+      });
+
+      // Fallback
+      if (!didShare) {
+        try {
+          await copyToClipboard(fallbackLink);
+        } catch (error) {
+          console.log(
+            "Something went wrong while copying the clipboard:",
+            error,
+          );
+          throw error;
+        }
+      }
+    } catch (error) {
+      console.log(
+        "Something went wrong while attempting the sharing flow:",
+        error,
+      );
+
+      await copyToClipboard(fallbackLink);
     }
   };
 
@@ -221,12 +255,17 @@ const ExhibitPage: NextPage = () => {
                           onClick={() => {
                             console.log("share this image");
 
-                            const path = `${
+                            const imageURL = downloadUrl(
+                              exhibit.images[viewing],
+                            );
+
+                            const fallbackURL = `${
                               config.appBaseUrl
                             }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
                               viewing ?? 0
                             }`;
-                            shareLink(path);
+
+                            shareFile(imageURL, fallbackURL);
                           }}
                         >
                           <Icon icon="carbon:arrow-up-right" height="1.0em" />
