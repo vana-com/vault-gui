@@ -132,7 +132,7 @@ const GalleryPage: NextPage = () => {
                   passHref
                 >
                   <ArtCard
-                    imageSrc={exhibit.images[0]}
+                    imageSrc={exhibit.images[exhibit.images.length - 1]}
                     imageAlt={exhibit.name}
                     size={512}
                     placeholder="blur"

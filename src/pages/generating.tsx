@@ -112,7 +112,11 @@ const GeneratePage: NextPage = () => {
                   passHref
                 >
                   <ArtCard
-                    imageSrc={gallery.exhibits[0].images[0]}
+                    imageSrc={
+                      gallery.exhibits[0].images[
+                        gallery.exhibits[0].images.length - 1
+                      ]
+                    }
                     imageAlt={gallery.userHash}
                   />
                 </NextLink>
