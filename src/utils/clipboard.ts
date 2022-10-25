@@ -21,7 +21,7 @@ const checkPermission = async (): Promise<boolean> => {
   return false;
 };
 
-const copyToClipboard = async (textToWrite: string): Promise<any> => {
+const copyToClipboard = async (textToWrite: string): Promise<boolean> => {
   const hasPermission = await checkPermission();
   if (!hasPermission) throw new Error("No permission granted");
   if (!textToWrite) throw new Error("No text provided");
@@ -29,6 +29,7 @@ const copyToClipboard = async (textToWrite: string): Promise<any> => {
   try {
     const nav = _navigator();
     await nav.clipboard.writeText(textToWrite);
+    return true;
   } catch (err) {
     throw new Error("Copying text to clipboard failed");
   }

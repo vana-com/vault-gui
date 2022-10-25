@@ -36,14 +36,30 @@ const GalleryPage: NextPage = () => {
   const shareLink = async () => {
     const link = `${config.appBaseUrl}/user/${userEmailHash}/`;
 
-    const didShare = await share({
-      title: "",
-      text: "",
-      link,
-    });
+    try {
+      const didShare = await share({
+        title: "Your Vana Portrait",
+        text: "you are amazing!!!",
+        link,
+      });
 
-    // Fallback
-    if (!didShare) copyToClipboard(link);
+      // Fallback
+      if (!didShare) {
+        try {
+          await copyToClipboard(link);
+        } catch (error) {
+          console.log(
+            "Something went wrong while copying the clipboard:",
+            error,
+          );
+        }
+      }
+    } catch (error) {
+      console.log(
+        "Something went wrong while attempting the sharing flow:",
+        error,
+      );
+    }
   };
 
   useEffect(() => {
@@ -89,7 +105,7 @@ const GalleryPage: NextPage = () => {
                   </button>
                 </NextLink>
                 <Button
-                  onClick={(_: any) => shareLink()}
+                  onClick={async (_: any) => shareLink()}
                   className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5"
                 >
                   <Icon icon="carbon:arrow-up" height="1.0em" />

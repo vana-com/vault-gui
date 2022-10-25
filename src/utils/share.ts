@@ -11,6 +11,7 @@ const _navigator = (): Navigator => {
 };
 
 const share = async (data: NavigatorData): Promise<boolean> => {
+  console.log("Attempting to share data...");
   try {
     const nav = _navigator();
     await nav.share(data);
