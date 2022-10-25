@@ -106,7 +106,8 @@ const GalleryPage: NextPage = () => {
                 </NextLink>
                 <Button
                   onClick={async (_: any) => shareLink()}
-                  className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5"
+                  size="sm"
+                  className="!text-stone-500 text-sm transform translate-y-[-0.2em]"
                 >
                   <Icon icon="carbon:arrow-up" height="1.0em" />
                   <span className="transform translate-y-[-0.015em]">
