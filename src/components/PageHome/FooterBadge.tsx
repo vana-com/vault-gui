@@ -25,11 +25,11 @@ const FooterBadge = ({ screenHeight, blackTheme }: Props) => (
           <div className="font-display text-2xl font-bold text-center tracking-[-0.01em]">
             <span className="-ml-[0.17em]">Portrait</span>
           </div>
-          <div className="flex justify-center gap-2 font-serif text-sm font-normal tracking-[0.015em]">
+          <div className="flex items-center justify-center gap-2 font-sans text-sm font-normal tracking-[0.015em]">
             <Link href="/terms-of-service" passHref>
               Terms of Service
             </Link>
-            <hr className="hr hr-vertical h-[15px]" />
+            <hr className="hr hr-vertical h-[12px] opacity-50" />
             <Link href="/privacy-policy" passHref>
               Privacy Policy
             </Link>
