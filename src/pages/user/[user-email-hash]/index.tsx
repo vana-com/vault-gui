@@ -39,8 +39,6 @@ const GalleryPage: NextPage = () => {
 
     try {
       const didShare = await share({
-        title: "Your Vana Portrait",
-        text: "you are amazing!!!",
         link,
       });
 

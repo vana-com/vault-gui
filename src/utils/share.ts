@@ -1,6 +1,6 @@
 interface NavigatorData {
-  title: string;
-  text: string;
+  title?: string;
+  text?: string;
   link?: string;
   files?: File[] | any;
 }
