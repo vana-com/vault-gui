@@ -92,7 +92,7 @@ const UploadPage: NextPage = () => {
       <TitleAndMetaTags
         color="black"
         title="Portrait | Vana"
-        description="Discover projects you can earn and learn from with your Vana Vault"
+        description="Create your portrait gallery on Vana"
       />
 
       <div
@@ -108,9 +108,10 @@ const UploadPage: NextPage = () => {
             heading="Create your gallery"
           >
             <p>
-              Select 8-10 portraits of you.{" "}
+              Create your digital self portrait.{" "}
               <span className="text-stone-400">
-                Add from your photos or take selfies with your phone.
+                Upload 8 images showing your face or take some pictures of your
+                face from different angles.{" "}
               </span>
             </p>
           </PageHeading>

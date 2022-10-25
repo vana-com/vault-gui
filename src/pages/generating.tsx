@@ -105,10 +105,10 @@ const GeneratePage: NextPage = () => {
             heading="Your masterpiece is being crafted"
           >
             <p>
-              We&apos;ll email you when it&apos;s ready in a couple of hours.{" "}
+              Sit tight. Your artwork is coming to life. You will receive an
+              email once it is ready.
               <span className="text-stone-400">
-                In the meantime, visit the galleries of the creative team behind
-                this project.
+                In the meantime, meet the creative team behind this project.
               </span>
             </p>
           </PageHeading>
