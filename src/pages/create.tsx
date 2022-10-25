@@ -29,6 +29,7 @@ const UploadPage: NextPage = () => {
 
   const [uploadProgress, setUploadProgress] = useState<Array<number>>([]);
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
+  const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
 
   // track the upload progress
   useEffect(() => {
@@ -85,8 +86,6 @@ const UploadPage: NextPage = () => {
     }
   };
 
-  console.log("filesToUpload.length", filesToUpload.length);
-
   return (
     <>
       <TitleAndMetaTags
@@ -103,6 +102,7 @@ const UploadPage: NextPage = () => {
         <div className="pt-[20vh] mb-[20vh] Container">
           {/* INSTRUCTIONS */}
           <PageHeading
+            hideSticky={!!videoStream}
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
             heading="Create your gallery"
@@ -132,6 +132,8 @@ const UploadPage: NextPage = () => {
               {isMobile && (
                 <SelfieButton
                   onImageCaptured={(imgFile) => setCapturedImage(imgFile)}
+                  videoStream={videoStream}
+                  setVideoStream={setVideoStream}
                 />
               )}
             </StorageUpload>

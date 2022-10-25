@@ -6,12 +6,17 @@ import { Button, Dialog } from "src/components";
 
 type Props = {
   onImageCaptured?: (image: File) => void;
+  videoStream: MediaStream | null;
+  setVideoStream: (videoStream: MediaStream | null) => void;
 };
 
-const SelfieButton = ({ onImageCaptured }: Props) => {
+const SelfieButton = ({
+  onImageCaptured,
+  videoStream,
+  setVideoStream,
+}: Props) => {
   const [containerRef, containerBounds] = useMeasure();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
 
   const captureImage = () => {
     if (videoRef.current) {
@@ -79,6 +84,7 @@ const SelfieButton = ({ onImageCaptured }: Props) => {
 
   return (
     <Dialog
+      className="bg-white"
       onOpenChange={(isOpen) => {
         if (isOpen) {
           openCameraStream();
