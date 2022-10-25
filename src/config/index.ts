@@ -39,15 +39,15 @@ const generalConfig = {
 
   adminPassword: "barack-obama-cactus",
 
-  // Email: kahtaf@generating-page.com
-  kahtafEmailHash:
-    "314e2646e4da5f61774e4007d385232e2c5eb46f706a53f90f323c1403e32fe1",
   // Email: anna@generating-page.com
   annaEmailHash:
     "823052d590e9672111d0b501a09d1d8cee75a59562a9628198e2816a07ec745e",
   // Email: art@generating-page.com
   artEmailHash:
     "b5a97e6fc2e860ef7bfd7628491279e4b4dd19d100a8ce24a967303141c4b68a",
+  //Email: ellie@generating-page.com
+  ellieEmailHash:
+    "04af22fe77f4839d3d34fe0520e554cf754aa8e7a421dbc4eea0923d0af13756",
 
   portraitBlurDataURL:
     "https://storage.googleapis.com/corsali-gui-assets/person.png",
