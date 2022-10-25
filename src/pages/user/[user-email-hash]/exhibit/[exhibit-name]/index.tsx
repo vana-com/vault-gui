@@ -13,6 +13,7 @@ import useMeasure from "react-use-measure";
 import {
   ArtCard,
   Button,
+  DialogControlled,
   FooterBadge,
   PageHeading,
   Spinner,
@@ -30,8 +31,7 @@ const ExhibitPage: NextPage = () => {
     view: viewQuery,
   } = router.query;
 
-  // If the view query is set, directly set that as the view & open the modal
-  const [showModal, setShowModalInternal] = useState<boolean>(false);
+  const [showModalInternal, setShowModalInternal] = useState<boolean>(false);
   const setShowModal = (
     // eslint-disable-next-line @typescript-eslint/no-shadow
     showModal: boolean,
@@ -124,58 +124,6 @@ const ExhibitPage: NextPage = () => {
     return <Spinner />;
   }
 
-  if (showModal) {
-    return (
-      <div>
-        <Image
-          className="w-full"
-          src={exhibit.images[viewing ?? 0]}
-          alt={exhibit.name}
-          width={250}
-          height={250}
-          loader={({ src }) => src}
-          placeholder="blur"
-          blurDataURL={config.portraitBlurDataURL}
-        />
-        <div className="flex">
-          <button
-            type="button"
-            className="p-2 border-2 border-solid"
-            onClick={() => {
-              console.log("share this image");
-
-              const path = `${
-                config.appBaseUrl
-              }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
-                viewing ?? 0
-              }`;
-              copyToClipboard(path);
-            }}
-          >
-            Share Image
-          </button>
-          {/* We wrap this bttn in <a> as we need it for a file download */}
-          <a
-            href={downloadUrl(exhibit.images[viewing])}
-            download="vana_portrait.png"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <button
-              type="button"
-              className="p-2 ml-8 border-2 border-solid"
-              onClick={() => {
-                console.log("save this image");
-              }}
-            >
-              Download
-            </button>
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <TitleAndMetaTags color="black" title={`Your ${exhibit.name} | Vana`} />
@@ -197,13 +145,14 @@ const ExhibitPage: NextPage = () => {
                     className="flex items-center gap-1 -ml-3"
                   >
                     <Icon icon="carbon:arrow-left" height="0.5em" />
-                    <span className="w-[240px] truncate text-left">
+                    <span className="w-[240px] truncate !overflow-y-[initial] text-left">
                       {exhibit.name}
                     </span>
                   </button>
                 </NextLink>
                 <Button
-                  className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5"
+                  size="sm"
+                  className="!text-stone-500 transform translate-y-[-0.2em]"
                   onClick={(_: any) => shareLink()}
                 >
                   <Icon icon="carbon:arrow-up" height="1.0em" />
@@ -227,20 +176,95 @@ const ExhibitPage: NextPage = () => {
 
           <div className="pt-w12 pb-w72">
             <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-insetHalf">
-              {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
-              {exhibit.images.map((imageUrl, i) => (
-                <ArtCard
+              {/* CARD with MODAL */}
+              {/* Use the first image in an exhibit as the thumbnail for the entire exhibit */}
+              {exhibit.images.map((imageUrl) => (
+                <DialogControlled
                   key={imageUrl}
-                  imageSrc={imageUrl}
-                  imageAlt={exhibit.name}
-                  placeholder="blur"
-                  blurDataURL={config.portraitBlurDataURL}
-                  buttonOnClick={() => {
-                    console.log("clickyy");
-                    setShowModal(true, i);
-                    setViewing(i);
-                  }}
-                />
+                  open={showModalInternal}
+                  onOpenChange={() => setShowModalInternal(!showModalInternal)}
+                  overlayClassName="overflow-y-auto !bg-white"
+                  contentClassName="!w-[100vw]"
+                  // onPointerDownOutside={(event) => event.preventDefault()}
+                  triggerNode={
+                    <button type="button">
+                      <ArtCard
+                        key={imageUrl}
+                        imageSrc={imageUrl}
+                        imageAlt={exhibit.name}
+                        placeholder="blur"
+                        blurDataURL={config.portraitBlurDataURL}
+                      />
+                    </button>
+                  }
+                >
+                  <div className="relative flex flex-col gap-w16">
+                    <Image
+                      className="w-full"
+                      // src={exhibit.images[viewing ?? 0]}
+                      src={imageUrl}
+                      alt={exhibit.name}
+                      width={250}
+                      height={250}
+                      loader={({ src }) => src}
+                      placeholder="blur"
+                      blurDataURL={config.portraitBlurDataURL}
+                    />
+                    <div className="relative">
+                      <div className="flex justify-center w-full">
+                        <Button
+                          size="lg"
+                          className="!text-stone-500 !border-transparent"
+                          onClick={() => {
+                            console.log("share this image");
+
+                            const path = `${
+                              config.appBaseUrl
+                            }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
+                              viewing ?? 0
+                            }`;
+                            copyToClipboard(path);
+                          }}
+                        >
+                          <Icon icon="carbon:arrow-up-right" height="1.0em" />
+                          <span className="transform translate-y-[-0.015em]">
+                            Share
+                          </span>
+                        </Button>
+                        {/* Wrapped in <a> for file download purposes */}
+                        <a
+                          href={downloadUrl(exhibit.images[viewing])}
+                          download="vana_portrait.png"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <Button
+                            size="lg"
+                            className="!text-stone-500 !border-transparent"
+                            onClick={() => {
+                              console.log("save this image");
+                            }}
+                          >
+                            <Icon icon="carbon:download" height="1.0em" />
+                            <span className="transform translate-y-[-0.015em]">
+                              Download
+                            </span>
+                          </Button>
+                        </a>
+                        <Button
+                          size="lg"
+                          className="!text-stone-500 !border-transparent"
+                          onClick={() => setShowModalInternal(false)}
+                        >
+                          <Icon icon="carbon:close" height="1.25em" />
+                          <span className="transform translate-y-[-0.015em]">
+                            Close
+                          </span>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </DialogControlled>
               ))}
             </div>
           </div>
