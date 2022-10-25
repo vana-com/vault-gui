@@ -9,7 +9,7 @@ import {
   Button,
   Input,
   PageHeading,
-  SelfieButton,
+  // SelfieButton,
   TitleAndMetaTags,
 } from "src/components";
 import { StorageUpload } from "src/components/Upload";
@@ -25,6 +25,7 @@ const UploadPage: NextPage = () => {
   });
   const screenHeight = bounds.height;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [capturedImage, setCapturedImage] = useState<File | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [emailAddress, setEmailAddress] = useState<string>("");
@@ -34,6 +35,7 @@ const UploadPage: NextPage = () => {
     Array(MAX_FILES).fill(0),
   );
   const [filesToUpload, setFilesToUpload] = useState<Array<File>>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
 
   // track the upload progress
@@ -105,7 +107,7 @@ const UploadPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="pt-[20vh] Container">
+        <div className="pt-[12.5vh] Container">
           {/* INSTRUCTIONS */}
           <PageHeading
             hideSticky={!!videoStream}

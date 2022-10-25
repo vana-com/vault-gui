@@ -91,7 +91,7 @@ const GalleryPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="pt-[20vh] mb-[20vh] Container">
+        <div className="pt-[12.5vh] Container">
           <PageHeading
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
