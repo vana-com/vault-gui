@@ -125,7 +125,7 @@ const UploadPage: NextPage = () => {
             {/* EMAIL */}
             <div className="">
               <form
-                action=""
+                onSubmit={uploadFiles}
                 className="flex justify-between w-full text-black border border-black/10"
               >
                 <Input
@@ -139,7 +139,7 @@ const UploadPage: NextPage = () => {
                   className={clsx("!text-black !border-transparent")}
                 />
                 <Button
-                  onClick={uploadFiles}
+                  type="submit"
                   disabled={
                     isDataUploading ||
                     !validateEmail(emailAddress) ||
