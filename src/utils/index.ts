@@ -19,6 +19,7 @@ export * from "./localStorage";
 export * from "./nameToPathName";
 export * from "./openInNewTab";
 export * from "./setLoginPath";
+export * from "./share";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";
 export * from "./validateEmail";

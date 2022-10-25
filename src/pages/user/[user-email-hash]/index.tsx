@@ -19,8 +19,7 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Gallery } from "src/types";
-// TODO: copyToClipboard
-import { nameToPathName } from "src/utils";
+import { copyToClipboard, nameToPathName, share } from "src/utils";
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
@@ -33,6 +32,19 @@ const GalleryPage: NextPage = () => {
   const { "user-email-hash": userEmailHash } = router.query;
 
   const [gallery, setGallery] = useState<Gallery | null>(null);
+
+  const shareLink = async () => {
+    const link = `${config.appBaseUrl}/user/${userEmailHash}/`;
+
+    const didShare = await share({
+      title: "",
+      text: "",
+      link,
+    });
+
+    // Fallback
+    if (!didShare) copyToClipboard(link);
+  };
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -76,7 +88,10 @@ const GalleryPage: NextPage = () => {
                     <span>Gallery {userEmailHash?.slice(-4)}</span>
                   </button>
                 </NextLink>
-                <Button className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5">
+                <Button
+                  onClick={(_: any) => shareLink()}
+                  className="!text-stone-500 text-sm font-sans !h-[27px] transform translate-y-[-0.2em] !px-2.5"
+                >
                   <Icon icon="carbon:arrow-up" height="1.0em" />
                   <span className="transform translate-y-[-0.015em]">
                     Share
