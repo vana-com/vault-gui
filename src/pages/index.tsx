@@ -76,17 +76,23 @@ const Home: NextPage = () => {
               initial={{ opacity: 0, scale: 1, translateY: 5 }}
               animate={{ opacity: 1, scale: 1, translateY: 0 }}
               transition={{ duration: 1, delay: 1 }}
-              className="flex flex-col gap-6"
+              className="flex flex-col gap-3"
             >
               <h1 className="Text-display Text-display--shadow text-[9vh]">
                 You are a work of art
               </h1>
-              <Link href="/create" passHref>
-                <Button className="">
-                  <span>Create your gallery</span>
-                  <Icon icon="carbon:arrow-right" />
-                </Button>
-              </Link>
+              <p className="text-white">
+                &ldquo;Portrait&rdquo; by Vana is a generative art studio that
+                can create self-portraits of you in infinite styles.
+              </p>
+              <div className="pt-3">
+                <Link href="/create" passHref>
+                  <Button className="!w-5/6 !md:w-3/4">
+                    <span>Create your gallery</span>
+                    <Icon icon="carbon:arrow-right" />
+                  </Button>
+                </Link>
+              </div>
             </motion.div>
           </div>
         </div>
