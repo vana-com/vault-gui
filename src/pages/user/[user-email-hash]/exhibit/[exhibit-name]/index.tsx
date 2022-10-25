@@ -226,7 +226,7 @@ const ExhibitPage: NextPage = () => {
                             }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
                               viewing ?? 0
                             }`;
-                            copyToClipboard(path);
+                            shareLink(path);
                           }}
                         >
                           <Icon icon="carbon:arrow-up-right" height="1.0em" />
