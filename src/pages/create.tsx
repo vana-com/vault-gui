@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -106,7 +105,7 @@ const UploadPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="pt-[20vh] mb-[20vh] Container">
+        <div className="pt-[20vh] Container">
           {/* INSTRUCTIONS */}
           <PageHeading
             hideSticky={!!videoStream}
@@ -121,6 +120,39 @@ const UploadPage: NextPage = () => {
                 pictures of your face from different angles.{" "}
               </span>
             </p>
+            {/* EMAIL */}
+            {filesToUpload.length >= MIN_FILES && (
+              <div className="">
+                <form
+                  action=""
+                  className="flex justify-between w-full text-black border border-black/10"
+                >
+                  <Input
+                    type="email"
+                    value={emailAddress}
+                    placeholder="Enter your email"
+                    required
+                    onChange={(event) => {
+                      setEmailAddress(event.target.value);
+                    }}
+                    className={clsx("!text-black !border-transparent")}
+                  />
+                  <Button
+                    onClick={uploadFiles}
+                    disabled={
+                      isDataUploading ||
+                      !validateEmail(emailAddress) ||
+                      filesToUpload.length < MIN_FILES ||
+                      filesToUpload.length > MAX_FILES
+                    }
+                    className={clsx("!text-black !border-transparent")}
+                  >
+                    <span>Submit</span>
+                    {/* <Icon icon="carbon:arrow-right" /> */}
+                  </Button>
+                </form>
+              </div>
+            )}
           </PageHeading>
 
           {/* INPUTS */}
@@ -144,51 +176,6 @@ const UploadPage: NextPage = () => {
             </StorageUpload>
           </div>
         </div>
-
-        {/* EMAIL */}
-        {filesToUpload.length >= MIN_FILES && (
-          <>
-            <div
-              className="fixed w-full h-[48px] bg-gradient-to-t from-blackShadow-50"
-              style={{ top: `${screenHeight - 148}px` }}
-            />
-            <div
-              className="fixed bottom-0 w-full bg-white"
-              style={{ top: `${screenHeight - 100}px` }}
-            >
-              <div className="Container pt-insetHalf">
-                <form
-                  action=""
-                  className="flex justify-between w-full text-black border border-black/10"
-                >
-                  <Input
-                    type="email"
-                    value={emailAddress}
-                    placeholder="Enter your email here"
-                    required
-                    onChange={(event) => {
-                      setEmailAddress(event.target.value);
-                    }}
-                    className={clsx("!text-black !border-transparent")}
-                  />
-                  <Button
-                    onClick={uploadFiles}
-                    disabled={
-                      isDataUploading ||
-                      !validateEmail(emailAddress) ||
-                      filesToUpload.length < MIN_FILES ||
-                      filesToUpload.length > MAX_FILES
-                    }
-                    className={clsx("!text-black !border-transparent")}
-                  >
-                    <span>Submit</span>
-                    <Icon icon="carbon:arrow-right" />
-                  </Button>
-                </form>
-              </div>
-            </div>
-          </>
-        )}
       </div>
     </>
   );
