@@ -179,11 +179,13 @@ const ExhibitPage: NextPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-insetHalf">
               {/* CARD with MODAL */}
               {/* Use the first image in an exhibit as the thumbnail for the entire exhibit */}
-              {exhibit.images.map((imageUrl) => (
+              {exhibit.images.map((imageUrl, i) => (
                 <DialogControlled
                   key={imageUrl}
                   open={showModalInternal}
-                  onOpenChange={() => setShowModalInternal(!showModalInternal)}
+                  onOpenChange={() => {
+                    setShowModal(!showModalInternal, i);
+                  }}
                   overlayClassName="overflow-y-auto !bg-white"
                   contentClassName="!w-[100vw]"
                   // onPointerDownOutside={(event) => event.preventDefault()}
@@ -202,8 +204,8 @@ const ExhibitPage: NextPage = () => {
                   <div className="relative flex flex-col gap-w16">
                     <Image
                       className="w-full"
-                      // src={exhibit.images[viewing ?? 0]}
-                      src={imageUrl}
+                      src={exhibit.images[viewing ?? 0]}
+                      // src={imageUrl}
                       alt={exhibit.name}
                       width={250}
                       height={250}
