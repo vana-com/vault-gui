@@ -1,4 +1,5 @@
 export * from "./apolloClient";
+export * from "./blob";
 export * from "./capitalizeString";
 export * from "./clipboard";
 export * from "./formatModuleNameForID";
