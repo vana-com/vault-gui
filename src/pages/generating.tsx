@@ -30,12 +30,12 @@ const GeneratePage: NextPage = () => {
     const fetchGallery = async () => {
       if (!galleries) {
         const vanaTeamEmailHashes = [
-          config.artEmailHash,
+          config.annaEmailHash,
           config.phoebeEmailHash,
           config.colinEmailHash,
           config.ellieEmailHash,
           config.zachEmailHash,
-          config.annaEmailHash,
+          config.artEmailHash,
         ];
 
         const galleryPromises = vanaTeamEmailHashes.map((emailHash) =>
