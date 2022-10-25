@@ -51,6 +51,7 @@ const GalleryPage: NextPage = () => {
             "Something went wrong while copying the clipboard:",
             error,
           );
+          throw error;
         }
       }
     } catch (error) {
@@ -58,6 +59,8 @@ const GalleryPage: NextPage = () => {
         "Something went wrong while attempting the sharing flow:",
         error,
       );
+
+      await copyToClipboard(link);
     }
   };
 
