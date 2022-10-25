@@ -1,16 +1,32 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { Icon } from "@iconify/react";
+import clsx from "clsx";
 import { NextPage } from "next";
-import Image from "next/image";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import useMeasure from "react-use-measure";
 
+import {
+  ArtCard,
+  FooterBadge,
+  PageHeading,
+  TitleAndMetaTags,
+} from "src/components";
 import config from "src/config";
 import { Gallery } from "src/types";
-import { copyToClipboard, nameToPathName } from "src/utils";
+// TODO: copyToClipboard
+import { nameToPathName } from "src/utils";
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
+  const [ref, bounds] = useMeasure();
+  const screenHeight = bounds.height;
+  const { ref: viewRef, inView } = useInView({
+    threshold: 0,
+  });
 
   const { "user-email-hash": userEmailHash } = router.query;
 
@@ -30,46 +46,72 @@ const GalleryPage: NextPage = () => {
     fetchGallery();
   }, [router.asPath]);
 
+  if (!gallery) {
+    return <p>Loading...</p>;
+  }
+
   console.log("gallery", gallery);
 
   return (
     <>
-      <h1 className="m-8">Your Masterpiece</h1>
-      {!gallery ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <div className="columns-2">
-            {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
-            {gallery.exhibits.map((exhibit) => (
-              <figure
-                className="bg-slate-100 rounded-xl p-2 m-2 dark:bg-slate-800 cursor-pointer"
-                key={exhibit.name}
-                onClick={() =>
-                  router.push(
-                    `/user/${userEmailHash}/exhibit/${nameToPathName(
-                      exhibit.name,
-                    )}`,
-                  )
-                }
-              >
-                <Image
-                  className="w-full"
-                  src={exhibit.images[0]}
-                  alt={exhibit.name}
-                  height={512}
-                  width={512}
-                  loader={({ src }) => src}
-                  placeholder="blur"
-                  blurDataURL={config.portraitBlurDataURL}
-                />
-                <p>{exhibit.name}</p>
-              </figure>
-            ))}
+      <TitleAndMetaTags color="black" title="Your Masterpiece | Vana" />
+
+      <div
+        ref={ref}
+        className={clsx("relative min-h-screen")}
+        style={{ height: `${screenHeight}px` }}
+      >
+        <div className="pt-[20vh] mb-[20vh] Container">
+          <PageHeading
+            inView={inView}
+            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
+            heading={
+              <NextLink href="/generating">
+                <button type="button" className="flex items-center gap-1 -ml-3">
+                  <Icon icon="carbon:arrow-left" height="0.5em" />
+                  <span>Gallery {userEmailHash?.slice(-7)}</span>
+                </button>
+              </NextLink>
+            }
+          >
+            <p className="text-stone-400">
+              Generated Monday October 24, 2022
+              {/* <span className="text-stone-400">
+                In the meantime, visit the galleries of the creative team behind
+                this project.
+              </span> */}
+            </p>
+          </PageHeading>
+
+          <div className="pt-w12 pb-w72">
+            <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-insetHalf">
+              {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
+              {gallery.exhibits.map((exhibit) => (
+                <NextLink
+                  key={exhibit.name}
+                  href={`/user/${userEmailHash}/exhibit/${nameToPathName(
+                    exhibit.name,
+                  )}`}
+                  passHref
+                >
+                  <ArtCard
+                    imageSrc={exhibit.images[0]}
+                    imageAlt={exhibit.name}
+                    size={512}
+                    placeholder="blur"
+                    blurDataURL={config.portraitBlurDataURL}
+                  >
+                    <p className="text-sm py-1.5 text-stone-500">
+                      {exhibit.name}
+                    </p>
+                  </ArtCard>
+                </NextLink>
+              ))}
+            </div>
           </div>
-          <button
+          {/* <button
             type="button"
-            className="border-solid border-2 p-2 mt-4"
+            className="p-2 mt-4 border-2 border-solid"
             onClick={() => {
               console.log("share this gallery");
 
@@ -78,9 +120,12 @@ const GalleryPage: NextPage = () => {
             }}
           >
             Share Gallery
-          </button>
+          </button> */}
         </div>
-      )}
+
+        {/* FOOTER LOGO */}
+        <FooterBadge screenHeight={screenHeight} blackTheme />
+      </div>
     </>
   );
 };

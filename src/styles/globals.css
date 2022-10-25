@@ -194,7 +194,7 @@
   }
   .Text-display {
     /* text-[9vh] */
-    @apply font-display font-light leading-[0.925] tracking-[-0.02em];
+    @apply font-display font-light leading-[1.025] tracking-[-0.0125em];
     text-shadow: "1px 2px 4px rgba(0,0,0,.5)";
   }
   .Text-display--shadow {
