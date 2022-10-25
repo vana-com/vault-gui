@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import useMeasure from "react-use-measure";
 
 import { Button, Dialog } from "src/components";
@@ -104,7 +104,7 @@ const SelfieButton = ({
 
         {/* Camera not available */}
         {!videoStream && (
-          <div className="w-full p-2 flex text-dark justify-center items-center">
+          <div className="flex items-center justify-center w-full p-2 text-dark">
             <Icon icon="carbon:camera" height="1.25em" />
             <p className="ml-2">Loading camera stream</p>
           </div>

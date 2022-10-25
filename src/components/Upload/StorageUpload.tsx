@@ -97,7 +97,10 @@ const StorageUpload = ({
     () => (
       <div className="grid grid-cols-2 gap-[5px]">
         {filesToUpload?.map((fileToUpload, i) => (
-          <div key={fileToUpload.name} className="relative aspect-square">
+          <div
+            key={fileToUpload.name}
+            className="relative aspect-square bg-stone-50"
+          >
             {/* Image preview */}
             <Image
               className="object-cover aspect-square"
@@ -112,7 +115,7 @@ const StorageUpload = ({
             ) : (
               <div className="absolute bottom-0 w-full">
                 <Button
-                  className="!w-full text-white bg-black !text-sm !h-[32px] !border-black"
+                  className="!w-full text-white bg-black !text-sm !h-[32px] !border-black !gap-0.5"
                   aria-label="Remove file to upload"
                   variant="icon"
                   type="reset"
@@ -125,7 +128,7 @@ const StorageUpload = ({
                   <span className="transform -translate-y-[0.05em]">
                     Remove
                   </span>
-                  <Icon icon="carbon:close-filled" />
+                  <Icon icon="carbon:close" height="1.2em" />
                 </Button>
               </div>
             )}
