@@ -11,16 +11,19 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
       ref={ref}
       {...props}
       className={clsx(
+        // layout
         "relative inline-flex items-center justify-center gap-1.5",
         "select-none whitespace-nowrap align-middle outline-none",
-        "h-inputH w-auto",
-        "rounded-none px-4 h-[40px]",
+        "w-auto",
+        "rounded-none",
+        // size
+        "px-4 h-[40px]",
         // typography: inherit body size
         "font-normal",
         // bg
         // "bg-blueCrayola-500 dark:bg-blueCrayola-500",
         "backdrop-blur-sm",
-        // text
+        // color
         "text-white dark:text-stone-100",
         // border
         "border border-current",

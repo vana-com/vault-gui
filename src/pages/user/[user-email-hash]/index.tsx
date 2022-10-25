@@ -11,6 +11,7 @@ import useMeasure from "react-use-measure";
 
 import {
   ArtCard,
+  Button,
   FooterBadge,
   PageHeading,
   TitleAndMetaTags,
@@ -51,7 +52,7 @@ const GalleryPage: NextPage = () => {
       <div className="flex items-center justify-center h-screen">
         <div role="status">
           <svg
-            className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -85,22 +86,26 @@ const GalleryPage: NextPage = () => {
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
             heading={
-              <NextLink href="/generating">
-                <button type="button" className="flex items-center gap-1 -ml-3">
-                  <Icon icon="carbon:arrow-left" height="0.5em" />
-                  <span>Gallery {userEmailHash?.slice(-7)}</span>
-                </button>
-              </NextLink>
+              <div className="flex items-baseline justify-between">
+                <NextLink href="/generating">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 -ml-3"
+                  >
+                    <Icon icon="carbon:arrow-left" height="0.5em" />
+                    <span>Gallery {userEmailHash?.slice(-4)}</span>
+                  </button>
+                </NextLink>
+                <Button className="!text-stone-500 text-sm font-sans !h-[27px]">
+                  <Icon icon="carbon:arrow-up" height="1.0em" />
+                  <span className="transform translate-y-[-0.015em]">
+                    Share
+                  </span>
+                </Button>
+              </div>
             }
           >
-            <p className="text-stone-400">
-              Generated Monday October 24, 2022
-              {/* TODO: add share button here… */}
-              {/* <span className="text-stone-400">
-                In the meantime, visit the galleries of the creative team behind
-                this project.
-              </span> */}
-            </p>
+            {/* <p className="text-stone-400">Generated Monday October 24, 2022</p> */}
           </PageHeading>
 
           <div className="pt-w12 pb-w72">
