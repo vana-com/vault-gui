@@ -39,7 +39,7 @@ const GalleryPage: NextPage = () => {
 
     try {
       const didShare = await share({
-        link,
+        text: link,
       });
 
       // Fallback
