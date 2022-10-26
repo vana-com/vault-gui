@@ -125,18 +125,11 @@ const GeneratePage: NextPage = () => {
                   <GalleryGrid
                     showAsOriginal
                     images={flattenGalleryImages(gallery, 6)}
-                    wrapperClassName="p-2 bg-white border border-stone-200 rounded-[14px]"
+                    wrapperClassName="p-2 bg-white border border-stone-200 rounded-[14px] hover:cursor-pointer hover:shadow-lg hover:border-transparent"
                     label={
-                      <p className="pt-2 text-sm leading-none text-black">
-                        <a
-                          href="https://www.vana.com/about"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1"
-                        >
-                          <span>{vanaTeamData[i].name}</span>
-                          <Icon icon="carbon:arrow-right" height="1em" />
-                        </a>
+                      <p className="flex items-center gap-1 pt-2 text-sm font-medium leading-none text-black">
+                        <span>{vanaTeamData[i].name}</span>
+                        <Icon icon="carbon:arrow-right" height="1em" />
                       </p>
                     }
                   />
