@@ -8,10 +8,14 @@ const PrivacyText = ({
   className?: string;
 }) => (
   <p className={clsx("link-block", className)}>
-    At Vana we believe in the user-owned internet. We create experience that
-    allow you to understand and own your data and the things that are built with
-    it. We will never share your data or ML models with anyone without your
-    express consent. For more info, feel free to reach out at{" "}
+    At{" "}
+    <a href={config.vanaPublicURL} target="_blank" rel="noopener noreferrer">
+      Vana
+    </a>{" "}
+    we believe in the user-owned internet. We create experiences that allow you
+    to understand and own your data and the things that are built with it. We
+    will never share your data or ML models with anyone without your express
+    consent. For more info, feel free to reach out at{" "}
     <a
       href={`mailto:${config.vanaSupportEmail}`}
       target="_blank"
