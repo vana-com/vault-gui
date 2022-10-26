@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import Image from "next/future/image";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Resizer from "react-image-file-resizer";
 
 import { Button } from "src/components";
 import config from "src/config";
@@ -33,6 +34,7 @@ const StorageUpload = ({
   numberOfFiles,
 }: Props) => {
   const { FileInput, openFileDialog } = useFileDropzone();
+  const [thumbnails, setThumbnails] = useState<string[]>([]);
 
   /**
    * Callback when a file is selected in the file picker
@@ -71,7 +73,7 @@ const StorageUpload = ({
   /**
    * Validate and update file list state
    */
-  const onFileReceived = (files: File[]) => {
+  const onFileReceived = async (files: File[]) => {
     const validFileCheck = files.every((file: File) =>
       config.allowedUploadMimeTypes.includes(file.type),
     );
@@ -79,6 +81,10 @@ const StorageUpload = ({
     if (!validFileCheck) {
       console.error("Invalid files. Please upload JPG or PNG files only.");
     } else if (filesToUpload.length + files.length <= maxFiles) {
+      const newThumbs = await Promise.all(
+        files.map((file) => imageToBase64Thumbnail(file)),
+      );
+      setThumbnails([...thumbnails, ...(newThumbs as string[])]);
       setFilesToUpload([...filesToUpload, ...files]);
     } else {
       console.error(
@@ -86,6 +92,22 @@ const StorageUpload = ({
       );
     }
   };
+
+  const imageToBase64Thumbnail = (file: File) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        200,
+        200,
+        "JPEG",
+        20,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64",
+      );
+    });
 
   // Add new selfie images to file list
   useEffect(() => {
@@ -108,7 +130,8 @@ const StorageUpload = ({
               className="object-cover aspect-square"
               width="200"
               height="200"
-              src={URL.createObjectURL(fileToUpload)}
+              loader={() => thumbnails[i]}
+              src="https://storage.googleapis.com/corsali-gui-assets/person.png"
             />
 
             {/* upload progress for each file */}
@@ -125,6 +148,7 @@ const StorageUpload = ({
                     const copyFilesToUpload = [...filesToUpload];
                     copyFilesToUpload.splice(i, 1);
                     setFilesToUpload(copyFilesToUpload);
+                    setThumbnails([...thumbnails].splice(i, 1));
                   }}
                 >
                   <span className="transform -translate-y-[0.05em]">
