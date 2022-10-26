@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import type { NextPage } from "next";
 import NextLink from "next/link";
@@ -7,8 +8,8 @@ import { useInView } from "react-intersection-observer";
 import useMeasure from "react-use-measure";
 
 import {
-  ArtCard,
   FooterBadge,
+  GalleryGrid,
   PageHeading,
   TitleAndMetaTags,
 } from "src/components";
@@ -94,16 +95,25 @@ const GeneratePage: NextPage = () => {
             }
           >
             <p>
-              Sit tight. Your artwork is coming to life. You will receive an
-              email once it is ready.{" "}
+              Sit tight while we build your custom-generated art.{" "}
               <span className="text-stone-400">
-                In the meantime, meet the creative team behind this project.
+                We will email you as soon as it is ready.
               </span>
             </p>
           </PageHeading>
 
-          <div className="pt-w12 pb-w72">
-            <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-inset">
+          <div className="pt-w24 pb-w72">
+            {/* sticky top-0 z-[11] */}
+            <div className="flex flex-col gap-4 bg-white">
+              <hr className="border-t-8 text-stone-100" />
+              <p className="text-stone-500">
+                <span className="!font-bold text-black Text-meta">
+                  While you&apos;re waiting…{" "}
+                </span>
+                Get to know the creative team behind Vana Portrait.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 pt-5 md:grid-cols-2 xl:grid-cols-3 gap-inset">
               {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
               {galleries.map((gallery) => (
                 <NextLink
@@ -111,13 +121,27 @@ const GeneratePage: NextPage = () => {
                   href={`/user/${gallery.userHash}/`}
                   passHref
                 >
-                  <ArtCard
-                    imageSrc={
-                      gallery.exhibits[0].images[
-                        gallery.exhibits[0].images.length - 1
-                      ]
+                  <GalleryGrid
+                    showAsOriginal
+                    images={[
+                      ...gallery.exhibits[0].images.slice(0, 5),
+                      ...gallery.exhibits[0].images.slice(1, 2),
+                      // ...gallery.exhibits[0].images.slice(2, 3),
+                    ]}
+                    wrapperClassName="p-3 bg-white border border-stone-200 rounded-[12px]"
+                    label={
+                      <p className="text-sm text-black pt-2.5 leading-none">
+                        <a
+                          href="http://"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1"
+                        >
+                          <span>Anna K</span>
+                          <Icon icon="carbon:arrow-right" height="1em" />
+                        </a>
+                      </p>
                     }
-                    imageAlt={gallery.userHash}
                   />
                 </NextLink>
               ))}

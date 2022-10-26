@@ -7,7 +7,8 @@ interface Props {
   imageSrc: string;
   imageAlt: string;
   size?: number;
-  className?: string;
+  wrapperClassName?: string;
+  imageClassName?: string;
   // TODO: update with Next Image props
   [x: string]: any;
 }
@@ -16,12 +17,18 @@ const ArtCard = ({
   imageSrc,
   imageAlt,
   size = 280,
-  className = "rounded-xl",
+  wrapperClassName = "rounded-xl",
+  imageClassName = "",
   ...props
 }: Props) => (
-  <div className={clsx("overflow-hidden bg-stone-50 aspect-square", className)}>
+  <div
+    className={clsx(
+      "overflow-hidden bg-stone-50 aspect-square",
+      wrapperClassName,
+    )}
+  >
     <Image
-      className="object-cover w-full aspect-square"
+      className={clsx("object-cover w-full aspect-square", imageClassName)}
       src={imageSrc}
       alt={imageAlt}
       width={size}
