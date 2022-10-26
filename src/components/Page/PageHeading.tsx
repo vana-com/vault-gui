@@ -3,7 +3,7 @@ import clsx from "clsx";
 interface Props {
   inView: boolean;
   heading: string | React.ReactNode;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   viewRefNode: React.ReactNode;
   hideSticky?: boolean;
 }
