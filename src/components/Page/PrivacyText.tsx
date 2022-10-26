@@ -3,7 +3,7 @@ import clsx from "clsx";
 import config from "src/config";
 
 const PrivacyText = ({
-  className = "text-sm text-stone-400",
+  className = "text-xs text-stone-400",
 }: {
   className?: string;
 }) => (

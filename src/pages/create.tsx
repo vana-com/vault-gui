@@ -125,10 +125,18 @@ const UploadPage: NextPage = () => {
 
           {/* INPUTS */}
           <div className="flex flex-col gap-4">
-            <p className="text-stone-500">
+            <p className="text-stone-500 link-block">
               <span className="!font-bold text-black Text-meta">Step 1. </span>
               Upload at least {MIN_FILES} images of your face or take a series
-              of selfies.
+              of selfies. We use these images to develop a{" "}
+              <a
+                href="https://www.techopedia.com/definition/34633/generative-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                generative art model
+              </a>{" "}
+              for you.
             </p>
             <StorageUpload
               minFiles={MIN_FILES}
@@ -146,20 +154,10 @@ const UploadPage: NextPage = () => {
           <div className="flex flex-col gap-4 pt-w6">
             <p className="text-stone-500">
               <span className="!font-bold text-black Text-meta">Step 2. </span>
-              We use the 8 images to develop a{" "}
-              <a
-                href="https://www.techopedia.com/definition/34633/generative-ai"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                generative model
-              </a>{" "}
-              that is able to create your unique works of art. Sometimes this
-              process can take a minute, so please drop your email. This way, if
-              you navigate away from the app, we can email you when the model is
+              Drop your email so that we can send you your finished works when
               ready.
             </p>
-            <form className="flex justify-between w-full text-black border border-black/10">
+            <form className="flex flex-col justify-between w-full gap-4">
               <Input
                 type="email"
                 value={emailAddress}
@@ -168,9 +166,7 @@ const UploadPage: NextPage = () => {
                 onChange={(event) => {
                   setEmailAddress(event.target.value);
                 }}
-                className={clsx(
-                  "flex-1 !px-2.5 !text-black !border-transparent",
-                )}
+                className={clsx("!px-2.5 !text-black")}
               />
               <Button
                 type="submit"
@@ -181,9 +177,7 @@ const UploadPage: NextPage = () => {
                   filesToUpload.length < MIN_FILES ||
                   filesToUpload.length > MAX_FILES
                 }
-                className={clsx(
-                  "!px-2.5 !gap-1 !text-black !border-transparent font-medium disabled:opacity-100",
-                )}
+                className={clsx("font-medium disabled:!opacity-100")}
               >
                 <span>Submit</span>
                 <Icon icon="carbon:arrow-right" />

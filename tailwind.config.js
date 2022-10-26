@@ -76,7 +76,7 @@ module.exports = {
         mono: ['IBM Plex Mono','SFMono-Regular','ui-monospace','monospace'],
       },
       fontSize: {
-        xs: ['11px', { lineHeight: '1.5' }],
+        xs: ['11.5px', { lineHeight: '1.5' }],
         sm: ['clamp(12px, 1vw, 13px)', { lineHeight: '1.5' }],
         smPlus: ['clamp(13px, 1vw, 14px)', { lineHeight: '1.5' }],
         base: ['clamp(14px, 1vw, 15px)', { lineHeight: '1.5' }],

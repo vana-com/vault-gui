@@ -178,12 +178,14 @@ const StorageUpload = ({
           </Button>
         ) : (
           <Button
-            className="!w-full text-white bg-blueCrayola-500 border-blueCrayola-500 disabled:opacity-100"
+            className="!w-full !text-stone-400 !bg-white before:content-[initial] border-transparent backdrop-blur-none disabled:opacity-100"
             disabled
             onClick={openFileDialog}
           >
             <Icon icon="carbon:checkmark-filled" height="1em" />
-            <span className="transform -translate-y-[0.05em]">Thanks!</span>
+            <span className="transform -translate-y-[0]">
+              Ready for generation
+            </span>
           </Button>
         )}
 
