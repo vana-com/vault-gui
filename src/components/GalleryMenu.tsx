@@ -1,5 +1,4 @@
 import { ArtCard } from "src/components";
-import { ExhibitImage } from "src/types";
 
 interface Props {
   images: string[]; // layout takes 4 only!

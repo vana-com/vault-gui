@@ -17,7 +17,6 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { StorageUpload } from "src/components/Upload";
-import { gallery } from "src/data";
 import { obamaImages, rbgImages, teslaImages } from "src/data/famousImages";
 import { uploadFile, validateEmail } from "src/utils";
 
@@ -106,8 +105,6 @@ const UploadPage: NextPage = () => {
       setIsDataUploading(false);
     }
   };
-
-  const example1 = gallery.slice(0, 5);
 
   return (
     <>

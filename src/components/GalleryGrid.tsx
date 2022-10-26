@@ -24,9 +24,11 @@ const GalleryGrid = ({
         return (
           <>
             {originalStyle ? (
-              <div className="relative p-1.5 overflow-hidden bg-black">
+              <div
+                key={exhibit}
+                className="relative p-1.5 overflow-hidden bg-black"
+              >
                 <ArtCard
-                  key={exhibit}
                   imageSrc={exhibit}
                   imageAlt={exhibit}
                   wrapperClassName="!bg-transparent"
