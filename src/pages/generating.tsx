@@ -16,6 +16,16 @@ import {
 import { Spinner } from "src/components/Spinner";
 import config from "src/config";
 import { Gallery } from "src/types";
+import { flattenGalleryImages } from "src/utils";
+
+const vanaTeamData = [
+  { name: "Anna", hash: config.annaEmailHash },
+  { name: "Art", hash: config.artEmailHash },
+  { name: "Colin", hash: config.colinEmailHash },
+  { name: "Ellie", hash: config.ellieEmailHash },
+  { name: "Zach", hash: config.zachEmailHash },
+  { name: "Phoebe", hash: config.phoebeEmailHash },
+];
 
 const GeneratePage: NextPage = () => {
   const router = useRouter();
@@ -30,16 +40,7 @@ const GeneratePage: NextPage = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       if (!galleries) {
-        const vanaTeamEmailHashes = [
-          config.annaEmailHash,
-          config.phoebeEmailHash,
-          config.colinEmailHash,
-          config.ellieEmailHash,
-          config.zachEmailHash,
-          config.artEmailHash,
-        ];
-
-        const galleryPromises = vanaTeamEmailHashes.map((emailHash) =>
+        const galleryPromises = vanaTeamData.map(({ hash: emailHash }) =>
           fetch(`/api/user/${emailHash}`),
         );
 
@@ -115,7 +116,7 @@ const GeneratePage: NextPage = () => {
             </div>
             <div className="grid grid-cols-1 pt-5 md:grid-cols-2 xl:grid-cols-3 gap-inset">
               {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
-              {galleries.map((gallery) => (
+              {galleries.map((gallery, i) => (
                 <NextLink
                   key={gallery.userHash}
                   href={`/user/${gallery.userHash}/`}
@@ -123,23 +124,12 @@ const GeneratePage: NextPage = () => {
                 >
                   <GalleryGrid
                     showAsOriginal
-                    images={[
-                      ...gallery.exhibits[0].images.slice(0, 5),
-                      ...gallery.exhibits[0].images.slice(1, 2),
-                      // ...gallery.exhibits[0].images.slice(2, 3),
-                    ]}
-                    wrapperClassName="p-3 bg-white border border-stone-200 rounded-[12px]"
+                    images={flattenGalleryImages(gallery, 6)}
+                    wrapperClassName="p-2 bg-white border border-stone-200 rounded-[14px] hover:cursor-pointer hover:shadow-lg hover:border-transparent"
                     label={
-                      <p className="text-sm text-black pt-2.5 leading-none">
-                        <a
-                          href="http://"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1"
-                        >
-                          <span>Anna K</span>
-                          <Icon icon="carbon:arrow-right" height="1em" />
-                        </a>
+                      <p className="flex items-center gap-1 pt-2 text-sm font-medium leading-none text-black">
+                        <span>{vanaTeamData[i].name}</span>
+                        <Icon icon="carbon:arrow-right" height="1em" />
                       </p>
                     }
                   />
