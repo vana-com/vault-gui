@@ -14,7 +14,9 @@ import {
   // SelfieButton,
   TitleAndMetaTags,
 } from "src/components";
+import { GalleryMenu } from "src/components/GalleryMenu";
 import { StorageUpload } from "src/components/Upload";
+import { gallery } from "src/data";
 import { uploadFile, validateEmail } from "src/utils";
 
 const MIN_FILES = 8;
@@ -96,6 +98,8 @@ const UploadPage: NextPage = () => {
     }
   };
 
+  const example1 = gallery.slice(0, 5);
+
   return (
     <>
       <TitleAndMetaTags
@@ -109,7 +113,7 @@ const UploadPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="pt-[12.5vh] Container flex flex-col gap-w12 pb-w72">
+        <div className="pt-[12.5vh] Container flex flex-col gap-w12">
           {/* INSTRUCTIONS */}
           <PageHeading
             hideSticky={!!videoStream}
@@ -184,11 +188,30 @@ const UploadPage: NextPage = () => {
               </Button>
             </form>
           </div>
+        </div>
 
-          {/* PRIVACY */}
-          <div className="flex flex-col gap-4 pt-w6">
-            <PrivacyText />
+        {/* WHAT DO I GET? */}
+        <div className="flex flex-col gap-4 pt-w24">
+          <div className="flex flex-col gap-4 Container">
+            <hr className="border-t-2 text-stone-100" />
+            <p className="text-stone-500">
+              <span className="!font-bold text-black Text-meta">
+                What do I get?{" "}
+              </span>
+              Check out a few recent galleries.
+            </p>
           </div>
+          <div className="flex flex-col gap-4">
+            <GalleryMenu images={example1} label="Anna K" />
+            <GalleryMenu images={example1} label="Josh H" />
+            <GalleryMenu images={example1} label="Sammy D" />
+          </div>
+        </div>
+
+        {/* PRIVACY */}
+        <div className="flex flex-col gap-4 Container pt-w24 pb-w72">
+          <hr className="border-t-8 text-stone-100" />
+          <PrivacyText />
         </div>
       </div>
     </>

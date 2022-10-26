@@ -1,11 +1,6 @@
-interface Image {
-  title: string;
-  category?: string;
-  tags?: string[];
-  src: string;
-}
+import { ExhibitImage } from "src/types";
 
-const gallery: Image[] = [
+const gallery: ExhibitImage[] = [
   {
     title: "Image title",
     category: "Project",

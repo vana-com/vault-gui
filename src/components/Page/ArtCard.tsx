@@ -1,3 +1,4 @@
+import clsx from "clsx";
 // import Image, { ImageProps } from "next/future/image";
 import Image from "next/future/image";
 
@@ -6,12 +7,19 @@ interface Props {
   imageSrc: string;
   imageAlt: string;
   size?: number;
+  className?: string;
   // TODO: update with Next Image props
   [x: string]: any;
 }
 
-const ArtCard = ({ imageSrc, imageAlt, size = 280, ...props }: Props) => (
-  <div className="overflow-hidden bg-stone-50 aspect-square rounded-xl">
+const ArtCard = ({
+  imageSrc,
+  imageAlt,
+  size = 280,
+  className = "rounded-xl",
+  ...props
+}: Props) => (
+  <div className={clsx("overflow-hidden bg-stone-50 aspect-square", className)}>
     <Image
       className="object-cover w-full aspect-square"
       src={imageSrc}
