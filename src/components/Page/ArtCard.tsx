@@ -1,5 +1,7 @@
+// import Image, { ImageProps } from "next/future/image";
 import Image from "next/future/image";
 
+// TODO: extends ImageProps creates a type error I can't figure out right now…
 interface Props {
   imageSrc: string;
   imageAlt: string;
