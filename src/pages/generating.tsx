@@ -97,7 +97,7 @@ const GeneratePage: NextPage = () => {
           >
             <p>
               Sit tight while we build your custom-generated art.{" "}
-              <span className="text-stone-400">
+              <span className="text-stone-500">
                 We will email you as soon as it is ready.
               </span>
             </p>
