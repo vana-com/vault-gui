@@ -18,7 +18,7 @@ const GalleryGrid = ({
   showAsOriginal,
 }: Props) => (
   <div className={wrapperClassName}>
-    <div className="grid grid-cols-3 gap-1 overflow-hidden rounded-md">
+    <div className="grid grid-cols-3 gap-1 overflow-hidden rounded-[6px]">
       {images.map((exhibit, index) => {
         const originalStyle = showAsOriginal && index === 0;
         return (
