@@ -10,6 +10,8 @@ const generalConfig = {
   vanaPublicURL: "https://www.vana.com",
   vanaVaultURL: "https://vault.vana.com",
   vanaExploreURL: "https://explore.vana.com",
+  termsOfServiceURL:
+    "https://drive.google.com/file/d/12Cx1s5cMuIv01tFYUVbXpRcDQ8ZFDGAx/view",
 
   ZENDESK_WIDGET_KEY: "ae33c673-67c2-4bb9-96a4-3b62821d9567",
   routesToHideZendeskWidget: ["/", "/share", "/login"],

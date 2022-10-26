@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
+import config from "src/config";
 
 interface Props {
   screenHeight: number;
@@ -28,11 +29,11 @@ const FooterBadge = ({ screenHeight, blackTheme }: Props) => (
             </Link>
           </div>
           <div className="flex items-center justify-center gap-2 font-sans text-sm font-normal tracking-[0.015em]">
-            <Link href="/terms-of-service" passHref>
+            <Link href={config.termsOfServiceURL} passHref>
               Terms of Service
             </Link>
             <hr className="hr hr-vertical h-[12px] opacity-50" />
-            <Link href="/privacy-policy" passHref>
+            <Link href={config.vanaPrivacyURL} passHref>
               Privacy Policy
             </Link>
           </div>
