@@ -145,10 +145,15 @@ const StorageUpload = ({
                   variant="icon"
                   type="reset"
                   onClick={() => {
+                    // Remove file to upload
                     const copyFilesToUpload = [...filesToUpload];
                     copyFilesToUpload.splice(i, 1);
                     setFilesToUpload(copyFilesToUpload);
-                    setThumbnails([...thumbnails].splice(i, 1));
+
+                    // Remove corresponding thumbnail
+                    const copyThumbs = [...thumbnails];
+                    copyThumbs.splice(i, 1);
+                    setThumbnails(copyThumbs);
                   }}
                 >
                   <span className="transform -translate-y-[0.05em]">
