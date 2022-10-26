@@ -117,7 +117,8 @@ const GeneratePage: NextPage = () => {
                 Get to know the creative team behind Vana Portrait.
               </p>
             </div>
-            <div className="grid grid-cols-1 pt-5 md:grid-cols-2 xl:grid-cols-3 gap-inset">
+            {/* add mobile:-mx-1 after refactoring blocks with .Container */}
+            <div className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3">
               {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
               {galleries.map((gallery, i) => (
                 <NextLink
@@ -125,17 +126,19 @@ const GeneratePage: NextPage = () => {
                   href={`/user/${gallery.userHash}/`}
                   passHref
                 >
-                  <GalleryGrid
-                    showAsOriginal
-                    images={flattenGalleryImages(gallery, 6)}
-                    wrapperClassName="p-2 bg-white border border-stone-200 rounded-[14px] hover:cursor-pointer hover:shadow-lg hover:border-transparent"
-                    label={
-                      <p className="flex items-center gap-1 pt-2 text-sm font-medium leading-none text-black">
-                        <span>{vanaTeamData[i].name}</span>
-                        <Icon icon="carbon:arrow-right" height="1em" />
-                      </p>
-                    }
-                  />
+                  <button type="button" className="hover:shadow-lg">
+                    <GalleryGrid
+                      key={gallery.userHash}
+                      images={flattenGalleryImages(gallery, 6)}
+                      wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
+                      label={
+                        <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
+                          <span>{vanaTeamData[i].name}</span>
+                          <Icon icon="carbon:arrow-right" height="1em" />
+                        </p>
+                      }
+                    />
+                  </button>
                 </NextLink>
               ))}
             </div>
