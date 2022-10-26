@@ -133,17 +133,18 @@ const GalleryPage: NextPage = () => {
                   )}`}
                   passHref
                 >
-                  <ArtCard
-                    imageSrc={exhibit.images[exhibit.images.length - 1]}
-                    imageAlt={exhibit.name}
-                    size={512}
-                    placeholder="blur"
-                    blurDataURL={config.portraitBlurDataURL}
-                  >
+                  <div>
+                    <ArtCard
+                      imageSrc={exhibit.images[exhibit.images.length - 1]}
+                      imageAlt={exhibit.name}
+                      size={512}
+                      placeholder="blur"
+                      blurDataURL={config.portraitBlurDataURL}
+                    />
                     <p className="text-sm py-1.5 text-stone-500">
                       {exhibit.name}
                     </p>
-                  </ArtCard>
+                  </div>
                 </NextLink>
               ))}
             </div>
