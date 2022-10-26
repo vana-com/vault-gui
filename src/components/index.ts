@@ -2,6 +2,7 @@
 // export * from "./AppHook";
 export * from "./Button";
 export * from "./Carousel";
+export * from "./FooterBadge";
 export * from "./Input";
 export * from "./LayoutWithHeight";
 export * from "./Link";
