@@ -1,22 +1,26 @@
 import { Gallery } from "src/types";
 
-export const flattenGalleryImages = (gallery: Gallery): string[] => {
-  const { exhibits } = gallery;
-  const images = exhibits.map((exhibit) => exhibit.images[0]);
+// Flattens images in a gallery alternating by shuffling exhibit images together.
+export const flattenGalleryImages = (
+  gallery: Gallery,
+  numImages: number,
+): string[] => {
+  try {
+    const maxImagesInAnExhibit = Math.max(
+      ...gallery.exhibits.map((exhibit) => exhibit.images.length),
+    );
+    const flattenedImages: string[] = [];
 
-  return images;
+    for (let imageIndex = 0; imageIndex < maxImagesInAnExhibit; imageIndex++) {
+      gallery.exhibits.forEach((exhibit) => {
+        if (exhibit.images.length <= imageIndex + 1) {
+          flattenedImages.push(exhibit.images[imageIndex]);
+        }
+      });
+    }
 
-  // if (images.length > 6) {
-  //   return images.slice(0, 6);
-  // } else if (images.length === 6) {
-  //   return images;
-  // } else {
-  //   exhibits.slice(1, Math.min(5, exhibits.images[0]))
-  // }
-  // const images = gallery.images.map((image) => ({
-  //   ...image,
-  //   gallery: gallery.name,
-  // }));
-
-  // return images;
+    return flattenedImages.slice(0, numImages - 1);
+  } catch (error) {
+    return gallery.exhibits[0].images;
+  }
 };

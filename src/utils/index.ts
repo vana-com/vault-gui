@@ -2,6 +2,7 @@ export * from "./apolloClient";
 export * from "./blob";
 export * from "./capitalizeString";
 export * from "./clipboard";
+export * from "./flattenGalleryImages";
 export * from "./formatModuleNameForID";
 export * from "./formatModuleNameForUI";
 export * from "./getAbbreviatedFileName";
