@@ -10,11 +10,11 @@ import {
   Button,
   Input,
   PageHeading,
+  PrivacyText,
   // SelfieButton,
   TitleAndMetaTags,
 } from "src/components";
 import { StorageUpload } from "src/components/Upload";
-import config from "src/config";
 import { uploadFile, validateEmail } from "src/utils";
 
 const MIN_FILES = 8;
@@ -146,8 +146,18 @@ const UploadPage: NextPage = () => {
           <div className="flex flex-col gap-4 pt-w6">
             <p className="text-stone-500">
               <span className="!font-bold text-black Text-meta">Step 2. </span>
-              It takes 60 minutes. Drop your email if you don&apos;t want to
-              wait.
+              We use the 8 images to develop a{" "}
+              <a
+                href="https://www.techopedia.com/definition/34633/generative-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                generative model
+              </a>{" "}
+              that is able to create your unique works of art. Sometimes this
+              process can take a minute, so please drop your email. This way, if
+              you navigate away from the app, we can email you when the model is
+              ready.
             </p>
             <form className="flex justify-between w-full text-black border border-black/10">
               <Input
@@ -172,7 +182,7 @@ const UploadPage: NextPage = () => {
                   filesToUpload.length > MAX_FILES
                 }
                 className={clsx(
-                  "!px-2.5 !gap-1 !text-black !border-transparent !disabled:opacity-100",
+                  "!px-2.5 !gap-1 !text-black !border-transparent font-medium disabled:opacity-100",
                 )}
               >
                 <span>Submit</span>
@@ -183,29 +193,7 @@ const UploadPage: NextPage = () => {
 
           {/* PRIVACY */}
           <div className="flex flex-col gap-4 pt-w6">
-            <p className="text-sm text-stone-400 link-block">
-              At Vana we believe in the user-owned internet. We create
-              experience that allow you to experience and own your data and the
-              things that are built with it. We will never share your data or ML
-              models with anyone without your express consent. For more info,
-              feel free to reach out at{" "}
-              <a
-                href={`mailto:${config.vanaSupportEmail}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {config.vanaSupportEmail}
-              </a>{" "}
-              or review our{" "}
-              <a
-                href={config.vanaPrivacyURL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                privacy policy
-              </a>
-              .
-            </p>
+            <PrivacyText />
           </div>
         </div>
       </div>
