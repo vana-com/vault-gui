@@ -17,10 +17,18 @@ import {
 import { GalleryMenu } from "src/components/GalleryMenu";
 import { StorageUpload } from "src/components/Upload";
 import { gallery } from "src/data";
+import { obamaImages, rbgImages, teslaImages } from "src/data/famousImages";
 import { uploadFile, validateEmail } from "src/utils";
 
 const MIN_FILES = 8;
 const MAX_FILES = 10;
+
+// pre-render this page at build
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
 
 const UploadPage: NextPage = () => {
   const router = useRouter();
@@ -205,9 +213,9 @@ const UploadPage: NextPage = () => {
             </p>
           </div>
           <div className="flex flex-col gap-4">
-            <GalleryMenu images={example1} label="Anna K" />
-            <GalleryMenu images={example1} label="Josh H" />
-            <GalleryMenu images={example1} label="Sammy D" />
+            <GalleryMenu images={obamaImages} label="Barack Obama" />
+            <GalleryMenu images={rbgImages} label="Ruth Bader Ginsburg" />
+            <GalleryMenu images={teslaImages} label="Nikola Tesla" />
           </div>
         </div>
 
