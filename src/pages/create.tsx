@@ -161,7 +161,7 @@ const UploadPage: NextPage = () => {
               Drop your email so that we can send you your finished works when
               ready.
             </p>
-            <form className="flex flex-col justify-between w-full gap-4">
+            <form className="flex flex-col justify-between w-full gap-3">
               <Input
                 type="email"
                 value={emailAddress}
@@ -186,6 +186,9 @@ const UploadPage: NextPage = () => {
                 <span>Submit</span>
                 <Icon icon="carbon:arrow-right" />
               </Button>
+              <p className="-mt-0.5 text-xs text-stone-400">
+                Please add your email to continue
+              </p>
             </form>
           </div>
         </div>
