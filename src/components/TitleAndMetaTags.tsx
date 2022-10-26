@@ -43,6 +43,9 @@ export function TitleAndMetaTags({
       <link rel="shortcut icon" type="image/x-icon" href="/vana.svg" />
 
       <meta content={color} name="theme-color" />
+
+      {/* TEST! */}
+      <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     </Head>
   );
 }
