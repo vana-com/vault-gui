@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -13,6 +14,7 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import { StorageUpload } from "src/components/Upload";
+import config from "src/config";
 import { uploadFile, validateEmail } from "src/utils";
 
 const MIN_FILES = 8;
@@ -107,58 +109,27 @@ const UploadPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
-        <div className="pt-[12.5vh] Container">
+        <div className="pt-[12.5vh] Container flex flex-col gap-w12 pb-w72">
           {/* INSTRUCTIONS */}
           <PageHeading
             hideSticky={!!videoStream}
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
-            heading="Create your gallery"
-          >
-            <p>
-              Create your digital self portrait.{" "}
-              <span className="text-stone-500">
-                Upload {MIN_FILES} images showing your face or take some
-                pictures of your face from different angles.{" "}
-              </span>
-            </p>
-            {/* EMAIL */}
-            <div className="">
-              <form className="flex justify-between w-full text-black border border-black/10">
-                <Input
-                  type="email"
-                  value={emailAddress}
-                  placeholder="Enter your email"
-                  required
-                  onChange={(event) => {
-                    setEmailAddress(event.target.value);
-                  }}
-                  className={clsx(
-                    "flex-1 !px-2.5 !text-black !border-transparent",
-                  )}
-                />
-                <Button
-                  type="submit"
-                  onClick={uploadFiles}
-                  disabled={
-                    isDataUploading ||
-                    !validateEmail(emailAddress) ||
-                    filesToUpload.length < MIN_FILES ||
-                    filesToUpload.length > MAX_FILES
-                  }
-                  className={clsx("!px-2.5 !text-black !border-transparent")}
-                >
-                  <span>Submit</span>
-                  {/* <Icon icon="carbon:arrow-right" /> */}
-                </Button>
-              </form>
-            </div>
-          </PageHeading>
+            heading={
+              <>
+                Create your{" "}
+                <span className="mobile:table">portrait gallery</span>
+              </>
+            }
+          />
 
           {/* INPUTS */}
-          <div className="sticky top-0 pt-w12 pb-w72">
-            {/* Email input */}
-
+          <div className="flex flex-col gap-4">
+            <p className="text-stone-500">
+              <span className="!font-bold text-black Text-meta">Step 1. </span>
+              Upload at least {MIN_FILES} images of your face or take a series
+              of selfies.
+            </p>
             <StorageUpload
               minFiles={MIN_FILES}
               maxFiles={MAX_FILES}
@@ -166,10 +137,75 @@ const UploadPage: NextPage = () => {
               uploadProgress={uploadProgress}
               filesToUpload={filesToUpload}
               setFilesToUpload={setFilesToUpload}
+              numberOfFiles={filesToUpload ? filesToUpload.length : 0}
               isDataUploading={isDataUploading}
-            >
-              {null}
-            </StorageUpload>
+            />
+          </div>
+
+          {/* STEP 2: ADD EMAIL */}
+          <div className="flex flex-col gap-4 pt-w6">
+            <p className="text-stone-500">
+              <span className="!font-bold text-black Text-meta">Step 2. </span>
+              It takes 60 minutes. Drop your email if you don&apos;t want to
+              wait.
+            </p>
+            <form className="flex justify-between w-full text-black border border-black/10">
+              <Input
+                type="email"
+                value={emailAddress}
+                placeholder="Enter your email"
+                required
+                onChange={(event) => {
+                  setEmailAddress(event.target.value);
+                }}
+                className={clsx(
+                  "flex-1 !px-2.5 !text-black !border-transparent",
+                )}
+              />
+              <Button
+                type="submit"
+                onClick={uploadFiles}
+                disabled={
+                  isDataUploading ||
+                  !validateEmail(emailAddress) ||
+                  filesToUpload.length < MIN_FILES ||
+                  filesToUpload.length > MAX_FILES
+                }
+                className={clsx(
+                  "!px-2.5 !gap-1 !text-black !border-transparent !disabled:opacity-100",
+                )}
+              >
+                <span>Submit</span>
+                <Icon icon="carbon:arrow-right" />
+              </Button>
+            </form>
+          </div>
+
+          {/* PRIVACY */}
+          <div className="flex flex-col gap-4 pt-w6">
+            <p className="text-sm text-stone-400 link-block">
+              At Vana we believe in the user-owned internet. We create
+              experience that allow you to experience and own your data and the
+              things that are built with it. We will never share your data or ML
+              models with anyone without your express consent. For more info,
+              feel free to reach out at{" "}
+              <a
+                href={`mailto:${config.vanaSupportEmail}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {config.vanaSupportEmail}
+              </a>{" "}
+              or review our{" "}
+              <a
+                href={config.vanaPrivacyURL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                privacy policy
+              </a>
+              .
+            </p>
           </div>
         </div>
       </div>

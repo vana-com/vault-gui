@@ -11,11 +11,12 @@ import { StorageProgress } from "./index";
 type Props = {
   maxFiles: number;
   minFiles: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   capturedImage: File | null;
   uploadProgress: Array<number>;
   filesToUpload: Array<File>;
   setFilesToUpload: (files: Array<File>) => void;
+  numberOfFiles: number;
   isDataUploading: boolean;
 };
 
@@ -29,6 +30,7 @@ const StorageUpload = ({
   capturedImage,
   filesToUpload,
   setFilesToUpload,
+  numberOfFiles,
 }: Props) => {
   const { FileInput, openFileDialog } = useFileDropzone();
 
@@ -115,7 +117,7 @@ const StorageUpload = ({
             ) : (
               <div className="absolute bottom-0 w-full">
                 <Button
-                  className="!w-full text-white bg-black !text-sm !h-[32px] !border-black !gap-0.5"
+                  className="!w-full text-white bg-black/60 !text-sm !h-[32px] !border-black !gap-0.5"
                   aria-label="Remove file to upload"
                   variant="icon"
                   type="reset"
@@ -139,6 +141,13 @@ const StorageUpload = ({
     [filesToUpload, ...uploadProgress],
   );
 
+  const uploadButtonLabel = (files: number): string => {
+    if (files > 0 && files < 9) {
+      return `Add ${minFiles - numberOfFiles} more`;
+    }
+    return `Add ${minFiles} images`;
+  };
+
   return (
     <>
       <div
@@ -156,14 +165,27 @@ const StorageUpload = ({
         {!!filesToUpload.length && imagesPreview}
 
         {/* STEP 1: DROP */}
-        <Button
-          className="!w-full text-white bg-black"
-          disabled={filesToUpload.length >= maxFiles}
-          onClick={openFileDialog}
-        >
-          <Icon icon="carbon:add" height="1.25em" />
-          <span className="transform -translate-y-[0.05em]">Add images</span>
-        </Button>
+        {numberOfFiles < minFiles ? (
+          <Button
+            className="!w-full text-white bg-black border-black"
+            disabled={filesToUpload.length >= maxFiles}
+            onClick={openFileDialog}
+          >
+            <Icon icon="carbon:add" height="1.25em" />
+            <span className="transform -translate-y-[0.05em]">
+              {uploadButtonLabel(numberOfFiles)}
+            </span>
+          </Button>
+        ) : (
+          <Button
+            className="!w-full text-white bg-blueCrayola-500 border-blueCrayola-500 disabled:opacity-100"
+            disabled
+            onClick={openFileDialog}
+          >
+            <Icon icon="carbon:checkmark-filled" height="1em" />
+            <span className="transform -translate-y-[0.05em]">Thanks!</span>
+          </Button>
+        )}
 
         {/* SELFIE CHILD */}
         {children}

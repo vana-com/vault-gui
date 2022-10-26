@@ -187,7 +187,7 @@
     animation-fill-mode: forwards;
   }
   .Text-meta {
-    @apply text-ssm font-medium tracking-wider uppercase;
+    @apply text-sm font-medium tracking-wider uppercase;
   }
   .Text-lg {
     @apply font-normal leading-snug text-lg;
