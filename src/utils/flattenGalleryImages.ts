@@ -13,11 +13,13 @@ export const flattenGalleryImages = (
 
     for (let imageIndex = 0; imageIndex < maxImagesInAnExhibit; imageIndex++) {
       gallery.exhibits.forEach((exhibit) => {
-        if (exhibit.images.length <= imageIndex + 1) {
+        if (imageIndex + 1 <= exhibit.images.length) {
           flattenedImages.push(exhibit.images[imageIndex]);
         }
       });
     }
+
+    flattenedImages.reverse();
 
     return flattenedImages.slice(0, numImages - 1);
   } catch (error) {

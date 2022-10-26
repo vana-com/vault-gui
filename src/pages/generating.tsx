@@ -27,6 +27,13 @@ const vanaTeamData = [
   { name: "Phoebe", hash: config.phoebeEmailHash },
 ];
 
+// pre-render this page at build time
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
+
 const GeneratePage: NextPage = () => {
   const router = useRouter();
   const [ref, bounds] = useMeasure();
@@ -67,13 +74,9 @@ const GeneratePage: NextPage = () => {
     fetchGallery();
   }, [router.asPath]);
 
-  console.log("galleries", galleries);
-
   if (!galleries) {
     return <Spinner />;
   }
-
-  console.log("galleries", galleries);
 
   return (
     <>
