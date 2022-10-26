@@ -8,13 +8,14 @@ import useMeasure from "react-use-measure";
 
 import {
   Button,
+  FooterBadge,
+  // SelfieButton,
+  GalleryMenu,
   Input,
   PageHeading,
   PrivacyText,
-  // SelfieButton,
   TitleAndMetaTags,
 } from "src/components";
-import { GalleryMenu } from "src/components/GalleryMenu";
 import { StorageUpload } from "src/components/Upload";
 import { gallery } from "src/data";
 import { obamaImages, rbgImages, teslaImages } from "src/data/famousImages";
@@ -224,6 +225,9 @@ const UploadPage: NextPage = () => {
           <hr className="border-t-8 text-stone-100" />
           <PrivacyText />
         </div>
+
+        {/* FOOTER LOGO */}
+        <FooterBadge screenHeight={screenHeight} blackTheme />
       </div>
     </>
   );

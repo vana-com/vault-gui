@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
+
 import config from "src/config";
 
 interface Props {
@@ -23,7 +24,7 @@ const FooterBadge = ({ screenHeight, blackTheme }: Props) => (
         )}
       >
         <div className="flex flex-col gap-1">
-          <div className="font-display text-2xl font-bold text-center tracking-[-0.01em]">
+          <div className="font-display text-2xl font-bold text-center tracking-[0.01em]">
             <Link href="/" passHref>
               Portrait
             </Link>

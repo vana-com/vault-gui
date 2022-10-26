@@ -24,7 +24,7 @@ const PageHeading = ({
     {/* our inView ref */}
     {viewRefNode}
     <h1
-      className={clsx("Text-display", inView ? "text-[4.5vh]" : "text-[3.5vh]")}
+      className={clsx("Text-display", inView ? "text-[4.5vh]" : "text-[27px]")}
     >
       {heading}
     </h1>
