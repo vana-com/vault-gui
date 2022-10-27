@@ -6,12 +6,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import useMeasure from "react-use-measure";
 
-import {
-  Button,
-  CanvasGrid,
-  FooterBadge,
-  TitleAndMetaTags,
-} from "src/components";
+import { Button, CanvasGrid, TitleAndMetaTags } from "src/components";
 
 const Home: NextPage = () => {
   // consider that knowing bounds is only possible *after* the view renders
@@ -85,26 +80,31 @@ const Home: NextPage = () => {
                 &ldquo;Portrait&rdquo; by Vana is a generative art studio that
                 can create self-portraits of you in infinite styles.
               </p>
-              <div className="pt-3">
-                <Link href="/create" passHref>
-                  <Button className="!w-5/6 !md:w-3/4">
-                    <span>Create your gallery</span>
-                    <Icon icon="carbon:arrow-right" />
-                  </Button>
-                </Link>
-              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 1, translateY: 5 }}
+              animate={{ opacity: 1, scale: 1, translateY: 0 }}
+              transition={{ duration: 1, delay: 1.25 }}
+              className="pt-5"
+            >
+              <Link href="/create" passHref>
+                <Button className="!w-5/6 !md:w-3/4 !bg-transparent">
+                  <span>Create your gallery</span>
+                  <Icon icon="carbon:arrow-right" />
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>
 
         {/* FOOTER LOGO */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.5 }}
         >
           <FooterBadge screenHeight={screenHeight} />
-        </motion.div>
+        </motion.div> */}
       </div>
     </>
   );
