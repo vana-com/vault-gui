@@ -244,7 +244,7 @@ const UploadPage: NextPage = () => {
                   }
                   className={clsx("font-medium disabled:!opacity-100")}
                 >
-                  <span>Submit</span>
+                  <span>Submit &amp; Agree</span>
                   <Icon icon="carbon:arrow-right" />
                 </Button>
                 <p className="-mt-0.5 text-xs text-stone-400">
