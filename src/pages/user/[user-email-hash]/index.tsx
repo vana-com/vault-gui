@@ -36,13 +36,10 @@ const GalleryPage: NextPage = () => {
 
   const { "user-email-hash": userEmailHash, name } = router.query;
 
-  console.log("name", name);
-
   const [gallery, setGallery] = useState<Gallery | null>(null);
 
   const shareLink = async () => {
     const link = `${config.appBaseUrl}/user/${userEmailHash}/`;
-    console.log("sharing link:", link);
 
     try {
       const didShare = await share({
@@ -166,7 +163,7 @@ const GalleryPage: NextPage = () => {
                   <button type="button" className="hover:shadow-lg">
                     <GalleryGrid
                       key={gallery.userHash}
-                      images={flattenGalleryImages(gallery, 12).slice(0, 3)}
+                      images={exhibit.images.slice(1, 4)}
                       wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
                       label={
                         <p className="flex items-center gap-1 pt-2.5 pl-0.5 text-base font-medium leading-none text-black">
