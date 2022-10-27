@@ -33,7 +33,8 @@ const Home: NextPage = () => {
       <TitleAndMetaTags
         color="black"
         title="Portrait | Vana"
-        description="Discover projects you can earn and learn from with your Vana Vault"
+        description="&ldquo;Portrait&rdquo; by Vana is a generative art studio that
+        can create self-portraits of you in infinite styles."
       />
 
       <div

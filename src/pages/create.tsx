@@ -120,7 +120,8 @@ const UploadPage: NextPage = () => {
       <TitleAndMetaTags
         color="black"
         title="Portrait | Vana"
-        description="Create your portrait gallery on Vana"
+        description="&ldquo;Portrait&rdquo; by Vana is a generative art studio that
+        can create self-portraits of you in infinite styles."
       />
 
       <div
