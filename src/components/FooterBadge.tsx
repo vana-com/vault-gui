@@ -15,7 +15,7 @@ const FooterBadge = ({ screenHeight, blackTheme }: Props) => (
     className="fixed w-full"
     style={{ top: `${screenHeight - BOTTOM_SPACE}px` }}
   >
-    <div className="flex justify-center mx-inset mb-insetDouble">
+    <div className="flex justify-center">
       {/* outline outline-1 outline-offset-4 */}
       <div
         className={clsx(
@@ -23,13 +23,13 @@ const FooterBadge = ({ screenHeight, blackTheme }: Props) => (
           blackTheme ? "bg-black text-white" : "bg-white text-black",
         )}
       >
-        <div className="flex flex-col gap-1">
-          <div className="font-display text-2xl font-bold text-center tracking-[0.01em]">
+        <div className="flex flex-col gap-0.5">
+          <div className="font-display text-md font-black text-center tracking-[0.15em] uppercase">
             <Link href="/" passHref>
               Portrait
             </Link>
           </div>
-          <div className="flex items-center justify-center gap-2 font-sans text-sm font-normal tracking-[0.015em]">
+          <div className="flex items-center justify-center gap-2 font-sans text-sm font-normal tracking-[0.015em] opacity-80">
             <Link href={config.termsOfServiceURL} passHref>
               Terms of Service
             </Link>
