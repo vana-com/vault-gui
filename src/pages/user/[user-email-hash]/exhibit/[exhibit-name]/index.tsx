@@ -26,6 +26,13 @@ import { blobify, copyToClipboard, fileify, share } from "src/utils";
 const DIALOG_BUTTON_STYLE =
   "!text-stone-500 !border-transparent !bg-transparent";
 
+interface QueryParams {
+  "user-email-hash": string;
+  "exhibit-name": string;
+  view: string;
+  name: string;
+}
+
 const ExhibitPage: NextPage = () => {
   const router = useRouter();
   const {
@@ -33,7 +40,7 @@ const ExhibitPage: NextPage = () => {
     "exhibit-name": exhibitName,
     view: viewQuery,
     name,
-  } = router.query;
+  } = router.query as unknown as QueryParams;
 
   const [showModalInternal, setShowModalInternal] = useState<boolean>(false);
   const setShowModal = (

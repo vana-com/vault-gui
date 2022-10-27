@@ -17,12 +17,12 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Gallery } from "src/types";
-import {
-  copyToClipboard,
-  flattenGalleryImages,
-  nameToPathName,
-  share,
-} from "src/utils";
+import { copyToClipboard, nameToPathName, share } from "src/utils";
+
+interface QueryParams {
+  "user-email-hash": string;
+  name: string;
+}
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
@@ -32,7 +32,8 @@ const GalleryPage: NextPage = () => {
     threshold: 0,
   });
 
-  const { "user-email-hash": userEmailHash, name } = router.query;
+  const { "user-email-hash": userEmailHash, name } =
+    router.query as unknown as QueryParams;
 
   const [gallery, setGallery] = useState<Gallery | null>(null);
 
