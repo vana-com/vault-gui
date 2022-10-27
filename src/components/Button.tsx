@@ -23,7 +23,7 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         "rounded-none",
         // size
         size === "lg" && "px-4 h-[40px]",
-        size === "sm" && "px-2.5 h-[27px] text-sm",
+        size === "sm" && "px-2 h-[27px] text-sm",
         // typography: inherit body size
         "font-sans font-normal",
         // color
