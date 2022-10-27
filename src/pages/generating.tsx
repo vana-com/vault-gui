@@ -7,12 +7,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useMeasure from "react-use-measure";
 
-import {
-  FooterBadge,
-  GalleryGrid,
-  PageHeading,
-  TitleAndMetaTags,
-} from "src/components";
+import { GalleryGrid, PageHeading, TitleAndMetaTags } from "src/components";
 import { Spinner } from "src/components/Spinner";
 import config from "src/config";
 import { Gallery } from "src/types";
@@ -146,7 +141,7 @@ const GeneratePage: NextPage = () => {
         </div>
 
         {/* FOOTER LOGO */}
-        <FooterBadge screenHeight={screenHeight} blackTheme />
+        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
       </div>
     </>
   );

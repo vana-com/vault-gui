@@ -8,7 +8,6 @@ import useMeasure from "react-use-measure";
 
 import {
   Button,
-  FooterBadge,
   // SelfieButton,
   GalleryMenu,
   Input,
@@ -224,7 +223,7 @@ const UploadPage: NextPage = () => {
         </div>
 
         {/* FOOTER LOGO */}
-        <FooterBadge screenHeight={screenHeight} blackTheme />
+        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
       </div>
     </>
   );
