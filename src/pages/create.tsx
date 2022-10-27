@@ -87,7 +87,7 @@ const UploadPage: NextPage = () => {
 
       // Prevent people from uploading an ungodly amount of photos
       const truncatedFiles =
-        filesToUpload.length < REAL_MAX_FILES
+        filesToUpload.length <= REAL_MAX_FILES
           ? filesToUpload
           : filesToUpload.slice(0, REAL_MAX_FILES);
 
