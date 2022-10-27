@@ -207,7 +207,7 @@ const UploadPage: NextPage = () => {
               <span className="!font-bold text-black Text-meta">
                 What do I get?{" "}
               </span>
-              Check out a few recent galleries.
+              Check out a few galleries of some familiar faces.
             </p>
           </div>
           <div className="flex flex-col gap-4">
