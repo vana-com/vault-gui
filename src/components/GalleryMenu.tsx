@@ -10,7 +10,7 @@ interface Props {
 const GalleryMenu = ({ images, label }: Props) => (
   <div>
     <div className="w-full overflow-x-auto no-scrollbar">
-      <div className="flex gap-1 w-[150%] snap-x overflow-x-auto">
+      <div className="flex gap-1 w-[180%] snap-x overflow-x-auto">
         {images.map((image, i) => (
           <div key={image} className="snap-start first:ml-inset last:pr-inset">
             <ArtCard
