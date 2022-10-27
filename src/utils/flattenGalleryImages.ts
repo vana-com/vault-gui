@@ -21,7 +21,7 @@ export const flattenGalleryImages = (
 
     flattenedImages.reverse();
 
-    return flattenedImages.slice(0, numImages - 1);
+    return flattenedImages.slice(0, numImages);
   } catch (error) {
     return gallery.exhibits[0].images;
   }
