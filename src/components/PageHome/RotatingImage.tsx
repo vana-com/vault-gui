@@ -66,6 +66,7 @@ function Image({ src }: { src: string }) {
           src={src}
           height={256}
           width={256}
+          unoptimized
         />
       </animated.div>
     </div>

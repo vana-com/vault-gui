@@ -33,7 +33,7 @@ const ArtCard = ({
       alt={imageAlt}
       width={size}
       height={size}
-      loader={({ src }) => src}
+      unoptimized
       {...props}
     />
   </div>
