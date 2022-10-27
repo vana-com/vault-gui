@@ -10,16 +10,21 @@ import { useInView } from "react-intersection-observer";
 import useMeasure from "react-use-measure";
 
 import {
-  ArtCard,
   Button,
   FooterBadge,
+  GalleryGrid,
   PageHeading,
   Spinner,
   TitleAndMetaTags,
 } from "src/components";
 import config from "src/config";
 import { Gallery } from "src/types";
-import { copyToClipboard, nameToPathName, share } from "src/utils";
+import {
+  copyToClipboard,
+  flattenGalleryImages,
+  nameToPathName,
+  share,
+} from "src/utils";
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
@@ -84,6 +89,9 @@ const GalleryPage: NextPage = () => {
     return <Spinner />;
   }
 
+  // TODO: make real via `?name=XXX` query param
+  const galleryWithName = name && true;
+
   return (
     <>
       <TitleAndMetaTags color="black" title="Your Masterpiece | Vana" />
@@ -93,40 +101,48 @@ const GalleryPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
+        {/* Back to /generating */}
+        <div className="fixed z-20 top-3 right-inset">
+          <NextLink href="/generating">
+            <button type="button" className="flex items-center gap-1">
+              <Icon icon="carbon:close" height="2em" />
+              <span className="hidden">Back to generating</span>
+            </button>
+          </NextLink>
+        </div>
+
+        {/* CONTENT */}
         <div className="pt-[12.5vh] Container">
           <PageHeading
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
             heading={
               <div className="flex items-baseline justify-between">
-                <NextLink href="/generating">
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 -ml-3"
+                <span>
+                  {galleryWithName ? (
+                    <span className="capitalize">Gallery {name}</span>
+                  ) : (
+                    `Gallery ${userEmailHash?.slice(-4)}`
+                  )}
+                </span>
+                {!galleryWithName && (
+                  <Button
+                    onClick={async (_: any) => shareLink()}
+                    size="sm"
+                    className="!text-stone-500 text-sm transform translate-y-[-0.2em]"
                   >
-                    <Icon icon="carbon:arrow-left" height="0.5em" />
-                    <span>Gallery {userEmailHash?.slice(-4)}</span>
-                  </button>
-                </NextLink>
-                <Button
-                  onClick={async (_: any) => shareLink()}
-                  size="sm"
-                  className="!text-stone-500 text-sm transform translate-y-[-0.2em]"
-                >
-                  <Icon icon="carbon:arrow-up" height="1.0em" />
-                  <span className="transform translate-y-[-0.015em]">
-                    Share
-                  </span>
-                </Button>
+                    <Icon icon="carbon:arrow-up" height="1.0em" />
+                    <span className="transform translate-y-[-0.015em]">
+                      Share
+                    </span>
+                  </Button>
+                )}
               </div>
             }
-          >
-            {/* <p className="text-stone-400">Generated Monday October 24, 2022</p> */}
-          </PageHeading>
+          />
 
           <div className="pt-w12 pb-w72">
-            <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-insetHalf">
-              {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
+            <div className="grid grid-cols-1 gap-4 mobile:-mx-1 md:grid-cols-4 xl:grid-cols-5">
               {gallery.exhibits.map((exhibit) => (
                 <NextLink
                   key={exhibit.name}
@@ -135,7 +151,7 @@ const GalleryPage: NextPage = () => {
                   )}`}
                   passHref
                 >
-                  <div>
+                  {/* <div>
                     <ArtCard
                       imageSrc={exhibit.images[exhibit.images.length - 1]}
                       imageAlt={exhibit.name}
@@ -146,23 +162,26 @@ const GalleryPage: NextPage = () => {
                     <p className="text-sm py-1.5 text-stone-500">
                       {exhibit.name}
                     </p>
-                  </div>
+                  </div> */}
+                  <button type="button" className="hover:shadow-lg">
+                    <GalleryGrid
+                      key={gallery.userHash}
+                      images={flattenGalleryImages(gallery, 12).slice(0, 3)}
+                      wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
+                      label={
+                        <p className="flex items-center gap-1 pt-2.5 pl-0.5 text-base font-medium leading-none text-black">
+                          <span className="capitalize">
+                            {name} {exhibit.name}
+                          </span>
+                          <Icon icon="carbon:arrow-right" height="1em" />
+                        </p>
+                      }
+                    />
+                  </button>
                 </NextLink>
               ))}
             </div>
           </div>
-          {/* <button
-            type="button"
-            className="p-2 mt-4 border-2 border-solid"
-            onClick={() => {
-              console.log("share this gallery");
-
-              const path = `${config.appBaseUrl}/user/${userEmailHash}`;
-              copyToClipboard(path);
-            }}
-          >
-            Share Gallery
-          </button> */}
         </div>
 
         {/* FOOTER LOGO */}
