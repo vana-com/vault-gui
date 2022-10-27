@@ -53,6 +53,10 @@ const ExhibitPage: NextPage = () => {
         query: { ...router.query, view: viewingPageIndex },
       });
     } else {
+      // const { view: _, ...rest } = router.query;
+      // router.replace({
+      //   query: { ...rest },
+      // });
       router.replace({
         query: { ...router.query, view: undefined },
       });
@@ -285,18 +289,18 @@ const ExhibitPage: NextPage = () => {
                     )
                   }
                 >
+                  {/* CARD IMAGE IN DIALOG */}
                   <div className="relative flex flex-col gap-w16">
-                    <div className="overflow-hidden aspect-square">
+                    <div className="overflow-hidden bg-black aspect-square">
                       <Image
-                        className="w-full"
+                        className="object-cover w-full"
                         src={exhibit.images[viewing ?? 0]}
-                        // src={imageUrl}
                         alt={exhibit.name}
                         width={250}
                         height={250}
                         loader={({ src }) => src}
-                        placeholder="blur"
-                        blurDataURL={config.portraitBlurDataURL}
+                        // placeholder="blur"
+                        // blurDataURL={config.portraitBlurDataURL}
                       />
                     </div>
                     <div className="relative">
