@@ -64,8 +64,8 @@ function Image({ src }: { src: string }) {
           priority
           className="absolute inset-0 object-cover w-full h-auto"
           src={src}
-          height={1000}
-          width={1000}
+          height={256}
+          width={256}
         />
       </animated.div>
     </div>
