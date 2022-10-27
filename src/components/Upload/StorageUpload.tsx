@@ -97,10 +97,10 @@ const StorageUpload = ({
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        200,
-        200,
-        "JPEG",
-        20,
+        400,
+        400,
+        "WEBP",
+        40, // Compression Level
         0,
         (uri) => {
           resolve(uri);
