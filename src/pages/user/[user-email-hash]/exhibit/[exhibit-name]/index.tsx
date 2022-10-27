@@ -321,7 +321,7 @@ const ExhibitPage: NextPage = () => {
                       </div>
                       <div className="relative">
                         <div className="flex justify-center w-full">
-                          <div className="overflow-hidden border rounded-md border-stone-200">
+                          <div className="p-1 overflow-hidden border rounded-md border-stone-200">
                             <Button
                               size="lg"
                               className={DIALOG_BUTTON_STYLE}
