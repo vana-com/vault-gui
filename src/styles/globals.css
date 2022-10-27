@@ -51,7 +51,7 @@
   @font-face {
     font-family: "Sharif";
     src: url("/fonts/Wulkan-Display-Light.otf") format("woff");
-    src: url("/fonts/GT-Super-Text-Book-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperText-Book.otf") format("woff");
     font-style: normal;
     font-weight: 300;
     font-display: swap;
@@ -59,7 +59,7 @@
   @font-face {
     font-family: "Sharif";
     src: url("/fonts/Wulkan-Display-Regular.otf") format("woff");
-    src: url("/fonts/GT-Super-Text-Regular-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperText-Regular.otf") format("woff");
     font-style: normal;
     font-weight: 400;
     font-display: swap;
@@ -67,7 +67,7 @@
   @font-face {
     font-family: "Sharif";
     src: url("/fonts/Wulkan-Display-Medium.otf") format("woff");
-    src: url("/fonts/GT-Super-Text-Medium-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperText-Medium.otf") format("woff");
     font-style: normal;
     font-weight: 500;
     font-display: swap;
@@ -75,7 +75,7 @@
   @font-face {
     font-family: "Sharif";
     src: url("/fonts/Wulkan-Display-SemiBold.otf") format("woff");
-    src: url("/fonts/GT-Super-Text-Medium-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperText-Medium.otf") format("woff");
     font-style: normal;
     font-weight: 600;
     font-display: swap;
@@ -83,7 +83,7 @@
   @font-face {
     font-family: "Sharif";
     src: url("/fonts/Wulkan-Display-Bold.otf") format("woff");
-    src: url("/fonts/GT-Super-Text-Bold-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperText-Bold.otf") format("woff");
     font-style: normal;
     font-weight: 700;
     font-display: swap;
@@ -91,21 +91,21 @@
   @font-face {
     font-family: "Sharif";
     src: url("/fonts/Wulkan-Display-Black.otf") format("woff");
-    src: url("/fonts/GT-Super-Text-Super-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperDisplay.otf") format("woff");
     font-style: normal;
     font-weight: 800;
     font-display: swap;
   }
   @font-face {
     font-family: "Display";
-    src: url("/fonts/GT-Super-Display-Light-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperDisplay-Light.otf") format("woff");
     font-style: normal;
     font-weight: 300;
     font-display: swap;
   }
   @font-face {
     font-family: "Display";
-    src: url("/fonts/GT-Super-Display-Bold-Trial.otf") format("woff");
+    src: url("/fonts/GTSuperDisplay-Bold.otf") format("woff");
     font-style: normal;
     font-weight: 700;
     font-display: swap;
