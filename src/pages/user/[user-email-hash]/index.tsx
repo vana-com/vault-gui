@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import { NextPage } from "next";
@@ -11,7 +9,7 @@ import useMeasure from "react-use-measure";
 
 import {
   Button,
-  FooterBadge,
+  ButtonClose,
   GalleryGrid,
   PageHeading,
   Spinner,
@@ -86,7 +84,6 @@ const GalleryPage: NextPage = () => {
     return <Spinner />;
   }
 
-  // TODO: make real via `?name=XXX` query param
   const galleryWithName = name && true;
 
   return (
@@ -98,15 +95,8 @@ const GalleryPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
-        {/* Back to /generating */}
-        <div className="fixed z-20 top-3 right-inset">
-          <NextLink href="/generating">
-            <button type="button" className="flex items-center gap-1">
-              <Icon icon="carbon:close" height="2em" />
-              <span className="hidden">Back to generating</span>
-            </button>
-          </NextLink>
-        </div>
+        {/* CLOSE BACK */}
+        <ButtonClose link="/generating" label="Back to generating" />
 
         {/* CONTENT */}
         <div className="pt-[12.5vh] Container">
@@ -117,7 +107,7 @@ const GalleryPage: NextPage = () => {
               <div className="flex items-baseline justify-between">
                 <span>
                   {galleryWithName ? (
-                    <span className="capitalize">Gallery {name}</span>
+                    <span className="capitalize">{name}&apos;s Gallery</span>
                   ) : (
                     `Gallery ${userEmailHash?.slice(-4)}`
                   )}
@@ -145,26 +135,18 @@ const GalleryPage: NextPage = () => {
                   key={exhibit.name}
                   href={`/user/${userEmailHash}/exhibit/${nameToPathName(
                     exhibit.name,
-                  )}`}
+                  )}${name ? `?name=${name?.toLowerCase()}` : ""}`}
                   passHref
                 >
-                  {/* <div>
-                    <ArtCard
-                      imageSrc={exhibit.images[exhibit.images.length - 1]}
-                      imageAlt={exhibit.name}
-                      size={512}
-                      placeholder="blur"
-                      blurDataURL={config.portraitBlurDataURL}
-                    />
-                    <p className="text-sm py-1.5 text-stone-500">
-                      {exhibit.name}
-                    </p>
-                  </div> */}
-                  <button type="button" className="hover:shadow-lg">
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                  <a>
                     <GalleryGrid
                       key={gallery.userHash}
                       images={exhibit.images.slice(1, 4)}
-                      wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
+                      wrapperClassName={clsx(
+                        "p-3 bg-stone-100 border border-stone-200 rounded-[18px] relative hover:shadow-lg",
+                        // "after:absolute after:top-0 after:bottom-0 after:right-0 after:w-[100px] after:bg-gradient-to-l after:from-stone-100 after:via-stone-100",
+                      )}
                       label={
                         <p className="flex items-center gap-1 pt-2.5 pl-0.5 text-base font-medium leading-none text-black">
                           <span className="capitalize">
@@ -174,7 +156,7 @@ const GalleryPage: NextPage = () => {
                         </p>
                       }
                     />
-                  </button>
+                  </a>
                 </NextLink>
               ))}
             </div>
@@ -182,7 +164,7 @@ const GalleryPage: NextPage = () => {
         </div>
 
         {/* FOOTER LOGO */}
-        <FooterBadge screenHeight={screenHeight} blackTheme />
+        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
       </div>
     </>
   );
