@@ -21,6 +21,7 @@ import { uploadFile, validateEmail } from "src/utils";
 
 const MIN_FILES = 8;
 const MAX_FILES = 10;
+const REAL_MAX_FILES = 24;
 
 // pre-render this page at build time
 export async function getStaticProps() {
@@ -83,7 +84,14 @@ const UploadPage: NextPage = () => {
     try {
       // Upload files to object store (S3 or GCS)
       const timestamp = new Date().getTime();
-      const uploadPromises = filesToUpload.map((file, index) =>
+
+      // Prevent people from uploading an ungodly amount of photos
+      const truncatedFiles =
+        filesToUpload.length < REAL_MAX_FILES
+          ? filesToUpload
+          : filesToUpload.slice(0, REAL_MAX_FILES);
+
+      const uploadPromises = truncatedFiles.map((file, index) =>
         uploadFile(file, index, timestamp, emailAddress, handleUploadProgress),
       );
 
