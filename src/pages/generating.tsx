@@ -116,9 +116,8 @@ const GeneratePage: NextPage = () => {
                 Get to know the creative team behind Vana Portrait.
               </p>
             </div>
-            {/* add mobile:-mx-1 after refactoring blocks with .Container */}
+            {/* TODO @Callum: add mobile:-mx-1 after refactoring blocks with .Container */}
             <div className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3">
-              {/** Use the first image in an exhibit as the thumbnail for the entire exhibit  */}
               {galleries.map((gallery, i) => (
                 <NextLink
                   key={gallery.userHash}
