@@ -1,6 +1,7 @@
 /* APP COMPOUND & LAYOUT COMPONENTS */
 // export * from "./AppHook";
 export * from "./Button";
+export * from "./ButtonClose";
 export * from "./Carousel";
 export * from "./FooterBadge";
 export * from "./GalleryGrid";

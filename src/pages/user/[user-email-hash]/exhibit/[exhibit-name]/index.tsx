@@ -13,8 +13,8 @@ import useMeasure from "react-use-measure";
 import {
   ArtCard,
   Button,
+  ButtonClose,
   DialogControlled,
-  FooterBadge,
   PageHeading,
   Spinner,
   TitleAndMetaTags,
@@ -32,6 +32,7 @@ const ExhibitPage: NextPage = () => {
     "user-email-hash": userEmailHash,
     "exhibit-name": exhibitName,
     view: viewQuery,
+    name,
   } = router.query;
 
   const [showModalInternal, setShowModalInternal] = useState<boolean>(false);
@@ -158,6 +159,12 @@ const ExhibitPage: NextPage = () => {
     return <Spinner />;
   }
 
+  const galleryWithName = name && true;
+  const galleryHash = userEmailHash?.slice(-4);
+  const backToGalleryLink = `/user/${userEmailHash}${
+    name ? `?name=${name?.toLowerCase()}` : ""
+  }`;
+
   return (
     <>
       <TitleAndMetaTags color="black" title={`Your ${exhibit.name} | Vana`} />
@@ -167,53 +174,68 @@ const ExhibitPage: NextPage = () => {
         className={clsx("relative min-h-screen")}
         style={{ height: `${screenHeight}px` }}
       >
+        {/* CLOSE BACK */}
+        <ButtonClose link={backToGalleryLink} label="Back to generating" />
+
+        {/* CONTENT */}
         <div className="pt-[12.5vh] Container">
           <PageHeading
             inView={inView}
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
             heading={
               <div className="flex items-baseline justify-between">
-                <NextLink href="/generating">
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 -ml-3"
-                  >
-                    <Icon icon="carbon:arrow-left" height="0.5em" />
-                    <span className="w-[240px] truncate !overflow-y-[initial] text-left">
-                      {exhibit.name}
+                <span>
+                  {galleryWithName ? (
+                    <span className="capitalize">
+                      {name} {exhibit.name}
                     </span>
-                  </button>
-                </NextLink>
-                <Button
-                  size="sm"
-                  className="!text-stone-500 transform translate-y-[-0.2em]"
-                  onClick={(_: any) =>
-                    shareLink(
-                      `${config.appBaseUrl}/user/${userEmailHash}/exhibit/${exhibitName}/`,
-                    )
-                  }
-                >
-                  <Icon icon="carbon:arrow-up" height="1.0em" />
-                  <span className="transform translate-y-[-0.015em]">
-                    Share
-                  </span>
-                </Button>
+                  ) : (
+                    `${galleryHash} ${exhibit.name}`
+                  )}
+                </span>
+                {!galleryWithName && (
+                  <Button
+                    size="sm"
+                    className="!text-stone-500 !bg-white transform translate-y-[-0.2em]"
+                    onClick={(_: any) =>
+                      shareLink(
+                        `${
+                          config.appBaseUrl
+                        }/user/${userEmailHash}/exhibit/${exhibitName}${
+                          name ? `?name=${name?.toLowerCase()}` : ""
+                        }`,
+                      )
+                    }
+                  >
+                    <Icon icon="carbon:arrow-up" height="1.0em" />
+                    <span className="transform translate-y-[-0.015em]">
+                      Share
+                    </span>
+                  </Button>
+                )}
               </div>
             }
           >
             <p className="text-stone-400">
-              {exhibit.name} images from{" "}
-              <NextLink href={`/user/${userEmailHash}`}>
-                <button type="button" className="link">
-                  Gallery {userEmailHash?.slice(-4)}
-                </button>
+              <NextLink href={backToGalleryLink}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className="flex items-center gap-1">
+                  <Icon icon="carbon:arrow-left" height="1em" />
+                  <span className="">
+                    Back to{" "}
+                    {galleryWithName ? (
+                      <span className="capitalize">{name}&apos;s Gallery</span>
+                    ) : (
+                      `${galleryHash} Gallery`
+                    )}{" "}
+                  </span>
+                </a>
               </NextLink>
-              .
             </p>
           </PageHeading>
 
           <div className="pt-w12 pb-w72">
-            <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-5 gap-insetHalf">
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-4 xl:grid-cols-5">
               {/* CARD with MODAL */}
               {/* Use the first image in an exhibit as the thumbnail for the entire exhibit */}
               {exhibit.images.map((imageUrl, i) => (
@@ -224,32 +246,52 @@ const ExhibitPage: NextPage = () => {
                     setShowModal(!showModalInternal, i);
                   }}
                   overlayClassName="overflow-y-auto !bg-white"
-                  contentClassName="!w-[100vw]"
+                  contentClassName="!w-screen"
                   // onPointerDownOutside={(event) => event.preventDefault()}
                   triggerNode={
-                    <button type="button">
-                      <ArtCard
+                    galleryWithName && i === 0 ? (
+                      <div
                         key={imageUrl}
-                        imageSrc={imageUrl}
-                        imageAlt={exhibit.name}
-                        placeholder="blur"
-                        blurDataURL={config.portraitBlurDataURL}
-                      />
-                    </button>
+                        className="relative p-6 overflow-hidden border rounded-xl border-stone-200"
+                      >
+                        <ArtCard
+                          imageSrc={imageUrl}
+                          imageAlt={exhibit.name}
+                          wrapperClassName="!bg-transparent"
+                          imageClassName="rounded-[8px] transform scale-[1.075]"
+                        />
+                        <div className="absolute bottom-0 w-full py-[6px] text-stone-500 text-xs font-medium uppercase text-[8px] tracking-widest">
+                          Original
+                        </div>
+                      </div>
+                    ) : (
+                      <button type="button" key={imageUrl}>
+                        <ArtCard
+                          key={imageUrl}
+                          imageSrc={imageUrl}
+                          imageAlt={exhibit.name}
+                          placeholder="blur"
+                          blurDataURL={config.portraitBlurDataURL}
+                          imageClassName="transform scale-[1.075]"
+                        />
+                      </button>
+                    )
                   }
                 >
                   <div className="relative flex flex-col gap-w16">
-                    <Image
-                      className="w-full"
-                      src={exhibit.images[viewing ?? 0]}
-                      // src={imageUrl}
-                      alt={exhibit.name}
-                      width={250}
-                      height={250}
-                      loader={({ src }) => src}
-                      placeholder="blur"
-                      blurDataURL={config.portraitBlurDataURL}
-                    />
+                    <div className="overflow-hidden aspect-square">
+                      <Image
+                        className="w-full"
+                        src={exhibit.images[viewing ?? 0]}
+                        // src={imageUrl}
+                        alt={exhibit.name}
+                        width={250}
+                        height={250}
+                        loader={({ src }) => src}
+                        placeholder="blur"
+                        blurDataURL={config.portraitBlurDataURL}
+                      />
+                    </div>
                     <div className="relative">
                       <div className="flex justify-center w-full">
                         <div className="overflow-hidden border rounded-md border-stone-200">
@@ -318,31 +360,8 @@ const ExhibitPage: NextPage = () => {
         </div>
 
         {/* FOOTER LOGO */}
-        <FooterBadge screenHeight={screenHeight} blackTheme />
+        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
       </div>
-      {/* <div className="flex">
-        <button
-          type="button"
-          className="p-2 border-2 border-solid"
-          onClick={() => {
-            console.log("Shared");
-
-            const path = `${config.appBaseUrl}/user/${userEmailHash}/exhibit/${exhibitName}`;
-            copyToClipboard(path);
-          }}
-        >
-          Share {exhibit.name} Images
-        </button>
-        <button
-          type="button"
-          className="p-2 border-2 border-solid"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Create a new gallery
-        </button>
-      </div> */}
     </>
   );
 };
