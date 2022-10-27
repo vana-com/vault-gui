@@ -29,7 +29,9 @@ const GalleryPage: NextPage = () => {
     threshold: 0,
   });
 
-  const { "user-email-hash": userEmailHash } = router.query;
+  const { "user-email-hash": userEmailHash, name } = router.query;
+
+  console.log("name", name);
 
   const [gallery, setGallery] = useState<Gallery | null>(null);
 

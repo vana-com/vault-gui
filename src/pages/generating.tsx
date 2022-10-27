@@ -123,7 +123,9 @@ const GeneratePage: NextPage = () => {
               {galleries.map((gallery, i) => (
                 <NextLink
                   key={gallery.userHash}
-                  href={`/user/${gallery.userHash}/`}
+                  href={`/user/${gallery.userHash}?name=${vanaTeamData[
+                    i
+                  ].name.toLowerCase()}`}
                   passHref
                 >
                   <button type="button" className="hover:shadow-lg">

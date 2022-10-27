@@ -23,7 +23,7 @@ import { uploadFile, validateEmail } from "src/utils";
 const MIN_FILES = 8;
 const MAX_FILES = 10;
 
-// pre-render this page at build
+// pre-render this page at build time
 export async function getStaticProps() {
   return {
     props: {},
