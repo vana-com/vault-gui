@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -83,60 +84,81 @@ const GeneratePage: NextPage = () => {
         style={{ height: `${screenHeight}px` }}
       >
         <div className="pt-[12.5vh] Container">
-          <PageHeading
-            inView={inView}
-            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
-            heading={
-              <>
-                Sit tight while we style your portrait
-                {/* <span className="mobile:table">custom-generated art</span> */}
-              </>
-            }
+          <motion.div
+            initial={{ opacity: 0, translateY: 5 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: 0.25 }}
           >
-            <p>
-              <span className="text-stone-500">
-                We&apos;ll email you when it&apos;s ready in a few hours.
-              </span>
-            </p>
-          </PageHeading>
+            <PageHeading
+              inView={inView}
+              viewRefNode={
+                <div ref={viewRef} className="absolute -top-[1vh]" />
+              }
+              heading={
+                <>
+                  Sit tight while we style your portrait
+                  {/* <span className="mobile:table">custom-generated art</span> */}
+                </>
+              }
+            >
+              <p>
+                <span className="text-stone-500">
+                  We&apos;ll email you when it&apos;s ready in a few hours.
+                </span>
+              </p>
+            </PageHeading>
+          </motion.div>
 
           <div className="pt-w24 pb-w72">
             {/* sticky top-0 z-[11] */}
-            <div className="flex flex-col gap-4 bg-white">
-              <hr className="border-t-8 text-stone-100" />
-              <p className="text-stone-500">
-                <span className="!font-bold text-black Text-meta">
-                  While you&apos;re waiting…{" "}
-                </span>
-                Get to know the creative team behind Vana Portrait.
-              </p>
-            </div>
-            {/* TODO @Callum: add mobile:-mx-1 after refactoring blocks with .Container */}
-            <div className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3">
-              {galleries.map((gallery, i) => (
-                <NextLink
-                  key={gallery.userHash}
-                  href={`/user/${gallery.userHash}?name=${vanaTeamData[
-                    i
-                  ].name.toLowerCase()}`}
-                  passHref
-                >
-                  <button type="button" className="hover:shadow-lg">
-                    <GalleryGrid
-                      key={gallery.userHash}
-                      images={flattenGalleryImages(gallery, 6)}
-                      wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
-                      label={
-                        <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
-                          <span>{vanaTeamData[i].name}</span>
-                          <Icon icon="carbon:arrow-right" height="1em" />
-                        </p>
-                      }
-                    />
-                  </button>
-                </NextLink>
-              ))}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, translateY: 5 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+            >
+              <div className="flex flex-col gap-4 bg-white">
+                <hr className="border-t-8 text-stone-100" />
+                <p className="text-stone-500">
+                  <span className="!font-bold text-black Text-meta">
+                    While you&apos;re waiting…{" "}
+                  </span>
+                  Get to know the creative team behind Vana Portrait.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, translateY: 5 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              {/* TODO @Callum: add mobile:-mx-1 after refactoring blocks with .Container */}
+              <div className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3">
+                {galleries.map((gallery, i) => (
+                  <NextLink
+                    key={gallery.userHash}
+                    href={`/user/${gallery.userHash}?name=${vanaTeamData[
+                      i
+                    ].name.toLowerCase()}`}
+                    passHref
+                  >
+                    <button type="button" className="hover:shadow-lg">
+                      <GalleryGrid
+                        key={gallery.userHash}
+                        images={flattenGalleryImages(gallery, 6)}
+                        wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
+                        label={
+                          <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
+                            <span>{vanaTeamData[i].name}</span>
+                            <Icon icon="carbon:arrow-right" height="1em" />
+                          </p>
+                        }
+                      />
+                    </button>
+                  </NextLink>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
 
