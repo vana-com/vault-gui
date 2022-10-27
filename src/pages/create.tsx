@@ -182,10 +182,12 @@ const UploadPage: NextPage = () => {
                 numberOfFiles={filesToUpload ? filesToUpload.length : 0}
                 isDataUploading={isDataUploading}
               />
-              <p className="-mt-0.5 text-xs text-stone-400">
-                For best results, make sure your face is fully visible and avoid
-                images with filters.
-              </p>
+              {filesToUpload.length >= MIN_FILES && (
+                <p className="-mt-0.5 text-xs text-stone-400">
+                  For best results, make sure your face is fully visible and
+                  avoid images with filters.
+                </p>
+              )}
             </div>
           </motion.div>
 
