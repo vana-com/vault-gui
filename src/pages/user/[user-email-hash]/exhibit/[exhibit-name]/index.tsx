@@ -23,6 +23,9 @@ import config from "src/config";
 import { Exhibit } from "src/types";
 import { blobify, copyToClipboard, fileify, share } from "src/utils";
 
+const DIALOG_BUTTON_STYLE =
+  "!text-stone-500 !border-transparent !bg-transparent";
+
 const ExhibitPage: NextPage = () => {
   const router = useRouter();
   const {
@@ -249,60 +252,62 @@ const ExhibitPage: NextPage = () => {
                     />
                     <div className="relative">
                       <div className="flex justify-center w-full">
-                        <Button
-                          size="lg"
-                          className="!text-stone-500 !border-transparent"
-                          onClick={() => {
-                            console.log("share this image");
-
-                            const imageURL = downloadUrl(
-                              exhibit.images[viewing],
-                            );
-
-                            const fallbackURL = `${
-                              config.appBaseUrl
-                            }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
-                              viewing ?? 0
-                            }`;
-
-                            shareFile(imageURL, fallbackURL);
-                          }}
-                        >
-                          <Icon icon="carbon:arrow-up-right" height="1.0em" />
-                          <span className="transform translate-y-[-0.015em]">
-                            Share
-                          </span>
-                        </Button>
-                        {/* Wrapped in <a> for file download purposes */}
-                        <a
-                          href={downloadUrl(exhibit.images[viewing])}
-                          download="vana_portrait.png"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
+                        <div className="overflow-hidden border rounded-md border-stone-200">
                           <Button
                             size="lg"
-                            className="!text-stone-500 !border-transparent"
+                            className={DIALOG_BUTTON_STYLE}
                             onClick={() => {
-                              console.log("save this image");
+                              console.log("share this image");
+
+                              const imageURL = downloadUrl(
+                                exhibit.images[viewing],
+                              );
+
+                              const fallbackURL = `${
+                                config.appBaseUrl
+                              }/user/${userEmailHash}/exhibit/${exhibitName}?view=${
+                                viewing ?? 0
+                              }`;
+
+                              shareFile(imageURL, fallbackURL);
                             }}
                           >
-                            <Icon icon="carbon:download" height="1.0em" />
+                            <Icon icon="carbon:arrow-up-right" height="1.0em" />
                             <span className="transform translate-y-[-0.015em]">
-                              Download
+                              Share
                             </span>
                           </Button>
-                        </a>
-                        <Button
-                          size="lg"
-                          className="!text-stone-500 !border-transparent"
-                          onClick={() => setShowModalInternal(false)}
-                        >
-                          <Icon icon="carbon:close" height="1.25em" />
-                          <span className="transform translate-y-[-0.015em]">
-                            Close
-                          </span>
-                        </Button>
+                          {/* Wrapped in <a> for file download purposes */}
+                          <a
+                            href={downloadUrl(exhibit.images[viewing])}
+                            download="vana_portrait.png"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <Button
+                              size="lg"
+                              className={DIALOG_BUTTON_STYLE}
+                              onClick={() => {
+                                console.log("save this image");
+                              }}
+                            >
+                              <Icon icon="carbon:download" height="1.0em" />
+                              <span className="transform translate-y-[-0.015em]">
+                                Download
+                              </span>
+                            </Button>
+                          </a>
+                          <Button
+                            size="lg"
+                            className={DIALOG_BUTTON_STYLE}
+                            onClick={() => setShowModalInternal(false)}
+                          >
+                            <Icon icon="carbon:close" height="1.25em" />
+                            <span className="transform translate-y-[-0.015em]">
+                              Close
+                            </span>
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
