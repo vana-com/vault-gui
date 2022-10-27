@@ -88,14 +88,14 @@ const GeneratePage: NextPage = () => {
             viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
             heading={
               <>
-                Sit tight while we build your custom-generated art
+                Sit tight while we style your portrait
                 {/* <span className="mobile:table">custom-generated art</span> */}
               </>
             }
           >
             <p>
               <span className="text-stone-500">
-                We will email you as soon as it is ready.
+                We&apos;ll email you when it&apos;s ready in a few hours.
               </span>
             </p>
           </PageHeading>
