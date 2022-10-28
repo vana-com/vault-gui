@@ -1,26 +1,28 @@
 export const obamaImages = [
-  "/images/famous-people/1419908709_Cyberpunk_digital_portrait_4k_Barack_Obama.webp",
-  "/images/famous-people/1466458927_Cyberpunk_digital_portrait_4k_Barack_Obama.webp",
-  "/images/famous-people/1582478290_Cyberpunk_digital_portrait_4k_Barack_Obama.webp",
-  "/images/famous-people/2107861856_Cyberpunk_digital_portrait_4k_Barack_Obama.webp",
-  "/images/famous-people/2581316752_Cyberpunk_digital_portrait_4k_Barack_Obama.webp",
-  "/images/famous-people/3559027660_Cyberpunk_digital_portrait_4k_Barack_Obama.webp",
+  "/images/famous-people/1244661617_Barack_Obama_cosmic_background_realistic_shaded_perfect_face__fine_details_by_realistic_shaded_light.webp",
+  "/images/famous-people/1274942853_Barack_Obama_cosmic_background_realistic_shaded_perfect_face__fine_details_by_realistic_shaded_light.webp",
+  "/images/famous-people/1761087011_scary_halloween_realistic_digital_painting_of_Barack_Obama__with_ghosts__pumpkins__black_cats.webp",
+  "/images/famous-people/1811752368_surrealism_painting_of_Barack_Obama_in_the_desert_with_cacti.webp",
+  "/images/famous-people/796762048_a_beautiful_portrait_of_Barack_Obama___with_isolated_flowers_with_strong_dark_comic_outlines__colorf.webp",
+  "/images/famous-people/2678558547_surrealism_painting_of_Barack_Obama_in_the_desert_with_cacti.webp",
+  "/images/famous-people/3022787954_vintage_halloween_detailed_colored_pencil_drawing_of_Barack_Obama_with_ghost_and_pumpkins.webp",
 ];
 
 export const rbgImages = [
-  "/images/famous-people/242453048_Cyberpunk_digital_portrait_4k_ruth_bader_ginsburg.webp",
-  "/images/famous-people/283482657_Cyberpunk_digital_portrait_4k_ruth_bader_ginsburg.webp",
-  "/images/famous-people/2509459223_Cyberpunk_digital_portrait_4k_ruth_bader_ginsburg.webp",
-  "/images/famous-people/2990707189_Cyberpunk_digital_portrait_4k_ruth_bader_ginsburg.webp",
-  "/images/famous-people/3879192932_Cyberpunk_digital_portrait_4k_ruth_bader_ginsburg.webp",
-  "/images/famous-people/4032368456_Cyberpunk_digital_portrait_4k_ruth_bader_ginsburg.webp",
+  "/images/famous-people/2011130458_Ruth_Bader_Ginsberg_cosmic_background_realistic_shaded_perfect_face__fine_details_by_realistic_shade.webp",
+  "/images/famous-people/3113576817_vintage_halloween_detailed_colored_pencil_drawing_of_Ruth_Bader_Ginsburg_with_ghost_and_pumpkins.webp",
+  "/images/famous-people/3859487509_Portrait_of_a_beautiful_Ruth_Bader_Ginsberg__intricate__elegant__highly_detailed__occult_imagery__di.webp",
+  "/images/famous-people/997750354_digital_painting_of_Ruth_Bader_Ginsberg_by_greg_rutkowski_neon_cyberpunk.webp",
+  "/images/famous-people/540657581_digital_painting_of_Ruth_Bader_Ginsberg_by_greg_rutkowski_neon_cyberpunk.webp",
+  "/images/famous-people/438050133_surrealism_painting_of_Ruth_Bader_Ginsberg_in_the_desert_with_cacti.webp",
 ];
 
 export const teslaImages = [
-  "/images/famous-people/324621647_Cyberpunk_digital_portrait_4k_nikola_tesla.webp",
-  "/images/famous-people/734186811_Cyberpunk_digital_portrait_4k_nikola_tesla.webp",
-  "/images/famous-people/1003647019_Cyberpunk_digital_portrait_4k_nikola_tesla.webp",
-  "/images/famous-people/1552854479_Cyberpunk_digital_portrait_4k_nikola_tesla.webp",
-  "/images/famous-people/2179999269_Cyberpunk_digital_portrait_4k_nikola_tesla.webp",
-  "/images/famous-people/2623550697_Cyberpunk_digital_portrait_4k_nikola_tesla.webp",
+  "/images/famous-people/3790896012_Nikola_Tesla_cosmic_background_realistic_shaded_perfect_face__fine_details_by_realistic_shaded_light.webp",
+  "/images/famous-people/3830855655_Nikola_Tesla_cosmic_background_realistic_shaded_perfect_face__fine_details_by_realistic_shaded_light.webp",
+  "/images/famous-people/3140689174_scary_halloween_realistic_digital_painting_of_Nikola_Tesla__with_ghosts__pumpkins__black_cats.webp",
+  "/images/famous-people/3142964654_surrealism_painting_of_Nikola_Tesla__portrait__in_the_desert_with_cacti.webp",
+  "/images/famous-people/4072036476_digital_painting_of_Nikola_Tesla_by_greg_rutkowski_neon_cyberpunk.webp",
+  "/images/famous-people/754606510_Nikola_Tesla_cosmic_background_realistic_shaded_perfect_face__fine_details_by_realistic_shaded_light.webp",
+  "/images/famous-people/4090568070_scary_halloween_realistic_digital_painting_of_Nikola_Tesla__with_ghosts__pumpkins__black_cats.webp",
 ];
