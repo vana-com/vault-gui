@@ -183,7 +183,7 @@ const ExhibitPage: NextPage = () => {
 
       <div
         ref={ref}
-        className={clsx("relative min-h-screen")}
+        className={clsx("relative min-h-screen pt-safe-top")}
         style={{ height: `${screenHeight}px` }}
       >
         {/* CLOSE BACK */}

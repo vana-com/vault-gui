@@ -126,7 +126,7 @@ const UploadPage: NextPage = () => {
 
       <div
         ref={ref}
-        className={clsx("relative min-h-screen")}
+        className={clsx("relative min-h-screen pt-safe-top")}
         style={{ height: `${screenHeight}px` }}
       >
         <div className="pt-[12.5vh] Container flex flex-col gap-w12">

@@ -122,7 +122,12 @@ module.exports = {
         w48: "clamp(6rem, 13vw, 12rem)",
         w64: "clamp(7rem, 2.4891rem + 17.4334vw, 16rem)",
         w72: "clamp(9rem, 19vw, 18rem)",
-        w96: "clamp(12rem, 26vw, 24rem)"
+        w96: "clamp(12rem, 26vw, 24rem)",
+        // safe utils
+        "safe-top": "env(safe-area-inset-top)",
+        "safe-bottom": "env(safe-area-inset-bottom)",
+        "safe-left": "env(safe-area-inset-left)",
+        "safe-right": "env(safe-area-inset-right)",
       },
       maxWidth: {
         canvasWidth: "1284px",
