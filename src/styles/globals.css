@@ -112,6 +112,7 @@
   }
   body {
     font-size: 16px;
+    -webkit-tap-highlight-color: transparent;
     @apply text-stone-900 font-normal text-md;
     /* @apply relative min-h-screen before:absolute before:content-[''] before:inset-0 before:top-2/3 before:bg-gradient-to-t before:from-blueCrayola-500/10; */
   }
