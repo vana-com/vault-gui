@@ -53,7 +53,7 @@ const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
   );
 
 export const getUserGallery = async (userEmail: string) => {
-  const keyPrefix = `${userEmail}/exhibits`;
+  const keyPrefix = `${userEmail}/exhibits/`;
   console.log("userEmail:", userEmail);
 
   const [files] = await readGCSDirectory(keyPrefix);
