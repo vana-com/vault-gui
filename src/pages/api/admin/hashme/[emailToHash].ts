@@ -6,10 +6,10 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
-  const { emailToHash, pxwrd } = req.query;
+  const { emailToHash, password } = req.query;
 
-  if (pxwrd !== process.env.HASH_EMAIL_PASSWORD) {
-    // Return a garbage hash to trick any bad actors
+  // Wrong password
+  if (password !== process.env.HASH_EMAIL_PASSWORD) {
     return res.status(200).json({ hash: "" });
   }
 
