@@ -234,7 +234,7 @@ const UploadPage: NextPage = () => {
                   className={clsx("!px-2.5 !text-black")}
                 />
                 <Button
-                  type="submit"
+                  type="button"
                   onClick={uploadFiles}
                   disabled={
                     isDataUploading ||
