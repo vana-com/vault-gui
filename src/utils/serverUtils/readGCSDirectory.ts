@@ -25,6 +25,7 @@ const readGCSDirectory = async (
         prefix: folderPrefix,
         delimiter,
         autoPaginate: false,
+        maxResults: 1000000,
       });
     return [files, metadata];
   } catch (err: any) {
