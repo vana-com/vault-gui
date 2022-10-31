@@ -188,7 +188,9 @@ const ExhibitPage: NextPage = () => {
         style={{ height: `${screenHeight}px` }}
       >
         {/* CLOSE BACK */}
-        <ButtonClose link={backToGalleryLink} label="Back to generating" />
+        {galleryWithName && (
+          <ButtonClose link={backToGalleryLink} label="Back to generating" />
+        )}
 
         {/* CONTENT */}
         <div className="pt-[12.5vh] Container">
