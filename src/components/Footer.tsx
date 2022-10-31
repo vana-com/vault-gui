@@ -14,14 +14,14 @@ const Footer = ({ blackTheme, wrapperClassName = "pb-w72" }: Props) => (
     <div className={clsx(blackTheme ? "text-white" : "text-stone-500")}>
       {/* <hr className="hr hr-vertical h-[12px] opacity-50" /> */}
       <div className="flex items-center justify-center gap-3 text-sm">
-        <Link href={config.vanaDiscord} passHref>
+        <Link href={config.vanaInstagram} passHref>
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a className="">
             <span className="hidden">Instagram</span>
             <Icon icon="carbon:logo-instagram" height="2.25em" />
           </a>
         </Link>
-        <Link href={config.vanaInstagram} passHref>
+        <Link href={config.vanaDiscord} passHref>
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a>
             <span className="hidden">Discord</span>

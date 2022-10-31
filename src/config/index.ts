@@ -14,8 +14,9 @@ const generalConfig = {
   vanaExploreURL: "https://explore.vana.com",
 
   vanaDiscord: "https://discord.gg/sbSMMY4y",
-  vanaInstagram: "https://discord.gg/sbSMMY4y",
-  vanaInstagramHashSearch: "https://discord.gg/sbSMMY4y",
+  vanaInstagram: "https://www.instagram.com/vanahq/",
+  vanaInstagramHashSearch:
+    "https://www.instagram.com/explore/tags/vanaportrait/?hl=en",
 
   ZENDESK_WIDGET_KEY: "ae33c673-67c2-4bb9-96a4-3b62821d9567",
   routesToHideZendeskWidget: ["/", "/share", "/login"],
