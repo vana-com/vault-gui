@@ -1,5 +1,4 @@
 export * from "./apolloClient";
-export * from "./blob";
 export * from "./capitalizeString";
 export * from "./clipboard";
 export * from "./flattenGalleryImages";
@@ -20,7 +19,7 @@ export * from "./localStorage";
 export * from "./nameToPathName";
 export * from "./openInNewTab";
 export * from "./setLoginPath";
-export * from "./share";
+export * from "./shareLink";
 export * from "./sortByCreatedAt";
 export * from "./uploadFile";
 export * from "./validateEmail";

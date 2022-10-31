@@ -1,38 +1,30 @@
 const CLIPBOARD_PERMISSION = "clipboard-write" as PermissionName;
 
-const _navigator = () => {
-  if (!window.navigator) throw new Error("No _navigator in current context");
-  else return window.navigator;
-};
+const copyToClipboard = async (textToWrite?: string): Promise<boolean> => {
+  if (window?.navigator) {
+    try {
+      const { state } = await window.navigator.permissions.query({
+        name: CLIPBOARD_PERMISSION,
+      });
+      const hasPermission = state === "granted" || state === "prompt";
 
-const checkPermission = async (): Promise<boolean> => {
-  try {
-    const nav = _navigator();
-    const { state } = await nav.permissions.query({
-      name: CLIPBOARD_PERMISSION,
-    });
+      if (hasPermission && textToWrite) {
+        await window.navigator.clipboard.writeText(textToWrite);
+        return true;
+      }
 
-    return state === "granted" || state === "prompt";
-  } catch (err) {
-    console.log("checkPermission():", err);
+      console.error(
+        "Unable to copy text to clipboard, permission denied or no text provided",
+      );
+      return false;
+    } catch (err) {
+      console.error("Copying text to clipboard failed");
+      return false;
+    }
   }
 
-  // Assume permission_not_granted if there is a failure
+  console.error("No window.navigator in current context");
   return false;
-};
-
-const copyToClipboard = async (textToWrite: string): Promise<boolean> => {
-  const hasPermission = await checkPermission();
-  if (!hasPermission) throw new Error("No permission granted");
-  if (!textToWrite) throw new Error("No text provided");
-
-  try {
-    const nav = _navigator();
-    await nav.clipboard.writeText(textToWrite);
-    return true;
-  } catch (err) {
-    throw new Error("Copying text to clipboard failed");
-  }
 };
 
 export { copyToClipboard };

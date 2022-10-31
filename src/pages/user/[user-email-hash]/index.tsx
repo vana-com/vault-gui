@@ -19,7 +19,7 @@ import {
 } from "src/components";
 import config from "src/config";
 import { Gallery } from "src/types";
-import { copyToClipboard, nameToPathName, share } from "src/utils";
+import { nameToPathName, shareLink } from "src/utils";
 
 interface QueryParams {
   "user-email-hash": string;
@@ -38,36 +38,6 @@ const GalleryPage: NextPage = () => {
     router.query as unknown as QueryParams;
 
   const [gallery, setGallery] = useState<Gallery | null>(null);
-
-  const shareLink = async () => {
-    const link = `${config.appBaseUrl}/user/${userEmailHash}/`;
-
-    try {
-      const didShare = await share({
-        text: link,
-      });
-
-      // Fallback
-      if (!didShare) {
-        try {
-          await copyToClipboard(link);
-        } catch (error) {
-          console.log(
-            "Something went wrong while copying the clipboard:",
-            error,
-          );
-          throw error;
-        }
-      }
-    } catch (error) {
-      console.log(
-        "Something went wrong while attempting the sharing flow:",
-        error,
-      );
-
-      await copyToClipboard(link);
-    }
-  };
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -126,7 +96,12 @@ const GalleryPage: NextPage = () => {
                   </span>
                   {!galleryWithName && (
                     <Button
-                      onClick={async (_: any) => shareLink()}
+                      onClick={async (_: any) =>
+                        shareLink(
+                          "Check out my Vana Portrait!",
+                          `${config.appBaseUrl}/user/${userEmailHash}/`,
+                        )
+                      }
                       size="sm"
                       className="!text-stone-500 !bg-white transform translate-y-[-0.2em]"
                     >
