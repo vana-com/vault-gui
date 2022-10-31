@@ -64,9 +64,19 @@ const AdminPage: NextPage = () => {
             {userWithoutGeneratedImages.map((user) => (
               <tr key={user.emailHash}>
                 <td>{user.email}</td>
-                <td>{user.emailHash}</td>
+                <a
+                  href={`/user/${user.emailHash}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {user.emailHash}
+                </a>
                 <td>{user.exhibitNames.length}</td>
-                <td>{user.gcsBucketUrl}</td>
+                <td>
+                  <a href={user.gcsBucketUrl} target="_blank" rel="noreferrer">
+                    {user.gcsBucketUrl}
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -90,9 +100,17 @@ const AdminPage: NextPage = () => {
               {userWithGeneratedImages.map((user) => (
                 <tr key={user.emailHash}>
                   <td>{user.email}</td>
-                  <td>{user.emailHash}</td>
+                  <a
+                    href={`/user/${user.emailHash}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {user.emailHash}
+                  </a>
                   <td>{user.exhibitNames.length}</td>
-                  <td>{user.gcsBucketUrl}</td>
+                  <a href={user.gcsBucketUrl} target="_blank" rel="noreferrer">
+                    {user.gcsBucketUrl}
+                  </a>
                 </tr>
               ))}
             </tbody>

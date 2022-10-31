@@ -16,11 +16,11 @@ export default async (
     const response = await getUserGallery(userEmail);
 
     console.log(JSON.stringify(response, null, 2));
-    res.setHeader("Cache-Control", "public, max-age=600");
+    // res.setHeader("Cache-Control", "public, max-age=600");
     return res.status(200).json(response);
   } catch (error) {
     console.error(error);
-    res.setHeader("Cache-Control", "public, max-age=600");
+    // res.setHeader("Cache-Control", "public, max-age=600");
     return res.status(404).json({ message: "404 Not Found" });
   }
 };
