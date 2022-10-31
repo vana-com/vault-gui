@@ -8,7 +8,12 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useMeasure from "react-use-measure";
 
-import { GalleryGrid, PageHeading, TitleAndMetaTags } from "src/components";
+import {
+  Footer,
+  GalleryGrid,
+  PageHeading,
+  TitleAndMetaTags,
+} from "src/components";
 import { Spinner } from "src/components/Spinner";
 import config from "src/config";
 import { Gallery } from "src/types";
@@ -109,7 +114,7 @@ const GeneratePage: NextPage = () => {
             </PageHeading>
           </motion.div>
 
-          <div className="pt-w24 pb-w72">
+          <div className="pt-w24 pb-w24">
             {/* sticky top-0 z-[11] */}
             <motion.div
               initial={{ opacity: 0, translateY: 5 }}
@@ -162,8 +167,8 @@ const GeneratePage: NextPage = () => {
           </div>
         </div>
 
-        {/* FOOTER LOGO */}
-        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
+        {/* FOOTER */}
+        <Footer wrapperClassName="pt-w36 pb-w72" />
       </div>
     </>
   );

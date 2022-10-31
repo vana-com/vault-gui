@@ -16,6 +16,7 @@ import {
   Button,
   ButtonClose,
   DialogControlled,
+  Footer,
   PageHeading,
   Spinner,
   TitleAndMetaTags,
@@ -256,7 +257,7 @@ const ExhibitPage: NextPage = () => {
             </PageHeading>
           </motion.div>
 
-          <div className="pt-w12 pb-w72">
+          <div className="pt-w12 pb-w12">
             <motion.div
               initial={{ opacity: 0, translateY: 5 }}
               animate={{ opacity: 1, translateY: 0 }}
@@ -391,7 +392,7 @@ const ExhibitPage: NextPage = () => {
         </div>
 
         {/* FOOTER LOGO */}
-        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
+        <Footer wrapperClassName="pt-w36 pb-w72" />
       </div>
     </>
   );

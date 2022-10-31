@@ -13,6 +13,10 @@ const generalConfig = {
   vanaVaultURL: "https://vault.vana.com",
   vanaExploreURL: "https://explore.vana.com",
 
+  vanaDiscord: "https://discord.gg/sbSMMY4y",
+  vanaInstagram: "https://discord.gg/sbSMMY4y",
+  vanaInstagramHashSearch: "https://discord.gg/sbSMMY4y",
+
   ZENDESK_WIDGET_KEY: "ae33c673-67c2-4bb9-96a4-3b62821d9567",
   routesToHideZendeskWidget: ["/", "/share", "/login"],
 

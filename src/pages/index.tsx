@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import useMeasure from "react-use-measure";
 
-import { Button, CanvasGrid, TitleAndMetaTags } from "src/components";
+import { Button, CanvasGrid, Footer, TitleAndMetaTags } from "src/components";
 
 const Home: NextPage = () => {
   // consider that knowing bounds is only possible *after* the view renders
@@ -33,8 +33,7 @@ const Home: NextPage = () => {
       <TitleAndMetaTags
         color="black"
         title="Portrait | Vana"
-        description="&ldquo;Portrait&rdquo; by Vana is a generative art studio that
-        can create self-portraits of you in infinite styles."
+        description="&ldquo;Portrait&rdquo; by Vana is a generative art studio that can create self-portraits of you in infinite styles."
       />
 
       <div
@@ -99,13 +98,15 @@ const Home: NextPage = () => {
         </div>
 
         {/* FOOTER LOGO */}
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.5 }}
         >
-          <FooterBadge screenHeight={screenHeight} />
-        </motion.div> */}
+          <div className="relative" style={{ top: `${screenHeight - 130}px` }}>
+            <Footer blackTheme />
+          </div>
+        </motion.div>
       </div>
     </>
   );

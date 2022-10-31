@@ -3,6 +3,7 @@
 export * from "./Button";
 export * from "./ButtonClose";
 export * from "./Carousel";
+export * from "./Footer";
 export * from "./FooterBadge";
 export * from "./GalleryGrid";
 export * from "./GalleryMenu";

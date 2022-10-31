@@ -11,6 +11,7 @@ import useMeasure from "react-use-measure";
 import {
   Button,
   ButtonClose,
+  Footer,
   GalleryGrid,
   PageHeading,
   Spinner,
@@ -138,7 +139,7 @@ const GalleryPage: NextPage = () => {
             />
           </motion.div>
 
-          <div className="pt-w12 pb-w72">
+          <div className="pt-w12 pb-w12">
             <motion.div
               initial={{ opacity: 0, translateY: 5 }}
               animate={{ opacity: 1, translateY: 0 }}
@@ -179,8 +180,8 @@ const GalleryPage: NextPage = () => {
           </div>
         </div>
 
-        {/* FOOTER LOGO */}
-        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
+        {/* FOOTER */}
+        <Footer wrapperClassName="pt-w36 pb-w72" />
       </div>
     </>
   );

@@ -9,6 +9,7 @@ import useMeasure from "react-use-measure";
 
 import {
   Button,
+  Footer,
   // SelfieButton,
   GalleryMenu,
   Input,
@@ -222,6 +223,7 @@ const UploadPage: NextPage = () => {
                 </a>
                 .
               </p>
+              {/* TODO @Callum: add new state to clarify when isDataUploading? */}
               <form className="flex flex-col justify-between w-full gap-3">
                 <Input
                   type="email"
@@ -280,13 +282,13 @@ const UploadPage: NextPage = () => {
         </motion.div>
 
         {/* PRIVACY */}
-        <div className="flex flex-col gap-4 Container pt-w24 pb-w72">
+        <div className="flex flex-col gap-4 Container pt-w24">
           <hr className="border-t-8 text-stone-100" />
           <PrivacyText />
         </div>
 
-        {/* FOOTER LOGO */}
-        {/* <FooterBadge screenHeight={screenHeight} blackTheme /> */}
+        {/* FOOTER */}
+        <Footer wrapperClassName="pt-w36 pb-w72" />
       </div>
     </>
   );
