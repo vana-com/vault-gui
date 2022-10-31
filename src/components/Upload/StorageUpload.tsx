@@ -131,7 +131,7 @@ const StorageUpload = ({
               width="200"
               height="200"
               loader={() => thumbnails[i]}
-              src="https://storage.googleapis.com/corsali-gui-assets/person.png"
+              src="https://storage.googleapis.com/corsali-gui-assets/person.webp"
             />
 
             {/* upload progress for each file */}

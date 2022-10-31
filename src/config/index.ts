@@ -66,7 +66,7 @@ const generalConfig = {
     "22673a90a00dcbe611747561a616642ed9745b256b5ff573ed5cce51f3088cbb",
 
   portraitBlurDataURL:
-    "https://storage.googleapis.com/corsali-gui-assets/person.png",
+    "https://storage.googleapis.com/corsali-gui-assets/person.webp",
 };
 
 export default {
