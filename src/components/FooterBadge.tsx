@@ -30,7 +30,7 @@ const FooterBadge = ({ screenHeight, blackTheme }: Props) => (
             </Link>
           </div>
           <div className="flex items-center justify-center gap-2 font-sans text-sm font-normal tracking-[0.015em] opacity-80">
-            <Link href={config.termsOfServiceURL} passHref>
+            <Link href={config.vanaTermsURL} passHref>
               Terms of Service
             </Link>
             <hr className="hr hr-vertical h-[12px] opacity-50" />
