@@ -28,6 +28,9 @@ const create = async (
       process.env.NEXT_PUBLIC_ENV === "production"
     ) {
       const hashedEmail = encrypt(email as string);
+      const gcsUrl = `https://console.cloud.google.com/storage/browser/${process.env.GCP_DATA_COLLECTIVE_BUCKET_NAME}/${email}`;
+      const galleryUrl = `${config.appBaseUrl}/user/${hashedEmail}`;
+
       await fetch(process.env.SLACK_WEBHOOK_URL, {
         method: "POST",
         headers: {
@@ -39,7 +42,7 @@ const create = async (
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `New Portrait submission from\n${email}`,
+                text: `New Portrait submission\nEmail: ${email}\nGCS: ${gcsUrl}\nGallery: ${galleryUrl}`,
               },
             },
             {
@@ -51,7 +54,7 @@ const create = async (
                     type: "plain_text",
                     text: "View Submission",
                   },
-                  url: `https://console.cloud.google.com/storage/browser/${process.env.GCP_DATA_COLLECTIVE_BUCKET_NAME}/${email}`,
+                  url: gcsUrl,
                 },
                 {
                   type: "button",
@@ -59,7 +62,7 @@ const create = async (
                     type: "plain_text",
                     text: "User Gallery",
                   },
-                  url: `${config.appBaseUrl}/user/${hashedEmail}`,
+                  url: galleryUrl,
                 },
               ],
             },
