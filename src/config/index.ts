@@ -10,6 +10,7 @@ const generalConfig = {
   vanaTermsURL:
     "https://docs.google.com/document/d/e/2PACX-1vQDdqMt3lMon8JtiICwI0BsV29Lo4V4yia7gQUfra5IjhoZy6uroQPN0irZdrwXxA/pub",
   vanaPublicURL: "https://www.vana.com",
+  portraitPublicURL: "https://portrait.vana.com",
   vanaVaultURL: "https://vault.vana.com",
   vanaExploreURL: "https://explore.vana.com",
 

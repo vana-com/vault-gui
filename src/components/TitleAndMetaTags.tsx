@@ -14,11 +14,11 @@ type TitleAndMetaTagsProps = {
 
 export function TitleAndMetaTags({
   color = "white",
-  description = "Shifting the flow of data for a more prosperous world",
+  description = "&ldquo;Portrait&rdquo; by Vana is a generative art studio that can create self-portraits of you in infinite styles.",
   image,
   pathname,
   title = "Vana",
-  url = config.vanaPublicURL,
+  url = config.portraitPublicURL,
 }: TitleAndMetaTagsProps) {
   const router = useRouter();
 
