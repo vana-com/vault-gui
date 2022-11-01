@@ -104,6 +104,7 @@ const UploadPage: NextPage = () => {
       );
 
       if (successfulUpload) {
+        await fetch(`/api/user-data/create?email=${emailAddress}`);
         console.log("All files uploaded successfully");
         setTimeout(() => router.push("/generating"), 500);
       } else {
