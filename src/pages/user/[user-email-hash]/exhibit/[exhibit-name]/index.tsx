@@ -85,21 +85,29 @@ const ExhibitPage: NextPage = () => {
       setShowModal(true, viewingPage);
     }
 
-    const fetchExhibit = async () => {
-      if (userEmailHash) {
-        const res = await fetch(
-          `/api/user/${userEmailHash}/exhibit/${exhibitName}`,
-        );
-        if (res.status < 399) {
-          const data = await res.json();
-          setExhibit(data);
+    // Fetch exhibit details
+    if (!exhibit) {
+      const fetchExhibit = async () => {
+        if (userEmailHash) {
+          const res = await fetch(
+            `/api/user/${userEmailHash}/exhibit/${exhibitName}`,
+          );
+          if (res.status < 399) {
+            const data = await res.json();
+            setExhibit(data);
+          }
         }
-      }
-    };
-    fetchExhibit();
-
-    console.log("viewing", viewing);
+      };
+      fetchExhibit();
+    }
   }, [router.asPath]);
+
+  // Reset viewing image when dialog is closed
+  useEffect(() => {
+    if (!showModalInternal) {
+      setViewing(-1);
+    }
+  }, [showModalInternal]);
 
   if (!exhibit) {
     return <Spinner />;
@@ -242,81 +250,85 @@ const ExhibitPage: NextPage = () => {
                       )
                     }
                   >
-                    {/* CARD IMAGE IN DIALOG */}
-                    <div className="relative flex flex-col gap-w16">
-                      <div className="overflow-hidden bg-black aspect-square">
-                        <Image
-                          className="object-cover w-full"
-                          src={exhibit.images[viewing ?? 0]}
-                          alt={exhibit.name}
-                          width={250}
-                          height={250}
-                          loader={({ src }) => src}
-                          // placeholder="blur"
-                          // blurDataURL={config.portraitBlurDataURL}
-                        />
-                      </div>
-                      <div className="relative">
-                        <div className="flex justify-center w-full">
-                          <div className="p-1 overflow-hidden border rounded-md border-stone-200">
-                            {/* Share image */}
-                            <Button
-                              size="lg"
-                              className={DIALOG_BUTTON_STYLE}
-                              onClick={() => {
-                                const imageFilename = `${userEmailHash}-${exhibitName}-${viewing}.png`;
-                                shareImage(
-                                  exhibit.images[viewing],
-                                  imageFilename,
-                                );
-                              }}
-                            >
-                              <Icon
-                                icon="carbon:arrow-up-right"
-                                height="1.0em"
-                              />
-                              <span className="transform translate-y-[-0.015em]">
-                                Share
-                              </span>
-                            </Button>
+                    <>
+                      {/* SHOW SINGLE IMAGE DIALOG */}
+                      {viewing >= 0 && (
+                        <div className="relative flex flex-col gap-w16">
+                          <div className="overflow-hidden bg-black aspect-square">
+                            <Image
+                              className="object-cover w-full"
+                              src={exhibit.images[viewing ?? 0]}
+                              alt={exhibit.name}
+                              width={250}
+                              height={250}
+                              loader={({ src }) => src}
+                              // placeholder="blur"
+                              // blurDataURL={config.portraitBlurDataURL}
+                            />
+                          </div>
+                          <div className="relative">
+                            <div className="flex justify-center w-full">
+                              <div className="p-1 overflow-hidden border rounded-md border-stone-200">
+                                {/* Share image */}
+                                <Button
+                                  size="lg"
+                                  className={DIALOG_BUTTON_STYLE}
+                                  onClick={() => {
+                                    const imageFilename = `${userEmailHash}-${exhibitName}-${viewing}.png`;
+                                    shareImage(
+                                      exhibit.images[viewing],
+                                      imageFilename,
+                                    );
+                                  }}
+                                >
+                                  <Icon
+                                    icon="carbon:arrow-up-right"
+                                    height="1.0em"
+                                  />
+                                  <span className="transform translate-y-[-0.015em]">
+                                    Share
+                                  </span>
+                                </Button>
 
-                            {/* Download image */}
-                            <Button
-                              size="lg"
-                              className={DIALOG_BUTTON_STYLE}
-                              onClick={async () => {
-                                const blob = await fetch(
-                                  exhibit.images[viewing],
-                                ).then((res) => res.blob());
-                                const a = document.createElement("a");
-                                a.href = URL.createObjectURL(blob);
-                                a.download = `${userEmailHash}-${exhibitName}-${viewing}.png`;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                              }}
-                            >
-                              <Icon icon="carbon:download" height="1.0em" />
-                              <span className="transform translate-y-[-0.015em]">
-                                Download
-                              </span>
-                            </Button>
+                                {/* Download image */}
+                                <Button
+                                  size="lg"
+                                  className={DIALOG_BUTTON_STYLE}
+                                  onClick={async () => {
+                                    const blob = await fetch(
+                                      exhibit.images[viewing],
+                                    ).then((res) => res.blob());
+                                    const a = document.createElement("a");
+                                    a.href = URL.createObjectURL(blob);
+                                    a.download = `${userEmailHash}-${exhibitName}-${viewing}.png`;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                  }}
+                                >
+                                  <Icon icon="carbon:download" height="1.0em" />
+                                  <span className="transform translate-y-[-0.015em]">
+                                    Download
+                                  </span>
+                                </Button>
 
-                            {/* Close preview */}
-                            <Button
-                              size="lg"
-                              className={DIALOG_BUTTON_STYLE}
-                              onClick={() => setShowModalInternal(false)}
-                            >
-                              <Icon icon="carbon:close" height="1.25em" />
-                              <span className="transform translate-y-[-0.015em]">
-                                Close
-                              </span>
-                            </Button>
+                                {/* Close preview */}
+                                <Button
+                                  size="lg"
+                                  className={DIALOG_BUTTON_STYLE}
+                                  onClick={() => setShowModalInternal(false)}
+                                >
+                                  <Icon icon="carbon:close" height="1.25em" />
+                                  <span className="transform translate-y-[-0.015em]">
+                                    Close
+                                  </span>
+                                </Button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      )}
+                    </>
                   </DialogControlled>
                 ))}
               </div>
