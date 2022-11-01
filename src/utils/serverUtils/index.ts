@@ -3,6 +3,8 @@ export * from "./crypto";
 export * from "./deleteGCSObject";
 export * from "./getHasuraClient";
 export * from "./getOrCreateUser";
+export * from "./getUserGallery";
 export * from "./heapServerSide";
+export * from "./prepareExhibit";
 export * from "./readGCSDirectory";
 export * from "./readGCSObject";

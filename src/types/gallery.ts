@@ -10,6 +10,7 @@ interface GalleryImage {
 interface Gallery {
   userHash: string;
   exhibits: Exhibit[];
+  errorMessage: string | undefined;
 }
 
 export type { Gallery, GalleryImage };

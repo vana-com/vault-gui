@@ -4,4 +4,5 @@ export interface User {
   exhibitNames: string[];
   needToGenerateImages: boolean;
   gcsBucketUrl: string;
+  errorMessage: string | undefined;
 }
