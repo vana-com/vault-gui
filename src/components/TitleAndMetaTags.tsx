@@ -22,7 +22,7 @@ export function TitleAndMetaTags({
 }: TitleAndMetaTagsProps) {
   const router = useRouter();
 
-  const imageUrl = `${url}/social/${image || "default.png"}`;
+  const imageUrl = `${url}/images/social/${image || "twitter_preview.webp"}`;
   const path = pathname || router.pathname;
 
   return (
