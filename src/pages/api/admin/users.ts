@@ -20,6 +20,14 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> => {
+  // A++ Security
+  const { password } = req.query;
+
+  // Wrong password
+  if (!password || password !== process.env.HASH_EMAIL_PASSWORD) {
+    return res.status(401).json({ error: "unauthorized" });
+  }
+
   const usersResponse = await getUsersResponse();
 
   return res.status(200).json(usersResponse);
