@@ -46,7 +46,10 @@ const getMaxUpdatedTime = (files: File[]): string =>
  * @param files - Google Cloud Storage File[] type
  * @returns An Exhibit object
  */
-export const prepareExhibit = async (files: File[]): Promise<Exhibit> => {
+export const prepareExhibit = async (
+  files: File[],
+  skipPreSignedUrls = false,
+): Promise<Exhibit> => {
   const updatedAt = getMaxUpdatedTime(files);
   const exhibitName = getExhibitName(files);
   const name = formatExhibitName(exhibitName);
@@ -68,10 +71,15 @@ export const prepareExhibit = async (files: File[]): Promise<Exhibit> => {
     return 0;
   });
 
-  // Get signed URLs for all images in exhibit
-  const images = await Promise.all(
-    fileNames.map(async (fileName: string) => getSignedUrl(fileName)),
-  );
+  let images;
+  if (skipPreSignedUrls) {
+    images = fileNames;
+  } else {
+    // Get signed URLs for all images in exhibit
+    images = await Promise.all(
+      fileNames.map(async (fileName: string) => getSignedUrl(fileName)),
+    );
+  }
 
   return {
     name,

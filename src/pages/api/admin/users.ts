@@ -107,6 +107,7 @@ const getUsersResponse = async (): Promise<User[]> => {
       const gallery = await getUserGallery(
         userFiles.userFiles,
         encrypt(userFiles.userEmail),
+        true,
       );
       return {
         email: userFiles.userEmail,

@@ -19,9 +19,14 @@ const getExhibitNames = (files: string[]): string[] => {
   return Array.from(exhibitsSet);
 };
 
-const getExhibits = async (exhibitFiles: File[][]): Promise<Exhibit[]> =>
+const getExhibits = async (
+  exhibitFiles: File[][],
+  skipPreSignedUrls = false,
+): Promise<Exhibit[]> =>
   Promise.all(
-    exhibitFiles.map(async (fileArr: File[]) => prepareExhibit(fileArr)),
+    exhibitFiles.map(async (fileArr: File[]) =>
+      prepareExhibit(fileArr, skipPreSignedUrls),
+    ),
   );
 
 const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
@@ -40,6 +45,7 @@ const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
 export const getUserGallery = async (
   files: File[],
   userHash: string,
+  skipPreSignedUrls = false,
 ): Promise<Gallery> => {
   try {
     const fileNames = files.map((file) => file.name);
@@ -55,7 +61,7 @@ export const getUserGallery = async (
       exhibitFiles.push(filteredFiles);
     });
 
-    const exhibitArr = await getExhibits(exhibitFiles);
+    const exhibitArr = await getExhibits(exhibitFiles, skipPreSignedUrls);
 
     return {
       userHash,
