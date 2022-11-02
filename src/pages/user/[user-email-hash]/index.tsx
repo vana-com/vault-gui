@@ -137,7 +137,7 @@ const GalleryPage: NextPage = () => {
                         key={gallery.userHash}
                         images={exhibit.images.slice(1, 4)}
                         wrapperClassName={clsx(
-                          "p-3 bg-stone-100 border border-stone-200 rounded-[18px] relative hover:shadow-lg",
+                          "p-3 bg-stone-100 border border-stone-200 rounded-[18px] relative transition-shadow hover:shadow-lg",
                           // "after:absolute after:top-0 after:bottom-0 after:right-0 after:w-[100px] after:bg-gradient-to-l after:from-stone-100 after:via-stone-100",
                         )}
                         label={

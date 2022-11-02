@@ -147,11 +147,11 @@ const GeneratePage: NextPage = () => {
                     ].name.toLowerCase()}`}
                     passHref
                   >
-                    <button type="button" className="hover:shadow-lg">
+                    <button type="button">
                       <GalleryGrid
                         key={gallery.userHash}
                         images={flattenGalleryImages(gallery, 6)}
-                        wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px]"
+                        wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px] transition-shadow hover:shadow-lg"
                         label={
                           <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
                             <span>{vanaTeamData[i].name}</span>

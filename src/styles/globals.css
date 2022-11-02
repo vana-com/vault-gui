@@ -194,18 +194,16 @@
     @apply font-normal leading-snug text-lg;
   }
   .Text-display {
-    /* text-[9vh] */
     @apply font-display font-light leading-[1.025] tracking-[-0.0125em];
-    text-shadow: "1px 2px 4px rgba(0,0,0,.5)";
   }
   .Text-display--shadow {
-    @apply text-white shadow-lg;
-    text-shadow: "1px 2px 4px rgba(0,0,0,.5)";
+    @apply text-white;
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
   }
   /* no scrollbar */
   .no-scrollbar {
     /* Firefox */
-    scrollbarwidth: "none";
+    scrollbar-width: none;
   }
   .no-scrollbar::-webkit-scrollbar {
     @apply hidden;

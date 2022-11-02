@@ -5,9 +5,9 @@ import Resizer from "react-image-file-resizer";
 
 import { Button } from "src/components";
 import config from "src/config";
+import { useDeviceDetect } from "src/hooks";
 
-import { useFileDropzone } from "./FileDropzone";
-import { StorageProgress } from "./index";
+import { StorageProgress, useFileDropzone } from "./index";
 
 type Props = {
   maxFiles: number;
@@ -35,6 +35,7 @@ const StorageUpload = ({
 }: Props) => {
   const { FileInput, openFileDialog } = useFileDropzone();
   const [thumbnails, setThumbnails] = useState<string[]>([]);
+  const { isMobileViewport } = useDeviceDetect();
 
   /**
    * Callback when a file is selected in the file picker
@@ -97,8 +98,8 @@ const StorageUpload = ({
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        400,
-        400,
+        isMobileViewport ? 400 : 1200,
+        isMobileViewport ? 400 : 1200,
         "WEBP",
         40, // Compression Level
         0,
@@ -127,7 +128,7 @@ const StorageUpload = ({
           >
             {/* Image preview */}
             <Image
-              className="object-cover aspect-square"
+              className="object-cover w-full aspect-square"
               width="200"
               height="200"
               loader={() => thumbnails[i]}

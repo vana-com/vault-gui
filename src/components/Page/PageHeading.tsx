@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 
 interface Props {
   inView: boolean;
@@ -14,25 +15,36 @@ const PageHeading = ({
   heading,
   viewRefNode,
   hideSticky,
-}: Props) => (
-  <div
-    className={clsx(
-      "flex flex-col gap-3 py-3 bg-white lg:gap-w6 scroll-mt-w12",
-      !hideSticky && "sticky top-0 z-10",
-    )}
-  >
-    {/* our inView ref */}
-    {viewRefNode}
-    <h1
+}: Props) => {
+  const [hasRendered, setHasRendered] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setHasRendered(true);
+    }, 100);
+    return () => {};
+  }, []);
+
+  return (
+    <div
       className={clsx(
-        "Text-display transition-all duration-250 ease",
-        inView ? "text-[4.5vh]" : "text-[27px]",
+        "flex flex-col gap-3 py-3 bg-white lg:gap-w6 scroll-mt-w12",
+        !hideSticky && "sticky top-0 z-10",
       )}
     >
-      {heading}
-    </h1>
-    {children}
-  </div>
-);
+      {/* our inView ref */}
+      {viewRefNode}
+      <h1
+        className={clsx(
+          "Text-display duration-250 ease",
+          hasRendered ? "transition-all" : "",
+          inView ? "text-[4.5vh]" : "text-[27px]",
+        )}
+      >
+        {heading}
+      </h1>
+      {children}
+    </div>
+  );
+};
 
 export { PageHeading };
