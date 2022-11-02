@@ -1,14 +1,14 @@
 import type { GetServerSideProps, NextPage } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { Spinner } from "src/components/Spinner";
-import config from "src/config";
 import { User } from "src/types";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { password } = context.query;
 
-  if (password !== config.adminPassword) {
+  if (password !== process.env.HASH_EMAIL_PASSWORD) {
     return {
       notFound: true,
     };
@@ -20,11 +20,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const AdminPage: NextPage = () => {
+  const router = useRouter();
   const [users, setUsers] = useState<User[] | null>(null);
 
   useEffect(() => {
+    // Get password from router query & pass it on
+    const { password } = router.query;
+
     const fetchUsers = async () => {
-      const res = await fetch(`/api/admin/users`);
+      const res = await fetch(`/api/admin/users?password=${password}`);
       if (res.status < 399) {
         const data = await res.json();
 
@@ -32,7 +36,7 @@ const AdminPage: NextPage = () => {
       }
     };
     fetchUsers();
-  }, []);
+  }, [router.query]);
 
   if (!users) {
     return <Spinner />;
