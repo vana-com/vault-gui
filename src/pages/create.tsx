@@ -5,7 +5,6 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import useMeasure from "react-use-measure";
 
 import {
   Button,
@@ -35,10 +34,6 @@ export async function getStaticProps() {
 
 const UploadPage: NextPage = () => {
   const router = useRouter();
-  const [ref, bounds] = useMeasure({
-    scroll: true,
-  });
-  const screenHeight = bounds.height;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [capturedImage, setCapturedImage] = useState<File | null>(null);
@@ -126,171 +121,159 @@ const UploadPage: NextPage = () => {
         can create self-portraits of you in infinite styles."
       />
 
-      <div
-        ref={ref}
-        className={clsx("relative min-h-screen pt-safe-top")}
-        style={{ height: `${screenHeight}px` }}
-      >
-        <div className="pt-[12.5vh] Container flex flex-col gap-w12">
-          {/* INSTRUCTIONS */}
-          <motion.div
-            initial={{ opacity: 0, translateY: 5 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <PageHeading
-              hideSticky={!!videoStream}
-              inView={inView}
-              viewRefNode={
-                <div ref={viewRef} className="absolute -top-[1vh]" />
-              }
-              heading={
-                <>
-                  Create your{" "}
-                  <span className="mobile:table">portrait gallery</span>
-                </>
-              }
-            />
-          </motion.div>
-
-          {/* INPUTS */}
-          <motion.div
-            initial={{ opacity: 0, translateY: 5 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
-            <div className="flex flex-col gap-4">
-              <p className="text-stone-500 link-block">
-                <span className="!font-bold text-black Text-meta">
-                  Step 1.{" "}
-                </span>
-                Upload at least {MIN_FILES} images of your face or take a series
-                of selfies. We use these images to develop a{" "}
-                <a
-                  href="https://www.techopedia.com/definition/34633/generative-ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  generative art model
-                </a>{" "}
-                for you.
-              </p>
-              <StorageUpload
-                minFiles={MIN_FILES}
-                maxFiles={MAX_FILES}
-                capturedImage={capturedImage}
-                uploadProgress={uploadProgress}
-                filesToUpload={filesToUpload}
-                setFilesToUpload={setFilesToUpload}
-                numberOfFiles={filesToUpload ? filesToUpload.length : 0}
-                isDataUploading={isDataUploading}
-              />
-              {filesToUpload.length >= MIN_FILES && (
-                <p className="-mt-0.5 text-xs text-stone-400">
-                  For best results, make sure your face is fully visible and
-                  avoid images with filters.
-                </p>
-              )}
-            </div>
-          </motion.div>
-
-          {/* STEP 2: ADD EMAIL */}
-          <motion.div
-            initial={{ opacity: 0, translateY: 5 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <div className="flex flex-col gap-4 pt-w6">
-              <p className="text-stone-500 link-block">
-                <span className="!font-bold text-black Text-meta">
-                  Step 2.{" "}
-                </span>
-                Drop your email to receive your finished works when ready. By
-                pressing “Submit” below, you agree to the{" "}
-                <a
-                  href={config.vanaTermsURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Terms of Service
-                </a>{" "}
-                and the{" "}
-                <a
-                  href={config.vanaPrivacyURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Privacy Policy
-                </a>
-                .
-              </p>
-              {/* TODO @Callum: add new state to clarify when isDataUploading? */}
-              <form className="flex flex-col justify-between w-full gap-3">
-                <Input
-                  type="email"
-                  value={emailAddress}
-                  placeholder="Enter your email"
-                  required
-                  onChange={(event) => {
-                    setEmailAddress(event.target.value);
-                  }}
-                  className={clsx("!px-2.5 !text-black")}
-                />
-                <Button
-                  type="button"
-                  onClick={uploadFiles}
-                  disabled={
-                    isDataUploading ||
-                    !validateEmail(emailAddress) ||
-                    filesToUpload.length < MIN_FILES ||
-                    filesToUpload.length > MAX_FILES
-                  }
-                  className={clsx("font-medium disabled:!opacity-100")}
-                >
-                  <span>Submit &amp; Agree</span>
-                  <Icon icon="carbon:arrow-right" />
-                </Button>
-                <p className="-mt-0.5 text-xs text-stone-400">
-                  Please add your email to continue.
-                </p>
-              </form>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* WHAT DO I GET? */}
+      <div className="pt-[12.5vh] Container flex flex-col gap-w12">
+        {/* INSTRUCTIONS */}
         <motion.div
           initial={{ opacity: 0, translateY: 5 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 0.75 }}
+          transition={{ duration: 0.25 }}
         >
-          <div className="flex flex-col gap-4 pt-w24">
-            <div className="flex flex-col gap-4 Container">
-              <hr className="border-t-2 text-stone-100" />
-              <p className="text-stone-500">
-                <span className="!font-bold text-black Text-meta">
-                  What do I get?{" "}
-                </span>
-                Check out a few galleries of some familiar faces.
+          <PageHeading
+            hideSticky={!!videoStream}
+            inView={inView}
+            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
+            heading={
+              <>
+                Create your{" "}
+                <span className="mobile:table">portrait gallery</span>
+              </>
+            }
+          />
+        </motion.div>
+
+        {/* INPUTS */}
+        <motion.div
+          initial={{ opacity: 0, translateY: 5 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+        >
+          <div className="flex flex-col gap-4">
+            <p className="text-stone-500 link-block">
+              <span className="!font-bold text-black Text-meta">Step 1. </span>
+              Upload at least {MIN_FILES} images of your face or take a series
+              of selfies. We use these images to develop a{" "}
+              <a
+                href="https://www.techopedia.com/definition/34633/generative-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                generative art model
+              </a>{" "}
+              for you.
+            </p>
+            <StorageUpload
+              minFiles={MIN_FILES}
+              maxFiles={MAX_FILES}
+              capturedImage={capturedImage}
+              uploadProgress={uploadProgress}
+              filesToUpload={filesToUpload}
+              setFilesToUpload={setFilesToUpload}
+              numberOfFiles={filesToUpload ? filesToUpload.length : 0}
+              isDataUploading={isDataUploading}
+            />
+            {filesToUpload.length >= MIN_FILES && (
+              <p className="-mt-0.5 text-xs text-stone-400">
+                For best results, make sure your face is fully visible and avoid
+                images with filters.
               </p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <GalleryMenu images={obamaImages} label="Barack Obama" />
-              <GalleryMenu images={rbgImages} label="Ruth Bader Ginsburg" />
-              <GalleryMenu images={teslaImages} label="Nikola Tesla" />
-            </div>
+            )}
           </div>
         </motion.div>
 
-        {/* PRIVACY */}
-        <div className="flex flex-col gap-4 Container pt-w24">
-          <hr className="border-t-8 text-stone-100" />
-          <PrivacyText />
-        </div>
-
-        {/* FOOTER */}
-        <Footer wrapperClassName="pt-w36 pb-w72" />
+        {/* STEP 2: ADD EMAIL */}
+        <motion.div
+          initial={{ opacity: 0, translateY: 5 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <div className="flex flex-col gap-4 pt-w6">
+            <p className="text-stone-500 link-block">
+              <span className="!font-bold text-black Text-meta">Step 2. </span>
+              Drop your email to receive your finished works when ready. By
+              pressing “Submit” below, you agree to the{" "}
+              <a
+                href={config.vanaTermsURL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Terms of Service
+              </a>{" "}
+              and the{" "}
+              <a
+                href={config.vanaPrivacyURL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+            {/* TODO @Callum: add new state to clarify when isDataUploading? */}
+            <form className="flex flex-col justify-between w-full gap-3">
+              <Input
+                type="email"
+                value={emailAddress}
+                placeholder="Enter your email"
+                required
+                onChange={(event) => {
+                  setEmailAddress(event.target.value);
+                }}
+                className={clsx("!px-2.5 !text-black")}
+              />
+              <Button
+                type="button"
+                onClick={uploadFiles}
+                disabled={
+                  isDataUploading ||
+                  !validateEmail(emailAddress) ||
+                  filesToUpload.length < MIN_FILES ||
+                  filesToUpload.length > MAX_FILES
+                }
+                className={clsx("font-medium disabled:!opacity-100")}
+              >
+                <span>Submit &amp; Agree</span>
+                <Icon icon="carbon:arrow-right" />
+              </Button>
+              <p className="-mt-0.5 text-xs text-stone-400">
+                Please add your email to continue.
+              </p>
+            </form>
+          </div>
+        </motion.div>
       </div>
+
+      {/* WHAT DO I GET? */}
+      <motion.div
+        initial={{ opacity: 0, translateY: 5 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.5, delay: 0.75 }}
+      >
+        <div className="flex flex-col gap-4 pt-w24">
+          <div className="flex flex-col gap-4 Container">
+            <hr className="border-t-2 text-stone-100" />
+            <p className="text-stone-500">
+              <span className="!font-bold text-black Text-meta">
+                What do I get?{" "}
+              </span>
+              Check out a few galleries of some familiar faces.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <GalleryMenu images={obamaImages} label="Barack Obama" />
+            <GalleryMenu images={rbgImages} label="Ruth Bader Ginsburg" />
+            <GalleryMenu images={teslaImages} label="Nikola Tesla" />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* PRIVACY */}
+      <div className="flex flex-col gap-4 Container pt-w24">
+        <hr className="border-t-8 text-stone-100" />
+        <PrivacyText />
+      </div>
+
+      {/* FOOTER */}
+      <Footer wrapperClassName="pt-w36 pb-w48" />
     </>
   );
 };

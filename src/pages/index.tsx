@@ -4,29 +4,16 @@ import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useEffect } from "react";
-import useMeasure from "react-use-measure";
 
 import { Button, CanvasGrid, Footer, TitleAndMetaTags } from "src/components";
 
 const Home: NextPage = () => {
-  // consider that knowing bounds is only possible *after* the view renders
-  // so you'll get zero values on the first run and be informed later
-  const [ref, bounds] = useMeasure();
-  const screenHeight = bounds.height;
-
-  // Intersection observer to toggle the filters location
-  // const { ref, inView } = useInView();
-
   useEffect(() => {
     document.body.classList.add("bg-black");
-
     return () => {
       document.body.classList.remove("bg-black");
     };
   }, []);
-
-  // TESTS
-  console.log(bounds);
 
   return (
     <>
@@ -35,12 +22,8 @@ const Home: NextPage = () => {
         title="Portrait | Vana"
         description="&ldquo;Portrait&rdquo; by Vana is a generative art studio that can create self-portraits of you in infinite styles."
       />
-
-      <div
-        ref={ref}
-        className={clsx("relative min-h-screen pt-safe-top")}
-        style={{ height: `${screenHeight}px` }}
-      >
+      {/* translate3d(tx, ty, tz) */}
+      <div className="relative min-h-screen">
         {/* CANVAS */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="transform scale-[1.07]">
@@ -56,10 +39,8 @@ const Home: NextPage = () => {
             className={clsx(
               "absolute -inset-[12vw]",
               "bg-black/30",
-              // from-cyan-800/50
               "after:absolute after:content-[''] after:inset-0 after:bg-gradient-radial after:to-black after:from-black/10",
               "after:blur-[10px]",
-              // after:z-[-1]
             )}
           />
         </div>
@@ -103,7 +84,7 @@ const Home: NextPage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1.5 }}
         >
-          <div className="relative" style={{ top: `${screenHeight - 130}px` }}>
+          <div className="absolute bottom-0 w-full">
             <Footer blackTheme />
           </div>
         </motion.div>
