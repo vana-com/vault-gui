@@ -151,7 +151,7 @@ const UploadPage: NextPage = () => {
             <p className="text-stone-500 link-block">
               <span className="!font-bold text-black Text-meta">Step 1. </span>
               Upload at least {MIN_FILES} images of your face or take a series
-              of selfies. We use these images to develop a{" "}
+              of selfies. Try to capture a variety of angles (including looking at and looking away from the camera), lighting conditions, and facial expressions. We use these images to develop a{" "}
               <a
                 href="https://www.techopedia.com/definition/34633/generative-ai"
                 target="_blank"
