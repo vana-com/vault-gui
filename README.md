@@ -1,16 +1,12 @@
-# Ingenium Gui
+# Vana Portrait App
 
 ## Guide to Running Locally
 
-1. Install Docker Desktop
-2. Setup `development-stack` and `hasura-console` repos locally
-3. Setup Doppler using the
-   [doppler setup document](https://vana.slab.com/posts/doppler-setup-71xn4xeu)
-4. Run `yarn install`
-5. Run the reset script to setup all local Docker infra:
-   `./scripts/reset-ingenium-gui-completely-including-data` OR run the container
-   with `./scripts/dc-start-ingenium-gui`
-6. Visit localhost:5000
+1. Install and set up [doppler](https://vana.slab.com/posts/doppler-setup-71xn4xeu).
+2. Add an `.npmrc` file to the root of the project. Ask a team member for its contents.
+2. Run `yarn install` to install dependencies.
+2. Start development server with `yarn doppler-dev`.
+5. Visit `localhost:5000`.
 
 ## Linting
 
