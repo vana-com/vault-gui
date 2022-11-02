@@ -32,13 +32,15 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
         "backdrop-blur-sm",
         // border
         "border border-current",
-        // IX states
-        "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75",
+        // interaction states
+        "focus:outline-none",
+        // group for any internal element interactions
+        "group",
+        // disabled
         "disabled:opacity-50 disabled:cursor-not-allowed",
         // default hover
         "overflow-hidden before:absolute before:inset-0 hover:before:bg-black/10 before:transition-all before:duration-300 before:ease-in-out",
         // Register all radix states
-        "group",
         // "radix-state-open:bg-gray-50 dark:radix-state-open:bg-gray-900",
         // "radix-state-on:bg-gray-50 dark:radix-state-on:bg-gray-900",
         // "radix-state-instant-open:bg-gray-50 radix-state-delayed-open:bg-gray-50",
