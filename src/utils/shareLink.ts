@@ -23,6 +23,15 @@ const share = async (dataToShare: NavigatorData) => {
       return;
     }
 
+    // If we're trying to share files, remove it and try sharing just text
+    if (dataToShare.files) {
+      share({
+        title: dataToShare.title,
+        text: dataToShare.text,
+        url: dataToShare.url,
+      });
+    }
+
     // Fallback - copy link to clipboard instead
     console.error("Browser does not support sharing functionality");
     await copyToClipboard(dataToShare.url);

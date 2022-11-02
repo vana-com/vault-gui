@@ -75,9 +75,12 @@ const ExhibitPage: NextPage = () => {
   useEffect(() => {
     // set viewing & modal
     const viewingPage = parseInt((viewQuery as string) ?? "-1", 10);
-    if (viewingPage !== -1) {
+    if (viewingPage >= 0) {
       setViewing(viewingPage);
       setShowModal(true, viewingPage);
+    } else {
+      setViewing(-1);
+      setShowModalInternal(false);
     }
 
     // Fetch exhibit details
@@ -113,6 +116,7 @@ const ExhibitPage: NextPage = () => {
   const backToGalleryLink = `/user/${userEmailHash}${
     name ? `?name=${name?.toLowerCase()}` : ""
   }`;
+  const imageName = () => `${galleryHash}-${exhibitName}-${viewing}.png`;
 
   return (
     <>
@@ -239,7 +243,7 @@ const ExhibitPage: NextPage = () => {
                   <>
                     {/* SHOW SINGLE IMAGE DIALOG */}
                     {viewing >= 0 && (
-                      <div className="relative flex flex-col gap-w16">
+                      <div className="relative flex flex-col gap-w16 max-w-2xl mx-auto">
                         <div className="overflow-hidden bg-black aspect-square">
                           <Image
                             className="object-cover w-full"
@@ -260,7 +264,7 @@ const ExhibitPage: NextPage = () => {
                                 size="lg"
                                 className={DIALOG_BUTTON_STYLE}
                                 onClick={() => {
-                                  const imageFilename = `${userEmailHash}-${exhibitName}-${viewing}.png`;
+                                  const imageFilename = imageName();
                                   shareImage(
                                     exhibit.images[viewing],
                                     imageFilename,
@@ -286,7 +290,7 @@ const ExhibitPage: NextPage = () => {
                                   ).then((res) => res.blob());
                                   const a = document.createElement("a");
                                   a.href = URL.createObjectURL(blob);
-                                  a.download = `${userEmailHash}-${exhibitName}-${viewing}.png`;
+                                  a.download = imageName();
                                   document.body.appendChild(a);
                                   a.click();
                                   document.body.removeChild(a);
