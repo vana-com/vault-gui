@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
 
 import {
   Button,
@@ -52,10 +51,6 @@ const UploadPage: NextPage = () => {
   useEffect(() => {
     // empty on purpose, just tracking uploadProgress
   }, [uploadProgress]);
-
-  const { ref: viewRef, inView } = useInView({
-    threshold: 0,
-  });
 
   // Callback to handle upload progress
   const handleUploadProgress = (event: any, fileIndex: number) => {
@@ -121,24 +116,20 @@ const UploadPage: NextPage = () => {
         can create self-portraits of you in infinite styles."
       />
 
-      <div className="pt-[12.5vh] Container flex flex-col gap-w12">
-        {/* INSTRUCTIONS */}
+      {/* Create page uses a slighty different layout structure to the rest of the pages: flex-col with gap-w12 for consistent section spacing */}
+      <div className="pt-[12.5vh] flex flex-col gap-w12">
+        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, translateY: 5 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: 0.5 }}
+          className="Container"
         >
-          <PageHeading
-            hideSticky={!!videoStream}
-            inView={inView}
-            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
-            heading={
-              <>
-                Create your{" "}
-                <span className="mobile:table">portrait gallery</span>
-              </>
-            }
-          />
+          <PageHeading>
+            <>
+              Create your <span className="mobile:table">portrait gallery</span>
+            </>
+          </PageHeading>
         </motion.div>
 
         {/* INPUTS */}
@@ -146,12 +137,15 @@ const UploadPage: NextPage = () => {
           initial={{ opacity: 0, translateY: 5 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
+          className="Container"
         >
           <div className="flex flex-col gap-4">
             <p className="text-stone-500 link-block">
               <span className="!font-bold text-black Text-meta">Step 1. </span>
               Upload at least {MIN_FILES} images of your face or take a series
-              of selfies. Try to capture a variety of angles (including looking at and looking away from the camera), lighting conditions, and facial expressions. We use these images to develop a{" "}
+              of selfies. Try to capture a variety of angles (including looking
+              at and looking away from the camera), lighting conditions, and
+              facial expressions. We use these images to develop a{" "}
               <a
                 href="https://www.techopedia.com/definition/34633/generative-ai"
                 target="_blank"
@@ -185,12 +179,14 @@ const UploadPage: NextPage = () => {
           initial={{ opacity: 0, translateY: 5 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
+          className="Container"
         >
           <div className="flex flex-col gap-4 pt-w6">
             <p className="text-stone-500 link-block">
               <span className="!font-bold text-black Text-meta">Step 2. </span>
-              Drop your email to receive your finished works when ready. By
-              pressing “Submit” below, you agree to the{" "}
+              It&apos;ll take about 2 hours. Drop your email to receive your
+              finished works when ready. By pressing “Submit” below, you agree
+              to the{" "}
               <a
                 href={config.vanaTermsURL}
                 target="_blank"

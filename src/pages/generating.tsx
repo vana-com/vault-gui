@@ -4,7 +4,6 @@ import type { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
 
 import {
   Footer,
@@ -14,6 +13,7 @@ import {
 } from "src/components";
 import { Spinner } from "src/components/Spinner";
 import config from "src/config";
+// import { framerListItem, framerListWrapper } from "src/data";
 import { Gallery } from "src/types";
 import { flattenGalleryImages } from "src/utils";
 
@@ -35,10 +35,6 @@ export async function getStaticProps() {
 
 const GeneratePage: NextPage = () => {
   const router = useRouter();
-  const { ref: viewRef, inView } = useInView({
-    threshold: 0,
-  });
-
   const [galleries, setGalleries] = useState<Gallery[] | null>(null);
 
   useEffect(() => {
@@ -71,93 +67,130 @@ const GeneratePage: NextPage = () => {
     fetchGallery();
   }, [router.asPath]);
 
+  // framer animations
+  const framerListWrapper = {
+    hide: { opacity: 0, y: 5 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        // type: "spring" prevents staggerChildren from working…
+        // If any non-orchestration transition values are set without a type property, it defaults to type: "tween". So don't bother setting.
+        // https://www.framer.com/docs/transition/#orchestration
+        delay: 1,
+        when: "beforeChildren",
+        // staggerDirection: -1,
+        ease: "anticipate",
+        duration: 0.5,
+        // children animations will start after this duration
+        delayChildren: 0.25,
+        // animations of child components can be staggered by this
+        staggerChildren: 0.25,
+      },
+    },
+  };
+
+  const framerListItem = {
+    hide: {
+      opacity: 0,
+    },
+    show: {
+      opacity: 1,
+    },
+  };
+
   if (!galleries) {
     return <Spinner />;
   }
 
   return (
     <>
-      <TitleAndMetaTags color="black" title="Generating | Vana" />
+      <TitleAndMetaTags
+        color="black"
+        title="Generating your portraits | Vana"
+      />
 
-      <div className="pt-[12.5vh] Container">
-        <motion.div
-          initial={{ opacity: 0, translateY: 5 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.25 }}
-        >
-          <PageHeading
-            inView={inView}
-            viewRefNode={<div ref={viewRef} className="absolute -top-[1vh]" />}
-            heading={
-              <>
-                Sit tight while we style your portrait
-                {/* <span className="mobile:table">custom-generated art</span> */}
-              </>
-            }
-          >
+      {/* HEADER */}
+      <motion.div
+        initial={{ opacity: 0, translateY: 5 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.5 }}
+        className="pt-[12.5vh] Container"
+      >
+        <PageHeading
+          underHeading={
             <p>
               <span className="text-stone-500">
                 We&apos;ll email you when it&apos;s ready in a few hours.
               </span>
             </p>
-          </PageHeading>
-        </motion.div>
+          }
+        >
+          Sit tight while we style your portrait
+        </PageHeading>
+      </motion.div>
 
-        <div className="pt-w24 pb-w24">
-          {/* sticky top-0 z-[11] */}
-          <motion.div
-            initial={{ opacity: 0, translateY: 5 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
-            <div className="flex flex-col gap-4 bg-white">
-              <hr className="border-t-8 text-stone-100" />
-              <p className="text-stone-500">
-                <span className="!font-bold text-black Text-meta">
-                  While you&apos;re waiting…{" "}
-                </span>
-                Get to know the creative team behind Vana Portrait.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, translateY: 5 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            {/* TODO @Callum: add mobile:-mx-1 after refactoring blocks with .Container */}
-            <div className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3">
-              {galleries.map((gallery, i) => (
-                <NextLink
-                  key={gallery.userHash}
-                  href={`/user/${gallery.userHash}?name=${vanaTeamData[
-                    i
-                  ].name.toLowerCase()}`}
-                  passHref
-                >
-                  <button type="button">
-                    <GalleryGrid
-                      key={gallery.userHash}
-                      images={flattenGalleryImages(gallery, 6)}
-                      wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px] transition-shadow hover:shadow-lg"
-                      label={
-                        <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
-                          <span>{vanaTeamData[i].name}</span>
-                          <Icon icon="carbon:arrow-right" height="1em" />
-                        </p>
-                      }
-                    />
-                  </button>
-                </NextLink>
-              ))}
-            </div>
-          </motion.div>
+      {/* MESSAGE */}
+      <motion.div
+        initial={{ opacity: 0, translateY: 5 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ duration: 0.5, delay: 0.125 }}
+        className="Container pt-w24"
+      >
+        <div className="flex flex-col gap-4 bg-white">
+          <hr className="border-t-8 text-stone-100" />
+          <p className="text-stone-500">
+            <span className="!font-bold text-black Text-meta">
+              While you&apos;re waiting…{" "}
+            </span>
+            Get to know the creative team behind Vana Portrait.
+          </p>
         </div>
+      </motion.div>
+
+      {/* GALLERIES */}
+      <div className="Container min-h-[60vh]">
+        <motion.div
+          variants={framerListWrapper}
+          initial="hide"
+          animate="show"
+          className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3 mobile:-mx-1"
+        >
+          {galleries.map((gallery, i) => (
+            <motion.div
+              key={gallery.userHash}
+              variants={framerListItem}
+              className="block"
+            >
+              <NextLink
+                key={gallery.userHash}
+                href={`/user/${gallery.userHash}?name=${vanaTeamData[
+                  i
+                ].name.toLowerCase()}`}
+                passHref
+              >
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a key={gallery.userHash} className="block min-h-[261px]">
+                  <GalleryGrid
+                    key={gallery.userHash}
+                    images={flattenGalleryImages(gallery, 6)}
+                    wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px] transition-shadow hover:shadow-lg"
+                    label={
+                      <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
+                        <span>{vanaTeamData[i].name}</span>
+                        <Icon icon="carbon:arrow-right" height="1em" />
+                      </p>
+                    }
+                  />
+                </a>
+              </NextLink>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
 
       {/* FOOTER */}
-      <Footer wrapperClassName="pt-w36 pb-w48" />
+      <Footer />
     </>
   );
 };

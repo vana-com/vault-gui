@@ -3,13 +3,13 @@ import { ArtCard } from "src/components";
 
 interface Props {
   // images: ExhibitImage[]; // layout takes 4 only!
-  images: string[]; // layout takes 4 only!
+  images: string[];
   label: React.ReactNode;
   wrapperClassName?: string;
   showAsOriginal?: boolean;
 }
 
-/* Built to take 6 images (grid of 2 x 3) */
+/* Built as a 3 column grid */
 
 const GalleryGrid = ({
   images,

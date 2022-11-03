@@ -36,11 +36,11 @@ const exhibitSort = (exhibits: Exhibit[]): Exhibit[] =>
   exhibits.sort((a: Exhibit, b: Exhibit) => {
     if (ORIGINAL_VARIATIONS.includes(a.name)) {
       return -1;
-    } if (ORIGINAL_VARIATIONS.includes(b.name)) {
+    }
+    if (ORIGINAL_VARIATIONS.includes(b.name)) {
       return 1;
-    } 
-      return Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt));
-    
+    }
+    return Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt));
   });
 /**
  * Filters through GCS files belonging to a particular user, partitions the files by exhibit, and returns list of exhibits.

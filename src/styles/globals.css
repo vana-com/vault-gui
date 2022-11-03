@@ -112,6 +112,7 @@
   }
   body {
     @apply text-stone-900 font-normal text-md;
+    @apply bg-white;
     /* iOS Safari. FYI we're using postcss-100vh-fix to manage 100vh use */
     @apply min-h-screen pt-safe-top;
     -webkit-tap-highlight-color: transparent;

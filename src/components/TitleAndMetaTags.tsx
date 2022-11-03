@@ -46,11 +46,13 @@ export function TitleAndMetaTags({
 
       {/* Mark this website as a Standalone app */}
       <link rel="manifest" href="/site.webmanifest" />
+
       {/* Make status bar transparent */}
       <meta
         name="apple-mobile-web-app-status-bar-style"
         content="black-translucent"
       />
+
       {/* Disallow scaling, make status bar transparent */}
       <meta
         name="viewport"

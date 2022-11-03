@@ -8,7 +8,9 @@ interface Props {
   wrapperClassName?: string;
 }
 
-const Footer = ({ blackTheme, wrapperClassName = "pb-w72" }: Props) => (
+const ICON_SIZE = "2em";
+
+const Footer = ({ blackTheme, wrapperClassName = "py-w36" }: Props) => (
   <footer className={clsx("flex justify-center", wrapperClassName)}>
     <div className={clsx(blackTheme ? "text-white" : "text-stone-500")}>
       <div className="flex items-center justify-center gap-3 text-sm">
@@ -18,15 +20,15 @@ const Footer = ({ blackTheme, wrapperClassName = "pb-w72" }: Props) => (
           rel="noopener noreferrer"
         >
           <span className="hidden">Instagram</span>
-          <Icon icon="carbon:logo-instagram" height="2.25em" />
+          <Icon icon="carbon:logo-instagram" height={ICON_SIZE} />
         </a>
         <a href={config.vanaDiscord} target="_blank" rel="noopener noreferrer">
           <span className="hidden">Discord</span>
-          <Icon icon="carbon:logo-discord" height="2.25em" />
+          <Icon icon="carbon:logo-discord" height={ICON_SIZE} />
         </a>
         <a href={`mailto:${config.vanaSupportEmail}`}>
           <span className="hidden">Support</span>
-          <Icon icon="carbon:email" height="2.25em" />
+          <Icon icon="carbon:email" height={ICON_SIZE} />
         </a>
       </div>
 
