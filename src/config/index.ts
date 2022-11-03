@@ -3,6 +3,7 @@ import web3AuthConfig from "./web3auth";
 
 const generalConfig = {
   appBaseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000",
+  vanaPortraitEmail: "portrait@vana.com",
   vanaSupportEmail: "support@vana.com",
   vanaBetaFeedback: "https://4eyuszgyknu.typeform.com/vanarocks",
   vanaSupportedAppsFeedback: "https://4eyuszgyknu.typeform.com/vanadata",
@@ -26,6 +27,8 @@ const generalConfig = {
   maxFileUploadSize: 2147483648,
 
   vercelDomain: "vana.vercel.app",
+
+  submissionEmailTemplateId: "d-77d91dfb973f41b2a6bb7dbd42aa26a0", // Sendgrid template ID
 
   /**
    * Encryption

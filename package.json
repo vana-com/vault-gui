@@ -37,6 +37,7 @@
     "@radix-ui/react-portal": "^0.1.4",
     "@radix-ui/react-toast": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
+    "@sendgrid/mail": "^7.7.0",
     "@toruslabs/openlogin": "^2.5.0",
     "@typeform/embed-react": "^1.19.0",
     "@web3auth/base": "^1.2.0",
