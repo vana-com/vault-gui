@@ -19,7 +19,7 @@ export default async (
 
   const response = await getUserGallery(files, userEmailHash as string);
 
-  console.log(JSON.stringify(response, null, 2));
+  // console.log(JSON.stringify(response, null, 2));
   // res.setHeader("Cache-Control", "public, max-age=600");
   return res.status(200).json(response);
 };

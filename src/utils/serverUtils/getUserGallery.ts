@@ -29,12 +29,19 @@ const getExhibits = async (
     ),
   );
 
-const sortExhibitsUpdatedDesc = (exhibits: Exhibit[]): Exhibit[] =>
-  exhibits.sort(
-    (a: Exhibit, b: Exhibit) =>
-      Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt)),
-  );
+const ORIGINAL_VARIATIONS = ["Original", "Originals"];
 
+// Originals exhibit always goes first, then sort by date
+const exhibitSort = (exhibits: Exhibit[]): Exhibit[] =>
+  exhibits.sort((a: Exhibit, b: Exhibit) => {
+    if (ORIGINAL_VARIATIONS.includes(a.name)) {
+      return -1;
+    } if (ORIGINAL_VARIATIONS.includes(b.name)) {
+      return 1;
+    } 
+      return Number(new Date(b.updatedAt)) - Number(new Date(a.updatedAt));
+    
+  });
 /**
  * Filters through GCS files belonging to a particular user, partitions the files by exhibit, and returns list of exhibits.
  *
@@ -66,7 +73,7 @@ export const getUserGallery = async (
     return {
       userHash,
       errorMessage: "",
-      exhibits: sortExhibitsUpdatedDesc(exhibitArr),
+      exhibits: exhibitSort(exhibitArr),
     };
   } catch (error) {
     console.error(`Error in getUserGallery for user ${userHash}`);
