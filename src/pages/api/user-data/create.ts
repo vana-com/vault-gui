@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import config from "src/config";
 import serverConfig from "src/config/server";
 import { ApiResponse } from "src/types/apiResponse";
-import { encrypt } from "src/utils/serverUtils";
+import { addNewSubmission, encrypt } from "src/utils/serverUtils";
 
 /**
  * API callback for new submissions
@@ -29,6 +29,7 @@ const create = async (
     await createDoneFile(lowerEmail, ts);
     await sendSlackNotification(lowerEmail);
     await sendSubmissionEmail(lowerEmail);
+    await addNewSubmission(email as string);
 
     return res.status(200).json({ success: true } as ApiResponse);
   } catch (error) {

@@ -58,6 +58,7 @@
     "ethereum-public-key-to-address": "^0.0.5",
     "formik": "^2.2.9",
     "framer-motion": "^6.5.1",
+    "googleapis": "^109.0.1",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
     "jose": "^4.8.3",
