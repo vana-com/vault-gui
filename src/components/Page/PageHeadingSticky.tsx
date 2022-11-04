@@ -39,7 +39,7 @@ const PageHeadingSticky = ({
         className={clsx(
           "Text-display duration-250 ease",
           hasRendered ? "transition-all" : "",
-          inView ? "text-[4.5vh]" : "text-[27px]",
+          inView ? "text-displayMd" : "text-[27px]",
         )}
       >
         {heading}

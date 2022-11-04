@@ -76,11 +76,21 @@ module.exports = {
         mono: ['IBM Plex Mono','SFMono-Regular','ui-monospace','monospace'],
       },
       fontSize: {
-        xs: ['11.5px', { lineHeight: '1.5' }],
-        sm: ['clamp(12px, 1vw, 13px)', { lineHeight: '1.5' }],
-        smPlus: ['clamp(13px, 1vw, 14px)', { lineHeight: '1.5' }],
-        base: ['clamp(14px, 1vw, 15px)', { lineHeight: '1.5' }],
-        md: ['clamp(14px, 1vw, 16px)', { lineHeight: '1.5' }],
+        xs: [
+          'clamp(11px, 0.6562rem + 0.1211vw, 12px)', 
+          { lineHeight: '1.5' }],
+        sm: [
+          'clamp(12px, 0.7187rem + 0.1211vw, 13px)', 
+          { lineHeight: '1.5' }],
+        smPlus: [
+          'clamp(13px, 0.7812rem + 0.1211vw, 14px)', 
+          { lineHeight: '1.5' }],
+        base: [
+          'clamp(14px, 0.8437rem + 0.1211vw, 15px)', 
+          { lineHeight: '1.5' }],
+        md: [
+          'clamp(14px, 0.8123rem + 0.2421vw, 16px)', 
+          { lineHeight: '1.5' }],
         lg: ['clamp(17px, 1vw, 20px)', { lineHeight: '1.3' }],
         xl: ['clamp(20px, 1vw, 24px)', { lineHeight: '1.2' }],
         '2xl': ['clamp(22px, 1vw, 27px)', { lineHeight: '1.1' }],
@@ -88,15 +98,18 @@ module.exports = {
         '4xl': ['clamp(32px, 1vw, 40px)', { lineHeight: '1.0' }],
         '5xl': ['clamp(36px, 1vw, 52px)', { lineHeight: '1.0' }],
         '6xl': ['clamp(48px, 1vw, 72px)', { lineHeight: '1.0' }],
-        '7xl': ['clamp(54px, 1vw, 90px)', { lineHeight: '1.0' }],
+        '7xl': [
+          'clamp(72px, 3.3723rem + 4.3584vw, 108px)', 
+          { lineHeight: '1.0' }
+        ],
+        displayMd: "4.5vh",
+        displayLg: "9vh",
       },
       // clamp()
       // https://codesandbox.io/s/clamp-linear-intepolation-based-on-viewport-width-builder-forked-c37i3
       // set between 414 thru 1240
       // or, easier: 17px at 1024 wide = 17/1024 = 1.66vw
       spacing: {
-        // navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 4.5rem)",
-        // navH: "clamp(3.5rem, 2.9988rem + 1.9370vw, 3.5rem)",
         navH: "56px",
         navHPlusPx: "57px",
         navLinkH: "clamp(36px, 2.0620rem + 0.7264vw, 42px)",
@@ -105,10 +118,9 @@ module.exports = {
         inputH: "clamp(2.5rem, 2vw, 3rem)",
         inputLgH: "clamp(3rem, 2vw, 3.375rem)",
         inputXlH: "clamp(3.5rem, 3vw, 4.5rem)",
-        insetHalf: "clamp(0.75rem, 0.9988rem + 0.9370vw, 1.125rem)",
-        insetAlmost: "clamp(1.25rem, 0.9988rem + 1.3370vw, 1.75rem)",
-        inset: "clamp(1.5rem, 0.9988rem + 1.9370vw, 2.25rem)",
-        insetDouble: "clamp(3rem, 1.9976rem + 3.8741vw, 4.5rem)",
+        insetHalf: "12px",
+        inset: "24px", // 1.5rem or spacing.6
+        // insetDouble: "72px", // 4.5rem or spacing.18
         w2: "clamp(0.25rem, 0.2494rem + 0.9685vw, 0.5rem)",
         w4: "clamp(0.5rem, 0.2494rem + 0.9685vw, 1rem)",
         w6: "clamp(0.75rem, 0.3741rem + 1.4528vw, 1.5rem)",
@@ -130,8 +142,7 @@ module.exports = {
         "safe-right": "env(safe-area-inset-right)",
       },
       maxWidth: {
-        canvasWidth: "1284px",
-        // canvasWidth: "1180px",
+        container: "800px",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

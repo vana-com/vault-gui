@@ -120,7 +120,7 @@ const StorageUpload = ({
   // useMemo prevents image flickering on state change
   const imagesPreview = useMemo(
     () => (
-      <div className="grid grid-cols-2 gap-[5px]">
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
         {filesToUpload?.map((fileToUpload, i) => (
           <div
             key={fileToUpload.name}
@@ -208,14 +208,11 @@ const StorageUpload = ({
           </Button>
         ) : (
           <Button
-            className="!w-full !text-stone-400 !bg-white before:content-[initial] border-transparent backdrop-blur-none disabled:opacity-100"
+            className="!w-full !gap-1.5 !bg-green-600 !text-white border-transparent backdrop-blur-none disabled:opacity-100 !cursor-auto before:content-[initial]"
             disabled
-            onClick={openFileDialog}
           >
             <Icon icon="carbon:checkmark-filled" height="1em" />
-            <span className="transform -translate-y-[0]">
-              Ready for generation
-            </span>
+            <span className="">Looks good</span>
           </Button>
         )}
 

@@ -22,12 +22,11 @@ const Home: NextPage = () => {
         title="Portrait | Vana"
         description="&ldquo;Portrait&rdquo; by Vana is a generative art studio that can create self-portraits of you in infinite styles."
       />
-      {/* translate3d(tx, ty, tz) */}
       <div className="relative min-h-screen">
         {/* CANVAS */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="transform scale-[1.07]">
-            <div className="grid grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-[3px] md:gap-4">
+            <div className="grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-[3px] md:gap-3">
               <CanvasGrid />
             </div>
           </div>
@@ -47,17 +46,17 @@ const Home: NextPage = () => {
 
         {/* CTA */}
         <div className="absolute inset-0 flex items-center justify-center h-[70vh] pointer-events-none">
-          <div className="text-center pointer-events-auto px-inset">
+          <div className="text-center pointer-events-auto px-inset max-w-[560px]">
             <motion.div
               initial={{ opacity: 0, scale: 1, translateY: 5 }}
               animate={{ opacity: 1, scale: 1, translateY: 0 }}
               transition={{ duration: 1, delay: 1 }}
-              className="flex flex-col gap-3"
+              className="flex flex-col gap-3 xl:gap-5"
             >
-              <h1 className="Text-display Text-display--shadow text-[9vh]">
+              <h1 className="Text-display Text-display--shadow text-7xl">
                 You are a work of art
               </h1>
-              <p className="text-white">
+              <p className="mx-auto text-white xl:w-5/6">
                 &ldquo;Portrait&rdquo; by Vana is a generative art studio that
                 can create self-portraits of you in infinite styles.
               </p>
@@ -65,8 +64,8 @@ const Home: NextPage = () => {
             <motion.div
               initial={{ opacity: 0, scale: 1, translateY: 5 }}
               animate={{ opacity: 1, scale: 1, translateY: 0 }}
-              transition={{ duration: 1, delay: 1.25 }}
-              className="pt-5"
+              transition={{ duration: 1, delay: 1.5 }}
+              className="pt-5 xl:pt-8"
             >
               <Link href="/create" passHref>
                 <Button className="!w-5/6 !md:w-3/4 !bg-transparent">

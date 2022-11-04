@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { ArtCard } from "src/components";
 // import { ExhibitImage } from "src/types";
 
@@ -5,6 +7,7 @@ interface Props {
   // images: ExhibitImage[]; // layout takes 4 only!
   images: string[];
   label: React.ReactNode;
+  gridCols: number;
   wrapperClassName?: string;
   showAsOriginal?: boolean;
 }
@@ -15,10 +18,22 @@ const GalleryGrid = ({
   images,
   label,
   wrapperClassName,
+  gridCols = 3,
   showAsOriginal,
 }: Props) => (
   <div className={wrapperClassName}>
-    <div className="grid grid-cols-3 gap-1 overflow-hidden rounded-[6px]">
+    <div
+      className={clsx(
+        "grid",
+        gridCols === 3 && "grid-cols-3",
+        gridCols === 4 && "grid-cols-4",
+        gridCols === 5 && "grid-cols-5",
+        gridCols === 6 && "grid-cols-6",
+        "gap-1",
+        "overflow-hidden",
+        "rounded-[6px]",
+      )}
+    >
       {images.map((exhibit, index) => {
         const originalStyle = showAsOriginal && index === 0;
         return (
@@ -40,13 +55,10 @@ const GalleryGrid = ({
               </div>
             ) : (
               <ArtCard
-                // key={exhibit.src}
-                // imageSrc={exhibit.src}
-                // imageAlt={exhibit.title}
                 key={exhibit}
                 imageSrc={exhibit}
                 imageAlt={exhibit}
-                wrapperClassName=""
+                wrapperClassName="" // purposely remove default w/ empty string
                 imageClassName="transform scale-[1.075]"
               />
             )}

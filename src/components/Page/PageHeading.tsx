@@ -8,11 +8,11 @@ interface Props {
 const PageHeading = ({ children, underHeading }: Props) => (
   <div
     className={clsx(
-      "flex flex-col gap-3 bg-white lg:gap-w6 scroll-mt-w12",
-      underHeading && "pb-3",
+      "flex flex-col gap-3 bg-white scroll-mt-w12",
+      underHeading && "pb-3 xl:pb-0",
     )}
   >
-    <h1 className="Text-display transition-all duration-250 ease text-[4.5vh]">
+    <h1 className="transition-all Text-display text-displayMd duration-250 ease">
       {children}
     </h1>
     {underHeading}

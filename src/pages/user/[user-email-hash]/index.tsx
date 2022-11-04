@@ -16,6 +16,7 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import config from "src/config";
+import { useDeviceDetect } from "src/hooks";
 import { Gallery } from "src/types";
 import { nameToPathName, shareLink } from "src/utils";
 
@@ -26,6 +27,7 @@ interface QueryParams {
 
 const GalleryPage: NextPage = () => {
   const router = useRouter();
+  const { isMobileViewport } = useDeviceDetect();
 
   const { "user-email-hash": userEmailHash, name } =
     router.query as unknown as QueryParams;
@@ -130,7 +132,7 @@ const GalleryPage: NextPage = () => {
           variants={listWrapper}
           initial="hide"
           animate="show"
-          className="grid grid-cols-1 gap-4 mobile:-mx-1 md:grid-cols-4 xl:grid-cols-5"
+          className="grid grid-cols-1 gap-4 xl:gap-5 mobile:-mx-1 md:grid-cols-1"
         >
           {gallery.exhibits.map((exhibit) => (
             <NextLink
@@ -148,18 +150,31 @@ const GalleryPage: NextPage = () => {
               >
                 <GalleryGrid
                   key={gallery.userHash}
-                  images={exhibit.images.slice(1, 4)}
+                  // Vana team members galleries only have 4 images (excluding original), so we truncate them
+                  // Otherwise, we show 3 images on mobile and 6 on desktop, in the truncated view
+                  gridCols={galleryWithName ? 4 : isMobileViewport ? 3 : 6}
+                  // Vana team members slice with index 1 rather than 0 so that we skip the "original" photo
+                  images={
+                    galleryWithName
+                      ? exhibit.images.slice(1, 5)
+                      : isMobileViewport
+                      ? exhibit.images.slice(0, 3)
+                      : exhibit.images.slice(0, 6)
+                  }
                   wrapperClassName={clsx(
-                    "p-3 bg-stone-100 border border-stone-200 rounded-[18px] relative transition-shadow hover:shadow-lg",
+                    "p-3 bg-stone-100 hover:bg-stone-50 border border-stone-200 rounded-[18px] relative md:-mx-3 group CardHover",
                     // TODO @Callum: use this design?
                     // "after:absolute after:top-0 after:bottom-0 after:right-0 after:w-[100px] after:bg-gradient-to-l after:from-stone-100 after:via-stone-100",
                   )}
                   label={
-                    <p className="flex items-center gap-1 pt-2.5 pl-0.5 text-base font-medium leading-none text-black">
-                      <span className="capitalize">
+                    <p className="flex items-center gap-1.5 pt-3 pl-0.5 text-sm leading-none">
+                      <span className="font-medium capitalize">
                         {name} {exhibit.name}
                       </span>
-                      <Icon icon="carbon:arrow-right" height="1em" />
+                      <div className="flex flex-row gap-1 text-sm place-items-center opacity-70 group-hover:opacity-100">
+                        View all
+                        <Icon icon="carbon:arrow-right" height=".9em" />
+                      </div>
                     </p>
                   }
                 />

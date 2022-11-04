@@ -10,7 +10,7 @@ interface StartProps {
 
 const GenerateHeadingStart = ({ onClick }: StartProps) => (
   <>
-    <h1 className="font-display text-[4.5vh] font-light leading-[0.925] tracking-[-0.01em]">
+    <h1 className="font-display text-displayMd font-light leading-[0.925] tracking-[-0.01em]">
       Create your gallery
     </h1>
     <p>To create your gallery, we need 6-9 portraits of you from your phone.</p>
@@ -36,7 +36,7 @@ const GenerateHeadingStart = ({ onClick }: StartProps) => (
 
 const GenerateHeadingSharing = () => (
   <div>
-    <h1 className="font-display text-[4.5vh] font-light leading-[0.925] tracking-[-0.01em] relative inline">
+    <h1 className="font-display text-displayMd font-light leading-[0.925] tracking-[-0.01em] relative inline">
       <LoadingDots>Generating</LoadingDots>
     </h1>
   </div>
@@ -48,7 +48,7 @@ const GenerateHeadingSuccess = ({
   children: React.ReactNode;
 }) => (
   <>
-    <h1 className="font-display text-[4.5vh] font-light leading-[1.1] tracking-[-0.01em]">
+    <h1 className="font-display text-displayMd font-light leading-[1.1] tracking-[-0.01em]">
       Your masterpiece is being crafted
     </h1>
     <p>We will email you when it is ready in a couple of hours</p>

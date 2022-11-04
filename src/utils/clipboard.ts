@@ -1,5 +1,6 @@
 const CLIPBOARD_PERMISSION = "clipboard-write" as PermissionName;
 
+// FIXME: Note that this won't work in Firefox browser, consider using another method https://bugzilla.mozilla.org/show_bug.cgi?id=1560373
 const copyToClipboard = async (textToWrite?: string): Promise<boolean> => {
   if (window?.navigator) {
     try {

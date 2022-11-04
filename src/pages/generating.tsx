@@ -79,7 +79,6 @@ const GeneratePage: NextPage = () => {
         // https://www.framer.com/docs/transition/#orchestration
         delay: 1,
         when: "beforeChildren",
-        // staggerDirection: -1,
         ease: "anticipate",
         duration: 0.5,
         // children animations will start after this duration
@@ -126,7 +125,7 @@ const GeneratePage: NextPage = () => {
             </p>
           }
         >
-          Sit tight while we style your portrait
+          Sit tight while we <span className="table">style your portrait</span>
         </PageHeading>
       </motion.div>
 
@@ -154,7 +153,7 @@ const GeneratePage: NextPage = () => {
           variants={framerListWrapper}
           initial="hide"
           animate="show"
-          className="grid grid-cols-1 gap-3 pt-5 md:grid-cols-2 xl:grid-cols-3 mobile:-mx-1"
+          className="grid grid-cols-1 gap-3 pt-5 xl:gap-5 md:grid-cols-2 xl:grid-cols-2 mobile:-mx-1 md:-mx-3"
         >
           {galleries.map((gallery, i) => (
             <motion.div
@@ -170,13 +169,18 @@ const GeneratePage: NextPage = () => {
                 passHref
               >
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a key={gallery.userHash} className="block min-h-[261px]">
+                <a
+                  key={gallery.userHash}
+                  className="block min-h-[261px] md:min-h-0"
+                >
                   <GalleryGrid
                     key={gallery.userHash}
                     images={flattenGalleryImages(gallery, 6)}
-                    wrapperClassName="p-3 bg-stone-100 border border-stone-200 rounded-[18px] transition-shadow hover:shadow-lg"
+                    // In generating, we want to show a 2x3 grid at all times
+                    gridCols={3}
+                    wrapperClassName="p-3 bg-stone-100 hover:bg-stone-50 border border-stone-200 rounded-[18px] CardHover"
                     label={
-                      <p className="flex items-center gap-1 pt-2 pl-0.5 text-sm font-medium leading-none text-black">
+                      <p className="flex items-center gap-1 pt-3 pl-0.5 text-sm font-medium leading-none text-black">
                         <span>{vanaTeamData[i].name}</span>
                         <Icon icon="carbon:arrow-right" height="1em" />
                       </p>
