@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Exhibit } from "src/types";
 import {
   decrypt,
+  filterFiles,
   prepareExhibit,
   readGCSDirectory,
 } from "src/utils/serverUtils";
@@ -21,8 +22,10 @@ export default async (
   const key = `${decryptedUserEmail}/exhibits/${exhibitName as string}`;
   const [files] = await readGCSDirectory(key);
 
+  const filtered = filterFiles(files);
+
   try {
-    if (files.length === 0) {
+    if (filtered.length === 0) {
       const err = new Error(
         `Exhibit ${exhibitName} for user ${userEmailHash} not found or has no images`,
       );
@@ -30,7 +33,7 @@ export default async (
       throw err;
     }
 
-    const exhibit = await prepareExhibit(files);
+    const exhibit = await prepareExhibit(filtered);
 
     console.log(JSON.stringify(exhibit, null, 2));
     // res.setHeader("Cache-Control", "public, max-age=600");

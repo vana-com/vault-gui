@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Gallery } from "src/types";
 import {
   decrypt,
+  filterFiles,
   getUserGallery,
   readGCSDirectory,
 } from "src/utils/serverUtils";
@@ -17,7 +18,8 @@ export default async (
   const keyPrefix = `${userEmail}/exhibits/`;
   const [files] = await readGCSDirectory(keyPrefix);
 
-  const response = await getUserGallery(files, userEmailHash as string);
+  const filtered = filterFiles(files);
+  const response = await getUserGallery(filtered, userEmailHash as string);
 
   // console.log(JSON.stringify(response, null, 2));
   // res.setHeader("Cache-Control", "public, max-age=600");
