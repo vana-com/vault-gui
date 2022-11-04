@@ -14,7 +14,8 @@ const create = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>,
 ): Promise<void> => {
-  const { email } = req.query;
+  const { email, timestamp } = req.query;
+  const ts = parseInt(timestamp as string, 10);
 
   try {
     if (!email) {
@@ -24,7 +25,7 @@ const create = async (
       } as ApiResponse);
     }
 
-    await createDoneFile(email as string);
+    await createDoneFile(email as string, ts);
     await sendSlackNotification(email as string);
     await sendSubmissionEmail(email as string);
 
@@ -41,9 +42,10 @@ const create = async (
 /**
  * Uploads a 'done.txt' file to the user's <email>/uploads/ path in GCS
  * @param email
+ * @param timestamp
  */
-const createDoneFile = async (email: string) => {
-  const destinationFilename = `${email}/uploads/done.txt`;
+const createDoneFile = async (email: string, timestamp: number) => {
+  const destinationFilename = `${email}/uploads/${timestamp}/done.txt`;
   await serverConfig.userDataBucket.file(destinationFilename).save("done");
   console.log(`${destinationFilename} uploaded`);
 };

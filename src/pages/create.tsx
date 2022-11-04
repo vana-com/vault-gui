@@ -93,7 +93,9 @@ const UploadPage: NextPage = () => {
         (result) => result?.uploadSuccessful,
       );
 
-      await fetch(`/api/user-data/create?email=${emailAddress}`);
+      await fetch(
+        `/api/user-data/create?email=${emailAddress}&timestamp=${timestamp}`,
+      );
       if (successfulUpload) {
         console.log("All files uploaded successfully");
         setTimeout(() => router.push("/generating"), 500);
