@@ -263,6 +263,8 @@ const UploadPage: NextPage = () => {
                   <span>
                     {filesToUpload.length !== 0 && !numberOfFilesValid
                       ? `Add ${MIN_FILES - numberOfFiles} more`
+                      : isDataUploading
+                      ? "Submitting"
                       : "Submit & Agree"}
                   </span>
                   {/* show arrow on load and when valid */}
