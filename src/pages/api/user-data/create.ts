@@ -3,6 +3,7 @@ import log from "loglevel";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import config from "src/config";
+import serverConfig from "src/config/server";
 import { ApiResponse } from "src/types/apiResponse";
 import { encrypt } from "src/utils/serverUtils";
 
@@ -23,6 +24,7 @@ const create = async (
       } as ApiResponse);
     }
 
+    await createDoneFile(email as string);
     await sendSlackNotification(email as string);
     await sendSubmissionEmail(email as string);
 
@@ -34,6 +36,16 @@ const create = async (
       success: false,
     } as ApiResponse);
   }
+};
+
+/**
+ * Uploads a 'done.txt' file to the user's <email>/uploads/ path in GCS
+ * @param email
+ */
+const createDoneFile = async (email: string) => {
+  const destinationFilename = `${email}/uploads/done.txt`;
+  await serverConfig.userDataBucket.file(destinationFilename).save("done");
+  console.log(`${destinationFilename} uploaded`);
 };
 
 /**
