@@ -25,9 +25,10 @@ const create = async (
       } as ApiResponse);
     }
 
-    await createDoneFile(email as string, ts);
-    await sendSlackNotification(email as string);
-    await sendSubmissionEmail(email as string);
+    const lowerEmail = (email as string).toLowerCase();
+    await createDoneFile(lowerEmail, ts);
+    await sendSlackNotification(lowerEmail);
+    await sendSubmissionEmail(lowerEmail);
 
     return res.status(200).json({ success: true } as ApiResponse);
   } catch (error) {

@@ -74,7 +74,7 @@ const UploadPage: NextPage = () => {
     setIsDataUploading(true);
     setUploadProgress(Array(MAX_FILES).fill(0));
     try {
-      // Upload files to object store (S3 or GCS)
+      // Upload files to object store (GCS)
       const timestamp = new Date().getTime();
 
       // Prevent people from uploading an ungodly amount of photos
