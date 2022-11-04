@@ -137,7 +137,7 @@
   }
   .CardHover:hover {
     /* hover interaction */
-    @apply shadow-2xl -translate-y-0.5 ring-opacity-100 hover:z-[1];
+    @apply shadow-2xl -translate-y-0.5 ring-opacity-100 hover:z-[1] relative;
   }
   /* button */
   .Button {
