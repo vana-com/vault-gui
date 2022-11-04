@@ -18,6 +18,7 @@ export * from "./identity/setWeb3AuthModalHeading";
 export * from "./localStorage";
 export * from "./nameToPathName";
 export * from "./openInNewTab";
+export * from "./sessionStorage";
 export * from "./setLoginPath";
 export * from "./shareLink";
 export * from "./sortByCreatedAt";

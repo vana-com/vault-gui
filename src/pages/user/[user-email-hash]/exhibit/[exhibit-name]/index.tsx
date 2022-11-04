@@ -19,6 +19,7 @@ import {
   TitleAndMetaTags,
 } from "src/components";
 import config from "src/config";
+import { useUserGalleryPartialCache } from "src/hooks/useUserGallery";
 import { Exhibit } from "src/types";
 import { shareImage, shareLink } from "src/utils";
 
@@ -139,7 +140,6 @@ const ExhibitPage: NextPage = () => {
       setViewing(-1);
       setShowModalInternal(false);
     }
-
     // Fetch exhibit details
     if (!exhibit) {
       const fetchExhibit = async () => {
@@ -153,7 +153,12 @@ const ExhibitPage: NextPage = () => {
           }
         }
       };
-      fetchExhibit();
+
+      // Check the cache if there is an exhibit
+      const cache = useUserGalleryPartialCache(userEmailHash, exhibitName);
+
+      if (!cache) fetchExhibit(); // Cache miss
+      else setExhibit(cache); // Cache hit
     }
   }, [router.asPath]);
 

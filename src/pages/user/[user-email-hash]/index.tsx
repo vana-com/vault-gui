@@ -17,6 +17,10 @@ import {
 } from "src/components";
 import config from "src/config";
 import { useDeviceDetect } from "src/hooks";
+import {
+  useUserGalleryCache,
+  writeUserGalleryCache,
+} from "src/hooks/useUserGallery";
 import { Gallery } from "src/types";
 import { nameToPathName, shareLink } from "src/utils";
 
@@ -42,10 +46,17 @@ const GalleryPage: NextPage = () => {
         if (res.status < 399) {
           const data = await res.json();
           setGallery(data);
+
+          writeUserGalleryCache(userEmailHash, data); // Cache the response
         }
       }
     };
-    fetchGallery();
+
+    // Check if there is a cache
+    const cache = useUserGalleryCache(userEmailHash);
+
+    if (!cache) fetchGallery(); // Cache Miss
+    else setGallery(cache); // Cache Hit
   }, [router.asPath]);
 
   if (!gallery) {
