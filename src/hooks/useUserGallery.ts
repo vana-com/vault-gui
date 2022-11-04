@@ -14,7 +14,7 @@ interface Exhibit {
 
 interface Gallery {
   userHash: string;
-  errorMessage: string;
+  errorMessage: string | undefined;
   exhibits: Exhibit[];
 }
 

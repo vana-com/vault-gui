@@ -13,6 +13,10 @@ import {
 } from "src/components";
 import { Spinner } from "src/components/Spinner";
 import config from "src/config";
+import {
+  useUserGalleryCache,
+  writeUserGalleryCache,
+} from "src/hooks/useUserGallery";
 // import { framerListItem, framerListWrapper } from "src/data";
 import { Gallery } from "src/types";
 import { flattenGalleryImages } from "src/utils";
@@ -40,31 +44,49 @@ const GeneratePage: NextPage = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       if (!galleries) {
+        // Store the results
+        const allGalleryData: Gallery[] = [];
+
+        // Create promises for all team members
         const galleryPromises = vanaTeamData.map(({ hash: emailHash }) =>
-          fetch(`/api/user/${emailHash}`),
+          fetch(`/api/user/${emailHash}`)
+            .then((res) => res.json())
+            .then((gallery: Gallery) => {
+              // Cache the value
+              writeUserGalleryCache(emailHash, gallery);
+              return gallery;
+            })
+            .catch((error) => console.log(error)),
         );
 
-        const galleriesData = [];
-
         for (let i = 0; i < galleryPromises.length; i++) {
-          const galleryPromise = galleryPromises[i];
+          const p = galleryPromises[i];
           // eslint-disable-next-line no-await-in-loop
-          const res = await galleryPromise;
+          const gallery = await p;
 
-          if (res.status < 399) {
-            // eslint-disable-next-line no-await-in-loop
-            const data = await res.json();
-            galleriesData.push(data);
-            // Call setGalleries for each image so that the images can load before
-            // all gallery network requests are made.
-            setGalleries([...galleriesData]);
-          }
+          // eslint-disable-next-line no-continue
+          if (!gallery) continue;
+
+          allGalleryData.push(gallery);
+          setGalleries([...allGalleryData]);
         }
 
-        setGalleries(galleriesData);
+        setGalleries(allGalleryData);
       }
     };
-    fetchGallery();
+
+    // Quick and dirty since all team members stay constant
+    // Just check the first team member, if they dont exist in the cache assume all of them dont
+    const cached = useUserGalleryCache(vanaTeamData[0].hash);
+
+    if (!cached) {
+      fetchGallery();
+    } else {
+      const allCached = vanaTeamData.map(
+        ({ hash }) => useUserGalleryCache(hash) as Gallery,
+      );
+      setGalleries([...allCached]);
+    }
   }, [router.asPath]);
 
   // framer animations
