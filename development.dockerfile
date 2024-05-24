@@ -24,7 +24,7 @@ RUN chown -R node:node /app
 
 USER node
 
-RUN yarn install
+RUN yarn install --ignore-engines
 
 EXPOSE 5000
 
