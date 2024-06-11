@@ -7,8 +7,6 @@ import { CacheProvider } from "@emotion/react";
 import * as Toast from "@radix-ui/react-toast";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
@@ -19,14 +17,12 @@ import {
   LayoutApp,
   UserProvider,
 } from "src/components";
-import config from "src/config";
 
 import GlobalStyles from "../styles/GlobalStyles";
 import { useApollo } from "../utils/apolloClient";
 
 const NextApp = ({ Component, pageProps }: AppProps) => {
   const client = useApollo(pageProps);
-  const router = useRouter();
 
   // Datadog RUM initialization
   datadogRum.init({
@@ -55,14 +51,6 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
                   <AppHook>
                     <LayoutApp renderNavMobile>
                       <Component {...pageProps} />
-                      {!config.routesToHideZendeskWidget.some((path) =>
-                        router.pathname.startsWith(path),
-                      ) && (
-                        <Script
-                          id="ze-snippet"
-                          src={`https://static.zdassets.com/ekr/snippet.js?key=${config.ZENDESK_WIDGET_KEY}`}
-                        />
-                      )}
                     </LayoutApp>
                   </AppHook>
                 </AuthenticatedLayout>

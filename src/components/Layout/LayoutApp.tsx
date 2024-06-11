@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Zendesk, { ZendeskAPI } from "react-zendesk";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from "twin.macro";
 
@@ -13,6 +14,7 @@ import {
   styledNavButton,
   styledTrigger,
 } from "src/components";
+import config from "src/config";
 import { useDeviceDetect } from "src/hooks";
 
 interface Props {
@@ -36,8 +38,31 @@ const LayoutApp = ({ children, renderNavMobile }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => setIsOpen(false), [router.asPath]);
 
+  // ZE
+  useEffect(() => {
+    const hideZendesk = config.routesToHideZendeskWidget.some((path) =>
+      router.pathname.startsWith(path),
+    );
+    console.log("hideZendesk", hideZendesk);
+
+    if (hideZendesk) {
+      ZendeskAPI("webWidget", "hide");
+    }
+
+    return () => {
+      ZendeskAPI("webWidget", "show");
+    };
+  }, []);
+
   return (
     <>
+      {/* CHAT */}
+      <Zendesk
+        defer
+        zendeskKey={config.ZENDESK_WIDGET_KEY}
+        onLoaded={() => console.log("ZE is loaded")}
+      />
+
       {/* NAVBAR */}
       {!isSendPath && (
         <div tw="fixed top-0 left-0 right-0 bg-background">
