@@ -50,7 +50,6 @@ const SSO_OPTIONS_TO_HIDE = [
   "twitch",
   "weibo",
   "kakao",
-  "email_passwordless",
 ];
 
 const openLoginModalConfig: ModalConfig = {
