@@ -10,11 +10,11 @@ Read here for an explanation of [why we are using CSS in Javascript](https://www
 
 ## UI Primitive Components using [Radix UI](https://radix-ui.com/)
 
-We are Using radix-ui for building compound interactive components. Why why why? Local component state management and accessibility completely taken care (otherwise it's hard, eg. 2000 hours!)
+We are Using radix-ui for building compound interactive components. Why why why? Local component state management and accessibility are completely taken care (otherwise it's hard, eg. 2000 hours!)
 
-Because we have not chosen a third party interaction library that also handles our styling system (eg.  Chakra, MUI, Mantine, etc.), we are not restricted to any particulr UI interaction "primitives" library. This means we can use, for example, any Headless-UI as well as Radix-UI. But we're going to try and stick with Radix-UI because of it's excellent accessibility and local component state management.
+Because we have not chosen a third party interaction library that also handles our styling system (eg.  Chakra, MUI, Mantine, etc.), we are not restricted to any particular UI interaction "primitives" library. This means we can use, for example, any Headless-UI as well as Radix-UI. But we're going to try and stick with Radix-UI because of it's excellent accessibility and local component state management.
 
-### What does "headless UI" mean and whay are we using it?
+### What does "headless UI" mean and why are we using it?
 
 Blah blah
 
