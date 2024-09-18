@@ -136,7 +136,7 @@ properly incremented (read below)
 
 # 🏷 All About Tags
 
-The tagging system follows the [semvar standard](https://semver.org/):
+The tagging system follows the [semver standard](https://semver.org/):
 
 ```
 MAJOR.MINOR.PATCH
